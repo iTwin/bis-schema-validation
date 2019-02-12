@@ -1,0 +1,6 @@
+.nyc_output/**/*
+.vscode/**/*
+src/**/*
+test/**/*
+coverage/**/*
+lib/**/*.map
