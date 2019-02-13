@@ -6,14 +6,14 @@
   "projectFolderMaxDepth": 1,
   "ensureConsistentVersions": true,
   "projects": [
+	  {
+      "packageName": "@bentley/schema-validater",
+      "projectFolder": "schema-validater",
+      "shouldPublish": true
+    },
     {
       "packageName": "@bentley/bis-rules",
       "projectFolder": "bis-rules",
-      "shouldPublish": true
-    },
-	{
-      "packageName": "@bentley/schema-validater",
-      "projectFolder": "schema-validater",
       "shouldPublish": true
     }
   ]

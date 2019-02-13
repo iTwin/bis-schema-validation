@@ -3,6 +3,8 @@
   "description": "Contains BIS rules for schema validation.",
   "license": "UNLICENSED",
   "version": "0.1.0",
+  "main": "lib/bis-rules.js",
+  "typings": "lib/bis-rules",
   "repository": {
     "type": "git",
     "url": "https://github.com/iTwin/bis-schema-validation"
@@ -40,7 +42,9 @@
     "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
     "mocha": "^5.2.0",
-    "typescript": "^3.3.1"
+    "chai": "^4.2.0",
+    "typescript": "^3.3.1",
+    "tsconfig-paths": "^3.3.2"
   },
   "dependencies": {
     "@bentley/bentleyjs-core": "0.189.0-dev.27",
