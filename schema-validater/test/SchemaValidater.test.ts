@@ -5,7 +5,7 @@
 
 import * as path from "path";
 import * as fs from "fs-extra";
-import { expect, use, assert } from "chai";
+import { expect, use } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
 import sinon = require("sinon");
 import * as utils from "./utilities/utils";
@@ -28,21 +28,6 @@ describe("SchemaValidator Tests", () => {
 
   afterEach(async () => {
     sinon.restore();
-  });
-
-  it.skip("DELETE ME", async () => {
-    const schemaFile = path.resolve("C:\\PlatformTech\\validation\\ECSchemas\\Domain\\BuildingSpacePlanning.ecschema.xml");
-    const dgn = "C:\\PlatformTech\\validation\\ECSchemas\\Dgn";
-    const ecDb = "C:\\PlatformTech\\validation\\ECSchemas\\ECDb";
-    const standard = "C:\\PlatformTech\\validation\\ECSchemas\\Standard";
-    const ecstandard = "C:\\bim0200dev\\src\\ecstandards\\schemas";
-    const refs = [dgn, ecDb, standard, ecstandard];
-
-    const options = new ValidationOptions(schemaFile, refs, "C:\\PlatformTech\\Validation\\output", false);
-    const results = await SchemaValidator.validate(options);
-    // tslint:disable-next-line:no-console
-    console.log(results);
-    assert(false, "REMOVE THIS TEST");
   });
 
   it("schemaPath is a directory, validateFile called multiple times.", async () => {
@@ -150,7 +135,7 @@ describe("SchemaValidator Tests", () => {
 
     it("out path does not exist, throws", async () => {
       const schemaFile = path.resolve(assetsDir, "SchemaWithViolations.ecschema.xml");
-      const options = new ValidationOptions(schemaFile, [], "bad/path/", false);
+      const options = new ValidationOptions(schemaFile, [], "bad\\path\\", false);
 
       await expect(SchemaValidator.validate(options)).to.be.rejectedWith(Error, "The out directory bad\\path\\\\ does not exist.");
     });
