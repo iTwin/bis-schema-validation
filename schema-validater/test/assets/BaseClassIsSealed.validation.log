@@ -1,0 +1,5 @@
+BaseClassIsSealed Validation Results
+
+Rule Violation ECObjects:100: 
+ Message: "Class 'BaseClassIsSealed.TestClass' cannot derive from sealed base class 'BaseClassIsSealed.BaseClass'." 
+ Diagnostic Information: Code: ECObjects:100, Category: Error, Type: SchemaItem
