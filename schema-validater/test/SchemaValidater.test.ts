@@ -66,7 +66,9 @@ describe("SchemaValidator Tests", () => {
   });
 
   it("Standard schema specified, error reported correctly.", async () => {
-    sinon.stub(fs, "lstat").resolves({isFile: () => true });
+    const fileStats = new fs.Stats();
+    sinon.stub(fileStats, "isFile").returns(true);
+    sinon.stub(fs, "lstat").resolves(fileStats);
     for (const schema of standardSchemaNames) {
       const schemaFile = path.resolve(assetsDir, schema);
       const options = new ValidationOptions(schemaFile, [], outDir, true);
