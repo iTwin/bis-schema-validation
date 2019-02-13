@@ -71,7 +71,7 @@ export class ValidationOptions {
     this._schemaPath = schemaPath;
     this._referenceDirectories = referenceDirectories;
     if (outputDir)
-      this._outputDir = path.normalize(outputDir) + path.sep;
+      this._outputDir = path.normalize(outputDir);
     this._validateFullSchemaGraph = validateFullSchemaGraph;
   }
 

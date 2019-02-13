@@ -135,9 +135,10 @@ describe("SchemaValidator Tests", () => {
 
     it("out path does not exist, throws", async () => {
       const schemaFile = path.resolve(assetsDir, "SchemaWithViolations.ecschema.xml");
-      const options = new ValidationOptions(schemaFile, [], "bad\\path\\", false);
+      const badPath = path.resolve(assetsDir, "DoesNotExist");
+      const options = new ValidationOptions(schemaFile, [], badPath, false);
 
-      await expect(SchemaValidator.validate(options)).to.be.rejectedWith(Error, "The out directory bad\\path\\\\ does not exist.");
+      await expect(SchemaValidator.validate(options)).to.be.rejectedWith(Error, `The out directory ${badPath + path.sep} does not exist.`);
     });
   });
 
