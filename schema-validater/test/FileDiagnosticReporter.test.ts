@@ -56,7 +56,7 @@ describe("FileDiagnosticReporter Tests", () => {
   });
 
   it("report diagnostic, failure with non-existent out directory.", () => {
-    const reporter = new FileDiagnosticReporter("SchemaWithViolations", "/bad/path/");
+    const reporter = new FileDiagnosticReporter("SchemaWithViolations", "\\bad\\path\\");
     expect(() => reporter.start("Header")).to.throw(Error, `The out directory \\bad\\path\\\\ does not exist.`);
   });
 
