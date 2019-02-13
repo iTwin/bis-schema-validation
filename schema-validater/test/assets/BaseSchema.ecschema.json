@@ -1,0 +1,13 @@
+{
+"$schema": "https://dev.bentley.com/json_schemas/ec/32/ecschema",
+  "name": "BaseSchema",
+  "version": "01.01.01",
+  "alias": "ts",
+  "items": {
+    "BaseEntityClass": {
+      "schemaItemType": "EntityClass",
+      "description": "Normal class with no modifier",
+      "modifier": "None"
+    }
+  }
+}

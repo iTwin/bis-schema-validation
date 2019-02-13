@@ -1,0 +1,5 @@
+BaseSchema Validation Results
+
+Rule Violation BIS:108: 
+ Message: "Entity class 'BaseSchema.BaseEntityClass' must derive from the BIS hierarchy." 
+ Diagnostic Information: Code: BIS:108, Category: Error, Type: SchemaItem
