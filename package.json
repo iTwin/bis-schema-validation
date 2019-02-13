@@ -1,0 +1,36 @@
+{
+  "name": "bis-schema-validation",
+  "//private": "NOTE: This 'root' package is private. It is never published",
+  "private": true,
+  "description": "bis schema validation packages",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iTwin/bis-schema-validation"
+  },
+  "scripts": {
+    "build": "echo NOTE: use 'rush build' instead",
+    "clean": "echo NOTE: use 'rush clean' instead",
+    "lint": "echo NOTE: use 'rush lint' instead",
+    "preinstall": "echo ERROR: use 'rush install' instead && exit 1",
+    "test": "npm run test:bis-rules && npm run test:schema-validater",
+    "test:bis-rules": "cd bis-rules && npm test -s",
+    "test:schema-validater": "cd schema-validater && npm test -s",
+    "cover:bis-rules": "cd bis-rules && npm run cover",
+    "cover:schema-validater": "cd schema-validater && npm run cover"
+  },
+  "keywords": [
+    "Bentley",
+    "iModel",
+    "iModelJs",
+    "EC"
+  ],
+  "author": {
+    "name": "Bentley Systems, Inc.",
+    "url": "http://www.bentley.com"
+  },
+  "//dependencies": "NOTE: dependencies will be empty here and instead specified in each package.",
+  "dependencies": {},
+  "//devDependencies": "NOTE: devDependencies will be empty here and instead specified in each package.",
+  "devDependencies": {}
+}

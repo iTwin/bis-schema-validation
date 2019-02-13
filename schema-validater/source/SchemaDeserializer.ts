@@ -3,9 +3,9 @@
 * Licensed under the MIT License. See LICENSE.md in the project root for license terms.
 *--------------------------------------------------------------------------------------------*/
 
-import { ECSchemaXmlContext, SchemaKey, IModelHost } from "@bentley/imodeljs-backend";
 import * as path from "path";
 import * as fs from "fs";
+import { ECSchemaXmlContext, SchemaKey, IModelHost } from "@bentley/imodeljs-backend";
 import * as EC from "@bentley/ecschema-metadata";
 
 /**

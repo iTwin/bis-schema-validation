@@ -7,7 +7,7 @@ import * as fs from "fs-extra";
 import * as path from "path";
 
 import { ECRuleSet, Schema, SchemaContext, IDiagnosticReporter, IRuleSet, SchemaValidationVisitor, SchemaWalker, ISchemaPartVisitor} from "@bentley/ecschema-metadata";
-import * as BisRules from "@bentley/bis-rules";
+import { BisRuleSet } from "@bentley/bis-rules";
 import { FileDiagnosticReporter } from "./FileDiagnosticReporter";
 import { CollectionDiagnosticReporter } from "./CollectionDiagnosticReporter";
 import { SchemaDeserializer } from "./SchemaDeserializer";
@@ -179,7 +179,7 @@ export class SchemaValidator {
     let msgType: ValidationResultType;
 
     try {
-      const visitor = this.createNewVisitor([ECRuleSet, BisRules.BisRuleSet], reporters);
+      const visitor = this.createNewVisitor([ECRuleSet, BisRuleSet], reporters);
       const reader = new SchemaWalker(visitor);
       await reader.traverseSchema(schema);
 
