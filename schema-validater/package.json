@@ -2,7 +2,7 @@
   "name": "@bentley/schema-validater",
   "description": "Command line tools validates an ECJson or ECXml schema.",
   "license": "UNLICENSED",
-  "version": "0.8.0",
+  "version": "0.1.0-dev.01",
   "bin": {
     "validate-schema": "./lib/index.js"
   },
