@@ -1,7 +1,7 @@
 {
   "name": "@bentley/schema-validater",
   "description": "Command line tools validates an ECJson or ECXml schema.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "version": "0.1.0-dev.1",
   "bin": {
     "validate-schema": "./lib/index.js"
@@ -13,9 +13,7 @@
   },
   "scripts": {
     "clean": "rimraf lib",
-    "copy:assets": "cpx ./source/index.js ./lib",
     "lint": "tslint --project . 1>&2",
-    "prebuild": "npm run clean && npm run copy:assets & npm run lint",
     "build": "tsc",
     "test": "betools test-tsnode --testDir=./test/",
     "test:watch": "betools test-tsnode --testDir=./test/ --watch",
