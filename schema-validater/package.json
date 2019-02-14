@@ -13,9 +13,7 @@
   },
   "scripts": {
     "clean": "rimraf lib",
-    "copy:assets": "cpx ./source/index.js ./lib",
     "lint": "tslint --project . 1>&2",
-    "prebuild": "npm run clean && npm run copy:assets & npm run lint",
     "build": "tsc",
     "test": "betools test-tsnode --testDir=./test/",
     "test:watch": "betools test-tsnode --testDir=./test/ --watch",
