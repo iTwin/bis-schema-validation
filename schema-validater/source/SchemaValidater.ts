@@ -6,7 +6,7 @@
 import * as fs from "fs-extra";
 import * as path from "path";
 
-import { ECRuleSet, Schema, SchemaContext, IDiagnosticReporter, IRuleSet, SchemaValidationVisitor, SchemaWalker, ISchemaPartVisitor} from "@bentley/ecschema-metadata";
+import { ECRuleSet, Schema, SchemaContext, IDiagnosticReporter, IRuleSet, SchemaValidationVisitor, SchemaWalker, ISchemaPartVisitor } from "@bentley/ecschema-metadata";
 import { BisRuleSet } from "@bentley/bis-rules";
 import { FileDiagnosticReporter } from "./FileDiagnosticReporter";
 import { CollectionDiagnosticReporter } from "./CollectionDiagnosticReporter";
@@ -67,7 +67,7 @@ export class ValidationOptions {
    * @param outputDir The directory where the output file(s) will be created.
    * @param validateFullSchemaGraph Indicates if the full schema graph should be validated.
    */
-  constructor (schemaPath: string, referenceDirectories: string[], outputDir: string | undefined, validateFullSchemaGraph: boolean) {
+  constructor(schemaPath: string, referenceDirectories: string[], outputDir: string | undefined, validateFullSchemaGraph: boolean) {
     this._schemaPath = schemaPath;
     this._referenceDirectories = referenceDirectories;
     if (outputDir)
@@ -97,9 +97,9 @@ export class ValidationOptions {
 }
 
 /**
- * The ECSchemaValidator validates EC3 Bis schemas and outputs the results to file.
+ * The ECSchemaValidater validates EC3 Bis schemas and outputs the results to file.
  */
-export class SchemaValidator {
+export class SchemaValidater {
   public static extensions: string[] = [".ecschema.xml", ".ecschema.json"];
 
   /**
@@ -138,11 +138,11 @@ export class SchemaValidator {
     const headerText = schemaName + " Validation Results";
 
     let results: IValidationResult[] = [];
-    results.push({resultType: ValidationResultType.Message, resultText: headerText});
+    results.push({ resultType: ValidationResultType.Message, resultText: headerText });
 
     // skip validation on all standard schemas
     if (this.isStandardSchema(schemaName))
-      results.push({resultType: ValidationResultType.Error, resultText: " Standard schemas are not supported by this tool."});
+      results.push({ resultType: ValidationResultType.Error, resultText: " Standard schemas are not supported by this tool." });
 
     const schema = await this.getSchema(schemaPath, results, options.referenceDirectories);
     if (!schema)
@@ -194,7 +194,7 @@ export class SchemaValidator {
     }
 
     if (message) {
-      results.push({resultType: msgType, resultText: message});
+      results.push({ resultType: msgType, resultText: message });
     }
     // message can be null, but we must end the reporter
     if (fileReporter)
@@ -216,17 +216,17 @@ export class SchemaValidator {
     let schema: Schema | undefined;
     try {
       if (isJson)
-        schema = await SchemaValidator.getJsonSchema(schemaPath, referencePaths);
+        schema = await SchemaValidater.getJsonSchema(schemaPath, referencePaths);
       else
-        schema = await SchemaValidator.getXmlSchema(schemaPath, referencePaths);
+        schema = await SchemaValidater.getXmlSchema(schemaPath, referencePaths);
 
       const msg = ` Successfully de-serialized schema ${schema.schemaKey.toString()}`;
-      results.push({resultType: ValidationResultType.Message, resultText: msg});
+      results.push({ resultType: ValidationResultType.Message, resultText: msg });
 
       return schema;
     } catch (err) {
       const msg = ` An error occurred de-serializing the schema ${schemaPath}: ${err.message}`;
-      results.push({resultType: ValidationResultType.Error, resultText: msg});
+      results.push({ resultType: ValidationResultType.Error, resultText: msg });
     }
 
     return schema;
@@ -254,7 +254,7 @@ export class SchemaValidator {
 
   private static createValidationResults(diagnostics: string[], results: IValidationResult[]) {
     for (const diag of diagnostics) {
-      results.push({resultType: ValidationResultType.RuleViolation, resultText: " " + diag});
+      results.push({ resultType: ValidationResultType.RuleViolation, resultText: " " + diag });
     }
   }
 

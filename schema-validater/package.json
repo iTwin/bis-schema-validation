@@ -14,10 +14,11 @@
   "scripts": {
     "clean": "rimraf lib",
     "lint": "tslint --project . 1>&2",
-    "build": "tsc",
+    "build": "cpx ./source/index.js ./lib & tsc",
     "test": "betools test-tsnode --testDir=./test/",
     "test:watch": "betools test-tsnode --testDir=./test/ --watch",
-    "cover": "nyc node ./node_modules/@bentley/build-tools/scripts/test-tsnode.js --testDir=./test/ --tscPaths"
+    "cover": "nyc node ./node_modules/@bentley/build-tools/scripts/test-tsnode.js --testDir=./test/ --tscPaths",
+    "cli-dev": "cd .. & rush publish --publish --pack --include-all & npm install -g ./common/temp/artifacts/packages/bentley-schema-validater-0.1.0.tgz"
   },
   "keywords": [
     "Bentley",
@@ -59,7 +60,7 @@
     "@bentley/imodeljs-clients-backend": "0.189.0-dev.27",
     "@bentley/imodeljs-common": "0.189.0-dev.27",
     "@bentley/ecschema-metadata": "0.189.0-dev.27",
-    "@bentley/bis-rules": "0.1.0-dev.1",
+    "@bentley/bis-rules": "0.1.0",
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
     "fs-extra": "^7.0.1"
