@@ -6,7 +6,7 @@
 import * as commander from "commander";
 import * as chalk from "chalk";
 
-import { SchemaValidator, ValidationResultType, ValidationOptions } from "./SchemaValidator";
+import { SchemaValidater, ValidationResultType, ValidationOptions } from "./SchemaValidater";
 
 function ref(value: string, refs: string[]) {
   refs.push(value);
@@ -35,7 +35,7 @@ console.log("\nPerforming schema validation on file/folder " + program.input + "
 async function validate() {
   try {
     const options = new ValidationOptions(program.input, program.ref, program.output, program.all);
-    const results = await SchemaValidator.validate(options);
+    const results = await SchemaValidater.validate(options);
     for (const line of results) {
       switch (line.resultType) {
         case ValidationResultType.RuleViolation:

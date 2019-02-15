@@ -9,13 +9,13 @@ import { expect, use } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
 import sinon = require("sinon");
 import * as utils from "./utilities/utils";
-import { SchemaValidator, ValidationOptions, standardSchemaNames } from "../source/SchemaValidator";
+import { SchemaValidater, ValidationOptions, standardSchemaNames } from "../source/SchemaValidater";
 import { SchemaWalker } from "@bentley/ecschema-metadata/lib/Validation/SchemaWalker";
 import { Schema } from "@bentley/ecschema-metadata";
 
 use(chaiAsPromised);
 
-describe("SchemaValidator Tests", () => {
+describe("SchemaValidater Tests", () => {
   const assetsDir = utils.getAssetsDir();
   const outDir = utils.getOutDir();
   const refDir = utils.getReferencesDir();
@@ -32,9 +32,9 @@ describe("SchemaValidator Tests", () => {
 
   it("schemaPath is a directory, validateFile called multiple times.", async () => {
     const options = new ValidationOptions(assetsDir, [], outDir, true);
-    const stub = sinon.stub(SchemaValidator, "validateFile").callThrough();
+    const stub = sinon.stub(SchemaValidater, "validateFile").callThrough();
 
-    await SchemaValidator.validate(options);
+    await SchemaValidater.validate(options);
 
     const expectedCount = 10;
     expect(stub.callCount).to.equal(expectedCount, `Expected ${expectedCount} calls to validateFile`);
@@ -45,7 +45,7 @@ describe("SchemaValidator Tests", () => {
     const schemaFile = path.resolve(assetsDir, "SchemaWithViolations.ecschema.xml");
     const options = new ValidationOptions(schemaFile, [], undefined, false);
 
-    const results = await SchemaValidator.validate(options);
+    const results = await SchemaValidater.validate(options);
 
     expect(results[2].resultText).to.equal(` An error occurred validating the schema SchemaWithViolations: Test Error`);
   });
@@ -57,17 +57,17 @@ describe("SchemaValidator Tests", () => {
     for (const schema of standardSchemaNames) {
       const schemaFile = path.resolve(assetsDir, schema);
       const options = new ValidationOptions(schemaFile, [], outDir, true);
-      const result = await SchemaValidator.validate(options);
+      const result = await SchemaValidater.validate(options);
       expect(result[1].resultText).to.equal(" Standard schemas are not supported by this tool.");
     }
   });
 
   it("Schema has standard schema reference, standard schema not validated.", async () => {
     const traverseSchema = sinon.stub(SchemaWalker.prototype, "traverseSchema");
-    const validateSchema = sinon.stub(SchemaValidator, "validateLoadedSchema").callThrough();
+    const validateSchema = sinon.stub(SchemaValidater, "validateLoadedSchema").callThrough();
     const schemaFile = path.resolve(assetsDir, "SchemaWithViolations.ecschema.json");
     const options = new ValidationOptions(schemaFile, [refDir], undefined, true);
-    await SchemaValidator.validate(options);
+    await SchemaValidater.validate(options);
 
     expect(validateSchema.callCount).to.equal(3);
     const schema = validateSchema.getCall(2).args[0] as Schema;
@@ -81,7 +81,7 @@ describe("SchemaValidator Tests", () => {
       const schemaFile = path.resolve(assetsDir, "SchemaWithViolations.ecschema.xml");
       const options = new ValidationOptions(schemaFile, [], undefined, false);
 
-      const result = await SchemaValidator.validate(options);
+      const result = await SchemaValidater.validate(options);
 
       expect(result.length).to.equal(4, "Expected 4 entries in the result array");
     });
@@ -90,7 +90,7 @@ describe("SchemaValidator Tests", () => {
       const schemaFile = path.resolve(assetsDir, "SchemaWithViolations.ecschema.xml");
       const options = new ValidationOptions(schemaFile, [], outDir, false);
 
-      await SchemaValidator.validate(options);
+      await SchemaValidater.validate(options);
 
       const baseOutputFile = path.resolve(outDir, "BaseSchema.results.xml");
       const expectedOutFile = path.resolve(assetsDir, "SchemaWithViolations.validation.log");
@@ -105,7 +105,7 @@ describe("SchemaValidator Tests", () => {
       const schemaFile = path.resolve(assetsDir, "SchemaWithViolations.ecschema.xml");
       const options = new ValidationOptions(schemaFile, [], outDir, true);
 
-      await SchemaValidator.validate(options);
+      await SchemaValidater.validate(options);
 
       let expectedOutFile = path.resolve(assetsDir, "SchemaWithViolations.validation.log");
       let actualOutFile = path.resolve(outDir, "SchemaWithViolations.validation.log");
@@ -124,7 +124,7 @@ describe("SchemaValidator Tests", () => {
       const schemaFile = path.resolve(assetsDir, "SchemaA.ecschema.xml");
       const options = new ValidationOptions(schemaFile, [refDir], outDir, false);
 
-      await SchemaValidator.validate(options);
+      await SchemaValidater.validate(options);
 
       const expectedOutFile = path.resolve(assetsDir, "SchemaA.validation.log");
       const actualOutFile = path.resolve(outDir, "SchemaA.validation.log");
@@ -138,7 +138,7 @@ describe("SchemaValidator Tests", () => {
       const badPath = path.resolve(assetsDir, "DoesNotExist");
       const options = new ValidationOptions(schemaFile, [], badPath, false);
 
-      await expect(SchemaValidator.validate(options)).to.be.rejectedWith(Error, `The out directory ${badPath + path.sep} does not exist.`);
+      await expect(SchemaValidater.validate(options)).to.be.rejectedWith(Error, `The out directory ${badPath + path.sep} does not exist.`);
     });
   });
 
@@ -146,7 +146,7 @@ describe("SchemaValidator Tests", () => {
     it("JSON Schema has failing rules, diagnostics reported correctly.", async () => {
       const schemaFile = path.resolve(assetsDir, "SchemaWithViolations.ecschema.json");
       const options = new ValidationOptions(schemaFile, [refDir], undefined, false);
-      const result = await SchemaValidator.validate(options);
+      const result = await SchemaValidater.validate(options);
 
       expect(result.length).to.equal(4, "Expected 4 entries in the result array");
     });
@@ -155,7 +155,7 @@ describe("SchemaValidator Tests", () => {
       const schemaFile = path.resolve(assetsDir, "SchemaWithViolations.ecschema.json");
       const options = new ValidationOptions(schemaFile, [refDir], outDir, false);
 
-      await SchemaValidator.validate(options);
+      await SchemaValidater.validate(options);
 
       const expectedOutFile = path.resolve(assetsDir, "SchemaWithViolations.validation.log");
       const actualOutFile = path.resolve(outDir, "SchemaWithViolations.validation.log");
