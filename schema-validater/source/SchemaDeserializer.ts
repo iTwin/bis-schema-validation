@@ -6,6 +6,7 @@
 import * as path from "path";
 import * as fs from "fs";
 import { ECSchemaXmlContext, SchemaKey, IModelHost } from "@bentley/imodeljs-backend";
+import { Config } from "@bentley/imodeljs-clients";
 import * as EC from "@bentley/ecschema-metadata";
 
 /**
@@ -21,6 +22,9 @@ export class SchemaDeserializer {
    * @param referencePaths Optional paths to search when locating schema references.
    */
   public async deserializeXmlFile(schemaFilePath: string, schemaContext: EC.SchemaContext, referencePaths?: string[]): Promise<EC.Schema> {
+    // Needed to avoid crash in backend when calling IModelHost.startup.  This
+    // can be removed once the backed is no longer need for de-serialization.
+    (Config as any)._appConfig = new (Config as any)();
     IModelHost.startup();
 
     this._processedStandardSchemas = false;

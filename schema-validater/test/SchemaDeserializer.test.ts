@@ -13,7 +13,7 @@ import { SchemaDeserializer } from "../source/SchemaDeserializer";
 
 use(chaiAsPromised);
 
-describe("ImseBackend", () => {
+describe("SchemaDeserializer", () => {
   const assetsDir = utils.getAssetsDir();
   const refDir = utils.getReferencesDir();
 

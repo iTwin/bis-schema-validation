@@ -52,7 +52,6 @@ export class FileDiagnosticReporter extends FormatDiagnosticReporter {
     if (!this._stream)
       return;
 
-    this.writeLine("");
     this.writeLine(messageText);
   }
 
