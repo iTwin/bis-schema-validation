@@ -7,30 +7,30 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Run EC Tests",
-      "program": "${workspaceFolder}/core/bentley/node_modules/@bentley/build-tools/scripts/test-tsnode.js",
-      "cwd": "${workspaceFolder}/core/ecschema-metadata",
+      "name": "Run bis-rule Tests",
+      "program": "${workspaceFolder}/bis-rules/node_modules/@bentley/build-tools/scripts/test-tsnode.js",
+      "cwd": "${workspaceFolder}/bis-rules",
       "args": [
-        "--testDir=${workspaceFolder}/core/ecschema-metadata/test",
+        "--testDir=${workspaceFolder}/bis-rules/test",
         "--debug"
       ],
       "port": 9229,
       "protocol": "inspector",
       "outputCapture": "std"
     },
-  "compounds": [
     {
-      "name": "Run Testbed (all)",
-      "configurations": [
-        "_Testbed (frontend)",
-        "_Testbed (backend)"
-      ]
-    },
-    {
-      "name": "Run Testbed (all-integration)",
-      "configurations": [
-        "Run EC Tests",
-      ]
+      "type": "node",
+      "request": "launch",
+      "name": "Run schema-validater Tests",
+      "program": "${workspaceFolder}/schema-validater/node_modules/@bentley/build-tools/scripts/test-tsnode.js",
+      "cwd": "${workspaceFolder}/schema-validater",
+      "args": [
+        "--testDir=${workspaceFolder}/schema-validater/test",
+        "--debug"
+      ],
+      "port": 9229,
+      "protocol": "inspector",
+      "outputCapture": "std"
     },
   ]
 }

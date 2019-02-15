@@ -9,7 +9,7 @@ import * as ECRules from "@bentley/ecschema-metadata/lib/Validation/ECRules";
 import * as EC from "@bentley/ecschema-metadata/lib/ecschema-metadata";
 import { CollectionDiagnosticReporter } from "../source/CollectionDiagnosticReporter";
 import { FormatDiagnosticReporter } from "../source/FormatDiagnosticReporter";
-import { diagnosticCategoryToString, diagnosticTypeToString } from "@bentley/ecschema-metadata/lib/Validation/Diagnostic";
+import { diagnosticCategoryToString } from "@bentley/ecschema-metadata/lib/Validation/Diagnostic";
 
 describe("CollectionDiagnosticReporter Tests", () => {
 
@@ -28,9 +28,8 @@ describe("CollectionDiagnosticReporter Tests", () => {
     reporter.report(diagnostic);
 
     const category = diagnosticCategoryToString(diagnostic.category);
-    const type = diagnosticTypeToString(diagnostic.diagnosticType);
     const message = baseSpy.args[0][1];
-    const args = [diagnostic.code, message, category, type];
+    const args = [category, diagnostic.code, message];
     const formattedMsg = formatStringFromArgs(FormatDiagnosticReporter.diagnosticMessageTemplate, args);
 
     expect(reporter.diagnostics.length).to.equal(1);

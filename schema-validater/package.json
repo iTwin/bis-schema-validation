@@ -2,7 +2,7 @@
   "name": "@bentley/schema-validater",
   "description": "Command line tools validates an ECJson or ECXml schema.",
   "license": "MIT",
-  "version": "0.1.0-dev.1",
+  "version": "0.1.0",
   "bin": {
     "validate-schema": "./lib/index.js"
   },
@@ -17,7 +17,6 @@
     "build": "tsc",
     "test": "betools test-tsnode --testDir=./test/",
     "test:watch": "betools test-tsnode --testDir=./test/ --watch",
-    "cli:dev": "npm run clean & npm run build & npm link",
     "cover": "nyc node ./node_modules/@bentley/build-tools/scripts/test-tsnode.js --testDir=./test/ --tscPaths"
   },
   "keywords": [
