@@ -60,7 +60,7 @@
     "@bentley/imodeljs-clients-backend": "0.189.0-dev.27",
     "@bentley/imodeljs-common": "0.189.0-dev.27",
     "@bentley/ecschema-metadata": "0.189.0-dev.27",
-    "@bentley/bis-rules": "0.1.0",
+    "@bentley/bis-rules": "0.1.1",
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
     "fs-extra": "^7.0.1"
