@@ -2,7 +2,7 @@
   "name": "@bentley/schema-validater",
   "description": "Command line tools validates an ECJson or ECXml schema.",
   "license": "MIT",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "bin": {
     "validate-schema": "./lib/index.js"
   },
@@ -53,14 +53,14 @@
     "tsconfig-paths": "^3.3.2"
   },
   "dependencies": {
-    "@bentley/imodeljs-backend": "0.189.0-dev.27",
-    "@bentley/bentleyjs-core": "0.189.0-dev.27",
-    "@bentley/geometry-core": "0.189.0-dev.27",
-    "@bentley/imodeljs-clients": "0.189.0-dev.27",
-    "@bentley/imodeljs-clients-backend": "0.189.0-dev.27",
-    "@bentley/imodeljs-common": "0.189.0-dev.27",
-    "@bentley/ecschema-metadata": "0.189.0-dev.27",
-    "@bentley/bis-rules": "0.1.1",
+    "@bentley/imodeljs-backend": "^0.189.0-dev.33",
+    "@bentley/bentleyjs-core": "^0.189.0-dev.33",
+    "@bentley/geometry-core": "^0.189.0-dev.33",
+    "@bentley/imodeljs-clients": "^0.189.0-dev.33",
+    "@bentley/imodeljs-clients-backend": "^0.189.0-dev.33",
+    "@bentley/imodeljs-common": "^0.189.0-dev.33",
+    "@bentley/ecschema-metadata": "^0.189.0-dev.33",
+    "@bentley/bis-rules": "0.1.2",
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
     "fs-extra": "^7.0.1"
