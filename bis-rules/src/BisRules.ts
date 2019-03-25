@@ -52,7 +52,7 @@ export const DiagnosticCodes = {
   EntityClassesCannotDeriveFromModelClasses: getCode(113),
   EntityClassesMayNotSubclassDeprecatedClasses: getCode(114),
   BisModelSubClassesCannotDefineProperties: getCode(115),
-  EntityClassesMayNotSubclassDeprecatedClasse: getCode(116),
+  // 116 IS FREE
   StructsCannotHaveBaseClasses: getCode(117),
   MixinsCannotOverrideInheritedProperties: getCode(118),
   RelationshipClassMustNotUseHoldingStrength: getCode(119),
@@ -342,6 +342,9 @@ export async function* mixinsCannotOverrideInheritedProperties(mixin: EC.Mixin):
  * BIS Rule: Entity classes must derive from the BIS hierarchy.
  */
 export async function* entityClassMustDeriveFromBisHierarchy(entity: EC.EntityClass): AsyncIterable<EC.SchemaItemDiagnostic<EC.EntityClass, any[]>> {
+  if (entity.schema.name === bisCoreName)
+    return;
+
   for await (const baseClass of entity.getAllBaseClasses()) {
     if (baseClass.schema.name === bisCoreName)
       return;
@@ -460,6 +463,9 @@ export async function* entityClassesCannotDeriveFromIParentElementAndISubModeled
  * bis:DefinitionModel, bis:DocumentListModel, or bis:LinkModel.
  */
 export async function* entityClassesCannotDeriveFromModelClasses(entity: EC.EntityClass): AsyncIterable<EC.SchemaItemDiagnostic<EC.EntityClass, any[]>> {
+  if (entity.schema.name === bisCoreName)
+    return;
+
   const context = entity.schema.context;
   if (!context)
     throw new EC.ECObjectsError(EC.ECObjectsStatus.SchemaContextUndefined, `Schema context is undefined for schema ${entity.schema.fullName}.`);
@@ -486,6 +492,9 @@ export async function* entityClassesCannotDeriveFromModelClasses(entity: EC.Enti
  * BIS Rule: Subclasses of bis:Model cannot have additional properties defined outside of BisCore.
  */
 export async function* bisModelSubClassesCannotDefineProperties(entity: EC.EntityClass): AsyncIterable<EC.SchemaItemDiagnostic<EC.EntityClass, any[]>> {
+  if (entity.schema.name === bisCoreName)
+    return;
+
   const context = entity.schema.context;
   if (!context)
     throw new EC.ECObjectsError(EC.ECObjectsStatus.SchemaContextUndefined, `Schema context is undefined for schema ${entity.schema.fullName}.`);
@@ -511,6 +520,10 @@ export async function* bisModelSubClassesCannotDefineProperties(entity: EC.Entit
  */
 export async function* entityClassesMayNotSubclassDeprecatedClasses(entity: EC.EntityClass): AsyncIterable<EC.SchemaItemDiagnostic<EC.EntityClass, any[]>> {
   if (!entity.baseClass)
+    return;
+
+  // If the class itself is deprecated, the rule should pass
+  if (entity.customAttributes && entity.customAttributes.has(deprecatedFullName))
     return;
 
   const baseClass = await entity.baseClass;
