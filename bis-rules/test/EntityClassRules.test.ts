@@ -92,6 +92,16 @@ describe("EntityClass Rule Tests", () => {
       }
     });
 
+    it("EntityClass defined in BIS schema, rule passes.", async () => {
+      const entityClass = new EntityClass(bisCoreSchema, "BisEntity");
+
+      const result = await Rules.entityClassMustDeriveFromBisHierarchy(entityClass);
+
+      for await (const _diagnostic of result!) {
+        expect(false, "Rule should have passed").to.be.true;
+      }
+    });
+
     it("EntityClass does derive from BIS hierarchy, rule passes.", async () => {
       const baseEntity = new EntityClass(bisCoreSchema, "BaseEntity");
       const childEntity = new EntityClass(testSchema, "ChildEntity");
@@ -803,6 +813,51 @@ describe("EntityClass Rule Tests", () => {
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
 
+    it("BIS Model class derives from BIS Model class, rule passes.", async () => {
+      const schemaJson = {
+        Model: {
+          schemaItemType: "EntityClass",
+        },
+        LinkModel: {
+          schemaItemType: "EntityClass",
+          baseClass: "BisCore.Model",
+        },
+        PhysicalModel: {
+          schemaItemType: "EntityClass",
+          baseClass: "BisCore.Model",
+        },
+        SpatialLocationModel: {
+          schemaItemType: "EntityClass",
+          baseClass: "BisCore.Model",
+        },
+        InformationRecordModel: {
+          schemaItemType: "EntityClass",
+          baseClass: "BisCore.Model",
+        },
+        DefinitionModel: {
+          schemaItemType: "EntityClass",
+          baseClass: "BisCore.Model",
+        },
+        DocumentListModel: {
+          schemaItemType: "EntityClass",
+          baseClass: "BisCore.Model",
+        },
+        TestEntity: {
+          schemaItemType: "EntityClass",
+          baseClass: "BisCore.LinkModel",
+        },
+      };
+
+      const schema = await getTestSchema(schemaJson, "BisCore", new SchemaContext());
+      const testEntity = (await schema.getItem("TestEntity")) as EntityClass;
+
+      const result = await Rules.entityClassesCannotDeriveFromModelClasses(testEntity);
+
+      for await (const _diagnostic of result!) {
+        expect(false, "Rule should have passed").to.be.true;
+      }
+    });
+
     it("Schema does not reference BIS, rule passes.", async () => {
       const schemaJson = {
         TestEntity: {
@@ -898,6 +953,35 @@ describe("EntityClass Rule Tests", () => {
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
+
+    it("BIS schema EntityClass derives from bis:Model and has local properties, rule passes.", async () => {
+      const schemaJson = {
+        Model: {
+          schemaItemType: "EntityClass",
+        },
+        TestEntity: {
+          schemaItemType: "EntityClass",
+          baseClass: "BisCore.Model",
+          properties: [
+            {
+              type: "PrimitiveProperty",
+              typeName: "string",
+              name: "TestProperty",
+            },
+          ],
+        },
+      };
+      const context = new SchemaContext();
+      const schema = await getTestSchema(schemaJson, "BisCore", context, false);
+      const testEntity = (await schema.getItem("TestEntity")) as EntityClass;
+
+      const result = await Rules.bisModelSubClassesCannotDefineProperties(testEntity);
+
+      for await (const _diagnostic of result!) {
+        expect(false, "Rule should have passed").to.be.true;
+      }
+    });
+
 
     it("EntityClass derives from bis:Model and has no local properties, rule passes.", async () => {
       const schemaJson = {
@@ -1000,7 +1084,37 @@ describe("EntityClass Rule Tests", () => {
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
 
-    it("EntityClass does not derive from deprecated class, rule violated.", async () => {
+    it("Deprecated EntityClass derives from deprecated class, rule passes.", async () => {
+      const schemaJson = {
+        BaseEntity: {
+          schemaItemType: "EntityClass",
+          customAttributes: [
+            {
+              className: "CoreCustomAttributes.Deprecated",
+            },
+          ],
+        },
+        TestEntity: {
+          schemaItemType: "EntityClass",
+          baseClass: "TestSchema.BaseEntity",
+          customAttributes: [
+            {
+              className: "CoreCustomAttributes.Deprecated",
+            },
+          ],
+        },
+      };
+      const schema = await getTestSchema(schemaJson);
+      const testEntity = (await schema.getItem("TestEntity")) as EntityClass;
+
+      const result = await Rules.entityClassesMayNotSubclassDeprecatedClasses(testEntity);
+
+      for await (const _diagnostic of result!) {
+        expect(false, "Rule should have passed").to.be.true;
+      }
+    });
+
+    it("EntityClass does not derive from deprecated class, rule passes.", async () => {
       const schemaJson = {
         BaseEntity: {
           schemaItemType: "EntityClass",
