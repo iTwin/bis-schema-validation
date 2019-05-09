@@ -8,7 +8,7 @@ import * as Rules from "../../bis-rules/src/BisRules";
 import { SchemaContext, Schema, KindOfQuantity } from "@bentley/ecschema-metadata";
 import { createSchemaJsonWithItems } from "./utils/DeserializationHelpers";
 import { TestSchemaLocater } from "./utils/TestSchemaLocater";
-import { DiagnosticCategory, DiagnosticType } from "@bentley/ecschema-metadata/lib/Validation/Diagnostic";
+import { IDiagnostic, DiagnosticCategory, DiagnosticType } from "@bentley/ecschema-metadata/lib/Validation/Diagnostic";
 
 function createSchemaJson(koq: any) {
   return createSchemaJsonWithItems({
@@ -24,6 +24,14 @@ function createSchemaJson(koq: any) {
         },
       ],
     });
+}
+
+async function iterableToArray(asyncIterable: AsyncIterable<IDiagnostic<KindOfQuantity, any []>>): Promise<IDiagnostic<KindOfQuantity, any []> []> {
+  const array: IDiagnostic<KindOfQuantity, any []> [] = [];
+  for await (const item of asyncIterable) {
+    array.push(item);
+  }
+  return array;
 }
 
 describe("KindOfQuantity Rule Tests", () => {
@@ -56,19 +64,13 @@ describe("KindOfQuantity Rule Tests", () => {
       schema = await Schema.fromJson(createSchemaJson(koqProps), context);
       const testKoq = await schema.getItem<KindOfQuantity>(koqProps.name) as KindOfQuantity;
 
-      const result = await Rules.koqMustNotUseUnitlessRatios(testKoq);
-
-      let resultHasEntries = false;
-      for await (const diagnostic of result!) {
-        resultHasEntries = true;
-        expect(diagnostic).to.not.be.undefined;
-        expect(diagnostic!.ecDefinition).to.equal(testKoq);
-        expect(diagnostic!.messageArgs).to.eql([testKoq.fullName]);
-        expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
-        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.KOQMustNotUseUnitlessRatios);
-        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
-      }
-      expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
+      const result = await iterableToArray(Rules.koqMustNotUseUnitlessRatios(testKoq));
+      expect(result.length).to.equal(1);
+      expect(result[0].ecDefinition).to.equal(testKoq);
+      expect(result[0].messageArgs).to.eql([testKoq.fullName]);
+      expect(result[0].category).to.equal(DiagnosticCategory.Error);
+      expect(result[0].code).to.equal(Rules.DiagnosticCodes.KOQMustNotUseUnitlessRatios);
+      expect(result[0].diagnosticType).to.equal(DiagnosticType.SchemaItem);
     });
 
     it("KindOfQuantity does not have 'PERCENTAGE' phenomenon, rule passes.", async () => {
@@ -82,12 +84,9 @@ describe("KindOfQuantity Rule Tests", () => {
       };
       schema = await Schema.fromJson(createSchemaJson(koqProps), context);
       const testKoq = await schema.getItem<KindOfQuantity>(koqProps.name) as KindOfQuantity;
+      const result = await iterableToArray(Rules.koqMustNotUseUnitlessRatios(testKoq));
 
-      const result = await Rules.koqMustNotUseUnitlessRatios(testKoq);
-
-      for await (const _diagnostic of result!) {
-        expect(false, "Rule should have passed").to.be.true;
-      }
+      expect(result.length).to.equal(0, "Rule should have passed.");
     });
   });
 
@@ -104,19 +103,13 @@ describe("KindOfQuantity Rule Tests", () => {
       schema = await Schema.fromJson(createSchemaJson(koqProps), context);
       const testKoq = await schema.getItem<KindOfQuantity>(koqProps.name) as KindOfQuantity;
 
-      const result = await Rules.koqMustUseSIUnitForPersistenceUnit(testKoq);
-
-      let resultHasEntries = false;
-      for await (const diagnostic of result!) {
-        resultHasEntries = true;
-        expect(diagnostic).to.not.be.undefined;
-        expect(diagnostic!.ecDefinition).to.equal(testKoq);
-        expect(diagnostic!.messageArgs).to.eql([testKoq.fullName, "Formats.USCustom"]);
-        expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
-        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.KOQMustUseSIUnitForPersistenceUnit);
-        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
-      }
-      expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
+      const result = await iterableToArray(Rules.koqMustUseSIUnitForPersistenceUnit(testKoq));
+      expect(result.length).to.equal(1);
+      expect(result[0].ecDefinition).to.equal(testKoq);
+      expect(result[0].messageArgs).to.eql([testKoq.fullName, "Formats.USCustom"]);
+      expect(result[0].category).to.equal(DiagnosticCategory.Error);
+      expect(result[0].code).to.equal(Rules.DiagnosticCodes.KOQMustUseSIUnitForPersistenceUnit);
+      expect(result[0].diagnosticType).to.equal(DiagnosticType.SchemaItem);
     });
 
     it("KindOfQuantity does have an 'SI' persistence unit, rule passes.", async () => {
@@ -130,12 +123,60 @@ describe("KindOfQuantity Rule Tests", () => {
       };
       schema = await Schema.fromJson(createSchemaJson(koqProps), context);
       const testKoq = await schema.getItem<KindOfQuantity>(koqProps.name) as KindOfQuantity;
+      const result = await iterableToArray(Rules.koqMustUseSIUnitForPersistenceUnit(testKoq));
 
-      const result = await Rules.koqMustUseSIUnitForPersistenceUnit(testKoq);
+      expect(result.length).to.equal(0, "Rule should have passed.");
+    });
+  });
 
-      for await (const _diagnostic of result!) {
-        expect(false, "Rule should have passed").to.be.true;
-      }
+  describe("KOQDuplicatePresentationFormat tests", () => {
+    it("KindOfQuantity has duplicate presentation formats, rule violated.", async () => {
+      const koqProps = {
+        ...baseJson,
+        relativeError: 1.234,
+        persistenceUnit: "Formats.IN",
+        presentationUnits: [
+          "Formats.IN",
+          "Formats.IN",
+          "Formats.FT",
+          "Formats.FT",
+          "Formats.M",
+        ],
+      };
+      schema = await Schema.fromJson(createSchemaJson(koqProps), context);
+      const testKoq = await schema.getItem<KindOfQuantity>(koqProps.name) as KindOfQuantity;
+
+      const result = await iterableToArray(Rules.koqDuplicatePresentationFormat(testKoq));
+
+      expect(result.length).to.equal(2);
+      expect(result[0].ecDefinition).to.equal(testKoq);
+      expect(result[0].messageArgs).to.eql([testKoq.fullName, "Formats.IN"]);
+      expect(result[0].category).to.equal(DiagnosticCategory.Error);
+      expect(result[0].code).to.equal(Rules.DiagnosticCodes.KOQDuplicatePresentationFormat);
+      expect(result[0].diagnosticType).to.equal(DiagnosticType.SchemaItem);
+      expect(result[1].ecDefinition).to.equal(testKoq);
+      expect(result[1].messageArgs).to.eql([testKoq.fullName, "Formats.FT"]);
+      expect(result[1].category).to.equal(DiagnosticCategory.Error);
+      expect(result[1].code).to.equal(Rules.DiagnosticCodes.KOQDuplicatePresentationFormat);
+      expect(result[1].diagnosticType).to.equal(DiagnosticType.SchemaItem);
+    });
+
+    it("KindOfQuantity has no duplicate presentation formats, rule passes.", async () => {
+      const koqProps = {
+        ...baseJson,
+        relativeError: 1.234,
+        persistenceUnit: "Formats.IN",
+        presentationUnits: [
+          "Formats.IN",
+          "Formats.FT",
+          "Formats.M",
+        ],
+      };
+      schema = await Schema.fromJson(createSchemaJson(koqProps), context);
+      const testKoq = await schema.getItem<KindOfQuantity>(koqProps.name) as KindOfQuantity;
+      const result = await iterableToArray(Rules.koqDuplicatePresentationFormat(testKoq));
+
+      expect(result.length).to.equal(0);
     });
   });
 });

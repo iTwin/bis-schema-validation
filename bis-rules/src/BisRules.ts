@@ -63,6 +63,7 @@ export const DiagnosticCodes = {
   CustomAttributeClassCannotHaveBaseClasses: getCode(124),
   KOQMustNotUseUnitlessRatios: getCode(125),
   KOQMustUseSIUnitForPersistenceUnit: getCode(126),
+  KOQDuplicatePresentationFormat: getCode(127),
 };
 
 /**
@@ -158,6 +159,10 @@ export const Diagnostics = {
   KOQMustUseSIUnitForPersistenceUnit: EC.createSchemaItemDiagnosticClass<EC.KindOfQuantity, [string, string]>(DiagnosticCodes.KOQMustUseSIUnitForPersistenceUnit,
     "KindOfQuantity '{0}' has persistence unit of unit system '{1}' but must have an SI unit system"),
 
+  /** Required message parameters: KindOfQuantity fullName, UnitSystem fullName */
+  KOQDuplicatePresentationFormat: EC.createSchemaItemDiagnosticClass<EC.KindOfQuantity, [string, string]>(DiagnosticCodes.KOQDuplicatePresentationFormat,
+    "KindOfQuantity '{0}' has a duplicate presentation format '{1}' which is not allowed."),
+
   /** Required message parameters: ECClass FullName, property name */
   PropertyShouldNotBeOfTypeLong: EC.createPropertyDiagnosticClass<[string, string]>(DiagnosticCodes.PropertyShouldNotBeOfTypeLong,
     "Property '{0}:{1}' is of type 'long' and long properties are not allowed. Use int, double or if this represents a FK use a navigation property."),
@@ -213,6 +218,7 @@ export const BisRuleSet: EC.IRuleSet = {
   kindOfQuantityRules: [
     koqMustNotUseUnitlessRatios,
     koqMustUseSIUnitForPersistenceUnit,
+    koqDuplicatePresentationFormat,
   ],
   propertyRules: [
     propertyShouldNotBeOfTypeLong,
@@ -400,7 +406,9 @@ export async function* elementMultiAspectMustHaveCorrespondingRelationship(entit
   if (!await entity.is(elementMultiAspectName, bisCoreName))
     return;
 
-  const relationships = entity.schema.getClasses().filter((c) => c.schemaItemType === EC.SchemaItemType.RelationshipClass);
+  let relationships = Array.from(entity.schema.getClasses());
+  relationships = relationships.filter((c) => c.schemaItemType === EC.SchemaItemType.RelationshipClass);
+
   if (relationships.length === 0) {
     yield new Diagnostics.ElementMultiAspectMustHaveCorrespondingRelationship(entity, [entity.fullName]);
     return;
@@ -429,7 +437,9 @@ export async function* elementUniqueAspectMustHaveCorrespondingRelationship(enti
   if (!await entity.is(elementUniqueAspectName, bisCoreName))
     return;
 
-  const relationships = entity.schema.getClasses().filter((c) => c.schemaItemType === EC.SchemaItemType.RelationshipClass);
+  let relationships = Array.from(entity.schema.getClasses());
+  relationships = relationships.filter((c) => c.schemaItemType === EC.SchemaItemType.RelationshipClass);
+
   if (relationships.length === 0) {
     yield new Diagnostics.ElementUniqueAspectMustHaveCorrespondingRelationship(entity, [entity.fullName]);
     return;
@@ -642,6 +652,22 @@ export async function* koqMustUseSIUnitForPersistenceUnit(koq: EC.KindOfQuantity
 
   if (unitSystem.name !== siUnitSystemName)
     yield new Diagnostics.KOQMustUseSIUnitForPersistenceUnit(koq, [koq.fullName, unitSystem.fullName]);
+}
+
+/** BIS Rule: Kind Of Quantities must not have duplicate presentation formats. */
+export async function* koqDuplicatePresentationFormat(koq: EC.KindOfQuantity): AsyncIterable<EC.SchemaItemDiagnostic<EC.KindOfQuantity, any[]>> {
+  const formats = koq.presentationUnits;
+  if (!formats)
+    return;
+
+  const uniqueFormatNames: string[] = [];
+
+  for (const format of formats) {
+    if (uniqueFormatNames.includes(format.fullName))
+      yield new Diagnostics.KOQDuplicatePresentationFormat(koq, [koq.fullName, format.fullName]);
+
+    uniqueFormatNames.push(format.fullName);
+  }
 }
 
 /** Property RULES
