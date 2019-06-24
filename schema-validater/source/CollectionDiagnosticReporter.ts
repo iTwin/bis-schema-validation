@@ -3,13 +3,13 @@
 * Licensed under the MIT License. See LICENSE.md in the project root for license terms.
 *--------------------------------------------------------------------------------------------*/
 
-import { FormatDiagnosticReporter } from "./FormatDiagnosticReporter";
+import { ValidationDiagnosticReporter } from "./ValidationDiagnosticReporter";
 
 /**
  * An IDiagnosticReporter implementation that adds formatted IDiagnostic messages
  * to a collection.
  */
-export class CollectionDiagnosticReporter extends FormatDiagnosticReporter {
+export class CollectionDiagnosticReporter extends ValidationDiagnosticReporter {
   private _diagnostics: string[] = [];
 
   /** Gets the collection of diagnostic message. */

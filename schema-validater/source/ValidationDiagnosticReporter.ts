@@ -3,13 +3,13 @@
 * Licensed under the MIT License. See LICENSE.md in the project root for license terms.
 *--------------------------------------------------------------------------------------------*/
 
-import { DiagnosticReporterBase, AnyDiagnostic, diagnosticCategoryToString } from "@bentley/ecschema-metadata";
+import { FormatDiagnosticReporter, AnyDiagnostic, diagnosticCategoryToString } from "@bentley/ecschema-metadata";
 
 /**
  * An IDiagnosticReporter implementation that formats diagnostics into a readable string
  * and then calls the abstract method reportedFormattedDiagnostic for further processing.
  */
-export abstract class FormatDiagnosticReporter extends DiagnosticReporterBase {
+export abstract class ValidationDiagnosticReporter extends FormatDiagnosticReporter {
 
   /** Template to use when creating the diagnostic message: 0-Category, 1-Code, 2-Message */
   public static diagnosticMessageTemplate = `{0} {1}: {2}`;
@@ -33,6 +33,6 @@ export abstract class FormatDiagnosticReporter extends DiagnosticReporterBase {
     const category = diagnosticCategoryToString(diagnostic.category);
     const args = [category, diagnostic.code, messageText];
 
-    return this.formatStringFromArgs(FormatDiagnosticReporter.diagnosticMessageTemplate, args);
+    return this.formatStringFromArgs(ValidationDiagnosticReporter.diagnosticMessageTemplate, args);
   }
 }

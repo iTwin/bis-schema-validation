@@ -29,41 +29,84 @@ const validExtendedTypes = ["BeGuid", "GeometryStream", "Json"];
 
 const ruleSetName = "BIS";
 
-function getCode(code: number): string {
-  return ruleSetName + ":" + code;
+function getCode(code: string): string {
+  return ruleSetName + "-" + code;
 }
 
-/** The unique diagnostic codes for BIS rules. */
+/**
+ * The unique diagnostic codes for BIS rules.
+ *
+ * To provide meaning to code values, with anticipation
+ * of future rules for all current EC Types, the following
+ * value ranges should be used:
+ *
+ * - Schema:                    000-099
+ * - Class:                     100-199
+ * - Constant:                  200-299
+ * - CustomAttribute            300-399
+ * - CustomAttributeClass:      400-499
+ * - CustomAttributeContainer:  500-599
+ * - EntityClass:               600-699
+ * - Enumeration:               700-799
+ * - Format:                    800-899
+ * - InvertedUnit:              900-999
+ * - KindOfQuantity:            1000-1099
+ * - Mixin:                     1100-1199
+ * - Phenomenon:                1200-1299
+ * - Property:                  1300-1399
+ * - PropertyCategory:          1400-1499
+ * - RelationshipClass:         1500-1599
+ * - RelationshipConstraint:    1600-1699
+ * - StructClass:               1700-1799
+ * - Unit:                      1800-1899
+ * - UnitSystem:                1900-1999
+ */
 // tslint:disable-next-line:variable-name
 export const DiagnosticCodes = {
-  SchemaXmlVersionMustBeTheLatest: getCode(100),
-  SchemaMustNotReferenceOldStandardSchemas: getCode(101),
-  SchemaWithDynamicInNameMustHaveDynamicSchemaCA: getCode(102),
-  SchemaClassDisplayLabelMustBeUnique: getCode(103),
-  MultiplePropertiesInClassWithSameLabel: getCode(104),
-  PropertyShouldNotBeOfTypeLong: getCode(105),
-  PropertyHasInvalidExtendedType: getCode(106),
-  PropertyMustNotUseCustomHandledPropertyRestriction: getCode(107),
-  EntityClassMustDeriveFromBisHierarchy: getCode(108),
-  EntityClassMayNotInheritSameProperty: getCode(109),
-  ElementMultiAspectMustHaveCorrespondingRelationship: getCode(110),
-  ElementUniqueAspectMustHaveCorrespondingRelationship: getCode(111),
-  EntityClassesCannotDeriveFromIParentElementAndISubModeledElement: getCode(112),
-  EntityClassesCannotDeriveFromModelClasses: getCode(113),
-  EntityClassesMayNotSubclassDeprecatedClasses: getCode(114),
-  BisModelSubClassesCannotDefineProperties: getCode(115),
-  // 116 IS FREE
-  StructsCannotHaveBaseClasses: getCode(117),
-  MixinsCannotOverrideInheritedProperties: getCode(118),
-  RelationshipClassMustNotUseHoldingStrength: getCode(119),
-  RelationshipSourceMultiplicityUpperBoundRestriction: getCode(120),
-  RelationshipTargetMultiplicityUpperBoundRestriction: getCode(121),
-  RelationshipElementAspectContraintRestriction: getCode(122),
-  EmbeddingRelationshipsMustNotHaveHasInName: getCode(123),
-  CustomAttributeClassCannotHaveBaseClasses: getCode(124),
-  KOQMustNotUseUnitlessRatios: getCode(125),
-  KOQMustUseSIUnitForPersistenceUnit: getCode(126),
-  KOQDuplicatePresentationFormat: getCode(127),
+  // Schema Rules (000-999)
+  SchemaXmlVersionMustBeTheLatest: getCode("001"),
+  SchemaMustNotReferenceOldStandardSchemas: getCode("002"),
+  SchemaWithDynamicInNameMustHaveDynamicSchemaCA: getCode("003"),
+  SchemaClassDisplayLabelMustBeUnique: getCode("004"),
+
+  // Class Rules (100-199)
+  MultiplePropertiesInClassWithSameLabel: getCode("100"),
+
+  // CustomAttributeClass Rules (400-499)
+  CustomAttributeClassCannotHaveBaseClasses: getCode("400"),
+
+  // EntityClass Rules (600-699)
+  EntityClassMustDeriveFromBisHierarchy: getCode("600"),
+  EntityClassMayNotInheritSameProperty: getCode("601"),
+  ElementMultiAspectMustHaveCorrespondingRelationship: getCode("602"),
+  ElementUniqueAspectMustHaveCorrespondingRelationship: getCode("603"),
+  EntityClassesCannotDeriveFromIParentElementAndISubModeledElement: getCode("604"),
+  EntityClassesCannotDeriveFromModelClasses: getCode("605"),
+  BisModelSubClassesCannotDefineProperties: getCode("606"),
+  EntityClassesMayNotSubclassDeprecatedClasses: getCode("607"),
+
+  // KindOfQuantity Rules (1000-1099)
+  KOQMustNotUseUnitlessRatios: getCode("1000"),
+  KOQMustUseSIUnitForPersistenceUnit: getCode("1001"),
+  KOQDuplicatePresentationFormat: getCode("1002"),
+
+  // Mixin Rules (1100-1199)
+  MixinsCannotOverrideInheritedProperties: getCode("1100"),
+
+  // Property Rules (1300-1399)
+  PropertyShouldNotBeOfTypeLong: getCode("1300"),
+  PropertyHasInvalidExtendedType: getCode("1301"),
+  PropertyMustNotUseCustomHandledPropertyRestriction: getCode("1302"),
+
+  // RelationshipClass Rules (1500-1599)
+  RelationshipClassMustNotUseHoldingStrength: getCode("1500"),
+  RelationshipSourceMultiplicityUpperBoundRestriction: getCode("1501"),
+  RelationshipTargetMultiplicityUpperBoundRestriction: getCode("1502"),
+  RelationshipElementAspectContraintRestriction: getCode("1503"),
+  EmbeddingRelationshipsMustNotHaveHasInName: getCode("1504"),
+
+  // StructClass Rules (1700-1799)
+  StructsCannotHaveBaseClasses: getCode("1700"),
 };
 
 /**
@@ -81,15 +124,15 @@ export const Diagnostics = {
 
   /** Required message parameters: Schema full name. */
   SchemaWithDynamicInNameMustHaveDynamicSchemaCA: EC.createSchemaDiagnosticClass<[string]>(DiagnosticCodes.SchemaWithDynamicInNameMustHaveDynamicSchemaCA,
-    "Schema '{0}' contains 'dynamic' in the name, therefore requiring the 'CoreCA:DynamicSchema' CustomAttribute to be applied."),
+    "Schema '{0}' contains 'dynamic' in the name but does not apply the 'CoreCA:DynamicSchema' ECCustomAttribute."),
 
   /** Required message parameters: 1st class full name, 2nd class full name, and display label */
   SchemaClassDisplayLabelMustBeUnique: EC.createSchemaDiagnosticClass<[string, string, string]>(DiagnosticCodes.SchemaClassDisplayLabelMustBeUnique,
-    "Classes {0} and {1} have the same display label, '{2}'. Labels must be unique within the same schema."),
+    "Classes {0} and {1} have the same display label, '{2}'. Classes in the same schema cannot have have the same label."),
 
   /** Required message parameters: mixin class fullName, class fullName, applies to constraint class fullName */
   MixinsCannotOverrideInheritedProperties: EC.createSchemaItemDiagnosticClass<EC.Mixin, [string, string]>(DiagnosticCodes.MixinsCannotOverrideInheritedProperties,
-    "Mixin '{0}' overrides inherited property '{1}'."),
+    "Mixin '{0}' overrides inherited property '{1}'. A mixin class must not override an inherited property."),
 
   /** Required message parameters: EntityClass fullName */
   EntityClassMustDeriveFromBisHierarchy: EC.createSchemaItemDiagnosticClass<EC.EntityClass, [string]>(DiagnosticCodes.EntityClassMustDeriveFromBisHierarchy,
@@ -408,7 +451,6 @@ export async function* elementMultiAspectMustHaveCorrespondingRelationship(entit
 
   let relationships = Array.from(entity.schema.getClasses());
   relationships = relationships.filter((c) => c.schemaItemType === EC.SchemaItemType.RelationshipClass);
-
   if (relationships.length === 0) {
     yield new Diagnostics.ElementMultiAspectMustHaveCorrespondingRelationship(entity, [entity.fullName]);
     return;
@@ -439,7 +481,6 @@ export async function* elementUniqueAspectMustHaveCorrespondingRelationship(enti
 
   let relationships = Array.from(entity.schema.getClasses());
   relationships = relationships.filter((c) => c.schemaItemType === EC.SchemaItemType.RelationshipClass);
-
   if (relationships.length === 0) {
     yield new Diagnostics.ElementUniqueAspectMustHaveCorrespondingRelationship(entity, [entity.fullName]);
     return;
