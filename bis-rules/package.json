@@ -2,7 +2,7 @@
   "name": "@bentley/bis-rules",
   "description": "Contains BIS rules for schema validation.",
   "license": "MIT",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "main": "lib/bis-rules.js",
   "typings": "lib/bis-rules",
   "repository": {
@@ -29,7 +29,7 @@
     "url": "http://www.bentley.com"
   },
   "devDependencies": {
-    "@bentley/build-tools": "^0.173.0",
+    "@bentley/build-tools": "^1.0",
     "@types/chai": "^4.1.7",
     "@types/xml2js": "^0.4.3",
     "@types/rimraf": "^2.0.2",
@@ -47,9 +47,9 @@
     "tsconfig-paths": "^3.3.2"
   },
   "dependencies": {
-    "@bentley/bentleyjs-core": "^0.189.0-dev.39",
-    "@bentley/imodeljs-backend": "^0.189.0-dev.39",
-    "@bentley/ecschema-metadata": "^0.189.0-dev.39"
+    "@bentley/bentleyjs-core": "^1.0.0",
+    "@bentley/imodeljs-backend": "^1.0.0",
+    "@bentley/ecschema-metadata": "^1.0.0"
   },
   "publishConfig": {
     "registry": "https://www.npmjs.com/"

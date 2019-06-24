@@ -5,13 +5,13 @@
 
 import * as fs from "fs-extra";
 import * as path from "path";
-import { FormatDiagnosticReporter } from "./FormatDiagnosticReporter";
+import { ValidationDiagnosticReporter } from "./ValidationDiagnosticReporter";
 
 /**
  * An IDiagnosticReporter implementation that writes diagnostics messages
  * during schema validation to a file with the name '{schema}.validation.txt'.
  */
-export class FileDiagnosticReporter extends FormatDiagnosticReporter {
+export class FileDiagnosticReporter extends ValidationDiagnosticReporter {
   private _schemaName: string;
   private _outPath: string;
   private _stream?: fs.WriteStream;

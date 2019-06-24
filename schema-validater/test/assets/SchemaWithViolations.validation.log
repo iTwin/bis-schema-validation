@@ -1,3 +1,3 @@
 SchemaWithViolations Validation Results
-Error BIS:104: Class 'SchemaWithViolations.TestEntityClass' has properties 'Property1' and 'Property2' with the same display label 'Duplicate Label'.
-Error BIS:108: Entity class 'SchemaWithViolations.TestEntityClass' must derive from the BIS hierarchy.
+Error BIS-100: Class 'SchemaWithViolations.TestEntityClass' has properties 'Property1' and 'Property2' with the same display label 'Duplicate Label'.
+Error BIS-600: Entity class 'SchemaWithViolations.TestEntityClass' must derive from the BIS hierarchy.

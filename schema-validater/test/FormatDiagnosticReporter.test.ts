@@ -7,10 +7,10 @@ import { expect } from "chai";
 import * as sinon from "sinon";
 import * as ECRules from "@bentley/ecschema-metadata/lib/Validation/ECRules";
 import * as EC from "@bentley/ecschema-metadata/lib/ecschema-metadata";
-import { FormatDiagnosticReporter } from "../source/FormatDiagnosticReporter";
+import { ValidationDiagnosticReporter } from "../source/ValidationDiagnosticReporter";
 import {  diagnosticCategoryToString } from "@bentley/ecschema-metadata/lib/Validation/Diagnostic";
 
-class TestReporter extends FormatDiagnosticReporter {
+class TestReporter extends ValidationDiagnosticReporter {
   public reportFormattedDiagnostic(_message: string): void {
   }
 }
@@ -36,7 +36,7 @@ describe("FormatDiagnosticReporter Tests", () => {
     const message = baseSpy.args[0][1];
     const args = [category, diagnostic.code, message];
 
-    const formattedMsg = formatStringFromArgs(FormatDiagnosticReporter.diagnosticMessageTemplate, args);
+    const formattedMsg = formatStringFromArgs(ValidationDiagnosticReporter.diagnosticMessageTemplate, args);
     expect(formatSpy.calledOnceWithExactly(formattedMsg)).to.be.true;
   });
 });
