@@ -1,0 +1,111 @@
+resources:
+- repo: self
+  clean: true
+
+trigger:
+- master
+
+pool:
+  name: iModelTechCI
+  demands: agent.os -equals windows_nt
+
+steps:
+- task: NodeTool@0
+  displayName: 'Use Node 10.13'
+  inputs:
+    versionSpec: 10.x
+    checkLatest: true
+
+- script: rush install
+  displayName: rush install
+- script: rush lint
+  displayName: rush lint
+- script: rush rebuild
+  displayName: rush rebuild
+- script: rush cover
+  displayName: rush cover
+
+- task: PublishCodeCoverageResults@1
+  displayName: Publish bis-rules code coverage
+  inputs:
+    codeCoverageTool: Cobertura
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/bis-rules/lib/test/coverage/cobertura-coverage.xml'
+    reportDirectory: '$(System.DefaultWorkingDirectory)/bis-rules/lib/test/coverage/lcov-report'
+
+- task: PublishCodeCoverageResults@1
+  displayName: Publish schema-validater code coverage
+  inputs:
+    codeCoverageTool: Cobertura
+    summaryFileLocation: '$(Build.SourcesDirectory)/schema-validater/lib/test/coverage/cobertura-coverage.xml'
+    reportDirectory: '$(Build.Repository.LocalPath)/schema-validater/lib/test/coverage/lcov-report'
+
+- script: rush publish --publish --pack --include-all
+  displayName: Rush publish pack
+  # condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+
+- task: PythonScript@0
+  displayName: 'Gather packages for release'
+  inputs:
+    scriptSource: inline
+    script: |
+     import sys, os, glob, re, subprocess
+     import shutil
+
+     artifactStagingDir = os.path.realpath(sys.argv[1])
+     sourcesDirectory = os.path.realpath(sys.argv[2])
+
+     ## Setup
+     stagingDir = os.path.join(artifactStagingDir, "packages")
+     os.makedirs(stagingDir)
+
+     packageDir = os.path.join(sourcesDirectory, "common", "temp", "artifacts", "packages")
+     registryUrl = "https://pkgs.dev.azure.com/bentleycs/_packaging/Default/npm/registry/"
+
+     artifactPaths = glob.glob(os.path.join(packageDir, "*.tgz"))
+
+     packagesToPublish = False
+     for artifact in artifactPaths:
+       baseName = os.path.basename(artifact)
+       print ""
+       print "Checking package: '" + baseName + "'..."
+
+       localVer = re.search(r'(\d\.\d.*).tgz', baseName)
+       localVer = localVer.group(1)
+
+       packageName = baseName[:(len(baseName) - len(localVer) - 5)]
+       packageName = "@" + packageName.replace("-", "/", 1)
+
+       command = "npm view --registry=" + registryUrl + " " + packageName + "@" + localVer + " version"
+       proc = subprocess.Popen(command, stdin = subprocess.PIPE, stdout = subprocess.PIPE, shell=True)
+
+       # We are going to assume if a version is provided back from the above call, that this version exists
+       # on the server.  Otherwise, it returns an empty string.
+       serverVer = proc.communicate()[0]
+
+       if proc.returncode != 0:
+         packagesToPublish = True
+         print "The package does not yet exist.  Copying " + packageName + " to staging area."
+         shutil.copy(artifact, stagingDir)
+         continue
+
+       if 0 != len(serverVer):
+         print "The version already exists.  Skipping..."
+         continue
+
+       packagesToPublish = True
+       print "Local version is newer than on the server.  Copying package " + packageName + " to staging area."
+       shutil.copy(artifact, stagingDir)
+
+     if packagesToPublish:
+       print "There are packages to publish."
+       print "##vso[build.addbuildtag]release"
+     else:
+       print "All packages are up-to-date."
+
+    arguments: '$(Build.ArtifactStagingDirectory) $(Build.SourcesDirectory)'
+  # condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+
+- publish: $(Build.ArtifactStagingDirectory)/packages
+  artifact: bis-schemas-packages
+  displayName: 'Publish Pipeline Artifact'
+  # condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
