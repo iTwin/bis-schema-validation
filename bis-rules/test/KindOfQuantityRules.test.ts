@@ -21,13 +21,13 @@ function createSchemaJson(koq: any) {
         {
           name: "Formats",
           version: "1.0.0",
-        },
+        }
       ],
     });
 }
 
-async function iterableToArray(asyncIterable: AsyncIterable<IDiagnostic<KindOfQuantity, any []>>): Promise<IDiagnostic<KindOfQuantity, any []> []> {
-  const array: IDiagnostic<KindOfQuantity, any []> [] = [];
+async function iterableToArray(asyncIterable: AsyncIterable<IDiagnostic<KindOfQuantity, any[]>>): Promise<IDiagnostic<KindOfQuantity, any[]>[]> {
+  const array: IDiagnostic<KindOfQuantity, any[]>[] = [];
   for await (const item of asyncIterable) {
     array.push(item);
   }
@@ -177,6 +177,70 @@ describe("KindOfQuantity Rule Tests", () => {
       const result = await iterableToArray(Rules.koqDuplicatePresentationFormat(testKoq));
 
       expect(result.length).to.equal(0);
+    });
+
+    it("KindOfQuantity has duplicate presentation formats, exception made for AecUnits:LENGTH_SHORT less than 1.0.0 and 1.0.1.", async () => {
+      const koqProps = {
+        schemaItemType: "KindOfQuantity",
+        name: "LENGTH_SHORT",
+        label: "Short Length",
+        relativeError: 0.01,
+        persistenceUnit: "Formats.IN",
+        presentationUnits: [
+          "Formats.IN",
+          "Formats.FT",
+          "Formats.IN"
+        ]
+      };
+
+      const schemaJson = createSchemaJsonWithItems(
+        {
+          LENGTH_SHORT: {
+            ...koqProps,
+          },
+        },
+        {
+          references: [
+            {
+              name: "Formats",
+              version: "1.0.0",
+            }
+          ],
+        });
+      schemaJson.name = "AecUnits";
+
+      // schema AecUnits 1.0.0 rule pass
+      schemaJson.version = "1.0.0";
+      context = new SchemaContext();
+      context.addLocater(new TestSchemaLocater());
+      schema = await Schema.fromJson(schemaJson, context);
+      let testKoq = await schema.getItem<KindOfQuantity>(koqProps.name) as KindOfQuantity;
+
+      let result = await iterableToArray(Rules.koqDuplicatePresentationFormat(testKoq));
+      expect(result.length).to.equal(0);
+
+      // schema AecUnits 1.0.1 rule pass
+      schemaJson.version = "1.0.1";
+      context = new SchemaContext();
+      context.addLocater(new TestSchemaLocater());
+      schema = await Schema.fromJson(schemaJson, context);
+      testKoq = await schema.getItem<KindOfQuantity>(koqProps.name) as KindOfQuantity;
+
+      result = await iterableToArray(Rules.koqDuplicatePresentationFormat(testKoq));
+      expect(result.length).to.equal(0);
+
+      // schema AecUnits above or equal to 1.0.2 rule violated
+      const latestSchemaJsonVersion = ["1.0.2", "1.0.3", "1.1.3", "1.1.0", "2.0.0", "2.1.1", "3.0.0"];
+      for (const latest of latestSchemaJsonVersion) {
+        schemaJson.version = latest;
+        context = new SchemaContext();
+        context.addLocater(new TestSchemaLocater());
+        schema = await Schema.fromJson(schemaJson, context);
+        testKoq = await schema.getItem<KindOfQuantity>(koqProps.name) as KindOfQuantity;
+
+        result = await iterableToArray(Rules.koqDuplicatePresentationFormat(testKoq));
+        expect(result.length).to.equal(1);
+      }
     });
   });
 });

@@ -704,6 +704,12 @@ export async function* koqMustUseSIUnitForPersistenceUnit(koq: EC.KindOfQuantity
 
 /** BIS Rule: Kind Of Quantities must not have duplicate presentation formats. */
 export async function* koqDuplicatePresentationFormat(koq: EC.KindOfQuantity): AsyncIterable<EC.SchemaItemDiagnostic<EC.KindOfQuantity, any[]>> {
+  const koqSchema = koq.schema.schemaKey;
+  const maxAllowedAecUnits: EC.SchemaKey = new EC.SchemaKey("AecUnits", 1, 0, 2);
+  const isExceptionAecUnits = koqSchema.compareByName(maxAllowedAecUnits) && koqSchema.compareByVersion(maxAllowedAecUnits) < 0;
+  if (koq.fullName === "AecUnits.LENGTH_SHORT" && isExceptionAecUnits)
+    return;
+
   const formats = koq.presentationUnits;
   if (!formats)
     return;
