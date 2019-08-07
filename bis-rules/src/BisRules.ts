@@ -11,6 +11,7 @@ const classHasHandlerName = "ClassHasHandler";
 const customHandledPropertyName = "CustomHandledProperty";
 const definitionModelName = "DefinitionModel";
 const deprecatedFullName = "CoreCustomAttributes.Deprecated";
+const classHasHandlerCAFullName = "BisCore.ClassHasHandler";
 const documentListModelName = "DocumentListModel";
 const elementAspectName = "ElementAspect";
 const elementMultiAspectName = "ElementMultiAspect";
@@ -68,6 +69,7 @@ export const DiagnosticCodes = {
   SchemaMustNotReferenceOldStandardSchemas: getCode("002"),
   SchemaWithDynamicInNameMustHaveDynamicSchemaCA: getCode("003"),
   SchemaClassDisplayLabelMustBeUnique: getCode("004"),
+  ClassHasHandlerCACannotAppliedOutsideCoreSchemas: getCode("009"),
 
   // Class Rules (100-199)
   MultiplePropertiesInClassWithSameLabel: getCode("100"),
@@ -221,6 +223,10 @@ export const Diagnostics = {
   /** Required message parameters: ECClass FullName, first property name, second property name, display label */
   MultiplePropertiesInClassWithSameLabel: EC.createClassDiagnosticClass<[string, string, string, string]>(DiagnosticCodes.MultiplePropertiesInClassWithSameLabel,
     "Class '{0}' has properties '{1}' and '{2}' with the same display label '{3}'."),
+
+  /** Required message parameters: ECClass FullName,  Schema Name */
+  ClassHasHandlerCACannotAppliedOutsideCoreSchemas: EC.createClassDiagnosticClass<[string, string]>(DiagnosticCodes.ClassHasHandlerCACannotAppliedOutsideCoreSchemas,
+    "Class '{0}' in schema '{1}' has 'ClassHasHandler' Custom Attribute applied. 'ClassHasHandler' Custom Attribute not allowed outside of the BisCore, Functional, and Generic schemas. Consider using the SchemaHasBehavior Custom Attribute."),
 };
 
 /**
@@ -270,6 +276,7 @@ export const BisRuleSet: EC.IRuleSet = {
   ],
   classRules: [
     multiplePropertiesInClassWithSameLabel,
+    classHasHandlerCACannotAppliedOutsideCoreSchemas,
   ],
   mixinRules: [
     mixinsCannotOverrideInheritedProperties,
@@ -781,5 +788,17 @@ export async function* multiplePropertiesInClassWithSameLabel(ecClass: EC.AnyCla
     }
 
     visitedProperties.push(property);
+  }
+}
+
+/** BIS Rule: ClassHasHandler cannot applied outside of BisCore, Functional, and Generic Schema */
+export async function* classHasHandlerCACannotAppliedOutsideCoreSchemas(ecClass: EC.AnyClass): AsyncIterable<EC.ClassDiagnostic<any[]>> {
+  if (ecClass.customAttributes === undefined)
+    return;
+
+  const schemaName: string = ecClass.schema.name;
+  const isExceptionSchema = (schemaName === "BisCore") || (schemaName === "Functional") || (schemaName === "Generic");
+  if (!isExceptionSchema && ecClass.customAttributes.has(classHasHandlerCAFullName)) {
+    yield new Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(ecClass, [ecClass.fullName, ecClass.schema.name]);
   }
 }

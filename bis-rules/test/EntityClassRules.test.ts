@@ -848,7 +848,7 @@ describe("EntityClass Rule Tests", () => {
         },
       };
 
-      const schema = await getTestSchema(schemaJson, "BisCore", new SchemaContext());
+      const schema = await getTestSchema(schemaJson, "BisCore", new SchemaContext(), false);
       const testEntity = (await schema.getItem("TestEntity")) as EntityClass;
 
       const result = await Rules.entityClassesCannotDeriveFromModelClasses(testEntity);
