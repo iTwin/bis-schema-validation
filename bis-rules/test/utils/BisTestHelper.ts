@@ -141,5 +141,11 @@ const bisCoreSchema = {
       modifier: "none",
       schemaItemType: "EntityClass",
     },
+    ClassHasHandler: {
+      appliesTo: "Any",
+      description: "Applied to an ECClass to indicate that a C++ subclass of DgnDomain::Handler will supply behavior for it at run-time. This custom attribute may only be used by BisCore or other core schemas.",
+      modifier: "sealed",
+      schemaItemType: "CustomAttributeClass"
+    }
   },
 };
