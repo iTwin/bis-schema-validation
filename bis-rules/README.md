@@ -11,14 +11,14 @@ schema.
 Typically, this package would be installed as a dependency (not globally) to another project that performs EC Schema validation:
 
 ```sh
-$ npm install @bentley/schema-validator
+npm install @bentley/schema-validator
 ```
 
 ### Usage
 
 The BisRuleSet can then be imported into your source like so:
 
-```sh
+```ts
 import { BisRuleSet } from "@bentley/bis-rules";
 ```
 

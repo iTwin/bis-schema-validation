@@ -329,7 +329,7 @@ export async function* schemaXmlVersionMustBeTheLatest(schema: EC.Schema): Async
 export async function* schemaMustNotReferenceOldStandardSchemas(schema: EC.Schema): AsyncIterable<EC.SchemaDiagnostic<any[]>> {
   for (const ref of schema.references) {
     // can reference ECDbMap as long as its 2.0 or above.
-    if (ref.name === "ECDbMap" && ref.readVersion > 1)
+    if ("ECDbMap" === ref.name && 1 < ref.readVersion)
       continue;
 
     if (oldStandardSchemaNames.findIndex((x) => ref.name === x) !== -1)
@@ -344,9 +344,8 @@ export async function* schemaWithDynamicInNameMustHaveDynamicSchemaCA(schema: EC
   if (!schema.name.toLowerCase().includes("dynamic"))
     return;
 
-  if (!schema.customAttributes || !schema.customAttributes.has("CoreCustomAttributes.DynamicSchema")) {
+  if (!schema.customAttributes || !schema.customAttributes.has("CoreCustomAttributes.DynamicSchema"))
     yield new Diagnostics.SchemaWithDynamicInNameMustHaveDynamicSchemaCA(schema, [schema.schemaKey.toString()]);
-  }
 }
 
 /**

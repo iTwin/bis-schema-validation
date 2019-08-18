@@ -36,8 +36,8 @@ steps:
   displayName: Publish schema-validater code coverage
   inputs:
     codeCoverageTool: Cobertura
-    summaryFileLocation: '$(Build.SourcesDirectory)/schema-validater/lib/test/coverage/cobertura-coverage.xml'
-    reportDirectory: '$(Build.Repository.LocalPath)/schema-validater/lib/test/coverage/lcov-report'
+    summaryFileLocation: '$(Build.SourcesDirectory)/schema-validator/lib/test/coverage/cobertura-coverage.xml'
+    reportDirectory: '$(Build.Repository.LocalPath)/schema-validator/lib/test/coverage/lcov-report'
 
 - script: rush publish --publish --pack --include-all
   displayName: Rush publish pack

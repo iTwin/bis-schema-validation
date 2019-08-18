@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ECSchema schemaName="PartialComprehensiveSchema" alias="pc" version="01.00.00" description="SchemaA" displayLabel="Schema" xmlns="http://www.bentley.com/schemas/Bentley.ECXML.3.1">
+    <ECSchemaReference name="CoreCustomAttributes" version="01.00.00" alias="CoreCA"/>
+    <ECSchemaReference name="BisCore" version="01.00.00" alias="bis"/>
+    <ECSchemaReference name="ComprehensiveSchema" version="01.00.00" alias="com"/>
+    <ECCustomAttributeClass typeName="GeneralCustomAttribute" description="Custom Attribute that can be applied to anything." appliesTo="Any"/>
+    <ECCustomAttributeClass typeName="SchemaCustomAttribute" description="Custom Attribute that can be applied to a schema." appliesTo="Schema"/>
+    <ECCustomAttributes>
+        <GeneralCustomAttribute xmlns="PartialComprehensiveSchema.01.00.00"/>
+        <SchemaCustomAttribute xmlns="PartialComprehensiveSchema.01.00.00"/>
+    </ECCustomAttributes>
+    <ECEnumeration typeName="IntEnumeration" backingTypeName="int" description="Int Enumeration" displayLabel="This is a display label." isStrict="true">
+        <ECEnumerator name="IntEnumeration1" value="1" displayLabel="First"/>
+        <ECEnumerator name="IntEnumeration2" value="2" displayLabel="Second"/>
+        <ECEnumerator name="IntEnumeration3" value="3" displayLabel="Third"/>
+    </ECEnumeration>
+    <ECEnumeration typeName="StringEnumeration" backingTypeName="string" description="String Enumeration" isStrict="true">
+        <ECEnumerator name="spring" value="spring" displayLabel="FirstSeason"/>
+        <ECEnumerator name="summer" value="summer" displayLabel="SecondSeason"/>
+        <ECEnumerator name="fall" value="fall" displayLabel="ThirdSeason"/>
+        <ECEnumerator name="winter" value="winter" displayLabel="FourthSeason"/>
+    </ECEnumeration>
+    <ECEntityClass typeName="AbstractEntityClass" description="Abstract class, cannot be instantiated" modifier="Abstract">
+        <ECProperty propertyName="AbstractClassProperty1" typeName="dateTime"/>
+    </ECEntityClass>
+    <ECEntityClass typeName="AbstractDerivedAbstract" description="An abstract class derived from an abstract class" modifier="Abstract">
+        <BaseClass>AbstractEntityClass</BaseClass>
+    </ECEntityClass>
+    <ECEntityClass typeName="MixinClass" description="A Mixin is designed to avoid issues with multiple inheritance">
+        <ECCustomAttributes>
+            <IsMixin xmlns="CoreCustomAttributes.01.00.00">
+                <AppliesToEntityClass>BaseEntity</AppliesToEntityClass>
+            </IsMixin>
+        </ECCustomAttributes>
+        <ECProperty propertyName="MixinStringPrimitive" typeName="string"/>
+        <ECProperty propertyName="MixinBinaryPrimitive" typeName="binary" readOnly="true"/>
+        <ECProperty propertyName="MixinDateTimePrimitive" typeName="dateTime" readOnly="true"/>
+        <ECProperty propertyName="MixinDoublePrimitive" typeName="double"/>
+        <ECProperty propertyName="MixinIGeometryPrimitive" typeName="Bentley.Geometry.Common.IGeometry"/>
+        <ECProperty propertyName="MixinIntPrimitive" typeName="int"/>
+        <ECProperty propertyName="MixinLongPrimitive" typeName="long"/>
+        <ECProperty propertyName="MixinPoint2dPrimitive" typeName="point2d"/>
+        <ECProperty propertyName="MixinPoint3dPrimitive" typeName="point3d"/>
+        <ECProperty propertyName="MixinIntEnumerationPrimitive" typeName="IntEnumeration"/>
+        <ECProperty propertyName="MixinStringEnumerationPrimitive" typeName="StringEnumeration"/>
+    </ECEntityClass>
+    <ECEntityClass typeName="BaseEntity" description="Base Entity Description" displayLabel="Base Entity" modifier="Abstract">
+        <BaseClass>bis:GraphicalModel2d</BaseClass>
+        <BaseClass>MixinClass</BaseClass>
+        <ECProperty propertyName="InheritedProperty" typeName="string"/>
+    </ECEntityClass>
+    <ECCustomAttributeClass typeName="CustomStructClassAttribute" description="Custom Attribute that can be applied to an ECStructClass." appliesTo="StructClass"/>
+    <ECCustomAttributeClass typeName="CustomAnyClassAttribute" description="Custom Attribute that can be applied to relationshipConstraint." appliesTo="AnyClass"/>
+    <ECStructClass typeName="Struct" displayLabel="Struct Class">
+        <ECCustomAttributes>
+            <GeneralCustomAttribute xmlns="PartialComprehensiveSchema.01.00.00"/>
+            <CustomStructClassAttribute xmlns="PartialComprehensiveSchema.01.00.00"/>
+            <CustomAnyClassAttribute xmlns="PartialComprehensiveSchema.01.00.00"/>
+        </ECCustomAttributes>
+        <ECProperty propertyName="StructStringPrimitive" typeName="string"/>
+        <ECProperty propertyName="StructBinaryPrimitive" typeName="binary" readOnly="true"/>
+        <ECProperty propertyName="StructDateTimePrimitive" typeName="dateTime" readOnly="true"/>
+        <ECProperty propertyName="StructDoublePrimitive" typeName="double"/>
+        <ECProperty propertyName="StructIGeometryPrimitive" typeName="Bentley.Geometry.Common.IGeometry"/>
+    </ECStructClass>
+    <ECStructClass typeName="DerivedStruct" displayLabel="A Struct derived from a Struct">
+        <BaseClass>Struct</BaseClass>
+    </ECStructClass>
+</ECSchema>

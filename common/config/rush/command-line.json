@@ -9,17 +9,17 @@
       "enableParallelism": true
     },
     {
-      "name": "lint",
-      "commandKind": "bulk",
-      "summary": "Run lint rules on each package",
-      "description": "Iterates through each package in the monorepo and runs the 'lint' script",
-      "enableParallelism": true
-    },
-    {
       "name": "cover",
       "commandKind": "bulk",
       "summary": "Runs code coverage on each package",
       "description": "Iterates through each package in the monorepo and runs the 'cover' script",
+      "enableParallelism": true
+    },
+    {
+      "name": "lint",
+      "commandKind": "bulk",
+      "summary": "Run lint rules on each package",
+      "description": "Iterates through each package in the monorepo and runs the 'lint' script",
       "enableParallelism": true
     }
   ]

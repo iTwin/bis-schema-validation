@@ -1,14 +1,14 @@
 {
-  "rushVersion": "5.5.4",
-  "pnpmVersion": "2.25.6",
+  "rushVersion": "5.10.3",
+  "pnpmVersion": "3.5.3",
   "nodeSupportedVersionRange": ">=10.6.0 <11.0.0",
   "projectFolderMinDepth": 1,
   "projectFolderMaxDepth": 1,
   "ensureConsistentVersions": true,
   "projects": [
-	  {
-      "packageName": "@bentley/schema-validater",
-      "projectFolder": "schema-validater",
+    {
+      "packageName": "@bentley/schema-validator",
+      "projectFolder": "schema-validator",
       "shouldPublish": true
     },
     {

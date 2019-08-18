@@ -22,10 +22,10 @@
       "type": "node",
       "request": "launch",
       "name": "Run schema-validater Tests",
-      "program": "${workspaceFolder}/schema-validater/node_modules/@bentley/build-tools/scripts/test-tsnode.js",
-      "cwd": "${workspaceFolder}/schema-validater",
+      "program": "${workspaceFolder}/schema-validator/node_modules/@bentley/build-tools/scripts/test-tsnode.js",
+      "cwd": "${workspaceFolder}/schema-validator",
       "args": [
-        "--testDir=${workspaceFolder}/schema-validater/test",
+        "--testDir=${workspaceFolder}/schema-validator/test",
         "--debug"
       ],
       "port": 9229,
