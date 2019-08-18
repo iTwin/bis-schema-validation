@@ -19,8 +19,6 @@
     "**/lib": true
   },
   "files.trimTrailingWhitespace": true,
-  "cSpell.words": [
-  ],
   "typescript.tsdk": "node_modules\\typescript\\lib",
   "files.associations": {
     "*.snap": "javascript",

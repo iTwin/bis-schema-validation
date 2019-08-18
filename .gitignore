@@ -3,7 +3,7 @@ node_modules
 
 # build output
 .nyc_output
-/**/lib
+lib
 /**/test/output
 /generated-docs
 /out

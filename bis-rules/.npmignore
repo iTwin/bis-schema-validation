@@ -3,6 +3,5 @@
 !lib/**/*.d.ts
 !lib/**/*.js
 lib/test
-!public/**
 !package.json
 !*.md

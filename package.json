@@ -13,11 +13,11 @@
     "clean": "echo NOTE: use 'rush clean' instead",
     "lint": "echo NOTE: use 'rush lint' instead",
     "preinstall": "echo ERROR: use 'rush install' instead && exit 1",
-    "test": "npm run test:bis-rules && npm run test:schema-validater",
+    "test": "npm run test:bis-rules && npm run test:schema-validator",
     "test:bis-rules": "cd bis-rules && npm test -s",
-    "test:schema-validater": "cd schema-validater && npm test -s",
+    "test:schema-validator": "cd schema-validator && npm test -s",
     "cover:bis-rules": "cd bis-rules && npm run cover",
-    "cover:schema-validater": "cd schema-validater && npm run cover"
+    "cover:schema-validator": "cd schema-validator && npm run cover"
   },
   "keywords": [
     "Bentley",

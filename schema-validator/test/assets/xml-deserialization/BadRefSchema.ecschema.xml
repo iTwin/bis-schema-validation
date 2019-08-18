@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ECSchema schemaName="BadRefSchema" alias="a" version="1.1.1" xmlns="http://www.bentley.com/schemas/Bentley.ECXML.3.1" displayLabel="BadRefSchema" description="This Schema has a non-existent reference schema.">
+    <ECSchemaReference name="DoesNotExist" version="1.1.1" alias="dne"/>
+</ECSchema>
