@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
-* Copyright (c) 2018 Bentley Systems, Incorporated. All rights reserved.
+* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
 * Licensed under the MIT License. See LICENSE.md in the project root for license terms.
 *--------------------------------------------------------------------------------------------*/
 
@@ -29,6 +29,23 @@ const spatialLocationModelName = "SpatialLocationModel";
 const validExtendedTypes = ["BeGuid", "GeometryStream", "Json"];
 
 const ruleSetName = "BIS";
+
+function getClassDefinedCustomAttribute(ecClass: EC.ECClass, customAttributeFullName: string): EC.ECClass | undefined {
+  if (ecClass.customAttributes && ecClass.customAttributes.has(customAttributeFullName))
+    return ecClass;
+
+  let res: EC.ECClass | undefined;
+  ecClass.traverseBaseClassesSync((base: EC.ECClass) => {
+    let found = false;
+    if (base.customAttributes && base.customAttributes.has(customAttributeFullName)) {
+      found = true;
+      res = base;
+    }
+    return found;
+  });
+
+  return res;
+}
 
 function getCode(code: string): string {
   return ruleSetName + "-" + code;
@@ -64,50 +81,85 @@ function getCode(code: string): string {
  */
 // tslint:disable-next-line:variable-name
 export const DiagnosticCodes = {
-  // Schema Rules (000-999)
-  SchemaXmlVersionMustBeTheLatest: getCode("001"),
-  SchemaMustNotReferenceOldStandardSchemas: getCode("002"),
-  SchemaWithDynamicInNameMustHaveDynamicSchemaCA: getCode("003"),
-  SchemaClassDisplayLabelMustBeUnique: getCode("004"),
-  ClassHasHandlerCACannotAppliedOutsideCoreSchemas: getCode("009"),
+  /**
+   * Schema Rules (000-999)
+   * - missing 001 (doc): A schema must load and pass EC3.1 spec validation
+   * - missing 004 (doc): A schema must specify a three-part version number (RR.WW.mm)
+   * - missing 005 (doc): A schema reference must specify a three-part version number (RR.WW.mm)
+   * - missing 009 (doc): an alias in the schema reference must be the same as the alias defined by the schema
+   */
+  SchemaXmlVersionMustBeTheLatest: getCode("002"),
+  SchemaMustNotReferenceOldStandardSchemas: getCode("003"),
+  SchemaWithDynamicInNameMustHaveDynamicSchemaCA: getCode("006"),
+  SchemaClassDisplayLabelMustBeUnique: getCode("007"),
+  SchemaShouldNotUseDeprecatedSchema: getCode("008"),
 
   // Class Rules (100-199)
   MultiplePropertiesInClassWithSameLabel: getCode("100"),
+  ClassHasHandlerCACannotAppliedOutsideCoreSchemas: getCode("101"),
+  ClassShouldNotDerivedFromDeprecatedClass: getCode("102"),
+  ClassShouldNotHaveDeprecatedProperty: getCode("103"),
+  ClassShouldNotHavePropertyOfDeprecatedStructClass: getCode("104"),
+  ClassShouldNotUseDeprecatedCustomAttributes: getCode("105"),
 
-  // CustomAttributeClass Rules (400-499)
+  /**
+   * CustomAttributeClass Rules (400-499)
+   */
   CustomAttributeClassCannotHaveBaseClasses: getCode("400"),
 
-  // EntityClass Rules (600-699)
+  /**
+   * EntityClass Rules (600-699)
+   * - missing 601 (doc): Entity classes may only derive from one base Entity class
+   * - missing 603 (doc): A mixin property cannot override an Entity property inherited from a base Entity class
+   * - missing 608 (doc): Property overrides cannot change the persistence unit.
+   */
   EntityClassMustDeriveFromBisHierarchy: getCode("600"),
-  EntityClassMayNotInheritSameProperty: getCode("601"),
-  ElementMultiAspectMustHaveCorrespondingRelationship: getCode("602"),
-  ElementUniqueAspectMustHaveCorrespondingRelationship: getCode("603"),
-  EntityClassesCannotDeriveFromIParentElementAndISubModeledElement: getCode("604"),
-  EntityClassesCannotDeriveFromModelClasses: getCode("605"),
-  BisModelSubClassesCannotDefineProperties: getCode("606"),
-  EntityClassesMayNotSubclassDeprecatedClasses: getCode("607"),
+  EntityClassMayNotInheritSameProperty: getCode("602"),
+  ElementMultiAspectMustHaveCorrespondingRelationship: getCode("604"),
+  ElementUniqueAspectMustHaveCorrespondingRelationship: getCode("605"),
+  EntityClassesCannotDeriveFromIParentElementAndISubModeledElement: getCode("606"),
+  EntityClassesCannotDeriveFromModelClasses: getCode("607"),
+  BisModelSubClassesCannotDefineProperties: getCode("609"),
+  EntityClassesMayNotSubclassDeprecatedClasses: getCode("610"),
+  EntityClassesShouldNotDerivedFromDeprecatedMixinClasses: getCode("611"),
 
-  // KindOfQuantity Rules (1000-1099)
+  /**
+   * KindOfQuantity Rules (1000-1099)
+   */
   KOQMustNotUseUnitlessRatios: getCode("1000"),
   KOQMustUseSIUnitForPersistenceUnit: getCode("1001"),
   KOQDuplicatePresentationFormat: getCode("1002"),
 
-  // Mixin Rules (1100-1199)
+  /**
+   * Mixin Rules (1100-1199)
+   */
   MixinsCannotOverrideInheritedProperties: getCode("1100"),
 
-  // Property Rules (1300-1399)
+  /**
+   * Property Rules (1300-1399)
+   * - missing 1301: Properties within the same class and category cannot have the same display label (maybe implemented in BIS-100)
+   */
   PropertyShouldNotBeOfTypeLong: getCode("1300"),
-  PropertyHasInvalidExtendedType: getCode("1301"),
-  PropertyMustNotUseCustomHandledPropertyRestriction: getCode("1302"),
+  PropertyHasInvalidExtendedType: getCode("1302"),
+  PropertyMustNotUseCustomHandledPropertyRestriction: getCode("1303"),
 
-  // RelationshipClass Rules (1500-1599)
+  /**
+   * RelationshipClass Rules (1500-1599)
+   * - missing 1503 (doc): Relationship classes must not have an abstract constraint if there is only one concrete constraint set
+   */
   RelationshipClassMustNotUseHoldingStrength: getCode("1500"),
   RelationshipSourceMultiplicityUpperBoundRestriction: getCode("1501"),
   RelationshipTargetMultiplicityUpperBoundRestriction: getCode("1502"),
-  RelationshipElementAspectContraintRestriction: getCode("1503"),
-  EmbeddingRelationshipsMustNotHaveHasInName: getCode("1504"),
+  RelationshipElementAspectContraintRestriction: getCode("1504"),
+  EmbeddingRelationshipsMustNotHaveHasInName: getCode("1505"),
+  RelationshipConstraintShouldNotUseDeprecatedConstraintClass: getCode("1506"),
+  RelationshipConstraintShouldNotUseDeperecatedAbstractConstraint: getCode("1507"),
+  RelationshipConstraintShouldNotUseConstraintClassWithDeprecatedBase: getCode("1508"),
+  RelationshipConstraintShouldNotUseAbstractConstraintWithDeprecatedBase: getCode("1509"),
 
-  // StructClass Rules (1700-1799)
+  /**
+   * StructClass Rules (1700-1799)
+   */
   StructsCannotHaveBaseClasses: getCode("1700"),
 };
 
@@ -131,6 +183,10 @@ export const Diagnostics = {
   /** Required message parameters: 1st class full name, 2nd class full name, and display label */
   SchemaClassDisplayLabelMustBeUnique: EC.createSchemaDiagnosticClass<[string, string, string]>(DiagnosticCodes.SchemaClassDisplayLabelMustBeUnique,
     "Classes {0} and {1} have the same display label, '{2}'. Classes in the same schema cannot have have the same label."),
+
+  /** Required message parameters: 1st current schema full name, 2nd reference schema full name */
+  SchemaShouldNotUseDeprecatedSchema: EC.createSchemaDiagnosticClass<[string, string]>(DiagnosticCodes.SchemaShouldNotUseDeprecatedSchema,
+    "Schema '{0}' references a deprecated schema, '{1}'", EC.DiagnosticCategory.Warning),
 
   /** Required message parameters: mixin class fullName, class fullName, applies to constraint class fullName */
   MixinsCannotOverrideInheritedProperties: EC.createSchemaItemDiagnosticClass<EC.Mixin, [string, string]>(DiagnosticCodes.MixinsCannotOverrideInheritedProperties,
@@ -168,6 +224,10 @@ export const Diagnostics = {
   EntityClassesMayNotSubclassDeprecatedClasses: EC.createSchemaItemDiagnosticClass<EC.EntityClass, [string, string]>(DiagnosticCodes.EntityClassesMayNotSubclassDeprecatedClasses,
     "Entity class '{0}' derives from '{1}' which has been deprecated."),
 
+  /** Required message parameters: EntityClass fullName, base mixin class fullName */
+  EntityClassesShouldNotDerivedFromDeprecatedMixinClasses: EC.createSchemaItemDiagnosticClass<EC.EntityClass, [string, string, string]>(DiagnosticCodes.EntityClassesShouldNotDerivedFromDeprecatedMixinClasses,
+    "Entity class '{0}' derives from a mixin, '{1}', which itself is or derives from a deprecated mixin, '{2}'.", EC.DiagnosticCategory.Warning),
+
   /** Required message parameters: RelationshipClass fullName */
   RelationshipClassMustNotUseHoldingStrength: EC.createSchemaItemDiagnosticClass<EC.RelationshipClass, [string]>(DiagnosticCodes.RelationshipClassMustNotUseHoldingStrength,
     "Relationship class '{0}' has a strength value of 'holding' which is not allowed."),
@@ -187,6 +247,22 @@ export const Diagnostics = {
   /** Required message parameters: RelationshipClass fullName */
   EmbeddingRelationshipsMustNotHaveHasInName: EC.createSchemaItemDiagnosticClass<EC.RelationshipClass, [string]>(DiagnosticCodes.EmbeddingRelationshipsMustNotHaveHasInName,
     "Relationship class '{0}' has an 'embedding' strength and contains 'Has' in its name. Consider renaming this class."),
+
+  /** Required message parameters: Source or Target name, RelationshipClass fullName, constraint class fullName */
+  RelationshipConstraintShouldNotUseDeprecatedConstraintClass: EC.createSchemaItemDiagnosticClass<EC.RelationshipClass, [string, string, string]>(DiagnosticCodes.RelationshipConstraintShouldNotUseDeprecatedConstraintClass,
+    "{0} Relationship Constraint of Relationship class '{1}' has deprecated constraint class '{2}'.", EC.DiagnosticCategory.Warning),
+
+  /** Required message parameters: Source or Target name, RelationshipClass fullName, constraint class fullName */
+  RelationshipConstraintShouldNotUseDeprecatedAbstractConstraint: EC.createSchemaItemDiagnosticClass<EC.RelationshipClass, [string, string, string]>(DiagnosticCodes.RelationshipConstraintShouldNotUseDeperecatedAbstractConstraint,
+    "{0} Relationship Constraint of Relationship class '{1}' has deprecated abstract constraint '{2}'.", EC.DiagnosticCategory.Warning),
+
+  /** Required message parameters: Source or Target name, RelationshipClass fullName, constraint class fullName, constraint base fullname */
+  RelationshipConstraintShouldNotUseConstraintClassWithDeprecatedBase: EC.createSchemaItemDiagnosticClass<EC.RelationshipClass, [string, string, string, string, string]>(DiagnosticCodes.RelationshipConstraintShouldNotUseConstraintClassWithDeprecatedBase,
+    "{0} Relationship Constraint of Relationship class '{1}' has constraint class '{2}' derived from base, '{3}', which itself is or derives from a deprecated class, {4}.", EC.DiagnosticCategory.Warning),
+
+  /** Required message parameters: Source or Target name, RelationshipClass fullName, constraint class fullName, constraint base fullname */
+  RelationshipConstraintShouldNotUseAbstractConstraintWithDeprecatedBase: EC.createSchemaItemDiagnosticClass<EC.RelationshipClass, [string, string, string, string, string]>(DiagnosticCodes.RelationshipConstraintShouldNotUseAbstractConstraintWithDeprecatedBase,
+    "{0} Relationship Constraint of Relationship class '{1}' has abstract constraint '{2}' derived from base, '{3}', which itself is or derives from a deprecated class, {4}.", EC.DiagnosticCategory.Warning),
 
   /** Required message parameters: StructClass fullName */
   StructsCannotHaveBaseClasses: EC.createSchemaItemDiagnosticClass<EC.StructClass, [string]>(DiagnosticCodes.StructsCannotHaveBaseClasses,
@@ -227,10 +303,26 @@ export const Diagnostics = {
   /** Required message parameters: ECClass FullName,  Schema Name */
   ClassHasHandlerCACannotAppliedOutsideCoreSchemas: EC.createClassDiagnosticClass<[string, string]>(DiagnosticCodes.ClassHasHandlerCACannotAppliedOutsideCoreSchemas,
     "Class '{0}' in schema '{1}' has 'ClassHasHandler' Custom Attribute applied. 'ClassHasHandler' Custom Attribute not allowed outside of the BisCore, Functional, and Generic schemas. Consider using the SchemaHasBehavior Custom Attribute."),
+
+  /** Required message parameters: Current Schema FullName, Derived ECClass FullName, Base ECClass FullName */
+  ClassShouldNotDerivedFromDeprecatedClass: EC.createClassDiagnosticClass<[string, string, string]>(DiagnosticCodes.ClassShouldNotDerivedFromDeprecatedClass,
+    "Class '{0}' derived from a class, '{1}', which itself is or derives from a deprecated class, '{2}'.", EC.DiagnosticCategory.Warning),
+
+  /** Required message parameters: Current Class FullName, Property Name */
+  ClassShouldNotHaveDeprecatedProperty: EC.createClassDiagnosticClass<[string, string]>(DiagnosticCodes.ClassShouldNotHaveDeprecatedProperty,
+    "Class '{0} has property '{1}' which is deprecated", EC.DiagnosticCategory.Warning),
+
+  /** Required message parameters: Current Class FullName, Property Name, Struct FullName */
+  ClassShouldNotHavePropertyOfDeprecatedStructClass: EC.createClassDiagnosticClass<[string, string, string]>(DiagnosticCodes.ClassShouldNotHavePropertyOfDeprecatedStructClass,
+    "Class '{0}' has property '{1}' which is of a deprecated struct class, '{2}'", EC.DiagnosticCategory.Warning),
+
+  /** Required message parameters: Current Class FullName, Custom Attribute Class Name */
+  ClassShouldNotUseDeprecatedCustomAttributes: EC.createClassDiagnosticClass<[string, string]>(DiagnosticCodes.ClassShouldNotUseDeprecatedCustomAttributes,
+    "Class '{0}' uses a deprecated custom attribute '{1}'", EC.DiagnosticCategory.Warning),
 };
 
 /**
- * All schema validation rules that fall under the category of ECObjects.
+ * Comprehensive set of BIS validation rules.
  */
 // tslint:disable-next-line:variable-name
 export const BisRuleSet: EC.IRuleSet = {
@@ -240,6 +332,7 @@ export const BisRuleSet: EC.IRuleSet = {
     schemaMustNotReferenceOldStandardSchemas,
     schemaWithDynamicInNameMustHaveDynamicSchemaCA,
     schemaClassDisplayLabelMustBeUnique,
+    schemaShouldNotUseDeprecatedSchema,
   ],
   entityClassRules: [
     entityClassMustDeriveFromBisHierarchy,
@@ -250,6 +343,7 @@ export const BisRuleSet: EC.IRuleSet = {
     entityClassesCannotDeriveFromModelClasses,
     bisModelSubClassesCannotDefineProperties,
     entityClassesMayNotSubclassDeprecatedClasses,
+    entityClassesShouldNotDerivedFromDeprecatedMixinClasses,
   ],
   relationshipRules: [
     relationshipClassMustNotUseHoldingStrength,
@@ -257,6 +351,10 @@ export const BisRuleSet: EC.IRuleSet = {
     relationshipTargetMultiplicityUpperBoundRestriction,
     relationshipElementAspectContraintRestriction,
     embeddingRelationshipsMustNotHaveHasInName,
+    relationshipConstraintShouldNotUseDeprecatedConstraintClass,
+    relationshipConstraintShouldNotUseDeprecatedAbstractConstraint,
+    relationshipConstraintShouldNotUseConstraintClassWithDeprecatedBase,
+    relationshipConstraintShouldNotUseAbstractConstraintWithDeprecatedBase,
   ],
   structClassRules: [
     structsCannotHaveBaseClasses,
@@ -277,6 +375,10 @@ export const BisRuleSet: EC.IRuleSet = {
   classRules: [
     multiplePropertiesInClassWithSameLabel,
     classHasHandlerCACannotAppliedOutsideCoreSchemas,
+    classShouldNotDerivedFromDeprecatedClass,
+    classShouldNotHaveDeprecatedProperty,
+    classShouldNotHavePropertyOfDeprecatedStructClass,
+    classShouldNotUseDeprecatedCustomAttributes,
   ],
   mixinRules: [
     mixinsCannotOverrideInheritedProperties,
@@ -344,7 +446,7 @@ export async function* schemaWithDynamicInNameMustHaveDynamicSchemaCA(schema: EC
   if (!schema.name.toLowerCase().includes("dynamic"))
     return;
 
-  if (!schema.customAttributes || !schema.customAttributes.has("CoreCustomAttributes.DynamicSchema"))
+  if (undefined === schema.customAttributes || !schema.customAttributes.has("CoreCustomAttributes.DynamicSchema"))
     yield new Diagnostics.SchemaWithDynamicInNameMustHaveDynamicSchemaCA(schema, [schema.schemaKey.toString()]);
 }
 
@@ -354,7 +456,7 @@ export async function* schemaWithDynamicInNameMustHaveDynamicSchemaCA(schema: EC
 export async function* schemaClassDisplayLabelMustBeUnique(schema: EC.Schema): AsyncIterable<EC.SchemaDiagnostic<any[]>> {
   const existingLabels = new Map<string, EC.ECClass>();
   for (const ecClass of schema.getClasses()) {
-    if (!ecClass.label)
+    if (undefined === ecClass.label)
       continue;
 
     const entry = existingLabels.get(ecClass.label);
@@ -367,6 +469,21 @@ export async function* schemaClassDisplayLabelMustBeUnique(schema: EC.Schema): A
   }
 }
 
+/**
+ * BIS Rule: Schema should not use a deprecated schema (warn)
+ */
+export async function* schemaShouldNotUseDeprecatedSchema(schema: EC.Schema): AsyncIterable<EC.SchemaDiagnostic<any[]>> {
+  if (undefined !== schema.customAttributes && schema.customAttributes.has(deprecatedFullName))
+    return;
+
+  for (const refSchema of schema.references) {
+    if (undefined !== refSchema.customAttributes && refSchema.customAttributes.has(deprecatedFullName)) {
+      yield new Diagnostics.SchemaShouldNotUseDeprecatedSchema(schema, [schema.fullName, refSchema.fullName]);
+      continue;
+    }
+  }
+}
+
 /** Mixin RULES
  * ************************************************************
  */
@@ -375,7 +492,7 @@ export async function* schemaClassDisplayLabelMustBeUnique(schema: EC.Schema): A
  * BIS Rule: A Mixin class cannot override inherited properties.
  */
 export async function* mixinsCannotOverrideInheritedProperties(mixin: EC.Mixin): AsyncIterable<EC.SchemaItemDiagnostic<EC.Mixin, any[]>> {
-  if (!mixin.properties || !mixin.baseClass)
+  if (undefined === mixin.properties || undefined === mixin.baseClass)
     return;
 
   const baseClass = await mixin.baseClass;
@@ -419,9 +536,9 @@ export async function* entityClassMayNotInheritSameProperty(entity: EC.EntityCla
   // The properties of each base class must be retrieved separately in order to discover duplicates.
   // entity.getProperties() would merge them in a map, removing duplicates...
   const allProperties: EC.Property[] = [];
-  if (baseClass) {
+  if (undefined !== baseClass)
     allProperties.push(...await baseClass.getProperties());
-  }
+
   for (const promise of entity.mixins) {
     const mixin = await promise;
     allProperties.push(...await mixin.getProperties());
@@ -568,7 +685,7 @@ export async function* bisModelSubClassesCannotDefineProperties(entity: EC.Entit
   if (!isModel)
     return;
 
-  if (entity.properties)
+  if (undefined !== entity.properties && 0 < entity.properties.length)
     yield new Diagnostics.BisModelSubClassesCannotDefineProperties(entity, [entity.fullName]);
 }
 
@@ -576,16 +693,31 @@ export async function* bisModelSubClassesCannotDefineProperties(entity: EC.Entit
  * BIS Rule: Entity classes may not subclass deprecated classes.
  */
 export async function* entityClassesMayNotSubclassDeprecatedClasses(entity: EC.EntityClass): AsyncIterable<EC.SchemaItemDiagnostic<EC.EntityClass, any[]>> {
-  if (!entity.baseClass)
+  if (undefined === entity.baseClass)
     return;
 
   // If the class itself is deprecated, the rule should pass
-  if (entity.customAttributes && entity.customAttributes.has(deprecatedFullName))
+  if (undefined !== entity.customAttributes && entity.customAttributes.has(deprecatedFullName))
     return;
 
   const baseClass = await entity.baseClass;
-  if (baseClass.customAttributes && baseClass.customAttributes.has(deprecatedFullName))
+  if (undefined !== baseClass.customAttributes && baseClass.customAttributes.has(deprecatedFullName))
     yield new Diagnostics.EntityClassesMayNotSubclassDeprecatedClasses(entity, [entity.fullName, baseClass.fullName]);
+}
+
+/**
+ * BIS Rule: Entity classes should not derived from deprecated mixin classes (warn)
+ */
+export async function* entityClassesShouldNotDerivedFromDeprecatedMixinClasses(entity: EC.EntityClass): AsyncIterable<EC.SchemaItemDiagnostic<EC.EntityClass, any[]>> {
+  if (undefined !== entity.customAttributes && entity.customAttributes.has(deprecatedFullName))
+    return;
+
+  const baseMixins = entity.getMixinsSync();
+  for (const mixin of baseMixins) {
+    const deprecatedClass = getClassDefinedCustomAttribute(mixin, deprecatedFullName);
+    if (deprecatedClass)
+      yield new Diagnostics.EntityClassesShouldNotDerivedFromDeprecatedMixinClasses(entity, [entity.fullName, mixin.fullName, deprecatedClass.fullName]);
+  }
 }
 
 /** RelationshipClass RULES
@@ -604,7 +736,7 @@ export async function* relationshipSourceMultiplicityUpperBoundRestriction(relat
     return;
 
   const multiplicity = relationshipClass.source.multiplicity;
-  if (multiplicity && multiplicity.upperLimit > 1)
+  if (undefined !== multiplicity && multiplicity.upperLimit > 1)
     yield new Diagnostics.RelationshipSourceMultiplicityUpperBoundRestriction(relationshipClass, [relationshipClass.fullName]);
 }
 
@@ -614,7 +746,7 @@ export async function* relationshipTargetMultiplicityUpperBoundRestriction(relat
     return;
 
   const multiplicity = relationshipClass.target.multiplicity;
-  if (multiplicity && multiplicity.upperLimit > 1)
+  if (undefined !== multiplicity && multiplicity.upperLimit > 1)
     yield new Diagnostics.RelationshipTargetMultiplicityUpperBoundRestriction(relationshipClass, [relationshipClass.fullName]);
 }
 
@@ -628,7 +760,7 @@ export async function* relationshipElementAspectContraintRestriction(relationshi
     return;
 
   const constraint = relationshipClass.strengthDirection === EC.StrengthDirection.Forward ? relationshipClass.target : relationshipClass.source;
-  if (!constraint.constraintClasses)
+  if (undefined === constraint.constraintClasses)
     return;
 
   for (const promise of constraint.constraintClasses) {
@@ -647,6 +779,156 @@ export async function* embeddingRelationshipsMustNotHaveHasInName(relationshipCl
 
   if (relationshipClass.name.includes("Has"))
     yield new Diagnostics.EmbeddingRelationshipsMustNotHaveHasInName(relationshipClass, [relationshipClass.fullName]);
+}
+
+/** BIS Rule: Relationship constraint should not use the deprecated constraint class (warn) */
+export async function* relationshipConstraintShouldNotUseDeprecatedConstraintClass(relationshipClass: EC.RelationshipClass): AsyncIterable<EC.SchemaItemDiagnostic<EC.RelationshipClass, any[]>> {
+  if (relationshipClass.customAttributes && relationshipClass.customAttributes.has(deprecatedFullName))
+    return;
+
+  // helper lambda to check deprecated constraint classes for source and target constraints
+  const checkDeprecatedConstraintClasses = async (relationshipConstraint: EC.RelationshipConstraint, constraintName: string) => {
+    if (!relationshipConstraint.constraintClasses)
+      return [];
+
+    const diagnosticsList = [];
+    for (const constraintClass of relationshipConstraint.constraintClasses) {
+      const constraint = await constraintClass;
+
+      // check if constraint class has CoreCustomAttributes.Deprecated applied to itself
+      if (constraint.customAttributes && constraint.customAttributes.has(deprecatedFullName)) {
+        diagnosticsList.push(new Diagnostics.RelationshipConstraintShouldNotUseDeprecatedConstraintClass(
+          relationshipClass, [constraintName, relationshipClass.fullName, constraint.fullName]));
+      }
+    }
+
+    return diagnosticsList;
+  };
+
+  let diagnostics = await checkDeprecatedConstraintClasses(relationshipClass.source, "Source");
+  for (const diagnostic of diagnostics)
+    yield diagnostic;
+
+  diagnostics = await checkDeprecatedConstraintClasses(relationshipClass.target, "Target");
+  for (const diagnostic of diagnostics)
+    yield diagnostic;
+}
+
+/** BIS Rule: Relationship constraint should not use the deprecated abstract constraint (warn) */
+export async function* relationshipConstraintShouldNotUseDeprecatedAbstractConstraint(relationshipClass: EC.RelationshipClass): AsyncIterable<EC.SchemaItemDiagnostic<EC.RelationshipClass, any[]>> {
+  if (relationshipClass.customAttributes && relationshipClass.customAttributes.has(deprecatedFullName))
+    return;
+
+  // helper lambda to check deprecated abstract constraint class for source and target constraints
+  const checkDeprecatedAbstractConstraint = async (relationshipConstraint: EC.RelationshipConstraint, constraintName: string) => {
+    const abstractConstraint = await relationshipConstraint.abstractConstraint;
+    if (abstractConstraint && abstractConstraint.customAttributes && abstractConstraint.customAttributes.has(deprecatedFullName)) {
+      return new Diagnostics.RelationshipConstraintShouldNotUseDeprecatedAbstractConstraint(
+        relationshipClass, [constraintName, relationshipClass.fullName, abstractConstraint.fullName]);
+    }
+
+    return undefined;
+  };
+
+  let diagnostic = await checkDeprecatedAbstractConstraint(relationshipClass.source, "Source");
+  if (diagnostic)
+    yield diagnostic;
+
+  diagnostic = await checkDeprecatedAbstractConstraint(relationshipClass.target, "Target");
+  if (diagnostic)
+    yield diagnostic;
+}
+
+/** BIS Rule: Relationship constraint should not use the constraint class derived from deprecated base (warn) */
+export async function* relationshipConstraintShouldNotUseConstraintClassWithDeprecatedBase(relationshipClass: EC.RelationshipClass): AsyncIterable<EC.SchemaItemDiagnostic<EC.RelationshipClass, any[]>> {
+  if (relationshipClass.customAttributes && relationshipClass.customAttributes.has(deprecatedFullName))
+    return;
+
+  // helper lambda to check if constraint classes for source and target constraints contains deprecated base
+  const checkDeprecatedConstraintBase = async (relationshipConstraint: EC.RelationshipConstraint, constraintName: string) => {
+    if (!relationshipConstraint.constraintClasses)
+      return [];
+
+    const diagnosticsList = [];
+    for (const constraintClass of relationshipConstraint.constraintClasses) {
+      const constraint = await constraintClass;
+      if (constraint.customAttributes && constraint.customAttributes.has(deprecatedFullName))
+        continue;
+
+      const baseList = [];
+      const base = await constraint.baseClass;
+      if (base)
+        baseList.push(base);
+
+      if (constraint.schemaItemType === EC.SchemaItemType.EntityClass) {
+        for (const eachMixin of (constraint as EC.EntityClass).mixins)
+          baseList.push(await eachMixin);
+      }
+
+      for (const eachBase of baseList) {
+        const deprecatedClass = getClassDefinedCustomAttribute(eachBase, deprecatedFullName);
+        if (deprecatedClass) {
+          diagnosticsList.push(new Diagnostics.RelationshipConstraintShouldNotUseConstraintClassWithDeprecatedBase(
+            relationshipClass, [constraintName, relationshipClass.fullName, constraint.fullName, eachBase.fullName, deprecatedClass.fullName]));
+        }
+      }
+    }
+
+    return diagnosticsList;
+  };
+
+  let diagnostics = await checkDeprecatedConstraintBase(relationshipClass.source, "Source");
+  for (const diagnostic of diagnostics)
+    yield diagnostic;
+
+  diagnostics = await checkDeprecatedConstraintBase(relationshipClass.target, "Target");
+  for (const diagnostic of diagnostics)
+    yield diagnostic;
+}
+
+/** BIS Rule: Relationship constraint should not use the abstract constraint derived from deprecated base (warn) */
+export async function* relationshipConstraintShouldNotUseAbstractConstraintWithDeprecatedBase(relationshipClass: EC.RelationshipClass): AsyncIterable<EC.SchemaItemDiagnostic<EC.RelationshipClass, any[]>> {
+  if (relationshipClass.customAttributes && relationshipClass.customAttributes.has(deprecatedFullName))
+    return;
+
+  // helper lambda to check if constraint classes for source and target abstract constraints contains deprecated base
+  const checkDeprecatedConstraintBase = async (relationshipConstraint: EC.RelationshipConstraint, constraintName: string) => {
+    if (!relationshipConstraint.abstractConstraint)
+      return [];
+
+    const abstractConstraint = await relationshipConstraint.abstractConstraint;
+    if (abstractConstraint.customAttributes && abstractConstraint.customAttributes.has(deprecatedFullName))
+      return [];
+
+    const diagnosticsList = [];
+    const baseList = [];
+    const base = await abstractConstraint.baseClass;
+    if (base)
+      baseList.push(base);
+
+    if (abstractConstraint.schemaItemType === EC.SchemaItemType.EntityClass) {
+      for (const eachMixin of (abstractConstraint as EC.EntityClass).mixins)
+        baseList.push(await eachMixin);
+    }
+
+    for (const eachBase of baseList) {
+      const deprecatedClass = getClassDefinedCustomAttribute(eachBase, deprecatedFullName);
+      if (deprecatedClass) {
+        diagnosticsList.push(new Diagnostics.RelationshipConstraintShouldNotUseAbstractConstraintWithDeprecatedBase(
+          relationshipClass, [constraintName, relationshipClass.fullName, abstractConstraint.fullName, eachBase.fullName, deprecatedClass.fullName]));
+      }
+    }
+
+    return diagnosticsList;
+  };
+
+  let diagnostics = await checkDeprecatedConstraintBase(relationshipClass.source, "Source");
+  for (const diagnostic of diagnostics)
+    yield diagnostic;
+
+  diagnostics = await checkDeprecatedConstraintBase(relationshipClass.target, "Target");
+  for (const diagnostic of diagnostics)
+    yield diagnostic;
 }
 
 /** StructClass RULES
@@ -709,7 +991,7 @@ export async function* koqDuplicatePresentationFormat(koq: EC.KindOfQuantity): A
   if (koq.fullName === "AecUnits.LENGTH_SHORT" && isExceptionAecUnits)
     return;
 
-  const formats = koq.presentationUnits;
+  const formats = koq.presentationFormats;
   if (!formats)
     return;
 
@@ -805,5 +1087,71 @@ export async function* classHasHandlerCACannotAppliedOutsideCoreSchemas(ecClass:
   const isExceptionSchema = (schemaName === "BisCore") || (schemaName === "Functional") || (schemaName === "Generic");
   if (!isExceptionSchema && ecClass.customAttributes.has(classHasHandlerCAFullName)) {
     yield new Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(ecClass, [ecClass.fullName, ecClass.schema.name]);
+  }
+}
+
+/** BIS Rule: Class should not derived from deprecated class (warn) */
+export async function* classShouldNotDerivedFromDeprecatedClass(ecClass: EC.AnyClass): AsyncIterable<EC.ClassDiagnostic<any[]>> {
+  if (ecClass.customAttributes && ecClass.customAttributes.has(deprecatedFullName))
+    return;
+
+  const base = ecClass.getBaseClassSync();
+  if (!base)
+    return;
+
+  const deprecatedBase = getClassDefinedCustomAttribute(base, deprecatedFullName);
+  if (deprecatedBase)
+    yield new Diagnostics.ClassShouldNotDerivedFromDeprecatedClass(ecClass, [ecClass.fullName, base.fullName, deprecatedBase.fullName]);
+}
+
+/** BIS Rule: Class should not have deprecated property (warn) */
+export async function* classShouldNotHaveDeprecatedProperty(ecClass: EC.AnyClass): AsyncIterable<EC.ClassDiagnostic<any[]>> {
+  if (ecClass.customAttributes && ecClass.customAttributes.has(deprecatedFullName))
+    return;
+
+  if (!ecClass.properties)
+    return;
+
+  for (const property of ecClass.properties) {
+    if (property.customAttributes && property.customAttributes.has(deprecatedFullName))
+      yield new Diagnostics.ClassShouldNotHaveDeprecatedProperty(ecClass, [ecClass.fullName, property.name]);
+  }
+}
+
+/** BIS Rule: Class should not have property which is of deprecated struct class (warn). No warning issued if class or property itself is deprecated */
+export async function* classShouldNotHavePropertyOfDeprecatedStructClass(ecClass: EC.AnyClass): AsyncIterable<EC.ClassDiagnostic<any[]>> {
+  if (ecClass.customAttributes && ecClass.customAttributes.has(deprecatedFullName))
+    return;
+
+  if (!ecClass.properties)
+    return;
+
+  for (const property of ecClass.properties) {
+    if (property.customAttributes && property.customAttributes.has(deprecatedFullName))
+      continue;
+
+    if (property.isStruct()) {
+      // since struct is banned from extending another struct in bis rule, we won't recursively check deprecated base here. Only check if it is deprecated
+      const struct = (property as EC.AnyStructProperty).structClass;
+      if (struct.customAttributes && struct.customAttributes.has(deprecatedFullName))
+        yield new Diagnostics.ClassShouldNotHavePropertyOfDeprecatedStructClass(ecClass, [ecClass.fullName, property.name, struct.fullName]);
+    }
+  }
+}
+
+/** BIS Rule: Class should not use deprecated custom attributes (warn) */
+export async function* classShouldNotUseDeprecatedCustomAttributes(ecClass: EC.AnyClass): AsyncIterable<EC.ClassDiagnostic<any[]>> {
+  if (!ecClass.customAttributes || ecClass.customAttributes.has(deprecatedFullName))
+    return;
+
+  const schema = ecClass.schema;
+  for (const [, customAttribute] of ecClass.customAttributes) {
+    const customAttributeClass = schema.getItemSync(customAttribute.className) as EC.CustomAttributeClass;
+    if (!customAttributeClass)
+      continue;
+
+    // since CA class is banned from extending another CA class in bis rule, we won't recursively check deprecated base here. Only check if it is deprecated
+    if (customAttributeClass.customAttributes && customAttributeClass.customAttributes.has(deprecatedFullName))
+      yield new Diagnostics.ClassShouldNotUseDeprecatedCustomAttributes(ecClass, [ecClass.fullName, customAttributeClass.fullName]);
   }
 }

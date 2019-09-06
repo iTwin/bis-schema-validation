@@ -6,8 +6,10 @@
 import { expect } from "chai";
 import * as Rules from "../../bis-rules/src/BisRules";
 import { MutableClass } from "@bentley/ecschema-metadata/lib/Metadata/Class";
+import { MutableProperty } from "@bentley/ecschema-metadata/lib/Metadata/Property";
 import { MutableSchema } from "@bentley/ecschema-metadata/lib/Metadata/Schema";
-import { DelayedPromiseWithProps, SchemaContext, Schema, EntityClass, PrimitiveType, ECClass, PropertyCategory, LazyLoadedSchemaItem, AnyClass } from "@bentley/ecschema-metadata";
+import { MutableEntityClass } from "@bentley/ecschema-metadata/lib/Metadata/EntityClass";
+import { Property, DelayedPromiseWithProps, SchemaContext, Schema, EntityClass, RelationshipClass, Mixin, PrimitiveType, ECClass, PropertyCategory, LazyLoadedSchemaItem, AnyClass } from "@bentley/ecschema-metadata";
 import { DiagnosticCategory, DiagnosticType } from "@bentley/ecschema-metadata/lib/Validation/Diagnostic";
 import { BisTestHelper } from "./utils/BisTestHelper";
 
@@ -202,6 +204,371 @@ describe("Class Rule Tests", () => {
       }
 
       ClassHasHandlerRuleTest("TestSchema", "ts", await BisTestHelper.getNewContext(), testValidation);
+    });
+  });
+
+  describe("ClassShouldNotDerivedFromDeprecatedClass", () => {
+    it("Ignore deprecated class, rule passed", async () => {
+      schema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      const mutableSchema = schema as MutableSchema;
+
+      const deprecatedClass = await mutableSchema.createEntityClass("DeprecatedEntity");
+      const deprecatedMutable = deprecatedClass as ECClass as MutableClass;
+      deprecatedMutable.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
+
+      const testClass = await mutableSchema.createEntityClass("TestEntity");
+      const testClassMutable = testClass as ECClass as MutableClass;
+      testClassMutable.baseClass = new DelayedPromiseWithProps(deprecatedClass.key, async () => deprecatedClass) as LazyLoadedSchemaItem<EntityClass>;
+      testClassMutable.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
+
+      const result = await Rules.classShouldNotDerivedFromDeprecatedClass(testClass);
+      for await (const _diagnostic of result!) {
+        expect(false, "Rule should have passed").to.be.true;
+      }
+    });
+
+    it("Entity class derived from a deprecated entity class, warning issued, no warning issue for deprecated mixin since the rule only check main base, rule passed", async () => {
+      schema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      const mutableSchema = schema as MutableSchema;
+
+      const deprecatedClass = await mutableSchema.createEntityClass("DeprecatedEntity");
+      const deprecatedMutable = deprecatedClass as ECClass as MutableClass;
+      deprecatedMutable.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
+
+      const deprecatedMixin = await mutableSchema.createMixinClass("DeprecatedMixin");
+      const deprecatedMixinMutable = deprecatedMixin as ECClass as MutableClass;
+      deprecatedMixinMutable.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
+
+      const normalEntity = await mutableSchema.createEntityClass("Entity");
+      const normalEntityMutable = normalEntity as MutableEntityClass;
+      normalEntityMutable.baseClass = new DelayedPromiseWithProps(deprecatedClass.key, async () => deprecatedClass) as LazyLoadedSchemaItem<EntityClass>;
+      normalEntityMutable.addMixin(deprecatedMixin);
+
+      const result = await Rules.classShouldNotDerivedFromDeprecatedClass(normalEntity);
+      let resultHasEntries = false;
+      for await (const diagnostic of result) {
+        resultHasEntries = true;
+        expect(diagnostic).to.not.be.undefined;
+        expect(diagnostic!.ecDefinition).to.equal(normalEntity);
+        expect(diagnostic!.messageArgs).to.eql(["TestSchema.Entity", "TestSchema.DeprecatedEntity", "TestSchema.DeprecatedEntity"]);
+        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.ClassShouldNotDerivedFromDeprecatedClass);
+        expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
+      }
+      expect(resultHasEntries, "expected rule to return an AsyncIterable with entries").to.be.true;
+    });
+
+    it("Relationship class derived from a deprecated relationship class, warning issued, rule passed", async () => {
+      schema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      const mutableSchema = schema as MutableSchema;
+
+      const deprecatedRel = await mutableSchema.createRelationshipClass("DeprecatedRelationship");
+      const deprecatedMutable = deprecatedRel as ECClass as MutableClass;
+      deprecatedMutable.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
+
+      const normalRel = await mutableSchema.createRelationshipClass("NormalRelationship");
+      const normalMutable = normalRel as ECClass as MutableClass;
+      normalMutable.baseClass = new DelayedPromiseWithProps(deprecatedRel.key, async () => deprecatedRel) as LazyLoadedSchemaItem<RelationshipClass>;
+
+      const result = await Rules.classShouldNotDerivedFromDeprecatedClass(normalRel);
+      let resultHasEntries = false;
+      for await (const diagnostic of result) {
+        resultHasEntries = true;
+        expect(diagnostic).to.not.be.undefined;
+        expect(diagnostic!.ecDefinition).to.equal(normalRel);
+        expect(diagnostic!.messageArgs).to.eql(["TestSchema.NormalRelationship", "TestSchema.DeprecatedRelationship", "TestSchema.DeprecatedRelationship"]);
+        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.ClassShouldNotDerivedFromDeprecatedClass);
+        expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
+      }
+      expect(resultHasEntries, "expected rule to return an AsyncIterable with entries").to.be.true;
+    });
+
+    it("Class indirectly derives from a deprecated main class, mixin is ignored in this rule, warning issued, rule passed", async () => {
+      schema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      const mutableSchema = schema as MutableSchema;
+
+      const deprecatedClass = await mutableSchema.createEntityClass("DeprecatedEntity");
+      const deprecatedMutable = deprecatedClass as ECClass as MutableClass;
+      deprecatedMutable.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
+
+      const indirectDeprecatedClass = await mutableSchema.createEntityClass("IndirectDeprecatedEntity");
+      const indirectDeprecatedMutable = indirectDeprecatedClass as ECClass as MutableClass;
+      indirectDeprecatedMutable.baseClass = new DelayedPromiseWithProps(deprecatedClass.key, async () => deprecatedClass) as LazyLoadedSchemaItem<EntityClass>;
+
+      const deprecatedMixin = await mutableSchema.createMixinClass("DeprecatedMixin");
+      const deprecatedMixinMutable = deprecatedMixin as ECClass as MutableClass;
+      deprecatedMixinMutable.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
+
+      const indirectDeprecatedMixin = await mutableSchema.createMixinClass("IndirectDeprecatedMixin");
+      const indirectDeprecatedMixinMutable = indirectDeprecatedMixin as ECClass as MutableClass;
+      indirectDeprecatedMixinMutable.baseClass = new DelayedPromiseWithProps(deprecatedMixin.key, async () => deprecatedMixin) as LazyLoadedSchemaItem<Mixin>;
+
+      const normalEntity = await mutableSchema.createEntityClass("Entity");
+      const normalEntityMutable = normalEntity as MutableEntityClass;
+      normalEntityMutable.baseClass = new DelayedPromiseWithProps(indirectDeprecatedClass.key, async () => deprecatedClass) as LazyLoadedSchemaItem<EntityClass>;
+      normalEntityMutable.addMixin(indirectDeprecatedMixin);
+
+      const result = await Rules.classShouldNotDerivedFromDeprecatedClass(normalEntity);
+      let resultHasEntries = false;
+      for await (const diagnostic of result) {
+        resultHasEntries = true;
+        expect(diagnostic).to.not.be.undefined;
+        expect(diagnostic!.ecDefinition).to.equal(normalEntity);
+        expect(diagnostic!.messageArgs).to.eql(["TestSchema.Entity", "TestSchema.IndirectDeprecatedEntity", "TestSchema.DeprecatedEntity"]);
+        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.ClassShouldNotDerivedFromDeprecatedClass);
+        expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
+      }
+      expect(resultHasEntries, "expected rule to return an AsyncIterable with entries").to.be.true;
+    });
+
+    it("Class does not derived from deprecated class", async () => {
+      schema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      const mutableSchema = schema as MutableSchema;
+
+      const base = await mutableSchema.createEntityClass("BaseEntity");
+      const normalEntity = await mutableSchema.createEntityClass("Entity");
+      normalEntity.baseClass = new DelayedPromiseWithProps(base.key, async () => base) as LazyLoadedSchemaItem<EntityClass>;
+
+      const result = await Rules.classShouldNotDerivedFromDeprecatedClass(normalEntity);
+      for await (const _diagnostic of result) {
+        expect(false, "Rule should have passed").to.be.true;
+      }
+    });
+  });
+
+  describe("ClassShouldNotUseDeprecatedProperty", () => {
+    it("Class has no deprecated property, rule passed", async () => {
+      const testSchema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      const testMutable = testSchema as MutableSchema;
+
+      const normalEntity = await testMutable.createEntityClass("NormalEntity");
+      const entityMutable = normalEntity as ECClass as MutableClass;
+      await entityMutable.createPrimitiveProperty("IntProp", PrimitiveType.Integer);
+
+      const result = await Rules.classShouldNotHaveDeprecatedProperty(normalEntity);
+      for await (const _diagnostic of result) {
+        expect(false, "Rule should have passed").to.be.true;
+      }
+    });
+
+    it("Ignore deprecated class, rule passed", async () => {
+      schema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      const mutableSchema = schema as MutableSchema;
+
+      const testClass = await mutableSchema.createEntityClass("TestEntity");
+      const testClassMutable = testClass as ECClass as MutableClass;
+      testClassMutable.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
+
+      const deprecatedProp = await testClassMutable.createPrimitiveProperty("intProp", PrimitiveType.Integer);
+      const deprecatedPropMutable = deprecatedProp as Property as MutableProperty;
+      deprecatedPropMutable.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
+
+      const result = await Rules.classShouldNotHaveDeprecatedProperty(testClass);
+      for await (const _diagnostic of result!) {
+        expect(false, "Rule should have passed").to.be.true;
+      }
+    });
+
+    it("Class has deprecated property, warning issued, rule passed", async () => {
+      const testSchema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      const testMutable = testSchema as MutableSchema;
+
+      const normalEntity = await testMutable.createEntityClass("NormalEntity");
+      const entityMutable = normalEntity as ECClass as MutableClass;
+      const deprecatedProp = await entityMutable.createPrimitiveProperty("intProp", PrimitiveType.Integer);
+      const deprecatedMutable = deprecatedProp as Property as MutableProperty;
+      deprecatedMutable.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
+
+      const result = await Rules.classShouldNotHaveDeprecatedProperty(normalEntity);
+      let resultHasEntries = false;
+      for await (const diagnostic of result) {
+        resultHasEntries = true;
+        expect(diagnostic).to.not.be.undefined;
+        expect(diagnostic!.ecDefinition).to.equal(normalEntity);
+        expect(diagnostic!.messageArgs).to.eql(["TestSchema.NormalEntity", "intProp"]);
+        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.ClassShouldNotHaveDeprecatedProperty);
+        expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
+      }
+      expect(resultHasEntries, "expected rule to return an AsyncIterable with entries").to.be.true;
+    });
+  });
+
+  describe("ClassShouldNotUsePropertyOfDeprecatedStruct", () => {
+    it("Class has no deprecated struct property, rule passed", async () => {
+      const testSchema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      const testMutable = testSchema as MutableSchema;
+
+      const normalStruct = await testMutable.createStructClass("NormalStruct");
+      const structMutable = normalStruct as ECClass as MutableClass;
+      await structMutable.createPrimitiveProperty("intProps", PrimitiveType.Integer);
+      await structMutable.createPrimitiveProperty("stringProps", PrimitiveType.String);
+
+      const normalEntity = await testMutable.createStructClass("NormalEntity");
+      const entityMutable = normalEntity as ECClass as MutableClass;
+      await entityMutable.createStructProperty("structProps", normalStruct);
+
+      const result = await Rules.classShouldNotHavePropertyOfDeprecatedStructClass(normalEntity);
+      for await (const _diagnostic of result) {
+        expect(false, "Rule should have passed").to.be.true;
+      }
+    });
+
+    it("Ignore deprecated class, rule passed", async () => {
+      schema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      const mutableSchema = schema as MutableSchema;
+
+      const deprecatedStruct = await mutableSchema.createStructClass("DeprecatedStruct");
+      const structMutable = deprecatedStruct as ECClass as MutableClass;
+      await structMutable.createPrimitiveProperty("intProps", PrimitiveType.Integer);
+      await structMutable.createPrimitiveProperty("stringProps", PrimitiveType.String);
+      structMutable.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
+
+      const testClass = await mutableSchema.createEntityClass("TestEntity");
+      const testClassMutable = testClass as ECClass as MutableClass;
+      testClassMutable.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
+      await testClassMutable.createStructProperty("structProp", deprecatedStruct);
+
+      const result = await Rules.classShouldNotHavePropertyOfDeprecatedStructClass(testClass);
+      for await (const _diagnostic of result!) {
+        expect(false, "Rule should have passed").to.be.true;
+      }
+    });
+
+    it("Ignore deprecated Property, rule passed", async () => {
+      schema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      const mutableSchema = schema as MutableSchema;
+
+      const deprecatedStruct = await mutableSchema.createStructClass("DeprecatedStruct");
+      const structMutable = deprecatedStruct as ECClass as MutableClass;
+      await structMutable.createPrimitiveProperty("intProps", PrimitiveType.Integer);
+      await structMutable.createPrimitiveProperty("stringProps", PrimitiveType.String);
+      structMutable.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
+
+      const testClass = await mutableSchema.createEntityClass("TestEntity");
+      const testClassMutable = testClass as ECClass as MutableClass;
+
+      const deprecatedProp = await testClassMutable.createStructProperty("structProp", deprecatedStruct);
+      const deprecatedPropMutable = deprecatedProp as Property as MutableProperty;
+      deprecatedPropMutable.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
+
+      const result = await Rules.classShouldNotHavePropertyOfDeprecatedStructClass(testClass);
+      for await (const _diagnostic of result!) {
+        expect(false, "Rule should have passed").to.be.true;
+      }
+    });
+
+    it("Class has property which is of deprecated struct, warning issued, rule passed", async () => {
+      const testSchema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      const testMutable = testSchema as MutableSchema;
+
+      const deprecatedStruct = await testMutable.createStructClass("DeprecatedStruct");
+      const deprecatedMutable = deprecatedStruct as ECClass as MutableClass;
+      deprecatedMutable.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
+      await deprecatedMutable.createPrimitiveProperty("IntProps", PrimitiveType.Integer);
+
+      const entityClass = await testMutable.createEntityClass("EntityClass");
+      const entityMutable = entityClass as ECClass as MutableClass;
+      await entityMutable.createStructProperty("deprecatedStructProps", deprecatedStruct);
+      await entityMutable.createStructArrayProperty("deprecatedStructArrayProps", deprecatedStruct);
+
+      const result = await Rules.classShouldNotHavePropertyOfDeprecatedStructClass(entityClass);
+      let index = 0;
+      for await (const diagnostic of result) {
+        expect(diagnostic).to.not.be.undefined;
+        expect(diagnostic!.ecDefinition).to.equal(entityClass);
+        if (index == 0)
+          expect(diagnostic!.messageArgs).to.eql(["TestSchema.EntityClass", "deprecatedStructProps", "TestSchema.DeprecatedStruct"]);
+        else
+          expect(diagnostic!.messageArgs).to.eql(["TestSchema.EntityClass", "deprecatedStructArrayProps", "TestSchema.DeprecatedStruct"]);
+        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.ClassShouldNotHavePropertyOfDeprecatedStructClass);
+        expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
+
+        ++index;
+      }
+      expect(index === 2, "expected rule to return an AsyncIterable with 2 entries").to.be.true;
+    });
+  });
+
+  describe("ClassShouldNotUseDeprecatedCustomAttributes", () => {
+    it("Class use deprecated custom attributes, Warning issued, rule passed", async () => {
+      const testSchema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      const mutableSchema = testSchema as MutableSchema;
+
+      const deprecatedCA = await mutableSchema.createCustomAttributeClass("DeprecatedCustomAttribute");
+      const deprecatedMutableCA = deprecatedCA as ECClass as MutableClass;
+      deprecatedMutableCA.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
+
+      const entityClass = await mutableSchema.createEntityClass("EntityClass");
+      const entityMutable = entityClass as ECClass as MutableClass;
+      entityMutable.addCustomAttribute({ className: "DeprecatedCustomAttribute" });
+
+      const result = await Rules.classShouldNotUseDeprecatedCustomAttributes(entityClass);
+      let index = 0;
+      for await (const diagnostic of result) {
+        expect(diagnostic).to.not.be.undefined;
+        expect(diagnostic!.ecDefinition).to.equal(entityClass);
+        expect(diagnostic!.messageArgs).to.eql(["TestSchema.EntityClass", "TestSchema.DeprecatedCustomAttribute"]);
+        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.ClassShouldNotUseDeprecatedCustomAttributes);
+        expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
+
+        ++index;
+      }
+
+      expect(index === 1, "expected rule to return an AsyncIterable with one entry").to.be.true;
+    });
+
+    it("Deprecated Class use deprecated custom attributes, No Warning issued, rule passed", async () => {
+      const testSchema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      const mutableSchema = testSchema as MutableSchema;
+
+      const deprecatedCA = await mutableSchema.createCustomAttributeClass("DeprecatedCustomAttribute");
+      const deprecatedMutableCA = deprecatedCA as ECClass as MutableClass;
+      deprecatedMutableCA.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
+
+      const entityClass = await mutableSchema.createEntityClass("EntityClass");
+      const entityMutable = entityClass as ECClass as MutableClass;
+      entityMutable.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
+      entityMutable.addCustomAttribute({ className: "DeprecatedCustomAttribute" });
+
+      const result = await Rules.classShouldNotUseDeprecatedCustomAttributes(entityClass);
+      for await (const _diagnostic of result) {
+        expect(false, "Rule should have passed").to.be.true;
+      }
+    });
+
+    it("Class does not use deprecated custom attributes, rule passed", async () => {
+      const testSchema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      const mutableSchema = testSchema as MutableSchema;
+
+      await mutableSchema.createCustomAttributeClass("CustomAttribute");
+
+      const entityClass = await mutableSchema.createEntityClass("EntityClass");
+      const entityMutable = entityClass as ECClass as MutableClass;
+      entityMutable.addCustomAttribute({ className: "CustomAttribute" });
+
+      const result = await Rules.classShouldNotUseDeprecatedCustomAttributes(entityClass);
+      for await (const _diagnostic of result) {
+        expect(false, "Rule should have passed").to.be.true;
+      }
+    });
+
+    it("Class use non-existent custom attributes, not crash, rule passed", async () => {
+      const testSchema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      const mutableSchema = testSchema as MutableSchema;
+
+      const entityClass = await mutableSchema.createEntityClass("EntityClass");
+      const entityMutable = entityClass as ECClass as MutableClass;
+      entityMutable.addCustomAttribute({ className: "NonExistCA" });
+
+      const result = await Rules.classShouldNotUseDeprecatedCustomAttributes(entityClass);
+      for await (const _diagnostic of result) {
+        expect(false, "Rule should have passed").to.be.true;
+      }
     });
   });
 });

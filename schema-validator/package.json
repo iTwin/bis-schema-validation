@@ -61,7 +61,7 @@
     "@bentley/imodeljs-clients": "^1.1.0",
     "@bentley/imodeljs-clients-backend": "^1.1.0",
     "@bentley/imodeljs-common": "^1.1.0",
-    "@bentley/ecschema-metadata": "^1.1.0",
+    "@bentley/ecschema-metadata": "^1.4.0-dev.24",
     "@bentley/bis-rules": "0.1.5",
     "chalk": "^2.4.1",
     "commander": "^2.19.0",

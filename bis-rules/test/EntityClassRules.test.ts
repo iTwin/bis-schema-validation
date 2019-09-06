@@ -1152,4 +1152,144 @@ describe("EntityClass Rule Tests", () => {
       }
     });
   });
+
+  describe("EntityClassesShouldNotDerivedFromDeprecatedMixinClasses", async () => {
+    const schemaJson = {
+      BaseEntity: {
+        schemaItemType: "EntityClass",
+        customAttributes: [
+          {
+            className: "CoreCustomAttributes.Deprecated"
+          }
+        ]
+      },
+      Mixin1: {
+        schemaItemType: "Mixin",
+        appliesTo: "TestSchema.TestEntity",
+      },
+      Mixin2: {
+        schemaItemType: "Mixin",
+        appliesTo: "TestSchema.TestEntity",
+      },
+      DeprecatedMixin1: {
+        schemaItemType: "Mixin",
+        appliesTo: "TestSchema.TestEntity",
+        customAttributes: [
+          {
+            className: "CoreCustomAttributes.Deprecated"
+          }
+        ]
+      },
+      DeprecatedMixin2: {
+        schemaItemType: "Mixin",
+        appliesTo: "TestSchema.TestEntity",
+        customAttributes: [
+          {
+            className: "CoreCustomAttributes.Deprecated"
+          }
+        ]
+      },
+      TestEntity: {
+        schemaItemType: "EntityClass",
+        baseClass: "TestSchema.BaseEntity",
+      }
+    };
+
+    it("EntityClass has deprecated base mixins, warning issued, rule passes", async () => {
+      const schema = await getTestSchema(schemaJson);
+
+      const testEntity = (await schema.getItem("TestEntity")) as EntityClass;
+      const firstDeprecatedMixin = (await schema.getItem("DeprecatedMixin1")) as Mixin;
+      const secondDeprecatedMixin = (await schema.getItem("DeprecatedMixin2")) as Mixin;
+      const mutableEntity = testEntity as MutableEntityClass;
+      mutableEntity.addMixin(firstDeprecatedMixin);
+      mutableEntity.addMixin(secondDeprecatedMixin);
+
+      const result = await Rules.entityClassesShouldNotDerivedFromDeprecatedMixinClasses(testEntity);
+      let index = 0;
+      for await (const diagnostic of result) {
+        expect(diagnostic).to.not.be.undefined;
+        expect(diagnostic!.ecDefinition).to.equal(testEntity);
+        if (index === 0)
+          expect(diagnostic!.messageArgs).to.eql([testEntity.fullName, "TestSchema.DeprecatedMixin1", "TestSchema.DeprecatedMixin1"]);
+        else
+          expect(diagnostic!.messageArgs).to.eql([testEntity.fullName, "TestSchema.DeprecatedMixin2", "TestSchema.DeprecatedMixin2"]);
+        expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
+        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.EntityClassesShouldNotDerivedFromDeprecatedMixinClasses);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
+        ++index;
+      }
+      expect(index === 2, "Expect there are 2 warnings about deprecated mixins").to.be.true;
+    });
+
+    it("EntityClass indirectly derives from deprecated mixins, warning issues, rule passes", async () => {
+      const schema = await getTestSchema(schemaJson);
+
+      const testEntity = (await schema.getItem("TestEntity")) as EntityClass;
+
+      const firstDeprecatedMixin = (await schema.getItem("DeprecatedMixin1")) as Mixin;
+      const secondDeprecatedMixin = (await schema.getItem("DeprecatedMixin2")) as Mixin;
+      const firstMixin = (await schema.getItem("Mixin1")) as Mixin;
+      const secondMixin = (await schema.getItem("Mixin2")) as Mixin;
+      const mutableFirstMixin = firstMixin as ECClass as MutableClass;
+      const mutableSecondMixin = secondMixin as ECClass as MutableClass;
+      mutableFirstMixin.baseClass = new DelayedPromiseWithProps(firstDeprecatedMixin.key, async () => firstDeprecatedMixin) as LazyLoadedSchemaItem<Mixin>;
+      mutableSecondMixin.baseClass = new DelayedPromiseWithProps(secondDeprecatedMixin.key, async () => secondDeprecatedMixin) as LazyLoadedSchemaItem<Mixin>;
+
+      const mutableEntity = testEntity as MutableEntityClass;
+      mutableEntity.addMixin(firstMixin);
+      mutableEntity.addMixin(secondMixin);
+
+      const result = await Rules.entityClassesShouldNotDerivedFromDeprecatedMixinClasses(testEntity);
+      let index = 0;
+      for await (const diagnostic of result) {
+        expect(diagnostic).to.not.be.undefined;
+        expect(diagnostic!.ecDefinition).to.equal(testEntity);
+        if (index === 0)
+          expect(diagnostic!.messageArgs).to.eql([testEntity.fullName, "TestSchema.Mixin1", "TestSchema.DeprecatedMixin1"]);
+        else
+          expect(diagnostic!.messageArgs).to.eql([testEntity.fullName, "TestSchema.Mixin2", "TestSchema.DeprecatedMixin2"]);
+        expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
+        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.EntityClassesShouldNotDerivedFromDeprecatedMixinClasses);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
+        ++index;
+      }
+      expect(index === 2, "Expect there are 2 warnings about deprecated mixins").to.be.true;
+    });
+
+    it("Deprecated EntityClass has deprecated base mixins, rule passes", async () => {
+      const schema = await getTestSchema(schemaJson);
+
+      const testEntity = (await schema.getItem("TestEntity")) as EntityClass;
+      const mutableClass = testEntity as ECClass as MutableClass
+      mutableClass.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
+
+      const firstDeprecatedMixin = (await schema.getItem("DeprecatedMixin1")) as Mixin;
+      const secondDeprecatedMixin = (await schema.getItem("DeprecatedMixin2")) as Mixin;
+      const mutableEntity = testEntity as MutableEntityClass;
+      mutableEntity.addMixin(firstDeprecatedMixin);
+      mutableEntity.addMixin(secondDeprecatedMixin);
+
+      const result = await Rules.entityClassesShouldNotDerivedFromDeprecatedMixinClasses(testEntity);
+      for await (const _diagnostic of result) {
+        expect(false, "Rule should have passed").to.be.true;
+      }
+    });
+
+    it("EntityClass has no deprecated base mixins, rule passes", async () => {
+      const schema = await getTestSchema(schemaJson);
+
+      const testEntity = (await schema.getItem("TestEntity")) as EntityClass;
+      const firstMixin = (await schema.getItem("Mixin1")) as Mixin;
+      const secondMixin = (await schema.getItem("Mixin2")) as Mixin;
+      const mutableEntity = testEntity as MutableEntityClass;
+      mutableEntity.addMixin(firstMixin);
+      mutableEntity.addMixin(secondMixin);
+
+      const result = await Rules.entityClassesShouldNotDerivedFromDeprecatedMixinClasses(testEntity);
+      for await (const _diagnostic of result) {
+        expect(false, "Rule should have passed").to.be.true;
+      }
+    });
+  });
 });
