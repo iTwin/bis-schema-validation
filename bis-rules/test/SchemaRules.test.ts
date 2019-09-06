@@ -104,7 +104,7 @@ describe("Schema Rule Tests", () => {
 
     it("ECDbMap 2.0 reference exist, rule passes.", async () => {
       const context = new SchemaContext();
-      const schema  = new Schema(context, "TestSchema", 1, 0, 0);
+      const schema = new Schema(context, "TestSchema", 1, 0, 0);
       const mutable = schema as MutableSchema;
       const ref = new Schema(context, "ECDbMap", 2, 0, 0);
       mutable.addReferenceSync(ref);
@@ -227,6 +227,77 @@ describe("Schema Rule Tests", () => {
         index++;
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
+    });
+  });
+
+  describe("SchemaShouldNotUseDeprecatedSchema", () => {
+    it("Schema Reference a non-deprecated Schema, no warning issued, rule passed", async () => {
+      const context = new SchemaContext();
+      const referenceSchema = new Schema(context, "NormalReferenceSchema", 1, 0, 0);
+
+      const testSchema = new Schema(context, "TestSchema", 1, 0, 0);
+      const mutable = testSchema as MutableSchema;
+      mutable.addReference(referenceSchema);
+
+      const result = await Rules.schemaShouldNotUseDeprecatedSchema(testSchema);
+      for await (const _diagnostic of result) {
+        expect(false, "Rule should have passed").to.be.true;
+      }
+    });
+
+    it("Deprecated Schema is ignored, rule passed", async () => {
+      const context = new SchemaContext();
+
+      const deprecatedSchemaA = new Schema(context, "DeprecatedTestSchemaA", 1, 0, 0);
+      const deprecatedMutableA = deprecatedSchemaA as MutableSchema;
+      deprecatedMutableA.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
+
+      const schema = new Schema(context, "TestSchema", 1, 0, 0);
+      const mutable = schema as MutableSchema;
+      mutable.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
+      mutable.addReference(deprecatedSchemaA);
+
+      const result = await Rules.schemaShouldNotUseDeprecatedSchema(schema);
+      for await (const _diagnostic of result) {
+        expect(false, "Rule should have passed").to.be.true;
+      }
+    });
+
+    it("Schema References a Deprecated Schema, warning issued, rule passed", async () => {
+      const context = new SchemaContext();
+
+      const deprecatedSchemaA = new Schema(context, "DeprecatedTestSchemaA", 1, 0, 0);
+      const deprecatedMutableA = deprecatedSchemaA as MutableSchema;
+      deprecatedMutableA.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
+
+      const deprecatedSchemaB = new Schema(context, "DeprecatedTestSchemaB", 1, 0, 0);
+      const deprecatedMutableB = deprecatedSchemaB as MutableSchema;
+      deprecatedMutableB.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
+
+      const schema = new Schema(context, "TestSchema", 1, 0, 0);
+      const mutable = schema as MutableSchema;
+      mutable.addReference(deprecatedSchemaA);
+      mutable.addReference(deprecatedSchemaB);
+
+      const result = await Rules.schemaShouldNotUseDeprecatedSchema(schema);
+
+      let index = 0;
+      let resultHasEntries = false;
+      for await (const diagnostic of result!) {
+        resultHasEntries = true;
+        expect(diagnostic).to.not.be.undefined;
+        expect(diagnostic!.ecDefinition).to.equal(schema);
+        if (index == 0)
+          expect(diagnostic!.messageArgs).to.eql(["TestSchema", "DeprecatedTestSchemaA"]);
+        else
+          expect(diagnostic!.messageArgs).to.eql(["TestSchema", "DeprecatedTestSchemaB"]);
+        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.SchemaShouldNotUseDeprecatedSchema);
+        expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.Schema);
+
+        ++index;
+      }
+      expect(resultHasEntries, "expected rule to return an AsyncIterable with entries").to.be.true;
     });
   });
 });

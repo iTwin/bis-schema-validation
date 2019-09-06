@@ -884,4 +884,459 @@ describe("RelationshipClass Rule Tests", () => {
       }
     });
   });
+
+  describe("RelationshipConstraintShouldNotUseDeprecatedConstraintClasses", () => {
+    it("Relationship constraint has no deprecated constraint classes (ignore deprecated property), rule passed", async () => {
+      const schemaJson = {
+        TestRelationship: {
+          schemaItemType: "RelationshipClass",
+          strength: "embedding",
+          strengthDirection: "forward",
+          source: {
+            multiplicity: "(1..1)",
+            polymorphic: true,
+            roleLabel: "owns",
+            abstractConstraint: "TestSchema.EntityA",
+            constraintClasses: [
+              "TestSchema.EntityA1",
+              "TestSchema.EntityA2",
+            ],
+          },
+          target: {
+            multiplicity: "(0..*)",
+            polymorphic: true,
+            roleLabel: "is owned by",
+            abstractConstraint: "TestSchema.EntityB",
+            constraintClasses: [
+              "TestSchema.EntityB1",
+              "TestSchema.EntityB2",
+            ],
+          },
+        },
+        EntityA: {
+          schemaItemType: "EntityClass",
+        },
+        EntityB: {
+          schemaItemType: "EntityClass",
+        },
+        EntityA1: {
+          schemaItemType: "EntityClass",
+          baseClass: "TestSchema.EntityA",
+        },
+        EntityA2: {
+          schemaItemType: "EntityClass",
+          baseClass: "TestSchema.EntityA",
+        },
+        EntityB1: {
+          schemaItemType: "EntityClass",
+          baseClass: "TestSchema.EntityB",
+        },
+        EntityB2: {
+          schemaItemType: "EntityClass",
+          baseClass: "TestSchema.EntityB",
+          properties: [
+            {
+              customAttributes: [
+                { className: "CoreCustomAttributes.Deprecated" }
+              ],
+              type: "PrimitiveProperty",
+              typeName: "string",
+              name: "TestProperty",
+            },
+          ]
+        }
+      }
+
+      const schema = await getTestSchema(schemaJson);
+      const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
+      const result = await Rules.relationshipConstraintShouldNotUseDeprecatedConstraintClass(relationship);
+      for await (const _diagnostic of result!) {
+        expect(false, "Rule should have passed").to.be.true;
+      }
+    });
+
+    it("Relationship constraint has deprecated constraint classes, warning issued, rule passed", async () => {
+      const schemaJson = {
+        TestRelationship: {
+          schemaItemType: "RelationshipClass",
+          strength: "embedding",
+          strengthDirection: "forward",
+          source: {
+            multiplicity: "(1..1)",
+            polymorphic: true,
+            roleLabel: "owns",
+            abstractConstraint: "TestSchema.EntityA",
+            constraintClasses: [
+              "TestSchema.EntityA",
+              "TestSchema.EntityA1",
+              "TestSchema.EntityA2",
+            ],
+          },
+          target: {
+            multiplicity: "(0..*)",
+            polymorphic: true,
+            roleLabel: "is owned by",
+            abstractConstraint: "TestSchema.EntityB",
+            constraintClasses: [
+              "TestSchema.EntityB1",
+              "TestSchema.EntityB2",
+            ],
+          },
+        },
+        EntityA: {
+          schemaItemType: "EntityClass",
+          customAttributes: [
+            { className: "CoreCustomAttributes.Deprecated" }
+          ]
+        },
+        EntityB: {
+          schemaItemType: "EntityClass",
+          customAttributes: [
+            { className: "CoreCustomAttributes.Deprecated" }
+          ]
+        },
+        EntityA1: {
+          schemaItemType: "EntityClass",
+          baseClass: "TestSchema.EntityA",
+          customAttributes: [
+            { className: "CoreCustomAttributes.Deprecated" }
+          ]
+        },
+        EntityA2: {
+          schemaItemType: "EntityClass",
+          baseClass: "TestSchema.EntityA",
+          customAttributes: [
+            { className: "CoreCustomAttributes.Deprecated" }
+          ]
+        },
+        EntityB1: {
+          schemaItemType: "EntityClass",
+          baseClass: "TestSchema.EntityB",
+          customAttributes: [
+            { className: "CoreCustomAttributes.Deprecated" }
+          ]
+        },
+        EntityB2: {
+          schemaItemType: "EntityClass",
+          baseClass: "TestSchema.EntityB",
+        }
+      };
+
+      const schema = await getTestSchema(schemaJson);
+      const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
+
+      const result = await Rules.relationshipConstraintShouldNotUseDeprecatedConstraintClass(relationship);
+      let index = 0;
+      for await (const diagnostic of result) {
+        expect(diagnostic).to.not.be.undefined;
+        expect(diagnostic!.ecDefinition).to.equal(relationship);
+        if (index === 0)
+          expect(diagnostic!.messageArgs).to.eql(["Source", "TestSchema.TestRelationship", "TestSchema.EntityA"]);
+        else if (index === 1)
+          expect(diagnostic!.messageArgs).to.eql(["Source", "TestSchema.TestRelationship", "TestSchema.EntityA1"]);
+        else if (index === 2)
+          expect(diagnostic!.messageArgs).to.eql(["Source", "TestSchema.TestRelationship", "TestSchema.EntityA2"]);
+        else if (index === 3)
+          expect(diagnostic!.messageArgs).to.eql(["Target", "TestSchema.TestRelationship", "TestSchema.EntityB1"]);
+        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.RelationshipConstraintShouldNotUseDeprecatedConstraintClass);
+        expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
+
+        ++index;
+      }
+
+      expect(index === 4, "There should be 4 warnings about deprecated constraint class").to.be.true;
+    });
+  });
+
+  describe("RelationshipConstraintShouldNotUseDeprecatedAbstractConstraint", () => {
+    it("Relation Constraints does not contains deprecated abstract constraint, rule passed", async () => {
+      const schemaJson = {
+        TestRelationship: {
+          schemaItemType: "RelationshipClass",
+          strength: "embedding",
+          strengthDirection: "forward",
+          source: {
+            multiplicity: "(1..1)",
+            polymorphic: true,
+            roleLabel: "owns",
+            constraintClasses: [
+              "TestSchema.EntityA",
+              "TestSchema.EntityA1",
+            ],
+          },
+          target: {
+            multiplicity: "(0..*)",
+            polymorphic: true,
+            roleLabel: "is owned by",
+            abstractConstraint: "TestSchema.EntityB",
+            constraintClasses: [],
+          },
+        },
+        EntityA: {
+          schemaItemType: "EntityClass",
+        },
+        EntityB: {
+          schemaItemType: "EntityClass",
+        },
+        EntityA1: {
+          schemaItemType: "EntityClass",
+          baseClass: "TestSchema.EntityA",
+          customAttributes: [
+            { className: "CoreCustomAttributes.Deprecated" }
+          ]
+        },
+      };
+
+      const schema = await getTestSchema(schemaJson);
+      const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
+
+      const result = await Rules.relationshipConstraintShouldNotUseDeprecatedAbstractConstraint(relationship);
+      for await (const _diagnostic of result!) {
+        expect(false, "Rule should have passed").to.be.true;
+      }
+    });
+
+    it("Relation Constraints contains abstract constraint that is deprecated, warning issued, rule passed", async () => {
+      const schemaJson = {
+        TestRelationship: {
+          schemaItemType: "RelationshipClass",
+          strength: "embedding",
+          strengthDirection: "forward",
+          source: {
+            multiplicity: "(1..1)",
+            polymorphic: true,
+            roleLabel: "owns",
+            constraintClasses: [
+              "TestSchema.EntityA",
+            ],
+          },
+          target: {
+            multiplicity: "(0..*)",
+            polymorphic: true,
+            roleLabel: "is owned by",
+            abstractConstraint: "TestSchema.EntityB",
+            constraintClasses: [],
+          },
+        },
+        EntityA: {
+          schemaItemType: "EntityClass",
+          customAttributes: [
+            { className: "CoreCustomAttributes.Deprecated" }
+          ]
+        },
+        EntityB: {
+          schemaItemType: "EntityClass",
+          customAttributes: [
+            { className: "CoreCustomAttributes.Deprecated" }
+          ]
+        }
+      };
+
+      const schema = await getTestSchema(schemaJson);
+      const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
+
+      const result = await Rules.relationshipConstraintShouldNotUseDeprecatedAbstractConstraint(relationship);
+      let index = 0;
+      for await (const diagnostic of result) {
+        expect(diagnostic).to.not.be.undefined;
+        expect(diagnostic!.ecDefinition).to.equal(relationship);
+        if (index === 0)
+          expect(diagnostic!.messageArgs).to.eql(["Source", "TestSchema.TestRelationship", "TestSchema.EntityA"]);
+        else if (index === 1)
+          expect(diagnostic!.messageArgs).to.eql(["Target", "TestSchema.TestRelationship", "TestSchema.EntityB"]);
+        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.RelationshipConstraintShouldNotUseDeperecatedAbstractConstraint);
+        expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
+
+        ++index;
+      }
+
+      expect(index === 2, "There should be 2 warnings about deprecated abstract constraint").to.be.true
+    });
+  });
+
+  describe("RelationshipConstraintShouldNotUseConstraintClassesWithDeprecatedBase", () => {
+    it("Relationship Constraints contain constraint classes directly or indirectly derives from deprecated base, warning issued, rule passed", async () => {
+      const schemaJson = {
+        TestRelationship: {
+          schemaItemType: "RelationshipClass",
+          strength: "embedding",
+          strengthDirection: "forward",
+          source: {
+            multiplicity: "(1..1)",
+            polymorphic: true,
+            roleLabel: "owns",
+            abstractConstraint: "TestSchema.EntityA",
+            constraintClasses: [
+              "TestSchema.EntityA1",
+              "TestSchema.EntityA2",
+              "TestSchema.EntityA3",
+            ],
+          },
+          target: {
+            multiplicity: "(0..*)",
+            polymorphic: true,
+            roleLabel: "is owned by",
+            abstractConstraint: "TestSchema.EntityB",
+            constraintClasses: [
+              "TestSchema.EntityB1",
+              "TestSchema.EntityB2",
+            ],
+          },
+        },
+        EntityA: {
+          schemaItemType: "EntityClass",
+          customAttributes: [
+            { className: "CoreCustomAttributes.Deprecated" }
+          ]
+        },
+        EntityB: {
+          schemaItemType: "EntityClass",
+          customAttributes: [
+            { className: "CoreCustomAttributes.Deprecated" }
+          ]
+        },
+        EntityA1: {
+          schemaItemType: "EntityClass",
+          baseClass: "TestSchema.EntityA",
+        },
+        EntityA2: {
+          schemaItemType: "EntityClass",
+          baseClass: "TestSchema.EntityA1",
+        },
+        EntityA3: {
+          schemaItemType: "EntityClass",
+          baseClass: "TestSchema.EntityA2",
+        },
+        EntityB1: {
+          schemaItemType: "EntityClass",
+          baseClass: "TestSchema.EntityB",
+        },
+        EntityB2: {
+          schemaItemType: "EntityClass",
+          baseClass: "TestSchema.EntityB",
+          customAttributes: [
+            { className: "CoreCustomAttributes.Deprecated" }
+          ]
+        }
+      };
+
+      const schema = await getTestSchema(schemaJson);
+      const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
+
+      const result = await Rules.relationshipConstraintShouldNotUseConstraintClassWithDeprecatedBase(relationship);
+      let index = 0;
+      for await (const diagnostic of result) {
+        expect(diagnostic).to.not.be.undefined;
+        expect(diagnostic!.ecDefinition).to.equal(relationship);
+        if (index === 0)
+          expect(diagnostic!.messageArgs).to.eql(["Source", "TestSchema.TestRelationship", "TestSchema.EntityA1", "TestSchema.EntityA", "TestSchema.EntityA"]);
+        else if (index === 1)
+          expect(diagnostic!.messageArgs).to.eql(["Source", "TestSchema.TestRelationship", "TestSchema.EntityA2", "TestSchema.EntityA1", "TestSchema.EntityA"]);
+        else if (index === 2)
+          expect(diagnostic!.messageArgs).to.eql(["Source", "TestSchema.TestRelationship", "TestSchema.EntityA3", "TestSchema.EntityA2", "TestSchema.EntityA"]);
+        else
+          expect(diagnostic!.messageArgs).to.eql(["Target", "TestSchema.TestRelationship", "TestSchema.EntityB1", "TestSchema.EntityB", "TestSchema.EntityB"]);
+        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.RelationshipConstraintShouldNotUseConstraintClassWithDeprecatedBase);
+        expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
+
+        ++index;
+      }
+
+      expect(index === 4, "There should be 3 warnings about constraint class derived from deprecated base").to.be.true;
+    });
+  });
+
+  describe("RelationshipConstraintShouldNotUseAbstractConstraintsWithDeprecatedBase", () => {
+    it("Relationship Constraint contains abstract constraint with deprecated base", async () => {
+      const schemaJson = {
+        TestRelationship: {
+          schemaItemType: "RelationshipClass",
+          strength: "embedding",
+          strengthDirection: "forward",
+          source: {
+            multiplicity: "(1..1)",
+            polymorphic: true,
+            roleLabel: "owns",
+            abstractConstraint: "TestSchema.EntityA1",
+            constraintClasses: [],
+          },
+          target: {
+            multiplicity: "(0..*)",
+            polymorphic: true,
+            roleLabel: "is owned by",
+            abstractConstraint: "TestSchema.EntityB2",
+            constraintClasses: [],
+          },
+        },
+
+        DeprecatedMixin: {
+          schemaItemType: "Mixin",
+          customAttributes: [
+            { className: "CoreCustomAttributes.Deprecated" }
+          ],
+          appliesTo: "TestSchema.EntityA",
+        },
+        IndirectDeprecatedMixin: {
+          schemaItemType: "Mixin",
+          baseClass: "TestSchema.DeprecatedMixin",
+          appliesTo: "TestSchema.EntityA",
+        },
+
+        EntityA: {
+          schemaItemType: "EntityClass",
+          customAttributes: [
+            { className: "CoreCustomAttributes.Deprecated" }
+          ]
+        },
+        EntityB: {
+          schemaItemType: "EntityClass",
+          customAttributes: [
+            { className: "CoreCustomAttributes.Deprecated" }
+          ]
+        },
+        EntityA1: {
+          schemaItemType: "EntityClass",
+          baseClass: "TestSchema.EntityA",
+          mixins: ["TestSchema.IndirectDeprecatedMixin"]
+        },
+        EntityB1: {
+          schemaItemType: "EntityClass",
+          baseClass: "TestSchema.EntityB",
+        },
+        EntityB2: {
+          schemaItemType: "EntityClass",
+          baseClass: "TestSchema.EntityB1",
+          mixins: ["TestSchema.DeprecatedMixin"]
+        }
+      };
+
+      const schema = await getTestSchema(schemaJson);
+      const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
+
+      const result = await Rules.relationshipConstraintShouldNotUseAbstractConstraintWithDeprecatedBase(relationship);
+      let index = 0;
+      for await (const diagnostic of result) {
+        expect(diagnostic).to.not.be.undefined;
+        expect(diagnostic!.ecDefinition).to.equal(relationship);
+        if (index === 0)
+          expect(diagnostic!.messageArgs).to.eql(["Source", "TestSchema.TestRelationship", "TestSchema.EntityA1", "TestSchema.EntityA", "TestSchema.EntityA"]);
+        else if (index === 1)
+          expect(diagnostic!.messageArgs).to.eql(["Source", "TestSchema.TestRelationship", "TestSchema.EntityA1", "TestSchema.IndirectDeprecatedMixin", "TestSchema.DeprecatedMixin"]);
+        else if (index === 2)
+          expect(diagnostic!.messageArgs).to.eql(["Target", "TestSchema.TestRelationship", "TestSchema.EntityB2", "TestSchema.EntityB1", "TestSchema.EntityB"]);
+        else
+          expect(diagnostic!.messageArgs).to.eql(["Target", "TestSchema.TestRelationship", "TestSchema.EntityB2", "TestSchema.DeprecatedMixin", "TestSchema.DeprecatedMixin"]);
+        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.RelationshipConstraintShouldNotUseAbstractConstraintWithDeprecatedBase);
+        expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
+
+        ++index;
+      }
+
+      expect(index === 4, "There should be 4 warnings about abstract constraint class derived from deprecated base").to.be.true;
+    });
+  });
 });
