@@ -1,0 +1,47 @@
+{
+  "name": "signoffn",
+  "description": "signoff tool that connects with Hub, get iModel information and export schemas.",
+  "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iTwin/bis-schema-validation"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Bentley Systems, Inc.",
+    "url": "http://www.bentley.com"
+  },
+  "version": "0.0.1",
+  "scripts": {
+    "build": "tsc 1>&2",
+    "lint": "tslint --project . 1>&2",
+    "test": "mocha -r ts-node/register test/**.test.ts",
+    "cover": "nyc npm test",
+    "clean": "rimraf _build/node_modules"
+  },
+  "dependencies": {
+    "@bentley/imodeljs-backend": "~1",
+    "@bentley/imodeljs-clients": "~1",
+    "@bentley/imodeljs-common": "~1",
+    "@bentley/geometry-core": "~1",
+    "@bentley/imodeljs-clients-backend": "~1",
+    "@bentley/ecschema-metadata": "~1",
+    "@bentley/bentleyjs-core": "~1",
+    "chalk": "^2.4.1",
+    "commander": "^2.19.0"
+  },
+  "devDependencies": {
+    "@bentley/build-tools": "~1",
+    "@types/chai": "^4.1.4",
+    "@types/mocha": "^5.2.5",
+    "rimraf": "^2.6.2",
+    "typescript": "^3.0.0",
+    "electron": "^2.0.10",
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0",
+    "nyc": "^13.0.1"
+  },
+  "nyc": {
+    "nycrc-path": "./node_modules/@bentley/build-tools/.nycrc"
+  }
+}
