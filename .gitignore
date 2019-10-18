@@ -15,6 +15,7 @@ coverage
 package-deps.json
 *.build.log
 *.build.error.log
+package-lock.json
 
 # docs
 /public
