@@ -5,6 +5,7 @@
 
 import { expect } from "chai";
 import sinon = require("sinon");
+import { MutableSchema } from "@bentley/ecschema-metadata/lib/Metadata/Schema";
 import { MutableClass, ECClass } from "@bentley/ecschema-metadata/lib/Metadata/Class";
 import { MutableEntityClass } from "@bentley/ecschema-metadata/lib/Metadata/EntityClass";
 import * as Rules from "../../bis-rules/src/BisRules";
@@ -269,6 +270,44 @@ describe("EntityClass Rule Tests", () => {
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
 
+    it("Dynamic Schemas do not require that ElementMultiAspect EntityClass have a corresponding relationship, rule passes.", async () => {
+      const schemaJson = {
+        TestRelationship: {
+          schemaItemType: "RelationshipClass",
+          strength: "embedding",
+          strengthDirection: "forward",
+          source: {
+            multiplicity: "(1..1)",
+            polymorphic: true,
+            roleLabel: "owns",
+            constraintClasses: [
+            ],
+          },
+          target: {
+            multiplicity: "(0..*)",
+            polymorphic: true,
+            roleLabel: "is owned by",
+            constraintClasses: [
+              "TestSchema.TestEntity",
+            ],
+          },
+        },
+        TestEntity: {
+          baseClass: "BisCore.ElementMultiAspect",
+          schemaItemType: "EntityClass",
+        },
+      };
+      const schema = await getTestSchema(schemaJson);
+      const entity = (await schema.getItem("TestEntity")) as EntityClass;
+      (schema as MutableSchema).addCustomAttribute({ className: "CoreCustomAttributes.DynamicSchema" });
+
+      const result = await Rules.elementMultiAspectMustHaveCorrespondingRelationship(entity);
+
+      for await (const _diagnostic of result!) {
+        expect(false, "Rule should have passed").to.be.true;
+      }
+    });
+
     it("Base ElementMultiAspect in different schema, does not have a corresponding relationship, rule violated.", async () => {
       const baseSchemaJson = {
         BaseEntity: {
@@ -489,6 +528,44 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
+    });
+
+    it("Dynamic Schemas do not require that ElementUniqueAspect EntityClass have a corresponding relationship, rule passes.", async () => {
+      const schemaJson = {
+        TestRelationship: {
+          schemaItemType: "RelationshipClass",
+          strength: "embedding",
+          strengthDirection: "forward",
+          source: {
+            multiplicity: "(1..1)",
+            polymorphic: true,
+            roleLabel: "owns",
+            constraintClasses: [
+            ],
+          },
+          target: {
+            multiplicity: "(0..*)",
+            polymorphic: true,
+            roleLabel: "is owned by",
+            constraintClasses: [
+              "TestSchema.TestEntity",
+            ],
+          },
+        },
+        TestEntity: {
+          baseClass: "BisCore.ElementUniqueAspect",
+          schemaItemType: "EntityClass",
+        },
+      };
+      const schema = await getTestSchema(schemaJson);
+      const entity = (await schema.getItem("TestEntity")) as EntityClass;
+      (schema as MutableSchema).addCustomAttribute({ className: "CoreCustomAttributes.DynamicSchema" });
+
+      const result = await Rules.elementUniqueAspectMustHaveCorrespondingRelationship(entity);
+
+      for await (const _diagnostic of result!) {
+        expect(false, "Rule should have passed.").to.be.true;
+      }
     });
 
     it("Schema has no relationship, rule violated.", async () => {
