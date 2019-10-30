@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ECSchema schemaName="NoSchemaRefAlias" alias="a" version="1.1.1" xmlns="http://www.bentley.com/schemas/Bentley.ECXML.3.1" displayLabel="BadSchemaRefAlias" description="This Schema has a reference whose alias does not match the actual schema alias.">
+    <ECSchemaReference name="SchemaA" version="1.1.1" alias=""/>
+</ECSchema>

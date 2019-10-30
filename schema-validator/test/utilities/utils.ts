@@ -21,3 +21,7 @@ export function getOutDir(): string {
   fs.ensureDirSync(outputDir);
   return outputDir;
 }
+
+export function normalizeLineEnds(s: string): string {
+  return s.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+}

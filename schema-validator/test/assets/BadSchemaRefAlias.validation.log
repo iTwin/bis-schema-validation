@@ -1,0 +1,2 @@
+BadSchemaRefAlias Validation Results
+Error VALIDATOR-001: The schema reference for 'SchemaA' uses the alias 'aa' which does not match the alias 'a' found in the original schema.

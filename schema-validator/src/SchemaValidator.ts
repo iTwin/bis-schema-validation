@@ -5,15 +5,21 @@
 
 import * as fs from "fs-extra";
 import * as path from "path";
+import { DOMParser } from "xmldom";
 
 import {
-  ECRuleSet, Schema, SchemaContext, IDiagnosticReporter,
-  IRuleSet, SchemaValidationVisitor, SchemaWalker, ISchemaPartVisitor,
+  ECRuleSet, Schema, SchemaContext, IDiagnosticReporter, SchemaDiagnostic,
+  IRuleSet, SchemaValidationVisitor, SchemaWalker, ISchemaPartVisitor, createSchemaDiagnosticClass,
 } from "@bentley/ecschema-metadata";
 import { BisRuleSet } from "@bentley/bis-rules";
 import { FileDiagnosticReporter } from "./FileDiagnosticReporter";
 import { CollectionDiagnosticReporter } from "./CollectionDiagnosticReporter";
 import { SchemaDeserializer } from "./SchemaDeserializer";
+
+interface SchemaReferenceInfo {
+  name: string;
+  alias: string;
+}
 
 export const standardSchemaNames = [
   "Bentley_Standard_CustomAttributes",
@@ -95,6 +101,10 @@ export class ValidationOptions {
  * The ECSchemaValidater validates EC3 Bis schemas and outputs the results to file.
  */
 export class SchemaValidator {
+  // Used to create a new schema diagnostic for the Schema Reference alias EC Rule.
+  private static _schemaReferenceAliasDiagnostic = createSchemaDiagnosticClass<[string, string, string]>("VALIDATOR-001",
+    "The schema reference for '{0}' uses the alias '{1}' which does not match the alias '{2}' found in the original schema.");
+
   public static extensions: string[] = [".ecschema.xml", ".ecschema.json"];
 
   /**
@@ -142,7 +152,10 @@ export class SchemaValidator {
     if (!schema)
       return results;
 
-    results = results.concat(await this.validateLoadedSchema(schema, options));
+    // Creates the Validator rule set that will be added to the validation along with EC and BIS rule sets.
+    const ruleSet = this.createRuleSet(schemaPath);
+
+    results = results.concat(await this.validateLoadedSchema(schema, options, ruleSet));
 
     return results;
   }
@@ -151,7 +164,7 @@ export class SchemaValidator {
    * Validates a schema against Core EC and BIS rules.
    * @param options The validation options.
    */
-  public static async validateLoadedSchema(schema: Schema, options: ValidationOptions): Promise<IValidationResult[]> {
+  public static async validateLoadedSchema(schema: Schema, options: ValidationOptions, validaterRuleSet?: IRuleSet): Promise<IValidationResult[]> {
     const schemaName = schema.fullName;
 
     // skip validation on all standard schemas
@@ -168,12 +181,16 @@ export class SchemaValidator {
       fileReporter.start(schemaName + " Validation Results");
     }
 
+    const ruleSets = [ECRuleSet, BisRuleSet];
+    if (validaterRuleSet)
+      ruleSets.push(validaterRuleSet);
+
     let results: IValidationResult[] = [];
     let message: string | undefined;
     let msgType: ValidationResultType;
 
     try {
-      const visitor = this.createNewVisitor([ECRuleSet, BisRuleSet], reporters);
+      const visitor = this.createNewVisitor(ruleSets, reporters);
       const reader = new SchemaWalker(visitor);
       await reader.traverseSchema(schema);
 
@@ -202,6 +219,53 @@ export class SchemaValidator {
     }
 
     return results;
+  }
+
+  private static createRuleSet(schemaPath: string): IRuleSet {
+    // Rule set to check schema reference aliases
+    const schemaReferenceAliasRule = async function* (schemaParam: Schema): AsyncIterable<SchemaDiagnostic<any[]>> {
+      const result = await SchemaValidator.validateSchemaReferenceAliases(schemaPath, schemaParam);
+      if (result)
+        yield result;
+    };
+
+    const ruleSet = { // tslint:disable-line:variable-name
+      name: "VALIDATOR",
+      schemaRules: [
+        schemaReferenceAliasRule,
+      ],
+    };
+
+    return ruleSet;
+  }
+
+  private static async validateSchemaReferenceAliases(schemaPath: string, loadedSchema: Schema): Promise<SchemaDiagnostic<any[]> | undefined> {
+    const isJson = schemaPath.endsWith(".json");
+    if (isJson)
+      return;
+
+    const schemaText = await this.readUtf8FileToString(schemaPath);
+    if (undefined === schemaText)
+      return;
+
+    const parser = new DOMParser();
+    const document = parser.parseFromString(schemaText);
+
+    const schemaReferences = this.getElementChildrenByTagName(document.documentElement, "ECSchemaReference");
+    for (const ref of schemaReferences) {
+      const referenceInfo = this.getSchemaReferenceInfo(ref);
+      const schemaReference = await loadedSchema.getReference(referenceInfo.name);
+      if (!schemaReference) {
+        return;
+      }
+
+      if (schemaReference.alias !== referenceInfo.alias) {
+        const refAlias = schemaReference.alias || "undefined";
+        return new this._schemaReferenceAliasDiagnostic(loadedSchema, [referenceInfo.name, referenceInfo.alias, refAlias]);
+      }
+    }
+
+    return undefined;
   }
 
   private static async getSchema(schemaPath: string, results: IValidationResult[], referencePaths?: string[]): Promise<Schema | undefined> {
@@ -261,5 +325,59 @@ export class SchemaValidator {
   private static isStandardSchema(schema: Schema | string): boolean {
     const name = schema instanceof Schema ? schema.name : schema;
     return standardSchemaNames.includes(name);
+  }
+
+  private static getAttributeValue(xmlElement: Element, attributeName: string): string | null {
+    if (xmlElement.hasAttribute(attributeName))
+      return xmlElement.getAttribute(attributeName);
+
+    return null;
+  }
+
+  private static getSchemaReferenceInfo(xmlElement: Element): SchemaReferenceInfo {
+    let name = this.getAttributeValue(xmlElement, "name");
+    if (!name) {
+      name = "";
+    }
+
+    const alias = this.getAttributeValue(xmlElement, "alias");
+    if (!alias) {
+      throw new Error(`Schema reference '${name}' has an invalid schema alias.`);
+    }
+
+    return {
+      name,
+      alias,
+    };
+  }
+
+  private static getElementChildren(xmlElement: Element): Element[] {
+    // NodeListOf<T> does not define [Symbol.iterator]
+    const children = Array.from(xmlElement.childNodes).filter((child) => {
+      // (node.nodeType === 1) implies instanceof Element
+      // https://developer.mozilla.org/en-US/docs/Web/API/ParentNode/children#Polyfill
+      return child.nodeType === 1;
+    });
+    return children as Element[];
+  }
+
+  private static getElementChildrenByTagName(xmlElement: Element, tagName: string): Element[] {
+    const children = this.getElementChildren(xmlElement);
+    let result = new Array<Element>();
+    result = children.filter((child) => {
+      return tagName.toLowerCase() === child.nodeName.toLowerCase();
+    });
+    return result;
+  }
+
+  public static async readUtf8FileToString(filePath: string): Promise<string | undefined> {
+    return new Promise<string | undefined>((resolve, reject) => {
+      fs.readFile(filePath, "utf-8", (err, data) => {
+        if (err)
+          reject(err);
+        else
+          resolve(data);
+      });
+    });
   }
 }
