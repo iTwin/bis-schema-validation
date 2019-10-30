@@ -2,7 +2,7 @@
 "$schema": "https://dev.bentley.com/json_schemas/ec/32/ecschema",
   "name": "BaseSchema",
   "version": "01.01.01",
-  "alias": "ts",
+  "alias": "bs",
   "items": {
     "BaseEntityClass": {
       "schemaItemType": "EntityClass",

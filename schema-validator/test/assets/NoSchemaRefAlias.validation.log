@@ -1,0 +1,2 @@
+NoSchemaRefAlias Validation Results
+ An error occurred validating the schema NoSchemaRefAlias: Schema reference 'SchemaA' has an invalid schema alias.

@@ -21,9 +21,10 @@ describe("SchemaValidater Tests", () => {
   const refDir = utils.getReferencesDir();
 
   beforeEach(async () => {
-    fs.remove(outDir + "SchemaWithViolations.validation.log");
-    fs.remove(outDir + "SchemaA.validation.log");
-    fs.remove(outDir + "BaseSchema.validation.log");
+    await fs.remove(outDir + "SchemaWithViolations.validation.log");
+    await fs.remove(outDir + "SchemaA.validation.log");
+    await fs.remove(outDir + "BaseSchema.validation.log");
+    await fs.remove(outDir + "BadSchemaRefAlias.validation.log");
   });
 
   afterEach(async () => {
@@ -36,7 +37,7 @@ describe("SchemaValidater Tests", () => {
 
     await SchemaValidator.validate(options);
 
-    const expectedCount = 10;
+    const expectedCount = 12;
     expect(stub.callCount).to.equal(expectedCount, `Expected ${expectedCount} calls to validateFile`);
   });
 
@@ -97,7 +98,7 @@ describe("SchemaValidater Tests", () => {
       const actualOutFile = path.resolve(outDir, "SchemaWithViolations.validation.log");
       const expectedOutText = fs.readFileSync(expectedOutFile, "utf8");
       const actualOutText = fs.readFileSync(actualOutFile, "utf8");
-      expect(actualOutText.toString()).to.equal(expectedOutText.toString());
+      expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));
       expect(fs.existsSync(baseOutputFile), "BaseSchema results should not have been created").to.be.false;
     });
 
@@ -111,13 +112,13 @@ describe("SchemaValidater Tests", () => {
       let actualOutFile = path.resolve(outDir, "SchemaWithViolations.validation.log");
       let expectedOutText = fs.readFileSync(expectedOutFile, "utf8");
       let actualOutText = fs.readFileSync(actualOutFile, "utf8");
-      expect(actualOutText.toString()).to.equal(expectedOutText.toString());
+      expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));
 
       expectedOutFile = path.resolve(assetsDir, "BaseSchema.validation.log");
       actualOutFile = path.resolve(outDir, "BaseSchema.validation.log");
       expectedOutText = fs.readFileSync(expectedOutFile, "utf8");
       actualOutText = fs.readFileSync(actualOutFile, "utf8");
-      expect(actualOutText.toString()).to.equal(expectedOutText.toString());
+      expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));
     });
 
     it("XML Schema has no failing rules, output written to file correctly.", async () => {
@@ -130,7 +131,7 @@ describe("SchemaValidater Tests", () => {
       const actualOutFile = path.resolve(outDir, "SchemaA.validation.log");
       const expectedOutText = fs.readFileSync(expectedOutFile, "utf8");
       const actualOutText = fs.readFileSync(actualOutFile, "utf8");
-      expect(actualOutText.toString()).to.equal(expectedOutText.toString());
+      expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));
     });
 
     it("out path does not exist, throws", async () => {
@@ -139,6 +140,32 @@ describe("SchemaValidater Tests", () => {
       const options = new ValidationOptions(schemaFile, [], false, badPath);
 
       await expect(SchemaValidator.validate(options)).to.be.rejectedWith(Error, `The out directory ${badPath + path.sep} does not exist.`);
+    });
+
+    it("XML Schema violates Schema Reference Alias rule, output written to file correctly.", async () => {
+      const schemaFile = path.resolve(assetsDir, "BadSchemaRefAlias.ecschema.xml");
+      const options = new ValidationOptions(schemaFile, [refDir], false, outDir);
+
+      await SchemaValidator.validate(options);
+
+      const expectedOutFile = path.resolve(assetsDir, "BadSchemaRefAlias.validation.log");
+      const actualOutFile = path.resolve(outDir, "BadSchemaRefAlias.validation.log");
+      const expectedOutText = fs.readFileSync(expectedOutFile, "utf8");
+      const actualOutText = fs.readFileSync(actualOutFile, "utf8");
+      expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));
+    });
+
+    it("XML Schema Reference Alias not defined, schema reference rule throws, output written to file correctly.", async () => {
+      const schemaFile = path.resolve(assetsDir, "NoSchemaRefAlias.ecschema.xml");
+      const options = new ValidationOptions(schemaFile, [refDir], false, outDir);
+
+      await SchemaValidator.validate(options);
+
+      const expectedOutFile = path.resolve(assetsDir, "NoSchemaRefAlias.validation.log");
+      const actualOutFile = path.resolve(outDir, "NoSchemaRefAlias.validation.log");
+      const expectedOutText = fs.readFileSync(expectedOutFile, "utf8");
+      const actualOutText = fs.readFileSync(actualOutFile, "utf8");
+      expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));
     });
   });
 
@@ -161,7 +188,7 @@ describe("SchemaValidater Tests", () => {
       const actualOutFile = path.resolve(outDir, "SchemaWithViolations.validation.log");
       const expectedOutText = fs.readFileSync(expectedOutFile, "utf8");
       const actualOutText = fs.readFileSync(actualOutFile, "utf8");
-      expect(actualOutText.toString()).to.equal(expectedOutText.toString());
+      expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));
     });
   });
 });
