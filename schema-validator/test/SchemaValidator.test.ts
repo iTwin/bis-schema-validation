@@ -98,7 +98,7 @@ describe("SchemaValidater Tests", () => {
       const actualOutFile = path.resolve(outDir, "SchemaWithViolations.validation.log");
       const expectedOutText = fs.readFileSync(expectedOutFile, "utf8");
       const actualOutText = fs.readFileSync(actualOutFile, "utf8");
-      expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));
+      expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));;
       expect(fs.existsSync(baseOutputFile), "BaseSchema results should not have been created").to.be.false;
     });
 
@@ -112,13 +112,13 @@ describe("SchemaValidater Tests", () => {
       let actualOutFile = path.resolve(outDir, "SchemaWithViolations.validation.log");
       let expectedOutText = fs.readFileSync(expectedOutFile, "utf8");
       let actualOutText = fs.readFileSync(actualOutFile, "utf8");
-      expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));
+      expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));;
 
       expectedOutFile = path.resolve(assetsDir, "BaseSchema.validation.log");
       actualOutFile = path.resolve(outDir, "BaseSchema.validation.log");
       expectedOutText = fs.readFileSync(expectedOutFile, "utf8");
       actualOutText = fs.readFileSync(actualOutFile, "utf8");
-      expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));
+      expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));;
     });
 
     it("XML Schema has no failing rules, output written to file correctly.", async () => {
@@ -131,7 +131,8 @@ describe("SchemaValidater Tests", () => {
       const actualOutFile = path.resolve(outDir, "SchemaA.validation.log");
       const expectedOutText = fs.readFileSync(expectedOutFile, "utf8");
       const actualOutText = fs.readFileSync(actualOutFile, "utf8");
-      expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));
+
+      expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));;
     });
 
     it("out path does not exist, throws", async () => {
@@ -188,7 +189,7 @@ describe("SchemaValidater Tests", () => {
       const actualOutFile = path.resolve(outDir, "SchemaWithViolations.validation.log");
       const expectedOutText = fs.readFileSync(expectedOutFile, "utf8");
       const actualOutText = fs.readFileSync(actualOutFile, "utf8");
-      expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));
+      expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));;
     });
   });
 });

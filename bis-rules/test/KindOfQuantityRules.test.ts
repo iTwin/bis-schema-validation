@@ -51,7 +51,7 @@ describe("KindOfQuantity Rule Tests", () => {
     context.addLocater(new TestSchemaLocater());
   });
 
-  describe("KOQMustNotUseUnitlessRatios tests", () => {
+  describe("KOQMustNotUseUnitLessRatios tests", () => {
     it("KindOfQuantity has 'PERCENTAGE' phenomenon, rule violated.", async () => {
       const koqProps = {
         ...baseJson,

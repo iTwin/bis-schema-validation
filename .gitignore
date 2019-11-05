@@ -1,5 +1,6 @@
 # dependencies
 node_modules
+package-lock.json
 
 # build output
 .nyc_output
@@ -13,6 +14,8 @@ coverage
 # rush-specific
 /common/temp
 package-deps.json
+package-dep_build.json
+/**/.rush
 *.build.log
 *.build.error.log
 package-lock.json

@@ -7,6 +7,16 @@
   "ensureConsistentVersions": true,
   "projects": [
     {
+      "packageName": "@bentley/schema-roundtrip",
+      "projectFolder": "schema-roundtrip",
+      "shouldPublish": true
+    },
+    {
+      "packageName": "@bentley/schema-comparer",
+      "projectFolder": "schema-comparer",
+      "shouldPublish": true
+    },
+    {
       "packageName": "@bentley/schema-validator",
       "projectFolder": "schema-validator",
       "shouldPublish": true

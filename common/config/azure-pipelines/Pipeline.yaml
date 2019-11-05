@@ -33,7 +33,7 @@ steps:
     reportDirectory: '$(System.DefaultWorkingDirectory)/bis-rules/lib/test/coverage/lcov-report'
 
 - task: PublishCodeCoverageResults@1
-  displayName: Publish schema-validater code coverage
+  displayName: Publish schema-validator code coverage
   inputs:
     codeCoverageTool: Cobertura
     summaryFileLocation: '$(Build.SourcesDirectory)/schema-validator/lib/test/coverage/cobertura-coverage.xml'

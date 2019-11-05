@@ -13,11 +13,13 @@
     "clean": "echo NOTE: use 'rush clean' instead",
     "lint": "echo NOTE: use 'rush lint' instead",
     "preinstall": "echo ERROR: use 'rush install' instead && exit 1",
-    "test": "npm run test:bis-rules && npm run test:schema-validator",
+    "test": "npm run test:bis-rules && npm run test:schema-validator && npm run test:schema-comparer",
     "test:bis-rules": "cd bis-rules && npm test -s",
     "test:schema-validator": "cd schema-validator && npm test -s",
+    "test:schema-comparer": "cd schema-comparer && npm test -s",
     "cover:bis-rules": "cd bis-rules && npm run cover",
-    "cover:schema-validator": "cd schema-validator && npm run cover"
+    "cover:schema-validator": "cd schema-validator && npm run cover",
+    "cover:schema-comparer": "cd schema-comparer && npm run cover"
   },
   "keywords": [
     "Bentley",
@@ -31,11 +33,8 @@
   },
   "//dependencies": "NOTE: dependencies will be empty here and instead specified in each package.",
   "dependencies": {
-    "@bentley/ecschema-metadata": "^1.7.0-dev.8",
-    "@types/mocha": "^5.2.7"
   },
   "//devDependencies": "NOTE: devDependencies will be empty here and instead specified in each package.",
   "devDependencies": {
-    "mocha": "^6.2.1"
   }
 }

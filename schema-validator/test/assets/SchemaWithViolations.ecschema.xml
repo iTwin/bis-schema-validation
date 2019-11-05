@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ECSchema schemaName="SchemaWithViolations" alias="swv" version="01.00.00" description="Basic test schema" xmlns="http://www.bentley.com/schemas/Bentley.ECXML.3.1">
+<ECSchema schemaName="SchemaWithViolations" alias="swv" version="01.00.00" description="Basic test schema" xmlns="http://www.bentley.com/schemas/Bentley.ECXML.3.2">
   <ECSchemaReference name="BaseSchema" version="01.00.00" alias="bs"/>
   <ECEntityClass typeName="TestEntityClass" description="Normal class with no modifier" basemodifier="None">
     <BaseClass>bs:BaseEntityClass</BaseClass>
