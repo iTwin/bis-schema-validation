@@ -15,7 +15,7 @@ class TestReporter extends ValidationDiagnosticReporter {
   }
 }
 
-describe("FormatDiagnosticReporter Tests", () => {
+describe("ValidationDiagnosticReporter Tests", () => {
 
   function formatStringFromArgs(text: string, args: ArrayLike<string>, baseIndex = 0): string {
     return text.replace(/{(\d+)}/g, (_match, index: string) => args[+index + baseIndex]);

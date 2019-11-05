@@ -1,0 +1,38 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.nyc_output": true,
+    "**/common/temp": true
+  },
+  "files.exclude": {
+    "**/.nyc_output": true,
+    "**/*.build.log": true,
+    "**/*.build.error.log": true,
+    "common/temp": true,
+    "**/generated-docs": true,
+    "**/package-deps.json": true,
+    "**/node_modules": true,
+    "**/out": true,
+    "**/lib": true
+  },
+  "files.trimTrailingWhitespace": true,
+  "cSpell.words": [
+  ],
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "files.associations": {
+    "*.snap": "javascript",
+    ".nycrc": "json"
+  },
+  "cSpell.enabledLanguageIds": [
+    "javascript",
+    "javascriptreact",
+    "markdown",
+    "plaintext",
+    "text",
+    "typescript",
+    "xml",
+  ]
+}

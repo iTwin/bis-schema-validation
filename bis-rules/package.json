@@ -2,7 +2,7 @@
   "name": "@bentley/bis-rules",
   "description": "Contains BIS rules for schema validation.",
   "license": "MIT",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "main": "lib/bis-rules.js",
   "typings": "lib/bis-rules",
   "repository": {
@@ -12,8 +12,8 @@
   "scripts": {
     "clean": "rimraf lib",
     "lint": "tslint --project . 1>&2",
-    "prebuild": "npm run clean && npm run lint",
-    "build": "tsc",
+    "beforeBuild": "npm run clean && npm run lint",
+    "build": "npm run beforeBuild && tsc",
     "test": "betools test-tsnode --testDir=./test/",
     "test:watch": "betools test-tsnode --testDir=./test/ --watch",
     "cover": "nyc node ./node_modules/@bentley/build-tools/scripts/test-tsnode.js --testDir=./test/ --tscPaths"
@@ -31,25 +31,25 @@
   "devDependencies": {
     "@bentley/build-tools": "^1.1",
     "@types/chai": "^4.1.7",
-    "@types/xml2js": "^0.4.3",
-    "@types/rimraf": "^2.0.2",
     "@types/mocha": "^5.2.5",
+    "@types/rimraf": "^2.0.2",
     "@types/sinon": "^7.0.5",
+    "@types/xml2js": "^0.4.3",
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
     "nyc": "^13.0.1",
-    "source-map-support": "^0.5.9",
     "rimraf": "^2.6.2",
     "sinon": "^7.1.1",
+    "source-map-support": "^0.5.9",
     "ts-node": "^7.0.1",
+    "tsconfig-paths": "^3.3.2",
     "tslint": "^5.11.0",
-    "mocha": "^5.2.0",
-    "chai": "^4.2.0",
-    "typescript": "^3.3.1",
-    "tsconfig-paths": "^3.3.2"
+    "typescript": "^3.3.1"
   },
   "dependencies": {
     "@bentley/bentleyjs-core": "^1.1.0",
-    "@bentley/imodeljs-backend": "^1.1.0",
-    "@bentley/ecschema-metadata": "^1.4.0-dev.24"
+    "@bentley/ecschema-metadata": "^1.7.0-dev.8",
+    "@bentley/imodeljs-backend": "^1.1.0"
   },
   "publishConfig": {
     "registry": "https://www.npmjs.com/"

@@ -4,6 +4,8 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
+
+
     {
       "type": "node",
       "request": "launch",
@@ -21,11 +23,39 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Run schema-validater Tests",
+      "name": "Run schema-validator Tests",
       "program": "${workspaceFolder}/schema-validator/node_modules/@bentley/build-tools/scripts/test-tsnode.js",
       "cwd": "${workspaceFolder}/schema-validator",
       "args": [
         "--testDir=${workspaceFolder}/schema-validator/test",
+        "--debug"
+      ],
+      "port": 9229,
+      "protocol": "inspector",
+      "outputCapture": "std"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Run schema-comparer Tests",
+      "program": "${workspaceFolder}/schema-comparer/node_modules/@bentley/build-tools/scripts/test-tsnode.js",
+      "cwd": "${workspaceFolder}/schema-comparer",
+      "args": [
+        "--testDir=${workspaceFolder}/schema-comparer/test",
+        "--debug"
+      ],
+      "port": 9229,
+      "protocol": "inspector",
+      "outputCapture": "std"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Run schema-roundtrip Tests",
+      "program": "${workspaceFolder}/schema-roundtrip/node_modules/@bentley/build-tools/scripts/test-tsnode.js",
+      "cwd": "${workspaceFolder}/schema-roundtrip",
+      "args": [
+        "--testDir=${workspaceFolder}/schema-roundtrip/test",
         "--debug"
       ],
       "port": 9229,
