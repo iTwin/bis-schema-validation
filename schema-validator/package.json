@@ -4,9 +4,10 @@
   "license": "MIT",
   "version": "0.1.6",
   "bin": {
-    "schema-validator": "./lib/index.js"
+    "schema-validator": "./bin/index.js"
   },
-  "main": "./lib/index.js",
+  "main": "./lib/SchemaValidator.js",
+  "typings": "./lib/SchemaComparison",
   "repository": {
     "type": "git",
     "url": "https://github.com/iTwin/bis-schema-validation"
@@ -14,8 +15,7 @@
   "scripts": {
     "clean": "rimraf lib",
     "lint": "tslint --project . 1>&2",
-    "beforeBuild": "npm run clean && npm run copy:assets & npm run lint",
-    "copy:assets": "cpx ./src/index.js ./lib",
+    "beforeBuild": "npm run clean && npm run lint",
     "build": "npm run beforeBuild && tsc",
     "test": "betools test-tsnode --testDir=./test/",
     "test:watch": "betools test-tsnode --testDir=./test/ --watch",

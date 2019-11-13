@@ -22,7 +22,7 @@ class TestSchemaCompareReporter extends SchemaCompareReporter {
 describe("SchemaCompareReporter Tests", () => {
   let schemaA: Schema;
   let schemaB: Schema;
-  let reporterSpy: sinon.SinonSpy;
+  let reporterSpy: sinon.SinonSpy<[string]>;
 
   beforeEach(async () => {
     schemaA = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
