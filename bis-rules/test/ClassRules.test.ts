@@ -196,7 +196,7 @@ describe("Class Rule Tests", () => {
           expect(diagnostic).to.not.be.undefined;
           expect(diagnostic!.ecDefinition).to.equal(testEntity!);
           expect(diagnostic!.messageArgs).to.eql([testEntity!.fullName, testEntity!.schema.name]);
-          expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
+          expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
           expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.ClassHasHandlerCACannotAppliedOutsideCoreSchemas);
           expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
         }

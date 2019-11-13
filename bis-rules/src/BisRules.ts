@@ -302,7 +302,8 @@ export const Diagnostics = {
 
   /** Required message parameters: ECClass FullName,  Schema Name */
   ClassHasHandlerCACannotAppliedOutsideCoreSchemas: EC.createClassDiagnosticClass<[string, string]>(DiagnosticCodes.ClassHasHandlerCACannotAppliedOutsideCoreSchemas,
-    "Class '{0}' in schema '{1}' has 'ClassHasHandler' Custom Attribute applied. 'ClassHasHandler' Custom Attribute not allowed outside of the BisCore, Functional, and Generic schemas. Consider using the SchemaHasBehavior Custom Attribute."),
+    "Class '{0}' in schema '{1}' has 'ClassHasHandler' Custom Attribute applied. 'ClassHasHandler' Custom Attribute not allowed outside of the BisCore, Functional, and Generic schemas. Consider using the SchemaHasBehavior Custom Attribute.",
+    EC.DiagnosticCategory.Warning),
 
   /** Required message parameters: Current Schema FullName, Derived ECClass FullName, Base ECClass FullName */
   ClassShouldNotDerivedFromDeprecatedClass: EC.createClassDiagnosticClass<[string, string, string]>(DiagnosticCodes.ClassShouldNotDerivedFromDeprecatedClass,
@@ -386,7 +387,7 @@ export const BisRuleSet: EC.IRuleSet = {
 };
 
 function getPrimitiveType(property: EC.Property): EC.PrimitiveType | undefined {
-  if (property.isPrimitive)
+  if (property.isPrimitive())
     return (property as EC.PrimitiveProperty).primitiveType;
 
   return undefined;

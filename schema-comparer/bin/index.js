@@ -8,7 +8,7 @@
 const commander = require("commander");
 const chalk = require("chalk");
 
-const SchemaComparison = require("../lib/SchemaComparison").SchemaComparison; // import { SchemaComparison, ComparisonResultType, CompareOptions } from "./SchemaComparison";
+const SchemaComparison = require("../lib/SchemaComparison").SchemaComparison;
 const ComparisonResultType = require("../lib/SchemaComparison").ComparisonResultType;
 const CompareOptions = require("../lib/SchemaComparison").CompareOptions;
 
@@ -72,5 +72,3 @@ compare().then(() => {
   console.log("End of schema comparison.");
 }).catch();
 
-// tslint:disable-next-line:no-console
-// console.log(" ref: %j", program.ref);

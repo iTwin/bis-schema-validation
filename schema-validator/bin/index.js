@@ -1,14 +1,18 @@
+#!/usr/bin/env node
+
 /*---------------------------------------------------------------------------------------------
 * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
 * Licensed under the MIT License. See LICENSE.md in the project root for license terms.
 *--------------------------------------------------------------------------------------------*/
 
-import * as commander from "commander";
-import * as chalk from "chalk";
+const commander = require("commander");
+const chalk = require("chalk");
 
-import { SchemaValidator, ValidationResultType, ValidationOptions } from "./SchemaValidator";
+const SchemaValidator = require("../lib/SchemaValidator").SchemaValidator;
+const ValidationResultType = require("../lib/SchemaValidator").ValidationResultType;
+const ValidationOptions = require("../lib/SchemaValidator").ValidationOptions;
 
-function ref(value: string, refs: string[]) {
+function ref(value, refs) {
   refs.push(value);
   return refs;
 }
