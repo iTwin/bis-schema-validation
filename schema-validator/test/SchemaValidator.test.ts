@@ -12,23 +12,25 @@ import * as utils from "./utilities/utils";
 import { SchemaValidator, ValidationOptions, standardSchemaNames } from "../src/SchemaValidator";
 import { SchemaWalker } from "@bentley/ecschema-metadata/lib/Validation/SchemaWalker";
 import { Schema } from "@bentley/ecschema-metadata";
+import { IModelHost } from "@bentley/imodeljs-backend";
 
 use(chaiAsPromised);
 
 describe("SchemaValidater Tests", () => {
-  const assetsDir = utils.getAssetsDir();
-  const outDir = utils.getOutDir();
-  const refDir = utils.getReferencesDir();
+  let assetsDir: string;
+  let outDir: string;
+  let refDir: string;
 
-  beforeEach(async () => {
-    await fs.remove(outDir + "SchemaWithViolations.validation.log");
-    await fs.remove(outDir + "SchemaA.validation.log");
-    await fs.remove(outDir + "BaseSchema.validation.log");
-    await fs.remove(outDir + "BadSchemaRefAlias.validation.log");
+  beforeEach(() => {
+    assetsDir = utils.getAssetsDir();
+    outDir = utils.getOutDir();
+    refDir = utils.getReferencesDir();
   });
 
   afterEach(async () => {
     sinon.restore();
+    IModelHost.shutdown();
+    await fs.remove(outDir);
   });
 
   it("schemaPath is a directory, validateFile called multiple times.", async () => {
@@ -48,7 +50,7 @@ describe("SchemaValidater Tests", () => {
 
     const results = await SchemaValidator.validate(options);
 
-    expect(results[2].resultText).to.equal(` An error occurred validating the schema SchemaWithViolations: Test Error`);
+    expect(results[1].resultText).to.equal(` An error occurred validating the schema SchemaWithViolations.01.00.00: Test Error`);
   });
 
   it("Standard schema specified, error reported correctly.", async () => {
@@ -84,7 +86,8 @@ describe("SchemaValidater Tests", () => {
 
       const result = await SchemaValidator.validate(options);
 
-      expect(result.length).to.equal(4, "Expected 4 entries in the result array");
+      expect(result[1].resultText).to.contain("Error BIS-100");
+      expect(result[2].resultText).to.contain("Error BIS-600");
     });
 
     it("XML Schema has failing rules, validateAll option is false, diagnostics written to file correctly.", async () => {
@@ -98,7 +101,7 @@ describe("SchemaValidater Tests", () => {
       const actualOutFile = path.resolve(outDir, "SchemaWithViolations.validation.log");
       const expectedOutText = fs.readFileSync(expectedOutFile, "utf8");
       const actualOutText = fs.readFileSync(actualOutFile, "utf8");
-      expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));;
+      expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));
       expect(fs.existsSync(baseOutputFile), "BaseSchema results should not have been created").to.be.false;
     });
 
@@ -112,13 +115,13 @@ describe("SchemaValidater Tests", () => {
       let actualOutFile = path.resolve(outDir, "SchemaWithViolations.validation.log");
       let expectedOutText = fs.readFileSync(expectedOutFile, "utf8");
       let actualOutText = fs.readFileSync(actualOutFile, "utf8");
-      expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));;
+      expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));
 
       expectedOutFile = path.resolve(assetsDir, "BaseSchema.validation.log");
       actualOutFile = path.resolve(outDir, "BaseSchema.validation.log");
       expectedOutText = fs.readFileSync(expectedOutFile, "utf8");
       actualOutText = fs.readFileSync(actualOutFile, "utf8");
-      expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));;
+      expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));
     });
 
     it("XML Schema has no failing rules, output written to file correctly.", async () => {
@@ -132,7 +135,7 @@ describe("SchemaValidater Tests", () => {
       const expectedOutText = fs.readFileSync(expectedOutFile, "utf8");
       const actualOutText = fs.readFileSync(actualOutFile, "utf8");
 
-      expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));;
+      expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));
     });
 
     it("out path does not exist, throws", async () => {
@@ -176,7 +179,8 @@ describe("SchemaValidater Tests", () => {
       const options = new ValidationOptions(schemaFile, [refDir], false);
       const result = await SchemaValidator.validate(options);
 
-      expect(result.length).to.equal(4, "Expected 4 entries in the result array");
+      expect(result[1].resultText).to.contain("Error BIS-100");
+      expect(result[2].resultText).to.contain("Error BIS-600");
     });
 
     it("JSON Schema has failing rules, diagnostics written to file correctly.", async () => {
@@ -189,7 +193,7 @@ describe("SchemaValidater Tests", () => {
       const actualOutFile = path.resolve(outDir, "SchemaWithViolations.validation.log");
       const expectedOutText = fs.readFileSync(expectedOutFile, "utf8");
       const actualOutText = fs.readFileSync(actualOutFile, "utf8");
-      expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));;
+      expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));
     });
   });
 });

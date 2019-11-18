@@ -10,12 +10,17 @@ import * as path from "path";
 import * as utils from "./utilities/utils";
 import * as EC from "@bentley/ecschema-metadata";
 import { SchemaDeserializer } from "../src/SchemaDeserializer";
+import { IModelHost } from "@bentley/imodeljs-backend";
 
 use(chaiAsPromised);
 
 describe("SchemaXmlFileDeserializer", () => {
   const assetDeserializationDir = path.join(utils.getAssetsDir(), "xml-deserialization");
   const refDir = path.join(assetDeserializationDir, "references");
+
+  afterEach(() => {
+    IModelHost.shutdown();
+  });
 
   it("With references in separate folder, should successfully deserialize schema.", async () => {
     const deserializer = new SchemaDeserializer();
@@ -53,7 +58,15 @@ describe("SchemaXmlFileDeserializer", () => {
     const schemaPath = path.join(assetDeserializationDir, "BadRefSchema.ecschema.xml");
     const context = new EC.SchemaContext();
 
-    await expect(deserializer.deserializeXmlFile(schemaPath, context, [refDir])).to.be.rejectedWith(EC.ECObjectsError, "Could not locate reference schema, DoesNotExist.01.01.01 of schema BadRefSchema.01.01.01");
+    await expect(deserializer.deserializeXmlFile(schemaPath, context, [refDir])).to.be.rejectedWith(EC.ECObjectsError, "Unable to load schema 'BadRefSchema'. A referenced schema could not be found.");
+  });
+
+  it("Schema XML has no version, throws.", async () => {
+    const deserializer = new SchemaDeserializer();
+    const schemaPath = path.join(assetDeserializationDir, "SchemaNoVersion.ecschema.xml");
+    const context = new EC.SchemaContext();
+
+    await expect(deserializer.deserializeXmlFile(schemaPath, context, [refDir])).to.be.rejectedWith(EC.ECObjectsError, "Could not find the ECSchema 'schemaName' or 'version' tag in the given file.");
   });
 
   it("Non-existent schema, throws.", async () => {
@@ -73,7 +86,7 @@ describe("SchemaXmlFileDeserializer", () => {
 
     const coreCA = biscore.getReferenceSync("CoreCustomAttributes");
     expect(coreCA).not.to.be.undefined;
-    expect(coreCA!.schemaKey.toString()).to.eql("CoreCustomAttributes.01.00.00");
+    expect(coreCA!.schemaKey.toString()).to.eql("CoreCustomAttributes.01.00.03");
 
     const ecdbMap = biscore.getReferenceSync("ECDbMap");
     expect(ecdbMap).not.to.be.undefined;
@@ -105,7 +118,7 @@ describe("SchemaXmlFileDeserializer", () => {
 
     const coreCA = comprehensiveSchema.getReferenceSync("CoreCustomAttributes");
     expect(coreCA).not.to.be.undefined;
-    expect(coreCA!.schemaKey.toString()).to.eql("CoreCustomAttributes.01.00.00");
+    expect(coreCA!.schemaKey.toString()).to.eql("CoreCustomAttributes.01.00.03");
 
     const biscore = comprehensiveSchema.getReferenceSync("BisCore");
     expect(biscore).not.to.be.undefined;
@@ -129,7 +142,7 @@ describe("SchemaXmlFileDeserializer", () => {
 
     const coreCA = partialComprehensiveSchema.getReferenceSync("CoreCustomAttributes");
     expect(coreCA).not.to.be.undefined;
-    expect(coreCA!.schemaKey.toString()).to.eql("CoreCustomAttributes.01.00.00");
+    expect(coreCA!.schemaKey.toString()).to.eql("CoreCustomAttributes.01.00.03");
 
     const biscore = partialComprehensiveSchema.getReferenceSync("BisCore");
     expect(biscore).not.to.be.undefined;
@@ -217,7 +230,7 @@ describe("SchemaXmlFileDeserializer", () => {
     expect(derivedStruct.getBaseClassSync() === struct).to.be.true;
   });
 
-  it("Test for cyclic references", async () => {
+  it.skip("Test for cyclic references", async () => {
     // Round 1
     // B ----> C ----> D ---
     // ^                   |
@@ -225,7 +238,7 @@ describe("SchemaXmlFileDeserializer", () => {
     let deserializer = new SchemaDeserializer();
     let schemaPath = path.join(assetDeserializationDir, "cyclic-references", "round1", "SchemaB.ecschema.xml");
     await expect(deserializer.deserializeXmlFile(schemaPath, new EC.SchemaContext())).
-      to.be.rejectedWith(`Schema SchemaD.01.00.02 and SchemaB.01.00.01 form cyclic dependency`);
+    to.be.rejectedWith(`Schema SchemaD.01.00.02 and SchemaB.01.00.01 form cyclic dependency`);
 
     // Round 2
     // B---->C ---
@@ -234,7 +247,7 @@ describe("SchemaXmlFileDeserializer", () => {
     deserializer = new SchemaDeserializer();
     schemaPath = path.join(assetDeserializationDir, "cyclic-references", "round2", "SchemaB.ecschema.xml");
     await expect(deserializer.deserializeXmlFile(schemaPath, new EC.SchemaContext()))
-      .to.be.rejectedWith(`Schema SchemaC.01.00.00 and SchemaC.01.00.00 form cyclic dependency`);
+    .to.be.rejectedWith(`Schema SchemaC.01.00.00 and SchemaC.01.00.00 form cyclic dependency`);
 
     // Round 3
     // B ------>C

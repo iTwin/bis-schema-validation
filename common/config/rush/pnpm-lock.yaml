@@ -1,5 +1,6 @@
 dependencies:
   '@bentley/bentleyjs-core': 1.7.0
+  '@bentley/bis-rules': 0.1.7_83b56c5b6c9a76b41cf76122d68e33b1
   '@bentley/build-tools': 1.7.0
   '@bentley/ecschema-metadata': 1.7.0_e7e6ab0e0a750d4e479c55913b233e14
   '@bentley/geometry-core': 1.7.0_@bentley+bentleyjs-core@1.7.0
@@ -146,6 +147,20 @@ packages:
     dev: false
     resolution:
       integrity: sha1-71F7YKlMKQw/fDmrx6OCBwL4i1w=
+  /@bentley/bis-rules/0.1.7_83b56c5b6c9a76b41cf76122d68e33b1:
+    dependencies:
+      '@bentley/bentleyjs-core': 1.7.0
+      '@bentley/ecschema-metadata': 1.7.0_e7e6ab0e0a750d4e479c55913b233e14
+      '@bentley/imodeljs-backend': 1.7.0_cedea38bc94f7a51b4d0ce448a8fc88b
+    dev: false
+    peerDependencies:
+      '@bentley/geometry-core': '*'
+      '@bentley/imodeljs-clients': '*'
+      '@bentley/imodeljs-clients-backend': '*'
+      '@bentley/imodeljs-common': '*'
+      '@bentley/imodeljs-i18n': '*'
+    resolution:
+      integrity: sha1-Yo3UjtfrPFJ0iZ8wRtLCtADroDg=
   /@bentley/build-tools/1.7.0:
     dependencies:
       '@microsoft/api-extractor': 7.5.0
@@ -465,7 +480,7 @@ packages:
       integrity: sha512-1Bh06cbWJUHMC97acuD6UMG29nMt0Aqz1vF3guLfG+kHHJhy3AyohZFFxYk2f7Q1SQIrNwvncxAE0N/9s70F2w==
   /@types/handlebars/4.1.0:
     dependencies:
-      handlebars: 4.5.1
+      handlebars: 4.5.3
     deprecated: 'This is a stub types definition. handlebars provides its own type definitions, so you do not need this installed.'
     dev: false
     resolution:
@@ -484,10 +499,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
-  /@types/lodash/4.14.146:
+  /@types/lodash/4.14.148:
     dev: false
     resolution:
-      integrity: sha512-JzJcmQ/ikHSv7pbvrVNKJU5j9jL9VLf3/gqs048CEnBVVVEv4kve3vLxoPHGvclutS+Il4SBIuQQ087m1eHffw==
+      integrity: sha512-05+sIGPev6pwpHF7NZKfP3jcXhXsIVFnYyVRT4WOB0me62E8OlWfTN+sKyt2/rqN+ETxuHAtgTSK1v71F0yncg==
   /@types/marked/0.4.2:
     dev: false
     resolution:
@@ -556,10 +571,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-WVk5+lJ+AoNLh2sIDMhnEAgLsVQuI067hWLJCzirErH1GYiy1gs09q4+XZxYWSvdAsslKsaO4q1iXXMx2c72dA==
-  /abab/2.0.2:
+  /abab/2.0.3:
     dev: false
     resolution:
-      integrity: sha512-2scffjvioEmNz0OyDSLGWDfKCVwaKc6l9Pm9kOIREU13ClXZvHpg/nRL5xyjSSSLhOnXqft2HpsAzNEEA8cFFg==
+      integrity: sha512-tsFzPpcttalNjFBCFMqsKYQcWxxen1pgJR56by//QwvJc4/OUS3kPOOttx2tSIfjsylB0pYu7f5D3K1RCxUnUg==
   /abort-controller/3.0.0:
     dependencies:
       event-target-shim: 5.0.1
@@ -1121,6 +1136,7 @@ packages:
     resolution:
       integrity: sha1-Z29us8OZl8LuGsOpJP1hJHSPV40=
   /core-js/2.6.10:
+    deprecated: 'core-js@<3.0 is no longer maintained and not recommended for usage due to the number of issues. Please, upgrade your dependencies to the actual version of core-js@3.'
     dev: false
     requiresBuild: true
     resolution:
@@ -1205,7 +1221,7 @@ packages:
       integrity: sha1-hTz6D3y+L+1d4gMmuN1YEDX24vA=
   /data-urls/1.1.0:
     dependencies:
-      abab: 2.0.2
+      abab: 2.0.3
       whatwg-mimetype: 2.3.0
       whatwg-url: 7.1.0
     dev: false
@@ -1398,7 +1414,7 @@ packages:
       es-to-primitive: 1.2.1
       function-bind: 1.1.1
       has: 1.0.3
-      has-symbols: 1.0.0
+      has-symbols: 1.0.1
       is-callable: 1.1.4
       is-regex: 1.0.4
       object-inspect: 1.7.0
@@ -1926,7 +1942,7 @@ packages:
       node: '>=4.x'
     resolution:
       integrity: sha512-qBr4OuELkhPenW6goKVXiv47US3clb3/IbuWF9KNKEijAy9oeHxU9IgzjvJhHkUzhaj7rOUD7+YGWqUjLp5oSA==
-  /handlebars/4.5.1:
+  /handlebars/4.5.3:
     dependencies:
       neo-async: 2.6.1
       optimist: 0.6.1
@@ -1938,7 +1954,7 @@ packages:
     optionalDependencies:
       uglify-js: 3.6.9
     resolution:
-      integrity: sha512-C29UoFzHe9yM61lOsIlCE5/mQVGrnIOrOq7maQl76L7tYPCgC1og0Ajt6uWnX4ZTxBPnjw+CUvawphwCfJgUnA==
+      integrity: sha512-3yPecJoJHK/4c6aZhSvxOyG4vJKDshV36VHp0iVCDVh7o9w2vwi3NSnL2MMPj3YdduqaBcu7cGbggJQM0br9xA==
   /har-schema/2.0.0:
     dev: false
     engines:
@@ -1964,12 +1980,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-3ToOva++HaW+eCpgqZrCfN51IPB+7bJNVT6CUATzueB5Heb8o6Nam0V3HG5dlDvZU1Gn5QLcbahiKw/XVk5JJw==
-  /has-symbols/1.0.0:
+  /has-symbols/1.0.1:
     dev: false
     engines:
       node: '>= 0.4'
     resolution:
-      integrity: sha1-uhqPGvKg/DllD1yFA2dwQSIGO0Q=
+      integrity: sha512-PLcsoqu++dmEIZB+6totNFKq/7Do+Z0u4oT0zKOJNl3lYK6vGwwu2hjHs+68OEZbTjiUE9bgOABXbP/GvrS0Kg==
   /has-to-string-tag-x/1.4.1:
     dependencies:
       has-symbol-support-x: 1.4.2
@@ -2380,7 +2396,7 @@ packages:
       integrity: sha1-EtSj3U5o4Lec6428hBc66A2RykQ=
   /is-symbol/1.0.2:
     dependencies:
-      has-symbols: 1.0.0
+      has-symbols: 1.0.1
     dev: false
     engines:
       node: '>= 0.4'
@@ -2478,7 +2494,7 @@ packages:
       integrity: sha512-R47KzMtDJH6X4/YW9XTx+jrLnZnscW4VpNN+1PViSYTejLVPWv7oov+Duf8YQSPyVRUvueQqz1TcsC6mooZTXw==
   /istanbul-reports/2.2.6:
     dependencies:
-      handlebars: 4.5.1
+      handlebars: 4.5.3
     dev: false
     engines:
       node: '>=6'
@@ -2527,7 +2543,7 @@ packages:
       integrity: sha1-a9KZwTsMRiay2iwDk81DhdYGrLk=
   /jsdom/11.12.0:
     dependencies:
-      abab: 2.0.2
+      abab: 2.0.3
       acorn: 5.7.3
       acorn-globals: 4.3.4
       array-equal: 1.0.0
@@ -4600,12 +4616,12 @@ packages:
       '@types/fs-extra': 5.1.0
       '@types/handlebars': 4.1.0
       '@types/highlight.js': 9.12.3
-      '@types/lodash': 4.14.146
+      '@types/lodash': 4.14.148
       '@types/marked': 0.4.2
       '@types/minimatch': 3.0.3
       '@types/shelljs': 0.8.6
       fs-extra: 7.0.1
-      handlebars: 4.5.1
+      handlebars: 4.5.3
       highlight.js: 9.16.2
       lodash: 4.17.15
       marked: 0.4.0
@@ -5080,12 +5096,13 @@ packages:
     dev: false
     name: '@rush-temp/schema-roundtrip'
     resolution:
-      integrity: sha512-7NsA9o0r4n+C/WOFHkxKzWE4k+eY5fLiRvG9YEb7oPamvpBA+p6dVpssWah8mm2YlziFWIMP4voKeCY/nFkHNg==
+      integrity: sha512-Ui8ZsAYhiIR7BLYKEQgkty7pjMiUJ9KO48B2mRstGLL/7w4o/i9OANrXtFFuOG/GpxTNH0A0bXls8xM/+/yYnQ==
       tarball: 'file:projects/schema-roundtrip.tgz'
     version: 0.0.0
   'file:projects/schema-validator.tgz_@bentley+imodeljs-i18n@1.7.0':
     dependencies:
       '@bentley/bentleyjs-core': 1.7.0
+      '@bentley/bis-rules': 0.1.7_83b56c5b6c9a76b41cf76122d68e33b1
       '@bentley/build-tools': 1.7.0
       '@bentley/ecschema-metadata': 1.7.0_e7e6ab0e0a750d4e479c55913b233e14
       '@bentley/geometry-core': 1.7.0_@bentley+bentleyjs-core@1.7.0
@@ -5123,11 +5140,12 @@ packages:
     peerDependencies:
       '@bentley/imodeljs-i18n': '*'
     resolution:
-      integrity: sha512-LcM1eOx6F/pIRV7TJq+aBG7Pr/a7/3uZuyxwp96DPXRp9n9XsjSJJSNL9UvfrjQ8eQHUYsuwiF5sQNcK4gDgjA==
+      integrity: sha512-w9znt/wlcKa8HdXWn0aWkww3dAheXpw1nV3m6mIwnfuRzTe53LUL2sz8XKA6gl1QV1H5e7vqGgD2OXCGWeMMVA==
       tarball: 'file:projects/schema-validator.tgz'
     version: 0.0.0
 specifiers:
   '@bentley/bentleyjs-core': ^1.1.0
+  '@bentley/bis-rules': 0.1.7
   '@bentley/build-tools': ^1.1
   '@bentley/ecschema-metadata': ^1.7.0-dev.8
   '@bentley/geometry-core': ^1.1.0

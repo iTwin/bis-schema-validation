@@ -1,2 +1,2 @@
-BaseSchema Validation Results
+BaseSchema.01.00.00 Validation Results
 Error BIS-600: Entity class 'BaseSchema.BaseEntityClass' must derive from the BIS hierarchy.

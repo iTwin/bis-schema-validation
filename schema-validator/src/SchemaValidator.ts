@@ -37,6 +37,7 @@ export const standardSchemaNames = [
   "USCustomaryUnitSystemDefaults",
   "ECDbMap",
   "CoreCustomAttributes", // New EC3 Standard Schema
+  "ECv3ConversionAttributes", // New EC2 Standard Schema
   "SchemaLocalizationCustomAttributes", // New EC3 Standard Schema
   "Units", // New EC3 Standard Schema
   "Formats", // New EC3 Standard Schema
@@ -145,8 +146,10 @@ export class SchemaValidator {
     results.push({ resultType: ValidationResultType.Message, resultText: headerText });
 
     // skip validation on all standard schemas
-    if (this.isStandardSchema(schemaName))
+    if (this.isStandardSchema(schemaName)) {
       results.push({ resultType: ValidationResultType.Error, resultText: " Standard schemas are not supported by this tool." });
+      return results;
+    }
 
     const schema = await this.getSchema(schemaPath, results, options.referenceDirectories);
     if (!schema)
@@ -155,7 +158,7 @@ export class SchemaValidator {
     // Creates the Validator rule set that will be added to the validation along with EC and BIS rule sets.
     const ruleSet = this.createRuleSet(schemaPath);
 
-    results = results.concat(await this.validateLoadedSchema(schema, options, ruleSet));
+    results = results.concat(await this.validateLoadedSchema(schema, options, ruleSet, schemaName));
 
     return results;
   }
@@ -164,8 +167,9 @@ export class SchemaValidator {
    * Validates a schema against Core EC and BIS rules.
    * @param options The validation options.
    */
-  public static async validateLoadedSchema(schema: Schema, options: ValidationOptions, validaterRuleSet?: IRuleSet): Promise<IValidationResult[]> {
-    const schemaName = schema.fullName;
+  public static async validateLoadedSchema(schema: Schema, options: ValidationOptions, validaterRuleSet?: IRuleSet, outputFileName?: string): Promise<IValidationResult[]> {
+    const schemaFullName = schema.schemaKey.toString();
+    outputFileName = outputFileName || schema.name;
 
     // skip validation on all standard schemas
     if (this.isStandardSchema(schema))
@@ -176,9 +180,9 @@ export class SchemaValidator {
 
     let fileReporter: FileDiagnosticReporter | undefined;
     if (options.outputDir) {
-      fileReporter = new FileDiagnosticReporter(schemaName, options.outputDir);
+      fileReporter = new FileDiagnosticReporter(outputFileName, options.outputDir);
       reporters.push(fileReporter);
-      fileReporter.start(schemaName + " Validation Results");
+      fileReporter.start(schemaFullName + " Validation Results");
     }
 
     const ruleSets = [ECRuleSet, BisRuleSet];
@@ -200,7 +204,7 @@ export class SchemaValidator {
       message = collectionReporter.diagnostics.length === 0 ? " Schema Validation Succeeded. No rule violations found." : undefined;
       msgType = ValidationResultType.Message;
     } catch (err) {
-      message = ` An error occurred validating the schema ${schemaName}: ${err.message}`;
+      message = ` An error occurred validating the schema ${schemaFullName}: ${err.message}`;
       msgType = ValidationResultType.Error;
     }
 
@@ -278,10 +282,8 @@ export class SchemaValidator {
 
       if (isJson)
         schema = await deserializer.deserializeJsonFile(schemaPath, context, referencePaths);
-      schema = await deserializer.deserializeXmlFile(schemaPath, context, referencePaths);
-
-      const msg = ` Successfully de-serialized schema ${schema.schemaKey.toString()}`;
-      results.push({ resultType: ValidationResultType.Message, resultText: msg });
+      else
+        schema = await deserializer.deserializeXmlFile(schemaPath, context, referencePaths);
 
       return schema;
     } catch (err) {
@@ -323,7 +325,14 @@ export class SchemaValidator {
   }
 
   private static isStandardSchema(schema: Schema | string): boolean {
-    const name = schema instanceof Schema ? schema.name : schema;
+    let name: string;
+
+    if (schema instanceof Schema)
+      name = schema.name;
+    else {
+       const match = schema.match(/\w+/);
+       name = match ? match[0] : "";
+    }
     return standardSchemaNames.includes(name);
   }
 
