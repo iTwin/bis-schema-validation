@@ -27,7 +27,7 @@ program.parse(process.argv);
 
 if (process.argv.length === 0) program.help();
 
-if (!program.input || !program.output) {
+if (!program.input) {
   // tslint:disable-next-line:no-console
   console.log(chalk.default.red("Invalid input. For help use the '-h' option."));
   process.exit(1);
@@ -38,7 +38,7 @@ console.log("\nPerforming schema validation on file/folder " + program.input + "
 
 async function validate() {
   try {
-    const options = new ValidationOptions(program.input, program.ref, program.output, program.all);
+    const options = new ValidationOptions(program.input, program.ref, program.all, program.output);
     const results = await SchemaValidator.validate(options);
     for (const line of results) {
       switch (line.resultType) {

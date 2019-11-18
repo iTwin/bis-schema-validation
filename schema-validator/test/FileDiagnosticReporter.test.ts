@@ -12,13 +12,16 @@ import * as EC from "@bentley/ecschema-metadata/lib/ecschema-metadata";
 import { FileDiagnosticReporter } from "../src/FileDiagnosticReporter";
 
 describe("FileDiagnosticReporter Tests", () => {
-  const outDir = utils.getOutDir();
-  const assetsDir = utils.getAssetsDir();
+  let assetsDir: string;
+  let outDir: string;
 
-  beforeEach(async () => {
-    fs.removeSync(path.resolve(outDir, "SchemaWithViolations.validation.log"));
-    fs.removeSync(path.resolve(outDir, "BaseClassIsSealed.validation.log"));
-    fs.removeSync(path.resolve(outDir, "NoErrors.validation.log"));
+  beforeEach(() => {
+    assetsDir = utils.getAssetsDir();
+    outDir = utils.getOutDir();
+  });
+
+  afterEach(async () => {
+    await fs.remove(outDir);
   });
 
   it("report diagnostic, diagnostic written to file correctly.", (done) => {
@@ -27,7 +30,7 @@ describe("FileDiagnosticReporter Tests", () => {
     const baseClass = new EC.EntityClass(schema, "BaseClass");
     const testClass = new EC.EntityClass(schema, "TestClass");
     const diagnostic = new ECRules.Diagnostics.BaseClassIsSealed(testClass, [testClass.fullName, baseClass.fullName]);
-    reporter.start("BaseClassIsSealed Validation Results");
+    reporter.start("BaseClassIsSealed.01.00.00 Validation Results");
 
     reporter.report(diagnostic);
 
@@ -36,21 +39,21 @@ describe("FileDiagnosticReporter Tests", () => {
       const actualOutFile = path.resolve(outDir, "BaseClassIsSealed.validation.log");
       const expectedOutText = fs.readFileSync(expectedOutFile, "utf8");
       const actualOutText = fs.readFileSync(actualOutFile, "utf8");
-      expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));;
+      expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));
       done();
     });
   });
 
   it("no diagnostics reported, output written to file correctly.", (done) => {
     const reporter = new FileDiagnosticReporter("NoErrors", outDir);
-    reporter.start("SchemaWithViolations Validation Results");
+    reporter.start("SchemaWithViolations.01.00.00 Validation Results");
 
     reporter.end(" Schema Validation Succeeded. No rule violations found.", () => {
       const expectedOutFile = path.resolve(assetsDir, "NoErrors.validation.log");
       const actualOutFile = path.resolve(outDir, "NoErrors.validation.log");
       const expectedOutText = fs.readFileSync(expectedOutFile, "utf8");
       const actualOutText = fs.readFileSync(actualOutFile, "utf8");
-      expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));;
+      expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));
       done();
     });
   });

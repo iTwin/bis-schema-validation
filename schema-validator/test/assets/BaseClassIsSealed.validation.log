@@ -1,2 +1,2 @@
-BaseClassIsSealed Validation Results
+BaseClassIsSealed.01.00.00 Validation Results
 Error ECObjects-100: Class 'BaseClassIsSealed.TestClass' cannot derive from sealed base class 'BaseClassIsSealed.BaseClass'.
