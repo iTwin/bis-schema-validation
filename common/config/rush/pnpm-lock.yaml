@@ -1,6 +1,5 @@
 dependencies:
   '@bentley/bentleyjs-core': 1.7.0
-  '@bentley/bis-rules': 0.1.7_83b56c5b6c9a76b41cf76122d68e33b1
   '@bentley/build-tools': 1.7.0
   '@bentley/ecschema-metadata': 1.7.0_e7e6ab0e0a750d4e479c55913b233e14
   '@bentley/geometry-core': 1.7.0_@bentley+bentleyjs-core@1.7.0
@@ -147,20 +146,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-71F7YKlMKQw/fDmrx6OCBwL4i1w=
-  /@bentley/bis-rules/0.1.7_83b56c5b6c9a76b41cf76122d68e33b1:
-    dependencies:
-      '@bentley/bentleyjs-core': 1.7.0
-      '@bentley/ecschema-metadata': 1.7.0_e7e6ab0e0a750d4e479c55913b233e14
-      '@bentley/imodeljs-backend': 1.7.0_cedea38bc94f7a51b4d0ce448a8fc88b
-    dev: false
-    peerDependencies:
-      '@bentley/geometry-core': '*'
-      '@bentley/imodeljs-clients': '*'
-      '@bentley/imodeljs-clients-backend': '*'
-      '@bentley/imodeljs-common': '*'
-      '@bentley/imodeljs-i18n': '*'
-    resolution:
-      integrity: sha1-Yo3UjtfrPFJ0iZ8wRtLCtADroDg=
   /@bentley/build-tools/1.7.0:
     dependencies:
       '@microsoft/api-extractor': 7.5.0
@@ -499,10 +484,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
-  /@types/lodash/4.14.148:
+  /@types/lodash/4.14.149:
     dev: false
     resolution:
-      integrity: sha512-05+sIGPev6pwpHF7NZKfP3jcXhXsIVFnYyVRT4WOB0me62E8OlWfTN+sKyt2/rqN+ETxuHAtgTSK1v71F0yncg==
+      integrity: sha512-ijGqzZt/b7BfzcK9vTrS6MFljQRPn5BFWOx8oE0GYxribu6uV+aA9zZuXI1zc/etK9E8nrgdoF2+LgUw7+9tJQ==
   /@types/marked/0.4.2:
     dev: false
     resolution:
@@ -4616,7 +4601,7 @@ packages:
       '@types/fs-extra': 5.1.0
       '@types/handlebars': 4.1.0
       '@types/highlight.js': 9.12.3
-      '@types/lodash': 4.14.148
+      '@types/lodash': 4.14.149
       '@types/marked': 0.4.2
       '@types/minimatch': 3.0.3
       '@types/shelljs': 0.8.6
@@ -5102,7 +5087,6 @@ packages:
   'file:projects/schema-validator.tgz_@bentley+imodeljs-i18n@1.7.0':
     dependencies:
       '@bentley/bentleyjs-core': 1.7.0
-      '@bentley/bis-rules': 0.1.7_83b56c5b6c9a76b41cf76122d68e33b1
       '@bentley/build-tools': 1.7.0
       '@bentley/ecschema-metadata': 1.7.0_e7e6ab0e0a750d4e479c55913b233e14
       '@bentley/geometry-core': 1.7.0_@bentley+bentleyjs-core@1.7.0
@@ -5140,12 +5124,11 @@ packages:
     peerDependencies:
       '@bentley/imodeljs-i18n': '*'
     resolution:
-      integrity: sha512-w9znt/wlcKa8HdXWn0aWkww3dAheXpw1nV3m6mIwnfuRzTe53LUL2sz8XKA6gl1QV1H5e7vqGgD2OXCGWeMMVA==
+      integrity: sha512-zr+ULeq8vEEudJaC/WRy8MFnYzR30yVuldlDJewsMIuCtUDKDtOD5eG2iXatkYdy/Itr28TtAtI9ZV0ZcZmbyg==
       tarball: 'file:projects/schema-validator.tgz'
     version: 0.0.0
 specifiers:
   '@bentley/bentleyjs-core': ^1.1.0
-  '@bentley/bis-rules': 0.1.7
   '@bentley/build-tools': ^1.1
   '@bentley/ecschema-metadata': ^1.7.0-dev.8
   '@bentley/geometry-core': ^1.1.0

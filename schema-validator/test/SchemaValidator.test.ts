@@ -12,7 +12,6 @@ import * as utils from "./utilities/utils";
 import { SchemaValidator, ValidationOptions, standardSchemaNames } from "../src/SchemaValidator";
 import { SchemaWalker } from "@bentley/ecschema-metadata/lib/Validation/SchemaWalker";
 import { Schema } from "@bentley/ecschema-metadata";
-import { IModelHost } from "@bentley/imodeljs-backend";
 
 use(chaiAsPromised);
 
@@ -29,7 +28,6 @@ describe("SchemaValidater Tests", () => {
 
   afterEach(async () => {
     sinon.restore();
-    IModelHost.shutdown();
     await fs.remove(outDir);
   });
 
