@@ -5,16 +5,11 @@ import * as fs from "fs";
 import * as utils from "./utilities/utils";
 import * as EC from "@bentley/ecschema-metadata";
 import { NativeSchemaXmlFileLocater } from "../src/NativeSchemaXmlFileLocater";
-import { IModelHost } from "@bentley/imodeljs-backend";
 
 use(chaiAsPromised);
 
 describe("NativeSchemaXmlFileLocater.test", () => {
   const assetDeserializationDir = path.join(utils.getAssetsDir(), "xml-deserialization");
-
-  afterEach(() => {
-    IModelHost.shutdown();
-  });
 
   it("Schema XML has no version, throws.", async () => {
     const nativeLocater = new NativeSchemaXmlFileLocater();

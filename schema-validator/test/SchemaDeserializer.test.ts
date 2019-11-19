@@ -10,17 +10,12 @@ import * as path from "path";
 import * as utils from "./utilities/utils";
 import * as EC from "@bentley/ecschema-metadata";
 import { SchemaDeserializer } from "../src/SchemaDeserializer";
-import { IModelHost } from "@bentley/imodeljs-backend";
 
 use(chaiAsPromised);
 
 describe("SchemaXmlFileDeserializer", () => {
   const assetDeserializationDir = path.join(utils.getAssetsDir(), "xml-deserialization");
   const refDir = path.join(assetDeserializationDir, "references");
-
-  afterEach(() => {
-    IModelHost.shutdown();
-  });
 
   it("With references in separate folder, should successfully deserialize schema.", async () => {
     const deserializer = new SchemaDeserializer();

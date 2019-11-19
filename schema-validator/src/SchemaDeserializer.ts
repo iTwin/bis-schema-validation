@@ -6,6 +6,8 @@
 import * as path from "path";
 import * as fs from "fs";
 import * as EC from "@bentley/ecschema-metadata";
+import { IModelHost } from "@bentley/imodeljs-backend";
+import { Config } from "@bentley/imodeljs-clients";
 import { NativeSchemaXmlFileLocater } from "./NativeSchemaXmlFileLocater";
 
 /**
@@ -29,16 +31,25 @@ export class SchemaDeserializer {
       referencePaths = [];
     referencePaths.push(path.dirname(schemaFilePath));
 
+    // The following two lines can be removed (and shutdown below) when/if the NativeSchemaXmlFIleLocater is removed
+    (Config as any)._appConfig = new (Config as any)(); // Needed to avoid crash in backend when calling IModelHost.startup.
+    IModelHost.startup();
+
     // Native file locater is registered first. If not a EC 3.1 schema, it will return
     // undefined and allow the normal EC.SchemaXmlFileLocater to get the schema.
     this.configureNativeFileLocater(schemaContext, referencePaths);
     this.configureFileLocater(schemaContext, referencePaths);
 
+    try {
     const schema = await schemaContext.getSchema(schemaKey, EC.SchemaMatchType.Exact);
     if (!schema)
       throw new EC.ECObjectsError(EC.ECObjectsStatus.UnableToLocateSchema, `Unable to locate schema '${schemaKey.name}'`);
 
     return schema;
+    } finally {
+      // This can be removed when/if the NativeSchemaXmlFIleLocater is removed
+      IModelHost.shutdown();
+    }
   }
 
   /**

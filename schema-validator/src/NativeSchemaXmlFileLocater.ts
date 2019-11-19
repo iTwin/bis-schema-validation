@@ -4,9 +4,8 @@
 *--------------------------------------------------------------------------------------------*/
 
 import * as path from "path";
-import { ECSchemaXmlContext, IModelHost } from "@bentley/imodeljs-backend";
+import { ECSchemaXmlContext } from "@bentley/imodeljs-backend";
 import * as EC from "@bentley/ecschema-metadata";
-import { Config } from "@bentley/imodeljs-clients";
 
 /**
  * A SchemaLocater implementation for locating XML Schema files
@@ -14,15 +13,6 @@ import { Config } from "@bentley/imodeljs-clients";
  * @internal This is a workaround the current lack of a full xml parser.
  */
 export class NativeSchemaXmlFileLocater extends EC.SchemaFileLocater implements EC.ISchemaLocater {
-
-  public constructor() {
-    super();
-
-    // Needed to avoid crash in backend when calling IModelHost.startup.  This
-    // can be removed once the backed is no longer need for de-serialization.
-    (Config as any)._appConfig = new (Config as any)();
-    IModelHost.startup();
-  }
 
   /**
    * Attempts to retrieve a Schema with the given SchemaKey by using the configured search paths
