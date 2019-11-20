@@ -1,7 +1,7 @@
 {
-  "name": "signoffn",
-  "description": "signoff tool that connects with Hub, get iModel information and export schemas.",
-  "main": "main.js",
+  "name": "@bentley/imodel-schema-validator",
+  "description": "This tool validates an iModel's Schema.",
+  "main": "./lib/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/iTwin/bis-schema-validation"
@@ -12,31 +12,38 @@
     "url": "http://www.bentley.com"
   },
   "version": "0.0.1",
+  "bin": {
+    "imodel-schema-validator": "./lib/index.js"
+  },
   "scripts": {
-    "build": "tsc 1>&2",
+    "build": "tsc 1>&2 && npm run copy:assets",
     "lint": "tslint --project . 1>&2",
-    "test": "mocha -r ts-node/register test/**.test.ts",
+    "test": "mocha -r ts-node/register test/**.test.ts --timeout 30000",
     "cover": "nyc npm test",
-    "clean": "rimraf _build/node_modules"
+    "clean": "rimraf lib",
+    "copy:assets": "cpx ./src/index.js ./lib"
   },
   "dependencies": {
-    "@bentley/imodeljs-backend": "~1",
-    "@bentley/imodeljs-clients": "~1",
-    "@bentley/imodeljs-common": "~1",
-    "@bentley/geometry-core": "~1",
-    "@bentley/imodeljs-clients-backend": "~1",
-    "@bentley/ecschema-metadata": "~1",
-    "@bentley/bentleyjs-core": "~1",
+    "@bentley/imodeljs-backend": "1.6.0",
+    "@bentley/imodeljs-clients": "1.6.0",
+    "@bentley/imodeljs-common": "1.6.0",
+    "@bentley/geometry-core": "1.6.0",
+    "@bentley/imodeljs-clients-backend": "1.6.0",
+    "@bentley/ecschema-metadata": "1.6.0",
+    "@bentley/bentleyjs-core": "1.6.0",
     "chalk": "^2.4.1",
-    "commander": "^2.19.0"
+    "commander": "^2.19.0",
+    "httpntlm": "~1",
+    "readdirp": "^3.0.0",
+    "@bentley/schema-comparer": "^0.1.7",
+    "@bentley/schema-validator": "^0.1.8"
   },
   "devDependencies": {
-    "@bentley/build-tools": "~1",
+    "@bentley/build-tools": "1.6.0",
     "@types/chai": "^4.1.4",
     "@types/mocha": "^5.2.5",
     "rimraf": "^2.6.2",
     "typescript": "^3.0.0",
-    "electron": "^2.0.10",
     "chai": "^4.1.2",
     "mocha": "^5.2.0",
     "nyc": "^13.0.1"
