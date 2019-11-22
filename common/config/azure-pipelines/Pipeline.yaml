@@ -26,6 +26,13 @@ stages:
         inputs:
           versionSpec: 10.15.0
           checkLatest: true
+
+      #Your build pipeline references a secret variable named ‘artifactsRegistryToken’. This variable is pulled from the 'arzure-artifacts-npm-token' variable group.  You must authorize this build to use that group: https://docs.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=yaml#use-a-variable-group
+  
+        parameters:
+          npmrcDir: $(System.DefaultWorkingDirectory)
+          artifactsRegistryToken: ${artifactsRegistryToken}
+
       - script: node ./common/scripts/install-run-rush.js install
         displayName: Rush install
       - script: node ./common/scripts/install-run-rush.js clean
@@ -149,23 +156,13 @@ stages:
         buildType: current
         artifactName: packages
         targetPath: $(packsDir)
-    - powershell: |
-        $npmrcDir = "$(System.DefaultWorkingDirectory)/npmjs"
 
-        if(!(Test-Path -Path $npmrcDir)) {
-          mkdir $npmrcDir
-        }
+    #Your build pipeline references a secret variable named ‘artifactsRegistryToken’. This variable is pulled from the 'arzure-artifacts-npm-token' variable group.  You must authorize this build to use that group: https://docs.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=yaml#use-a-variable-group
 
-        $npmrcFile = $npmrcDir + "/.npmrc"
+      parameters:
+        npmrcDir: $(System.DefaultWorkingDirectory)
+        artifactsRegistryToken: ${artifactsRegistryToken}
 
-        
-        
-        
-        
-        
-        
-        
-      displayName: 'Seed npmrc'
     - powershell: |
 
 
