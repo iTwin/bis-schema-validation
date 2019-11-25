@@ -47,9 +47,9 @@
     "typescript": "^3.3.1"
   },
   "dependencies": {
-    "@bentley/bentleyjs-core": "^1.1.0",
-    "@bentley/ecschema-metadata": "^1.7.0-dev.8",
-    "@bentley/imodeljs-backend": "^1.1.0"
+    "@bentley/bentleyjs-core": "1.9.0-dev.3",
+    "@bentley/ecschema-metadata": "1.9.0-dev.3",
+    "@bentley/imodeljs-backend": "1.9.0-dev.3"
   },
   "publishConfig": {
     "registry": "https://www.npmjs.com/"

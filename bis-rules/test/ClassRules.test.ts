@@ -18,7 +18,7 @@ describe("Class Rule Tests", () => {
   let testClass: EntityClass;
 
   beforeEach(async () => {
-    schema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+    schema = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
     const mutable = schema as MutableSchema;
     testClass = await mutable.createEntityClass("TestClass");
   });
@@ -209,7 +209,7 @@ describe("Class Rule Tests", () => {
 
   describe("ClassShouldNotDerivedFromDeprecatedClass", () => {
     it("Ignore deprecated class, rule passed", async () => {
-      schema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      schema = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
       const mutableSchema = schema as MutableSchema;
 
       const deprecatedClass = await mutableSchema.createEntityClass("DeprecatedEntity");
@@ -228,7 +228,7 @@ describe("Class Rule Tests", () => {
     });
 
     it("Entity class derived from a deprecated entity class, warning issued, no warning issue for deprecated mixin since the rule only check main base, rule passed", async () => {
-      schema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      schema = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
       const mutableSchema = schema as MutableSchema;
 
       const deprecatedClass = await mutableSchema.createEntityClass("DeprecatedEntity");
@@ -259,7 +259,7 @@ describe("Class Rule Tests", () => {
     });
 
     it("Relationship class derived from a deprecated relationship class, warning issued, rule passed", async () => {
-      schema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      schema = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
       const mutableSchema = schema as MutableSchema;
 
       const deprecatedRel = await mutableSchema.createRelationshipClass("DeprecatedRelationship");
@@ -285,7 +285,7 @@ describe("Class Rule Tests", () => {
     });
 
     it("Class indirectly derives from a deprecated main class, mixin is ignored in this rule, warning issued, rule passed", async () => {
-      schema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      schema = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
       const mutableSchema = schema as MutableSchema;
 
       const deprecatedClass = await mutableSchema.createEntityClass("DeprecatedEntity");
@@ -324,7 +324,7 @@ describe("Class Rule Tests", () => {
     });
 
     it("Class does not derived from deprecated class", async () => {
-      schema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      schema = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
       const mutableSchema = schema as MutableSchema;
 
       const base = await mutableSchema.createEntityClass("BaseEntity");
@@ -340,7 +340,7 @@ describe("Class Rule Tests", () => {
 
   describe("ClassShouldNotUseDeprecatedProperty", () => {
     it("Class has no deprecated property, rule passed", async () => {
-      const testSchema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      const testSchema = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
       const testMutable = testSchema as MutableSchema;
 
       const normalEntity = await testMutable.createEntityClass("NormalEntity");
@@ -354,7 +354,7 @@ describe("Class Rule Tests", () => {
     });
 
     it("Ignore deprecated class, rule passed", async () => {
-      schema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      schema = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
       const mutableSchema = schema as MutableSchema;
 
       const testClass = await mutableSchema.createEntityClass("TestEntity");
@@ -372,7 +372,7 @@ describe("Class Rule Tests", () => {
     });
 
     it("Class has deprecated property, warning issued, rule passed", async () => {
-      const testSchema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      const testSchema = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
       const testMutable = testSchema as MutableSchema;
 
       const normalEntity = await testMutable.createEntityClass("NormalEntity");
@@ -398,7 +398,7 @@ describe("Class Rule Tests", () => {
 
   describe("ClassShouldNotUsePropertyOfDeprecatedStruct", () => {
     it("Class has no deprecated struct property, rule passed", async () => {
-      const testSchema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      const testSchema = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
       const testMutable = testSchema as MutableSchema;
 
       const normalStruct = await testMutable.createStructClass("NormalStruct");
@@ -417,7 +417,7 @@ describe("Class Rule Tests", () => {
     });
 
     it("Ignore deprecated class, rule passed", async () => {
-      schema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      schema = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
       const mutableSchema = schema as MutableSchema;
 
       const deprecatedStruct = await mutableSchema.createStructClass("DeprecatedStruct");
@@ -438,7 +438,7 @@ describe("Class Rule Tests", () => {
     });
 
     it("Ignore deprecated Property, rule passed", async () => {
-      schema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      schema = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
       const mutableSchema = schema as MutableSchema;
 
       const deprecatedStruct = await mutableSchema.createStructClass("DeprecatedStruct");
@@ -461,7 +461,7 @@ describe("Class Rule Tests", () => {
     });
 
     it("Class has property which is of deprecated struct, warning issued, rule passed", async () => {
-      const testSchema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      const testSchema = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
       const testMutable = testSchema as MutableSchema;
 
       const deprecatedStruct = await testMutable.createStructClass("DeprecatedStruct");
@@ -495,7 +495,7 @@ describe("Class Rule Tests", () => {
 
   describe("ClassShouldNotUseDeprecatedCustomAttributes", () => {
     it("Class use deprecated custom attributes, Warning issued, rule passed", async () => {
-      const testSchema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      const testSchema = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
       const mutableSchema = testSchema as MutableSchema;
 
       const deprecatedCA = await mutableSchema.createCustomAttributeClass("DeprecatedCustomAttribute");
@@ -523,7 +523,7 @@ describe("Class Rule Tests", () => {
     });
 
     it("Deprecated Class use deprecated custom attributes, No Warning issued, rule passed", async () => {
-      const testSchema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      const testSchema = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
       const mutableSchema = testSchema as MutableSchema;
 
       const deprecatedCA = await mutableSchema.createCustomAttributeClass("DeprecatedCustomAttribute");
@@ -542,7 +542,7 @@ describe("Class Rule Tests", () => {
     });
 
     it("Class does not use deprecated custom attributes, rule passed", async () => {
-      const testSchema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      const testSchema = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
       const mutableSchema = testSchema as MutableSchema;
 
       await mutableSchema.createCustomAttributeClass("CustomAttribute");
@@ -558,7 +558,7 @@ describe("Class Rule Tests", () => {
     });
 
     it("Class use non-existent custom attributes, not crash, rule passed", async () => {
-      const testSchema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      const testSchema = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
       const mutableSchema = testSchema as MutableSchema;
 
       const entityClass = await mutableSchema.createEntityClass("EntityClass");

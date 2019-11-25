@@ -14,6 +14,7 @@ import { SchemaWalker } from "@bentley/ecschema-metadata/lib/Validation/SchemaWa
 import { Schema } from "@bentley/ecschema-metadata";
 
 use(chaiAsPromised);
+const assetDeserializationDir = path.join(utils.getAssetsDir(), "xml-deserialization");
 
 describe("SchemaValidater Tests", () => {
   let assetsDir: string;
@@ -31,13 +32,13 @@ describe("SchemaValidater Tests", () => {
     await fs.remove(outDir);
   });
 
-  it("schemaPath is a directory, validateFile called multiple times.", async () => {
+  it("schemaPath is a directory, every schema file (xml or json) in the directory is validated.", async () => {
     const options = new ValidationOptions(assetsDir, [], true, outDir);
     const stub = sinon.stub(SchemaValidator, "validateFile").callThrough();
 
     await SchemaValidator.validate(options);
 
-    const expectedCount = 12;
+    const expectedCount = 15;
     expect(stub.callCount).to.equal(expectedCount, `Expected ${expectedCount} calls to validateFile`);
   });
 
@@ -192,6 +193,33 @@ describe("SchemaValidater Tests", () => {
       const expectedOutText = fs.readFileSync(expectedOutFile, "utf8");
       const actualOutText = fs.readFileSync(actualOutFile, "utf8");
       expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));
+    });
+  });
+
+  describe("Rule Suppression Tests", () => {
+    it("Kind of Quantity Process Functional rule suppression warning.", async () => {
+      const schemaFile = path.resolve(assetsDir, "ProcessFunctional.ecschema.xml");
+      const options = new ValidationOptions(schemaFile, [assetDeserializationDir], false, outDir);
+
+      const result = await SchemaValidator.validate(options);
+      expect(result[1].resultText).to.contain("Warning BIS-1000: KindOfQuantity");
+      expect(result[2].resultText).to.contain("Warning BIS-1001: KindOfQuantity");
+    });
+
+    it("Kind of Quantity Suppression test: schema not named ProcessFunctional or ProcessPhysical, error.", async () => {
+      const schemaFile = path.resolve(assetsDir, "NotSuppressed.ecschema.xml");
+      const options = new ValidationOptions(schemaFile, [assetDeserializationDir], false, outDir);
+
+      const result = await SchemaValidator.validate(options);
+      expect(result[1].resultText).to.contain("Error BIS-1000: KindOfQuantity");
+    });
+
+    it("Kind of Quantity Suppression test: kind of quantity not ONE, error.", async () => {
+      const schemaFile = path.resolve(assetsDir, "ProcessPhysical.ecschema.xml");
+      const options = new ValidationOptions(schemaFile, [assetDeserializationDir], false, outDir);
+
+      const result = await SchemaValidator.validate(options);
+      expect(result[1].resultText).to.contain("Error BIS-1000: KindOfQuantity");
     });
   });
 });

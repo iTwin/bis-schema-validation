@@ -21,8 +21,8 @@ describe("FileDiagnosticReporter Tests", () => {
   });
 
   it("report diagnostic, diagnostic written to file correctly.", (done) => {
-    const schemaA = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
-    const schemaB = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+    const schemaA = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
+    const schemaB = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
     const reporter = new FileSchemaCompareReporter(schemaA, schemaB, outDir);
     const diag = new SchemaCompareDiagnostics.SchemaDelta(schemaA, ["label", "LabelA", "LabelB"]);
     const schemaChanges = new SchemaChanges(schemaA);
@@ -42,8 +42,8 @@ describe("FileDiagnosticReporter Tests", () => {
   });
 
   it("no changes reported, output written to file correctly.", (done) => {
-    const schemaA = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
-    const schemaB = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+    const schemaA = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
+    const schemaB = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
     const reporter = new FileSchemaCompareReporter(schemaA, schemaB, outDir);
     reporter.start("Comparison Results");
 
@@ -59,15 +59,15 @@ describe("FileDiagnosticReporter Tests", () => {
 
   it("report changes, failure with non-existent out directory.", () => {
     const badPath = path.resolve(assetsDir, "DoesNotExist");
-    const schemaA = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
-    const schemaB = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+    const schemaA = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
+    const schemaB = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
     const reporter = new FileSchemaCompareReporter(schemaA, schemaB, badPath);
     expect(() => reporter.start("Header")).to.throw(Error, `The out directory ${badPath + path.sep} does not exist.`);
   });
 
   it("calling report without calling start results in no error.", () => {
-    const schemaA = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
-    const schemaB = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+    const schemaA = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
+    const schemaB = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
     const reporter = new FileSchemaCompareReporter(schemaA, schemaB, outDir);
     const diag = new SchemaCompareDiagnostics.SchemaDelta(schemaA, ["label", "LabelA", "LabelB"]);
     const schemaChanges = new SchemaChanges(schemaA);
@@ -77,16 +77,16 @@ describe("FileDiagnosticReporter Tests", () => {
   });
 
   it("calling end without calling start results in no error.", () => {
-    const schemaA = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
-    const schemaB = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+    const schemaA = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
+    const schemaB = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
     const reporter = new FileSchemaCompareReporter(schemaA, schemaB, outDir);
     expect(() => reporter.end()).to.not.throw();
   });
 
   it("WriteStream errors, report throws.", () => {
     sinon.stub(fs.WriteStream.prototype, "write").callsArgWith(1, new Error("Test Error"));
-    const schemaA = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
-    const schemaB = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+    const schemaA = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
+    const schemaB = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
     const reporter = new FileSchemaCompareReporter(schemaA, schemaB, outDir);
 
     expect(() => reporter.start("test")).to.throw(Error, "Test Error");

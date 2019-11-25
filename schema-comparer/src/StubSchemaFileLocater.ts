@@ -36,7 +36,7 @@ export class StubSchemaFileLocater extends SchemaFileLocater implements ISchemaL
 
     const maxCandidate = candidates.sort(this.compareSchemaKeyByVersion)[candidates.length - 1];
 
-    const schema = new Schema(context, maxCandidate) as T;
+    const schema = new Schema(context, maxCandidate, maxCandidate.name) as T;
     await context.addSchema(schema);
     await this.addSchemaReferences(schema, context);
     return schema;

@@ -9,8 +9,8 @@ import { SchemaCompareDiagnostics, SchemaChanges, Schema, SchemaContext } from "
 
 describe("CollectionSchemaCompareReporter Tests", () => {
   it("report diagnostic, diagnostic added correctly.", async () => {
-    const schemaA = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
-    const schemaB = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+    const schemaA = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
+    const schemaB = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
     const reporter = new CollectionSchemaCompareReporter(schemaA, schemaB);
     const diag = new SchemaCompareDiagnostics.SchemaDelta(schemaA, ["label", "LabelA", "LabelB"]);
     const schemaChanges = new SchemaChanges(schemaA);

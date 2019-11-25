@@ -51,8 +51,8 @@ describe("EntityClass Rule Tests", () => {
 
   beforeEach(async () => {
     const context = new SchemaContext();
-    testSchema = new Schema(context, "TestSchema", 1, 0, 0);
-    bisCoreSchema = new Schema(context, "BisCore", 1, 0, 0);
+    testSchema = new Schema(context, "TestSchema", "ts", 1, 0, 0);
+    bisCoreSchema = new Schema(context, "BisCore", "bc", 1, 0, 0);
   });
 
   afterEach(() => {

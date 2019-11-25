@@ -26,7 +26,7 @@ describe("FileDiagnosticReporter Tests", () => {
 
   it("report diagnostic, diagnostic written to file correctly.", (done) => {
     const reporter = new FileDiagnosticReporter("BaseClassIsSealed", outDir);
-    const schema = new EC.Schema(new EC.SchemaContext(), "BaseClassIsSealed", 1, 0, 0);
+    const schema = new EC.Schema(new EC.SchemaContext(), "BaseClassIsSealed", "baseClass", 1, 0, 0);
     const baseClass = new EC.EntityClass(schema, "BaseClass");
     const testClass = new EC.EntityClass(schema, "TestClass");
     const diagnostic = new ECRules.Diagnostics.BaseClassIsSealed(testClass, [testClass.fullName, baseClass.fullName]);
@@ -66,7 +66,7 @@ describe("FileDiagnosticReporter Tests", () => {
 
   it("calling report without calling start results in no error.", () => {
     const reporter = new FileDiagnosticReporter("TestSchema", outDir);
-    const schema = new EC.Schema(new EC.SchemaContext(), "TestSchema", 1, 0, 0);
+    const schema = new EC.Schema(new EC.SchemaContext(), "TestSchema", "ts", 1, 0, 0);
     const testClass = new EC.EntityClass(schema, "TestClass");
     const diagnostic = new ECRules.Diagnostics.BaseClassIsSealed(testClass, ["test", "test"]);
 

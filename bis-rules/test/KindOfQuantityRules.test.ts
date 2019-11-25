@@ -17,13 +17,13 @@ function createSchemaJson(koq: any) {
       ...koq,
     },
   }, {
-      references: [
-        {
-          name: "Formats",
-          version: "1.0.0",
-        }
-      ],
-    });
+    references: [
+      {
+        name: "Formats",
+        version: "1.0.0",
+      }
+    ],
+  });
 }
 
 async function iterableToArray(asyncIterable: AsyncIterable<IDiagnostic<KindOfQuantity, any[]>>): Promise<IDiagnostic<KindOfQuantity, any[]>[]> {
@@ -46,7 +46,7 @@ describe("KindOfQuantity Rule Tests", () => {
   };
 
   beforeEach(() => {
-    schema = new Schema(new SchemaContext(), "TestSchema", 1, 2, 3);
+    schema = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 2, 3);
     context = new SchemaContext();
     context.addLocater(new TestSchemaLocater());
   });
