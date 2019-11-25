@@ -25,7 +25,7 @@ describe("ValidationDiagnosticReporter Tests", () => {
     const baseSpy = sinon.spy(TestReporter.prototype, "reportDiagnostic");
     const formatSpy = sinon.spy(TestReporter.prototype, "reportFormattedDiagnostic");
     const reporter = new TestReporter();
-    const schema = new EC.Schema(new EC.SchemaContext(), "TestSchema", 1, 0, 0);
+    const schema = new EC.Schema(new EC.SchemaContext(), "TestSchema", "ts", 1, 0, 0);
     const baseClass = new EC.EntityClass(schema, "BaseClass");
     const testClass = new EC.EntityClass(schema, "TestClass");
 

@@ -20,7 +20,7 @@ describe("CollectionDiagnosticReporter Tests", () => {
   it("report diagnostic, diagnostic added correctly.", async () => {
     const reporter = new CollectionDiagnosticReporter();
     const baseSpy = sinon.spy(reporter, "reportDiagnostic");
-    const schema = new EC.Schema(new EC.SchemaContext(), "TestSchema", 1, 0, 0);
+    const schema = new EC.Schema(new EC.SchemaContext(), "TestSchema", "ts", 1, 0, 0);
     const baseClass = new EC.EntityClass(schema, "BaseClass");
     const testClass = new EC.EntityClass(schema, "TestClass");
 

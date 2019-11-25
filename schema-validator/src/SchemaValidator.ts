@@ -11,6 +11,7 @@ import {
   ECRuleSet, Schema, SchemaContext, IDiagnosticReporter, SchemaDiagnostic,
   IRuleSet, SchemaValidationVisitor, SchemaWalker, ISchemaPartVisitor, createSchemaDiagnosticClass,
 } from "@bentley/ecschema-metadata";
+import { ruleSuppressionSet } from "./RuleSuppression";
 import { BisRuleSet } from "@bentley/bis-rules";
 import { FileDiagnosticReporter } from "./FileDiagnosticReporter";
 import { CollectionDiagnosticReporter } from "./CollectionDiagnosticReporter";
@@ -312,7 +313,7 @@ export class SchemaValidator {
     const visitor = new SchemaValidationVisitor();
     ruleSets.forEach((set) => visitor.registerRuleSet(set));
     reporters.forEach((reporter) => visitor.registerReporter(reporter));
-
+    visitor.registerRuleSuppressionSet(ruleSuppressionSet);
     return visitor;
   }
 
@@ -330,8 +331,8 @@ export class SchemaValidator {
     if (schema instanceof Schema)
       name = schema.name;
     else {
-       const match = schema.match(/\w+/);
-       name = match ? match[0] : "";
+      const match = schema.match(/\w+/);
+      name = match ? match[0] : "";
     }
     return standardSchemaNames.includes(name);
   }

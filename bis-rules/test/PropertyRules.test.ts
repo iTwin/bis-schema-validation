@@ -16,7 +16,7 @@ describe("Property Rule Tests", () => {
   let testClass: EntityClass;
 
   beforeEach(async () => {
-    schema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+    schema = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
     const mutable = schema as MutableSchema;
     testClass = await mutable.createEntityClass("TestClass");
   });

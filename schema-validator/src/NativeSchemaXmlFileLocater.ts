@@ -60,8 +60,8 @@ export class NativeSchemaXmlFileLocater extends EC.SchemaFileLocater implements 
     }
 
     try {
-    const schemaJson = nativeContext!.readSchemaFromXmlFile(schemaPath);
-    return EC.Schema.fromJsonSync(schemaJson, context) as T;
+      const schemaJson = nativeContext!.readSchemaFromXmlFile(schemaPath);
+      return EC.Schema.fromJsonSync(schemaJson, context) as T;
     } catch (err) {
       if (err.message === "ReferencedSchemaNotFound")
         throw new EC.ECObjectsError(EC.ECObjectsStatus.UnableToLocateSchema, `Unable to load schema '${key.name}'. A referenced schema could not be found.`);

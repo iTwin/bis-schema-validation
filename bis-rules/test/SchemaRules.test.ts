@@ -32,7 +32,7 @@ describe("Schema Rule Tests", () => {
   describe("schemaXmlVersionMustBeTheLatest Tests", () => {
     // TODO: Re-implement when rule can be fully written
     it.skip("EC XML version is latest, rule passes.", async () => {
-      const schema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      const schema = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
 
       const result = await Rules.schemaXmlVersionMustBeTheLatest(schema);
 
@@ -43,7 +43,7 @@ describe("Schema Rule Tests", () => {
 
     // TODO: Re-implement when rule can be fully written
     it.skip("EC XML version less than latest, rule violated.", async () => {
-      const schema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      const schema = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
 
       const result = await Rules.schemaXmlVersionMustBeTheLatest(schema);
 
@@ -65,9 +65,9 @@ describe("Schema Rule Tests", () => {
   describe("schemaMustNotReferenceOldStandardSchemas Tests", () => {
     it("No standard schema references, rule passes.", async () => {
       const context = new SchemaContext();
-      const schema = new Schema(context, "TestSchema", 1, 0, 0);
+      const schema = new Schema(context, "TestSchema", "ts", 1, 0, 0);
       const mutable = schema as MutableSchema;
-      mutable.addReferenceSync(new Schema(context, "NotStandardSchema", 1, 0, 0));
+      mutable.addReferenceSync(new Schema(context, "NotStandardSchema", "notStandard", 1, 0, 0));
 
       const result = await Rules.schemaMustNotReferenceOldStandardSchemas(schema);
 
@@ -78,10 +78,10 @@ describe("Schema Rule Tests", () => {
 
     it("Standard references exist, rule violated.", async () => {
       const context = new SchemaContext();
-      const schema = new Schema(context, "TestSchema", 1, 0, 0);
+      const schema = new Schema(context, "TestSchema", "ts", 1, 0, 0);
       const mutable = schema as MutableSchema;
       for (const name of oldStandardSchemaNames) {
-        const ref = new Schema(context, name, 1, 0, 0);
+        const ref = new Schema(context, name, "ref", 1, 0, 0);
         mutable.addReferenceSync(ref);
       }
       const result = await Rules.schemaMustNotReferenceOldStandardSchemas(schema);
@@ -104,9 +104,9 @@ describe("Schema Rule Tests", () => {
 
     it("ECDbMap 2.0 reference exist, rule passes.", async () => {
       const context = new SchemaContext();
-      const schema = new Schema(context, "TestSchema", 1, 0, 0);
+      const schema = new Schema(context, "TestSchema", "ts", 1, 0, 0);
       const mutable = schema as MutableSchema;
-      const ref = new Schema(context, "ECDbMap", 2, 0, 0);
+      const ref = new Schema(context, "ECDbMap", "map", 2, 0, 0);
       mutable.addReferenceSync(ref);
 
       const result = await Rules.schemaMustNotReferenceOldStandardSchemas(schema);
@@ -119,7 +119,7 @@ describe("Schema Rule Tests", () => {
 
   describe("schemaWithDynamicInNameMustHaveDynamicSchemaCA Tests", () => {
     it("Dynamic not in the name, rule passes.", async () => {
-      const schema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      const schema = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
 
       const result = await Rules.schemaWithDynamicInNameMustHaveDynamicSchemaCA(schema);
 
@@ -129,7 +129,7 @@ describe("Schema Rule Tests", () => {
     });
 
     it("Dynamic (mixed-case) in the name,  DynamicSchema attribute not applied, rule violated.", async () => {
-      const schema = new Schema(new SchemaContext(), "TestDynamicSchema", 1, 0, 0);
+      const schema = new Schema(new SchemaContext(), "TestDynamicSchema", "ts", 1, 0, 0);
       (schema as MutableSchema).addCustomAttribute({ className: "CoreCustomAttributes.TestAttribute" });
 
       const result = await Rules.schemaWithDynamicInNameMustHaveDynamicSchemaCA(schema);
@@ -149,7 +149,7 @@ describe("Schema Rule Tests", () => {
     });
 
     it("Dynamic (upper-case) in the name, DynamicSchema attribute not applied, rule violated.", async () => {
-      const schema = new Schema(new SchemaContext(), "TestDYNAMICSchema", 1, 0, 0);
+      const schema = new Schema(new SchemaContext(), "TestDYNAMICSchema", "ts", 1, 0, 0);
       (schema as MutableSchema).addCustomAttribute({ className: "CoreCustomAttributes.TestAttribute" });
 
       const result = await Rules.schemaWithDynamicInNameMustHaveDynamicSchemaCA(schema);
@@ -169,7 +169,7 @@ describe("Schema Rule Tests", () => {
     });
 
     it("Dynamic in the name, DynamicSchema attribute applied, rule passes.", async () => {
-      const schema = new Schema(new SchemaContext(), "TestDynamicSchema", 1, 0, 0);
+      const schema = new Schema(new SchemaContext(), "TestDynamicSchema", "ts", 1, 0, 0);
       (schema as MutableSchema).addCustomAttribute({ className: "CoreCustomAttributes.DynamicSchema" });
       const result = await Rules.schemaWithDynamicInNameMustHaveDynamicSchemaCA(schema);
 
@@ -189,7 +189,7 @@ describe("Schema Rule Tests", () => {
     }
 
     it("Display labels are unique, rule passes.", async () => {
-      const schema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      const schema = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
       const mutable = schema as MutableSchema;
       mutable.addItem(new TestClass(schema, "TestEntityA", "LabelA"));
       mutable.addItem(new TestClass(schema, "TestEntityB", "LabelB"));
@@ -202,7 +202,7 @@ describe("Schema Rule Tests", () => {
     });
 
     it("Duplicate display labels, rule violated.", async () => {
-      const schema = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+      const schema = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
       const mutable = schema as MutableSchema;
       mutable.addItem(new TestClass(schema, "TestEntityA", "LabelA"));
       mutable.addItem(new TestClass(schema, "TestEntityB", "LabelA"));
@@ -233,9 +233,9 @@ describe("Schema Rule Tests", () => {
   describe("SchemaShouldNotUseDeprecatedSchema", () => {
     it("Schema Reference a non-deprecated Schema, no warning issued, rule passed", async () => {
       const context = new SchemaContext();
-      const referenceSchema = new Schema(context, "NormalReferenceSchema", 1, 0, 0);
+      const referenceSchema = new Schema(context, "NormalReferenceSchema", "ts", 1, 0, 0);
 
-      const testSchema = new Schema(context, "TestSchema", 1, 0, 0);
+      const testSchema = new Schema(context, "TestSchema", "ts", 1, 0, 0);
       const mutable = testSchema as MutableSchema;
       mutable.addReference(referenceSchema);
 
@@ -248,11 +248,11 @@ describe("Schema Rule Tests", () => {
     it("Deprecated Schema is ignored, rule passed", async () => {
       const context = new SchemaContext();
 
-      const deprecatedSchemaA = new Schema(context, "DeprecatedTestSchemaA", 1, 0, 0);
+      const deprecatedSchemaA = new Schema(context, "DeprecatedTestSchemaA", "tsA", 1, 0, 0);
       const deprecatedMutableA = deprecatedSchemaA as MutableSchema;
       deprecatedMutableA.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
 
-      const schema = new Schema(context, "TestSchema", 1, 0, 0);
+      const schema = new Schema(context, "TestSchema", "ts", 1, 0, 0);
       const mutable = schema as MutableSchema;
       mutable.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
       mutable.addReference(deprecatedSchemaA);
@@ -266,15 +266,15 @@ describe("Schema Rule Tests", () => {
     it("Schema References a Deprecated Schema, warning issued, rule passed", async () => {
       const context = new SchemaContext();
 
-      const deprecatedSchemaA = new Schema(context, "DeprecatedTestSchemaA", 1, 0, 0);
+      const deprecatedSchemaA = new Schema(context, "DeprecatedTestSchemaA", "tsA", 1, 0, 0);
       const deprecatedMutableA = deprecatedSchemaA as MutableSchema;
       deprecatedMutableA.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
 
-      const deprecatedSchemaB = new Schema(context, "DeprecatedTestSchemaB", 1, 0, 0);
+      const deprecatedSchemaB = new Schema(context, "DeprecatedTestSchemaB", "tsB", 1, 0, 0);
       const deprecatedMutableB = deprecatedSchemaB as MutableSchema;
       deprecatedMutableB.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
 
-      const schema = new Schema(context, "TestSchema", 1, 0, 0);
+      const schema = new Schema(context, "TestSchema", "ts", 1, 0, 0);
       const mutable = schema as MutableSchema;
       mutable.addReference(deprecatedSchemaA);
       mutable.addReference(deprecatedSchemaB);

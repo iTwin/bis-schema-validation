@@ -7,7 +7,8 @@ import { expect } from "chai";
 import * as sinon from "sinon";
 
 import { SchemaCompareReporter } from "../src/SchemaCompareReporter";
-import { SchemaCompareDiagnostics, SchemaChanges, Schema, SchemaContext, EntityClass, PrimitiveProperty, Mixin,
+import {
+  SchemaCompareDiagnostics, SchemaChanges, Schema, SchemaContext, EntityClass, PrimitiveProperty, Mixin,
   RelationshipClass, RelationshipConstraint, RelationshipEnd, Enumeration, AnyEnumerator, KindOfQuantity, Format,
   Unit, PropertyCategory, UnitSystem, InvertedUnit, Phenomenon, Constant,
 } from "@bentley/ecschema-metadata/lib/ecschema-metadata";
@@ -25,8 +26,8 @@ describe("SchemaCompareReporter Tests", () => {
   let reporterSpy: sinon.SinonSpy<[string]>;
 
   beforeEach(async () => {
-    schemaA = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
-    schemaB = new Schema(new SchemaContext(), "TestSchema", 1, 0, 0);
+    schemaA = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
+    schemaB = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
     reporterSpy = sinon.spy(TestSchemaCompareReporter.prototype, "reportFormattedChange");
   });
 
@@ -36,7 +37,7 @@ describe("SchemaCompareReporter Tests", () => {
 
   describe("SchemaChanges", () => {
     it("Different Schemas, with property value change, correct message reported", async () => {
-      schemaB = new Schema(new SchemaContext(), "TestSchemaB", 1, 0, 0);
+      schemaB = new Schema(new SchemaContext(), "TestSchemaB", "b", 1, 0, 0);
       const diag = new SchemaCompareDiagnostics.SchemaDelta(schemaA, ["label", "LabelA", "LabelB"]);
       const changes = new SchemaChanges(schemaA);
       changes.addDiagnostic(diag);
@@ -103,7 +104,7 @@ describe("SchemaCompareReporter Tests", () => {
     });
 
     it("CustomAttribute removed, different schemas, correct message reported", async () => {
-      schemaB = new Schema(new SchemaContext(), "TestSchemaB", 1, 0, 0);
+      schemaB = new Schema(new SchemaContext(), "TestSchemaB", "b", 1, 0, 0);
       const ca = { className: "TestSchema.TestCustomAttribute" };
       const diag = new SchemaCompareDiagnostics.CustomAttributeInstanceClassMissing(schemaA, [ca]);
       const changes = new SchemaChanges(schemaA);
@@ -118,7 +119,7 @@ describe("SchemaCompareReporter Tests", () => {
     });
 
     it("Schema reference removed, correct message reported", async () => {
-      const refSchema = new Schema(new SchemaContext(), "ReferenceSchema", 1, 0, 0);
+      const refSchema = new Schema(new SchemaContext(), "ReferenceSchema", "ref", 1, 0, 0);
       const diag = new SchemaCompareDiagnostics.SchemaReferenceMissing(schemaA, [refSchema]);
       const changes = new SchemaChanges(schemaA);
       changes.addDiagnostic(diag);
@@ -132,7 +133,7 @@ describe("SchemaCompareReporter Tests", () => {
     });
 
     it("Schema reference added, correct message reported", async () => {
-      const refSchema = new Schema(new SchemaContext(), "ReferenceSchema", 1, 0, 0);
+      const refSchema = new Schema(new SchemaContext(), "ReferenceSchema", "ref", 1, 0, 0);
       const diag = new SchemaCompareDiagnostics.SchemaReferenceMissing(schemaB, [refSchema]);
       const changes = new SchemaChanges(schemaA);
       changes.addDiagnostic(diag);
@@ -148,7 +149,7 @@ describe("SchemaCompareReporter Tests", () => {
 
   describe("ClassChanges", () => {
     it("Class removed, different Schemas, correct message reported", async () => {
-      schemaB = new Schema(new SchemaContext(), "TestSchemaB", 1, 0, 0);
+      schemaB = new Schema(new SchemaContext(), "TestSchemaB", "b", 1, 0, 0);
       const classA = new EntityClass(schemaA, "TestClass");
       const diag = new SchemaCompareDiagnostics.ClassDelta(classA, ["label", "LabelA", "LabelB"]);
       const changes = new SchemaChanges(schemaA);
@@ -164,7 +165,7 @@ describe("SchemaCompareReporter Tests", () => {
     });
 
     it("Class added, different Schemas, correct message reported", async () => {
-      schemaB = new Schema(new SchemaContext(), "TestSchemaB", 1, 0, 0);
+      schemaB = new Schema(new SchemaContext(), "TestSchemaB", "b", 1, 0, 0);
       const classA = new EntityClass(schemaB, "TestClass");
       const diag = new SchemaCompareDiagnostics.ClassDelta(classA, ["label", "LabelA", "LabelB"]);
       const changes = new SchemaChanges(schemaB);
@@ -561,7 +562,7 @@ describe("SchemaCompareReporter Tests", () => {
       });
 
       it("CustomAttribute instance added, different schemas, correct message reported", async () => {
-        schemaB = new Schema(new SchemaContext(), "TestSchemaB", 1, 0, 0);
+        schemaB = new Schema(new SchemaContext(), "TestSchemaB", "b", 1, 0, 0);
         const classA = new EntityClass(schemaB, "TestClass");
         const property = new PrimitiveProperty(classA, "TestProperty");
         const ca = { className: "TestSchema.TestCustomAttribute" };
@@ -585,7 +586,7 @@ describe("SchemaCompareReporter Tests", () => {
 
   describe("EnumerationChanges", () => {
     it("Enumeration property change, different Schemas, correct message reported", async () => {
-      schemaB = new Schema(new SchemaContext(), "TestSchemaB", 1, 0, 0);
+      schemaB = new Schema(new SchemaContext(), "TestSchemaB", "b", 1, 0, 0);
       const schemaItem = new Enumeration(schemaA, "TestItem");
       const diag = new SchemaCompareDiagnostics.EnumerationDelta(schemaItem, ["label", "LabelA", "LabelB"]);
       const changes = new SchemaChanges(schemaA);
