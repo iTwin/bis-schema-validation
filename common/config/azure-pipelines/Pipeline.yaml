@@ -81,7 +81,7 @@ stages:
 
             packageDir = os.path.join(sourcesDirectory, "common", "temp", "artifacts", "packages")
             print "packageDir = " + packageDir
-            registryUrl = ""
+            registryUrl = "https:////_packaging/Packages/npm/registry/"
 
             artifactPaths = glob.glob(os.path.join(packageDir, "*.tgz"))
 
