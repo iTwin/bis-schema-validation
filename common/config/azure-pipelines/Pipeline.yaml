@@ -11,11 +11,9 @@ stages:
       maxParallel: 2
       matrix:
         'Windows':
-          os: Windows_NT
+          os: vs2017-win2016
     pool:
-      name: iModelTechCI
-      demands:
-        agent.os -equals $(os)
+      vmImage: $(os)
     workspace:
       clean: all
     steps:
@@ -27,11 +25,8 @@ stages:
           versionSpec: 10.15.0
           checkLatest: true
 
-      #Your build pipeline references a secret variable named ‘artifactsRegistryToken’. This variable is pulled from the 'arzure-artifacts-npm-token' variable group.  You must authorize this build to use that group: https://docs.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=yaml#use-a-variable-group
       - template: ./seed-npmrc.yaml
-        parameters:
-          npmrcDir: $(System.DefaultWorkingDirectory)/common/config/rush
-          artifactsRegistryToken: $(artifactsRegistryToken)
+        parameters: { artifactsRegistryToken: $(artifactsRegistryToken) }
 
       - script: node ./common/scripts/install-run-rush.js install
         displayName: Rush install
@@ -80,16 +75,15 @@ stages:
             os.makedirs(stagingDir)
 
             packageDir = os.path.join(sourcesDirectory, "common", "temp", "artifacts", "packages")
-            print "packageDir = " + packageDir
-            registryUrl = "https://pkgs.dev.azure.com/bentleycs/_packaging/Packages/npm/registry/"
+            print ("packageDir = " + packageDir)
 
             artifactPaths = glob.glob(os.path.join(packageDir, "*.tgz"))
 
             packagesToPublish = False
             for artifact in artifactPaths:
               baseName = os.path.basename(artifact)
-              print ""
-              print "Checking package: '" + baseName + "'..."
+              print ("")
+              print ("Checking package: '" + baseName + "'...")
 
               localVer = re.search(r'(\d\.\d.*).tgz', baseName)
               localVer = localVer.group(1)
@@ -97,7 +91,7 @@ stages:
               packageName = baseName[:(len(baseName) - len(localVer) - 5)]
               packageName = "@" + packageName.replace("-", "/", 1)
 
-              command = "npm view --registry=" + registryUrl + " " + packageName + "@" + localVer + " version"
+              command = "npm view " + packageName + "@" + localVer + " version"
               proc = subprocess.Popen(command, stdin = subprocess.PIPE, stdout = subprocess.PIPE, shell=True)
 
               # We are going to assume if a version is provided back from the above call, that this version exists
@@ -106,23 +100,23 @@ stages:
 
               if proc.returncode != 0:
                 packagesToPublish = True
-                print "The package does not yet exist.  Copying " + packageName + " to staging area."
+                print ("The package does not yet exist.  Copying " + packageName + " to staging area.")
                 shutil.copy(artifact, stagingDir)
                 continue
 
               if 0 != len(serverVer):
-                print "The version already exists.  Skipping..."
+                print ("The version already exists.  Skipping...")
                 continue
 
               packagesToPublish = True
-              print "Local version is newer than on the server.  Copying package " + packageName + " to staging area."
+              print ("Local version is newer than on the server.  Copying package " + packageName + " to staging area.")
               shutil.copy(artifact, stagingDir)
 
             if packagesToPublish:
-              print "There are packages to publish."
-              print "##vso[build.addbuildtag]package-release"
+              print ("There are packages to publish.")
+              print ("##vso[build.addbuildtag]package-release")
             else:
-              print "All packages are up-to-date."
+              print ("All packages are up-to-date.")
 
           arguments: '$(Build.ArtifactStagingDirectory) $(Build.SourcesDirectory)'
         condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual'), eq(variables['os'], 'Windows_NT'))
@@ -144,7 +138,13 @@ stages:
   jobs:
   - job: publish_artifacts
     displayName: Publish packages to Artifacts
-    pool: Hosted VS2017
+    strategy:
+      maxParallel: 2
+      matrix:
+        'Windows':
+          os: vs2017-win2016
+    pool:
+      vmImage: $(os)
     variables:
       packsDir: $(System.ArtifactsDirectory)/packages/
     steps:
@@ -157,11 +157,8 @@ stages:
         artifactName: packages
         targetPath: $(packsDir)
 
-    #Your build pipeline references a secret variable named ‘artifactsRegistryToken’. This variable is pulled from the 'arzure-artifacts-npm-token' variable group.  You must authorize this build to use that group: https://docs.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=yaml#use-a-variable-group
     - template: ./seed-npmrc.yaml
-      parameters:
-        npmrcDir: $(System.ArtifactsDirectory)/packages/
-        artifactsRegistryToken: $(artifactsRegistryToken)
+      parameters: { artifactsRegistryToken: $(artifactsRegistryToken) }
 
     - powershell: |
         $artifactPaths = Get-ChildItem "$(packsDir)\*.tgz"
