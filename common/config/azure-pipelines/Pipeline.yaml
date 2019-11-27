@@ -166,8 +166,6 @@ stages:
     - powershell: |
 
 
-        Push-Location npmjs
-
         npm config list
 
 
@@ -181,5 +179,4 @@ stages:
 
 
         }
-
 
