@@ -56,8 +56,8 @@ stages:
       - task: CmdLine@1
         displayName: 'rush publish pack'
         inputs:
-          filename: rush
-          arguments: 'publish --publish --pack --include-all'
+          filename: node
+          arguments: './common/scripts/install-run-rush.js publish --publish --pack --include-all'
         condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual'))
       - task: PythonScript@0
         displayName: 'Gather packages for release'
