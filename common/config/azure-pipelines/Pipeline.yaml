@@ -58,7 +58,7 @@ stages:
         inputs:
           filename: rush
           arguments: 'publish --publish --pack --include-all'
-        condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual'), eq(variables['os'], 'Windows_NT'))
+        condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual'))
       - task: PythonScript@0
         displayName: 'Gather packages for release'
         inputs:
@@ -119,18 +119,18 @@ stages:
               print ("All packages are up-to-date.")
 
           arguments: '$(Build.ArtifactStagingDirectory) $(Build.SourcesDirectory)'
-        condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual'), eq(variables['os'], 'Windows_NT'))
+        condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual'))
       - script: |
           dir $(Build.ArtifactStagingDirectory)\bis-schema-tools\packages
           dir $(Build.ArtifactStagingDirectory)\
           dir $(Build.ArtifactStagingDirectory)\bis-schema-tools\
-        condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual'), eq(variables['os'], 'Windows_NT'))
+        condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual'))
       - task: PublishPipelineArtifact@1
         displayName: 'Publish Artifact: packages'
         inputs:
           targetPath: '$(Build.ArtifactStagingDirectory)/bis-schema-tools/packages'
           artifact: packages
-        condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual'), eq(variables['os'], 'Windows_NT'))
+        condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual'))
 - stage: publish
   dependsOn: build
   displayName: Publish
