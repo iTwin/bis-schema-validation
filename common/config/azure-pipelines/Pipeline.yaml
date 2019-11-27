@@ -81,7 +81,7 @@ stages:
 
             packageDir = os.path.join(sourcesDirectory, "common", "temp", "artifacts", "packages")
             print "packageDir = " + packageDir
-            registryUrl = "http://nuget.bentley.com/npm/npm/"
+            registryUrl = "https://pkgs.dev.azure.com/bentleycs/_packaging/Packages/npm/registry/"
 
             artifactPaths = glob.glob(os.path.join(packageDir, "*.tgz"))
 
