@@ -166,8 +166,6 @@ stages:
     - powershell: |
         $artifactPaths = Get-ChildItem "$(packsDir)\*.tgz"
 
-        Push-Location npmjs
-
         npm config list
 
         foreach ($artifactPath in $artifactPaths) {
@@ -182,4 +180,3 @@ stages:
           Write-Output ("Done processing Artifact: '" + $artifactPath.Name + "'...")
         }
 
-        Pop-Location
