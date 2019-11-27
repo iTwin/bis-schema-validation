@@ -3,7 +3,7 @@
 * Licensed under the MIT License. See LICENSE.md in the project root for license terms.
 *--------------------------------------------------------------------------------------------*/
 
-import { IRuleSuppressionSet, KindOfQuantity, SchemaItemType } from "@bentley/ecschema-metadata";
+import { IRuleSuppressionSet, KindOfQuantity, SchemaItemType, RelationshipClass } from "@bentley/ecschema-metadata";
 import { DiagnosticCodes } from "@bentley/bis-rules";
 
 export const ruleSuppressionSet: IRuleSuppressionSet = {
@@ -12,6 +12,9 @@ export const ruleSuppressionSet: IRuleSuppressionSet = {
     { ruleCode: DiagnosticCodes.KOQMustNotUseUnitlessRatios, rule: koqMustNotUseUnitlessRatios },
     { ruleCode: DiagnosticCodes.KOQMustUseSIUnitForPersistenceUnit, rule: koqMustUseSIUnitForPersistenceUnit },
     { ruleCode: DiagnosticCodes.KOQDuplicatePresentationFormat, rule: koqDuplicatePresentationFormat },
+  ],
+  relationshipRuleSuppressions: [
+    { ruleCode: DiagnosticCodes.EmbeddingRelationshipsMustNotHaveHasInName, rule: embeddingRelationshipsMustNotHaveHasInName },
   ],
 };
 
@@ -38,6 +41,13 @@ export async function koqDuplicatePresentationFormat(koq: KindOfQuantity): Promi
     const schemaItem = await koq.schema.getItem("ONE");
     if (!schemaItem) { return false; }
     return schemaItem.schemaItemType === SchemaItemType.KindOfQuantity;
+  }
+  return false;
+}
+
+export async function embeddingRelationshipsMustNotHaveHasInName(relationshipClass: RelationshipClass): Promise<boolean> {
+  if (relationshipClass.schema.name === "ProcessFunctional" || relationshipClass.schema.name === "ProcessPhysical" || relationshipClass.schema.name.startsWith("SP3D")) {
+    return true;
   }
   return false;
 }

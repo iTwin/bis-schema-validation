@@ -38,7 +38,7 @@ describe("SchemaValidater Tests", () => {
 
     await SchemaValidator.validate(options);
 
-    const expectedCount = 15;
+    const expectedCount = 12;
     expect(stub.callCount).to.equal(expectedCount, `Expected ${expectedCount} calls to validateFile`);
   });
 
@@ -197,29 +197,55 @@ describe("SchemaValidater Tests", () => {
   });
 
   describe("Rule Suppression Tests", () => {
-    it("Kind of Quantity Process Functional rule suppression warning.", async () => {
-      const schemaFile = path.resolve(assetsDir, "ProcessFunctional.ecschema.xml");
-      const options = new ValidationOptions(schemaFile, [assetDeserializationDir], false, outDir);
+    describe("Kind of Quantity Tests", () => {
+      const koqAssetsDir = utils.getKOQAssetDir();
 
-      const result = await SchemaValidator.validate(options);
-      expect(result[1].resultText).to.contain("Warning BIS-1000: KindOfQuantity");
-      expect(result[2].resultText).to.contain("Warning BIS-1001: KindOfQuantity");
+      it("KindOfQuantity named 'ONE' and schema named 'ProcessFunctional', so rule suppressed and warning logged.", async () => {
+        const schemaFile = path.resolve(koqAssetsDir, "ProcessFunctional.ecschema.xml");
+        const options = new ValidationOptions(schemaFile, [assetDeserializationDir], false);
+
+        const result = await SchemaValidator.validate(options);
+        expect(result[1].resultText).to.contain("Warning BIS-1000: KindOfQuantity");
+        expect(result[2].resultText).to.contain("Warning BIS-1001: KindOfQuantity");
+      });
+
+      it("KindOfQuantity named 'ONE' but schema not named 'ProcessFunctional' or 'ProcessPhysical', so rule not suppressed and error logged.", async () => {
+        const schemaFile = path.resolve(koqAssetsDir, "BadNameSchema.ecschema.xml");
+        const options = new ValidationOptions(schemaFile, [assetDeserializationDir], false);
+
+        const result = await SchemaValidator.validate(options);
+        expect(result[1].resultText).to.contain("Error BIS-1000: KindOfQuantity");
+        expect(result[2].resultText).to.contain("Error BIS-1001: KindOfQuantity");
+      });
+
+      it("KindOfQuantity not named 'ONE', so rule suppressed and error logged.", async () => {
+        const schemaFile = path.resolve(koqAssetsDir, "ProcessPhysical.ecschema.xml");
+        const options = new ValidationOptions(schemaFile, [assetDeserializationDir], false);
+
+        const result = await SchemaValidator.validate(options);
+        expect(result[1].resultText).to.contain("Error BIS-1000: KindOfQuantity");
+        expect(result[2].resultText).to.contain("Error BIS-1001: KindOfQuantity");
+      });
     });
 
-    it("Kind of Quantity Suppression test: schema not named ProcessFunctional or ProcessPhysical, error.", async () => {
-      const schemaFile = path.resolve(assetsDir, "NotSuppressed.ecschema.xml");
-      const options = new ValidationOptions(schemaFile, [assetDeserializationDir], false, outDir);
+    describe("Embedded Relationship Class Tests", () => {
+      const relAssetsDir = utils.getRelationshipAssetDir();
 
-      const result = await SchemaValidator.validate(options);
-      expect(result[1].resultText).to.contain("Error BIS-1000: KindOfQuantity");
-    });
+      it("Relationship class schema name is 'ProcessFunctional', so rule suppressed and warning logged.", async () => {
+        const schemaFile = path.resolve(relAssetsDir, "ProcessFunctional.ecschema.xml");
+        const options = new ValidationOptions(schemaFile, [assetDeserializationDir], false);
 
-    it("Kind of Quantity Suppression test: kind of quantity not ONE, error.", async () => {
-      const schemaFile = path.resolve(assetsDir, "ProcessPhysical.ecschema.xml");
-      const options = new ValidationOptions(schemaFile, [assetDeserializationDir], false, outDir);
+        const result = await SchemaValidator.validate(options);
+        expect(result[1].resultText).to.contain("Warning BIS-1505: Relationship class");
+      });
 
-      const result = await SchemaValidator.validate(options);
-      expect(result[1].resultText).to.contain("Error BIS-1000: KindOfQuantity");
+      it("Relationship class schema name is not 'ProcessFunctional', 'ProcessPhysical', or 'SP3D', so rule not suppressed and error logged.", async () => {
+        const schemaFile = path.resolve(relAssetsDir, "BadNameSchema.ecschema.xml");
+        const options = new ValidationOptions(schemaFile, [assetDeserializationDir], false);
+
+        const result = await SchemaValidator.validate(options);
+        expect(result[1].resultText).to.contain("Error BIS-1505: Relationship class");
+      });
     });
   });
 });

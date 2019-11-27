@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ECSchema schemaName="ProcessFunctional" alias="ts" version="01.00.00" xmlns="http://www.bentley.com/schemas/Bentley.ECXML.3.2" displayLabel="This schema should be suppressed.">
+  <ECSchemaReference name="BisCore" version="01.00.00" alias="bis"/>
+  <ECSchemaReference name="Units" version="01.00.00" alias="u"/>
+  <ECEntityClass typeName="TestClass">
+    <BaseClass>bis:Element</BaseClass>
+  </ECEntityClass>
+  <ECRelationshipClass typeName='HasString' strength='embedding' modifier='Sealed'>
+    <Source multiplicity='(0..1)' roleLabel='read from source to target' polymorphic='true'>"
+      <Class class='TestClass'/>
+    </Source>
+    <Target multiplicity='(0..*)' roleLabel='read from target to source' polymorphic='true'>
+      <Class class='TestClass'/>
+    </Target>
+  </ECRelationshipClass>
+</ECSchema>
