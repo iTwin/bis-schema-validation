@@ -12,6 +12,14 @@ export function getAssetsDir(): string {
   return path.normalize(__dirname + "/../assets/");
 }
 
+export function getKOQAssetDir(): string {
+  return path.normalize(__dirname + "/../assets/koqSuppressions/");
+}
+
+export function getRelationshipAssetDir(): string {
+  return path.normalize(__dirname + "/../assets/relationshipSuppressions/");
+}
+
 export function getReferencesDir(): string {
   return path.normalize(__dirname + "/../assets/references/");
 }

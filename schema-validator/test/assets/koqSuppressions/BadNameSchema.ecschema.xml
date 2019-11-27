@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ECSchema schemaName="NotSuppressed" alias="ns" version="01.00.00" xmlns="http://www.bentley.com/schemas/Bentley.ECXML.3.2" displayLabel="This schema should not be suppressed.">
+<ECSchema schemaName="BadNameSchema" alias="bad" version="01.00.00" xmlns="http://www.bentley.com/schemas/Bentley.ECXML.3.2" displayLabel="This schema should not be suppressed.">
   <ECSchemaReference name="BisCore" version="01.00.00" alias="bis"/>
   <ECSchemaReference name="Units" version="01.00.00" alias="u"/>
   <ECEntityClass typeName="TestClass">
