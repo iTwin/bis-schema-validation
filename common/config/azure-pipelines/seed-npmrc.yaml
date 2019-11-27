@@ -11,5 +11,3 @@ steps:
       npm config set //pkgs.dev.azure.com/bentleycs/_packaging/Packages/npm/:_password=${{ parameters.artifactsRegistryToken }}
       npm config set //pkgs.dev.azure.com/bentleycs/_packaging/Packages/npm/:email="not used"
     displayName: 'Seed npmrc'
-    failOnStderr: false
-
