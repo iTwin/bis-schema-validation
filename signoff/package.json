@@ -36,7 +36,7 @@
     "httpntlm": "~1",
     "readdirp": "^3.0.0",
     "@bentley/schema-comparer": "^0.1.7",
-    "@bentley/schema-validator": "^0.1.8"
+    "@bentley/schema-validator": "^0.1.9"
   },
   "devDependencies": {
     "@bentley/build-tools": "1.6.0",
