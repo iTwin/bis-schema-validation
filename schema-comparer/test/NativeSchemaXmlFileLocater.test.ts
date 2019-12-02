@@ -22,7 +22,7 @@ describe("NativeSchemaXmlFileLocater.test", () => {
     sinon.restore();
   });
 
-  it("Schema XML has no version, throws.", async () => {
+  it("Schema XML has no version, getSchemaKey throws.", async () => {
     const nativeLocater = new NativeSchemaXmlFileLocater();
     const schemaPath = path.join(assetDeserializationDir, "SchemaNoVersion.ecschema.xml");
     const schemaString = fs.readFileSync(schemaPath, "utf8");

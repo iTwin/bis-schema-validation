@@ -230,6 +230,10 @@ describe("SchemaXmlFileDeserializer", () => {
     expect(derivedStruct.getBaseClassSync() === struct).to.be.true;
   });
 
+  /**
+   * Test is skipped because cyclic reference check will now be done in imodeljs:
+   * _workitems/edit/214993
+   */
   it.skip("Test for cyclic references", async () => {
     // Round 1
     // B ----> C ----> D ---
@@ -277,7 +281,6 @@ describe("SchemaXmlFileDeserializer", () => {
     expect(schemaC!.getReferenceSync("SchemaD") === schemaD).to.be.true;
   });
 });
-
 
 describe("SchemaJsonFileDeserializer", () => {
   const assetDeserializationDir = path.join(utils.getAssetsDir(), "json-deserialization");
