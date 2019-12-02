@@ -2,7 +2,7 @@
   "name": "@bentley/schema-validator",
   "description": "Command line tools validates an ECJson or ECXml schema.",
   "license": "MIT",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "bin": {
     "schema-validator": "./bin/index.js"
   },
@@ -20,7 +20,7 @@
     "test": "betools test-tsnode --testDir=./test/",
     "test:watch": "betools test-tsnode --testDir=./test/ --watch",
     "cover": "nyc node ./node_modules/@bentley/build-tools/scripts/test-tsnode.js --testDir=./test/ --tscPaths",
-    "cli-dev": "cd .. & rush publish --publish --pack --include-all & npm install -g ./common/temp/artifacts/packages/bentley-schema-validator-0.1.8.tgz"
+    "cli-dev": "cd .. & rush publish --publish --pack --include-all & npm install -g ./common/temp/artifacts/packages/bentley-schema-validator-0.1.9.tgz"
   },
   "keywords": [
     "Bentley",
@@ -57,14 +57,14 @@
     "xmldom": "^0.1.27"
   },
   "dependencies": {
-    "@bentley/bentleyjs-core": "1.9.0-dev.3",
-    "@bentley/bis-rules": "^0.1.8",
-    "@bentley/ecschema-metadata": "1.9.0-dev.3",
-    "@bentley/geometry-core": "1.9.0-dev.3",
-    "@bentley/imodeljs-backend": "1.9.0-dev.3",
-    "@bentley/imodeljs-clients": "1.9.0-dev.3",
-    "@bentley/imodeljs-clients-backend": "1.9.0-dev.3",
-    "@bentley/imodeljs-common": "1.9.0-dev.3",
+    "@bentley/bentleyjs-core": "1.9.0-dev.12",
+    "@bentley/bis-rules": "^0.1.9",
+    "@bentley/ecschema-metadata": "1.9.0-dev.12",
+    "@bentley/geometry-core": "1.9.0-dev.12",
+    "@bentley/imodeljs-backend": "1.9.0-dev.12",
+    "@bentley/imodeljs-clients": "1.9.0-dev.12",
+    "@bentley/imodeljs-clients-backend": "1.9.0-dev.12",
+    "@bentley/imodeljs-common": "1.9.0-dev.12",
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
     "fs-extra": "^7.0.1"
