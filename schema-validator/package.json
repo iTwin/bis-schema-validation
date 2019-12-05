@@ -2,7 +2,7 @@
   "name": "@bentley/schema-validator",
   "description": "Command line tools validates an ECJson or ECXml schema.",
   "license": "MIT",
-  "version": "0.1.9",
+  "version": "0.2.0",
   "bin": {
     "schema-validator": "./bin/index.js"
   },
@@ -20,7 +20,7 @@
     "test": "betools test-tsnode --testDir=./test/",
     "test:watch": "betools test-tsnode --testDir=./test/ --watch",
     "cover": "nyc node ./node_modules/@bentley/build-tools/scripts/test-tsnode.js --testDir=./test/ --tscPaths",
-    "cli-dev": "cd .. & rush publish --publish --pack --include-all & npm install -g ./common/temp/artifacts/packages/bentley-schema-validator-0.1.9.tgz"
+    "cli-dev": "cd .. & rush publish --publish --pack --include-all & npm install -g ./common/temp/artifacts/packages/bentley-schema-validator-0.2.0.tgz"
   },
   "keywords": [
     "Bentley",
@@ -58,7 +58,7 @@
   },
   "dependencies": {
     "@bentley/bentleyjs-core": "1.9.0-dev.12",
-    "@bentley/bis-rules": "^0.1.9",
+    "@bentley/bis-rules": "^0.2.0",
     "@bentley/ecschema-metadata": "1.9.0-dev.12",
     "@bentley/geometry-core": "1.9.0-dev.12",
     "@bentley/imodeljs-backend": "1.9.0-dev.12",

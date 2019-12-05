@@ -6,7 +6,7 @@
 import * as fs from "fs-extra";
 import * as path from "path";
 
-import { Schema, SchemaContext, SchemaXmlFileLocater, SchemaMatchType, SchemaKey, ECVersion, SchemaComparer, ISchemaCompareReporter } from "@bentley/ecschema-metadata";
+import { Schema, SchemaContext, SchemaComparer, ISchemaCompareReporter } from "@bentley/ecschema-metadata";
 import { FileSchemaCompareReporter } from "./FileSchemaCompareReporter";
 import { CollectionSchemaCompareReporter } from "./CollectionSchemaCompareReporter";
 import { SchemaDeserializer } from "./SchemaDeserializer";
@@ -34,10 +34,9 @@ export interface IComparisonResult {
  */
 export class CompareOptions {
   private _schemaAPath: string;
-  private _schemaBPath?: string;
+  private _schemaBPath: string;
   private _referenceDirectories: string[];
   private _outputDir?: string;
-  private _compareToNativeDeserialization: boolean;
 
   /**
    * Initializes a new CompareOptions instance.
@@ -45,12 +44,11 @@ export class CompareOptions {
    * @param referenceDirectories Optional paths in which to search for referenced schemas.
    * @param outputDir The directory where the output file(s) will be created.
    */
-  constructor(schemaAPath: string, schemaBPath: string | undefined, referenceDirectories: string[], outputDir?: string,
-              compareToNativeDeserialization: boolean = false) {
+  constructor(schemaAPath: string, schemaBPath: string, referenceDirectories: string[], outputDir?: string) {
     this._schemaAPath = schemaAPath;
     this._schemaBPath = schemaBPath;
     this._referenceDirectories = referenceDirectories;
-    this._compareToNativeDeserialization = compareToNativeDeserialization;
+
     if (outputDir)
       this._outputDir = path.normalize(outputDir);
   }
@@ -61,7 +59,7 @@ export class CompareOptions {
   }
 
   /** Gets the path to the second schema. */
-  public get SchemaBPath(): string | undefined {
+  public get SchemaBPath(): string {
     return this._schemaBPath;
   }
 
@@ -73,14 +71,6 @@ export class CompareOptions {
   /** Gets the output directory. */
   public get outputDir(): string | undefined {
     return this._outputDir;
-  }
-
-  /**
-   * Indicates if the schema comparison should be done on one schema de-serialized in two ways:
-   * typescript deserialization and native deserialization.
-   */
-  public get compareToNativeDeserialization(): boolean {
-    return this._compareToNativeDeserialization;
   }
 }
 
@@ -105,18 +95,12 @@ export class SchemaComparison {
   }
 
   /**
-   * Compares two EC Schema XML files by de-serializing the schemas and reporting differences. If no schemaBPath is specified,
-   * or the CompareOptions.compareToNativeDeserialization is true, the schema identified by schemaAPath will be de-serialized
-   * twice - once using typescript de-serializer and once using the native de-serializer. The two in-memory schemas will then
-   * be compared as if two schema paths were specified.
+   * Compares two EC Schema XML files by de-serializing the schemas and reporting differences.
    * @param schemaAPath The path to first schema.
    * @param schemaBPath The path to second schema.
    * @param options The CompareOptions options.
    */
-  public static async compareSchemas(schemaAPath: string, schemaBPath: string | undefined, options: CompareOptions): Promise<IComparisonResult[]> {
-    if (options.compareToNativeDeserialization || undefined === schemaBPath) {
-      return this.compareToNativeDeserialization(schemaAPath, options);
-    }
+  public static async compareSchemas(schemaAPath: string, schemaBPath: string, options: CompareOptions): Promise<IComparisonResult[]> {
 
     let results: IComparisonResult[] = [];
 
@@ -129,11 +113,11 @@ export class SchemaComparison {
 
     results.push({ resultType: ComparisonResultType.Message, resultText: headerText });
 
-    const baseLineSchema = await this.getSchemaFromXmlFile(schemaAPath, results, options.referenceDirectories);
+    const baseLineSchema = await this.getSchema(schemaAPath, results, options.referenceDirectories);
     if (!baseLineSchema)
       return results;
 
-    const schemaToCompare = await this.getSchemaFromXmlFile(schemaBPath, results, options.referenceDirectories);
+    const schemaToCompare = await this.getSchema(schemaBPath, results, options.referenceDirectories);
     if (!schemaToCompare)
       return results;
 
@@ -202,67 +186,18 @@ export class SchemaComparison {
     return schemaPath.endsWith(".ecschema.xml");
   }
 
-  private static async compareToNativeDeserialization(schemaPath: string, options: CompareOptions): Promise<IComparisonResult[]> {
-    let results: IComparisonResult[] = [];
+  private static async getSchema(schemaPath: string, results: IComparisonResult[], referencePaths?: string[]): Promise<Schema | undefined> {
+    const isJson = schemaPath.endsWith(".json");
 
-    const headerText = "Schema Comparison Results";
-
-    results.push({ resultType: ComparisonResultType.Message, resultText: headerText });
-
-    const baseLineSchema = await this.getXmlSchemaUsingJsonDeserializer(schemaPath, results, options.referenceDirectories);
-    if (!baseLineSchema)
-      return results;
-
-    const schema = await this.getSchemaFromXmlFile(schemaPath, results, options.referenceDirectories);
-    if (!schema)
-      return results;
-
-    results = results.concat(await this.compareLoadedSchemas(baseLineSchema, schema, options.outputDir));
-
-    return results;
-  }
-
-  private static async getSchemaFromXmlFile(schemaPath: string, results: IComparisonResult[], referencePaths?: string[]): Promise<Schema | undefined> {
-    let schemaText: string;
-    try {
-      schemaText = fs.readFileSync(schemaPath, "utf-8");
-    } catch (err) {
-      const msg = ` An error occurred reading the schema XML file ${schemaPath}: ${err.message}`;
-      results.push({ resultType: ComparisonResultType.Error, resultText: msg });
-      return;
-    }
-
-    const locater = new SchemaXmlFileLocater();
-    const context = new SchemaContext();
-    context.addLocater(locater);
-
-    if (referencePaths) {
-      locater.addSchemaSearchPaths(referencePaths);
-    }
-
-    const directory = path.dirname(schemaPath);
-    locater.addSchemaSearchPaths([directory]);
-
-    const schemaKey = this.getSchemaKey(schemaText, schemaPath, results);
-    if (!schemaKey)
-      return;
-
-    try {
-      return await context.getSchema(schemaKey, SchemaMatchType.Exact);
-    } catch (err) {
-      const msg = `An error occurred retrieving schema '${schemaKey.toString()}': ${err.message}`;
-      results.push({ resultType: ComparisonResultType.Error, resultText: msg });
-    }
-
-    return;
-  }
-
-  private static async getXmlSchemaUsingJsonDeserializer(schemaPath: string, results: IComparisonResult[], referencePaths?: string[]): Promise<Schema | undefined> {
     let schema: Schema | undefined;
     try {
       const context = new SchemaContext();
       const deserializer = new SchemaDeserializer();
-      schema = await deserializer.deserializeXmlFile(schemaPath, context, referencePaths);
+
+      if (isJson)
+        schema = await deserializer.deserializeJsonFile(schemaPath, context, referencePaths);
+      else
+        schema = await deserializer.deserializeXmlFile(schemaPath, context, referencePaths);
 
       return schema;
     } catch (err) {
@@ -270,7 +205,7 @@ export class SchemaComparison {
       results.push({ resultType: ComparisonResultType.Error, resultText: msg });
     }
 
-    return;
+    return schema;
   }
 
   private static async waitForReporterToFlush(reporter: FileSchemaCompareReporter, message?: string): Promise<void> {
@@ -285,34 +220,5 @@ export class SchemaComparison {
     for (const diag of diagnostics) {
       results.push({ resultType: ComparisonResultType.Delta, resultText: " " + diag });
     }
-  }
-
-  /**
-   * Constructs a SchemaKey based on the information in the Schema XML.
-   * @param data The Schema XML as a string.
-   */
-  private static getSchemaKey(data: string, schemaPath: string, results: IComparisonResult[]): SchemaKey | undefined {
-    const matches = data.match(/<ECSchema ([^]+?)>/g);
-    if (!matches || matches.length !== 1) {
-      const msg = ` Could not find '<ECSchema>' tag in the file '${schemaPath}'`;
-      results.push({ resultType: ComparisonResultType.Error, resultText: msg });
-      return;
-    }
-
-    const name = matches[0].match(/schemaName="(.+?)"/);
-    if (!name || name.length !== 2 ) {
-      const msg = ` Could not find the ECSchema 'schemaName' tag in the file '${schemaPath}'`;
-      results.push({ resultType: ComparisonResultType.Error, resultText: msg });
-      return;
-    }
-    const version = matches[0].match(/version="(.+?)"/);
-    if (!version || version.length !== 2) {
-      const msg = ` Could not find the ECSchema 'version' tag in the file '${schemaPath}'`;
-      results.push({ resultType: ComparisonResultType.Error, resultText: msg });
-      return;
-    }
-
-    const key = new SchemaKey(name[1], ECVersion.fromString(version[1]));
-    return key;
   }
 }

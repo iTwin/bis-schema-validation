@@ -12,7 +12,7 @@ dependencies:
   '@rush-temp/schema-comparer': 'file:projects/schema-comparer.tgz'
   '@rush-temp/schema-roundtrip': 'file:projects/schema-roundtrip.tgz'
   '@rush-temp/schema-validator': 'file:projects/schema-validator.tgz_4ae37d1cad6c993d755056a523193944'
-  '@types/chai': 4.2.5
+  '@types/chai': 4.2.6
   '@types/chai-as-promised': 7.1.2
   '@types/fs-extra': 5.1.0
   '@types/mocha': 5.2.7
@@ -34,8 +34,8 @@ dependencies:
   source-map-support: 0.5.16
   ts-node: 7.0.1
   tsconfig-paths: 3.9.0
-  tslint: 5.20.1_typescript@3.7.2
-  typescript: 3.7.2
+  tslint: 5.20.1_typescript@3.7.3
+  typescript: 3.7.3
   xmldom: 0.1.27
 lockfileVersion: 5.1
 packages:
@@ -427,7 +427,7 @@ packages:
       integrity: sha512-+iTbntw2IZPb/anVDbypzfQa+ay64MW0Zo8aJ8gZPWMMK6/OubMVb6lUPMagqjOPnmtauXnFCACVl3O7ogjeqQ==
   /@szmarczak/http-timer/1.1.2:
     dependencies:
-      defer-to-connect: 1.1.0
+      defer-to-connect: 1.1.1
     dev: false
     engines:
       node: '>=6'
@@ -443,14 +443,14 @@ packages:
       integrity: sha1-WCskdhaabLpGCiFNR2x0REHYc9U=
   /@types/chai-as-promised/7.1.2:
     dependencies:
-      '@types/chai': 4.2.5
+      '@types/chai': 4.2.6
     dev: false
     resolution:
       integrity: sha512-PO2gcfR3Oxa+u0QvECLe1xKXOqYTzCmWf0FhLhjREoW3fPAVamjihL7v1MOVLJLsnAMdLcjkfrs01yvDMwVK4Q==
-  /@types/chai/4.2.5:
+  /@types/chai/4.2.6:
     dev: false
     resolution:
-      integrity: sha512-YvbLiIc0DbbhiANrfVObdkLEHJksQZVq0Uvfg550SRAKVYaEJy+V70j65BVe2WNp6E3HtKsUczeijHFCjba3og==
+      integrity: sha512-HF8faEUA4JurIm+68VaA2KedtZf5LYdXpQEAbIAN79DwWQbO82BNTksZgCH3UMqbZHXex9C6TrBfg7OUInRISQ==
   /@types/events/3.0.0:
     dev: false
     resolution:
@@ -1304,10 +1304,10 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha1-9fj7sYp9bVCyH2QfZJ67Uiz+JPc=
-  /defer-to-connect/1.1.0:
+  /defer-to-connect/1.1.1:
     dev: false
     resolution:
-      integrity: sha512-WE2sZoctWm/v4smfCAdjYbrfS55JiMRdlY9ZubFhsYbteCK9+BvAx4YV7nPjYM6ZnX5BcoVKwfmyx9sIFTgQMQ==
+      integrity: sha512-J7thop4u3mRTkYRQ+Vpfwy2G5Ehoy82I14+14W4YMDLKdWloI9gSzRbV30s/NckQGVJtPkWNcW4oMAUigTdqiQ==
   /define-properties/1.1.3:
     dependencies:
       object-keys: 1.1.1
@@ -4414,7 +4414,7 @@ packages:
       typescript: '>=2.3.0-dev || >=2.4.0-dev || >=2.5.0-dev || >=2.6.0-dev || >=2.7.0-dev || >=2.8.0-dev || >=2.9.0-dev || >=3.0.0-dev || >= 3.1.0-dev || >= 3.2.0-dev'
     resolution:
       integrity: sha512-EcMxhzCFt8k+/UP5r8waCf/lzmeSyVlqxqMEDQE7rWYiQky8KpIBz1JAoYXfROHrPZ1XXd43q8yQnULOLiBRQg==
-  /tslint/5.20.1_typescript@3.7.2:
+  /tslint/5.20.1_typescript@3.7.3:
     dependencies:
       '@babel/code-frame': 7.5.5
       builtin-modules: 1.1.1
@@ -4428,8 +4428,8 @@ packages:
       resolve: 1.13.1
       semver: 5.7.1
       tslib: 1.10.0
-      tsutils: 2.29.0_typescript@3.7.2
-      typescript: 3.7.2
+      tsutils: 2.29.0_typescript@3.7.3
+      typescript: 3.7.3
     dev: false
     engines:
       node: '>=4.8.0'
@@ -4455,10 +4455,10 @@ packages:
       typescript: '>=2.1.0 || >=2.1.0-dev || >=2.2.0-dev || >=2.3.0-dev || >=2.4.0-dev || >=2.5.0-dev || >=2.6.0-dev || >=2.7.0-dev || >=2.8.0-dev || >=2.9.0-dev || >= 3.0.0-dev || >= 3.1.0-dev'
     resolution:
       integrity: sha512-g5JVHCIJwzfISaXpXE1qvNalca5Jwob6FjI4AoPlqMusJ6ftFE7IkkFoMhVLRgK+4Kx3gkzb8UZK5t5yTTvEmA==
-  /tsutils/2.29.0_typescript@3.7.2:
+  /tsutils/2.29.0_typescript@3.7.3:
     dependencies:
       tslib: 1.10.0
-      typescript: 3.7.2
+      typescript: 3.7.3
     dev: false
     peerDependencies:
       typescript: '>=2.1.0 || >=2.1.0-dev || >=2.2.0-dev || >=2.3.0-dev || >=2.4.0-dev || >=2.5.0-dev || >=2.6.0-dev || >=2.7.0-dev || >=2.8.0-dev || >=2.9.0-dev || >= 3.0.0-dev || >= 3.1.0-dev'
@@ -4579,13 +4579,13 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-unoCll1+l+YK4i4F8f22TaNVPRHcD9PA3yCuZ8g5e0qGqlVlJ/8FSateOLLSagn+Yg5+ZwuPkL8LFUc0Jcvksg==
-  /typescript/3.7.2:
+  /typescript/3.7.3:
     dev: false
     engines:
       node: '>=4.2.0'
     hasBin: true
     resolution:
-      integrity: sha512-ml7V7JfiN2Xwvcer+XAf2csGO1bPBdRbFCkYBczNZggrBZ9c7G3riSUeJmqEU5uOtXNPMhE3n+R4FA/3YOAWOQ==
+      integrity: sha512-Mcr/Qk7hXqFBXMN7p7Lusj1ktCBydylfQM/FZCk5glCNQJrCUKPkMHdo9R0MTFWsC/4kPFvDS0fDPvukfCkFsw==
   /uglify-js/3.7.1:
     dependencies:
       commander: 2.20.3
@@ -4907,7 +4907,7 @@ packages:
       '@bentley/build-tools': 1.8.0
       '@bentley/ecschema-metadata': 1.9.0-dev.12_0c052bc8403077772285de88034d98c6
       '@bentley/imodeljs-backend': 1.9.0-dev.12_9743c33a102c80ee15e92c4a792398fd
-      '@types/chai': 4.2.5
+      '@types/chai': 4.2.6
       '@types/mocha': 5.2.7
       '@types/rimraf': 2.0.3
       '@types/sinon': 7.5.1
@@ -4920,8 +4920,8 @@ packages:
       source-map-support: 0.5.16
       ts-node: 7.0.1
       tsconfig-paths: 3.9.0
-      tslint: 5.20.1_typescript@3.7.2
-      typescript: 3.7.2
+      tslint: 5.20.1_typescript@3.7.3
+      typescript: 3.7.3
     dev: false
     id: 'file:projects/bis-rules.tgz'
     name: '@rush-temp/bis-rules'
@@ -4946,7 +4946,7 @@ packages:
       '@bentley/imodeljs-clients-backend': 1.9.0-dev.12_e927cb5cef5d11fc35f640292ed562fc
       '@bentley/imodeljs-common': 1.9.0-dev.12_1ca749f23558c57e84ee9accdb46c258
       '@bentley/imodeljs-i18n': 1.9.0-dev.12_bfffef20337ac4d051ba079edafdffb1
-      '@types/chai': 4.2.5
+      '@types/chai': 4.2.6
       '@types/chai-as-promised': 7.1.2
       '@types/fs-extra': 5.1.0
       '@types/mocha': 5.2.7
@@ -4966,8 +4966,8 @@ packages:
       sinon: 7.5.0
       ts-node: 7.0.1
       tsconfig-paths: 3.9.0
-      tslint: 5.20.1_typescript@3.7.2
-      typescript: 3.7.2
+      tslint: 5.20.1_typescript@3.7.3
+      typescript: 3.7.3
     dev: false
     name: '@rush-temp/schema-comparer'
     resolution:
@@ -4985,7 +4985,7 @@ packages:
       '@bentley/imodeljs-clients-backend': 1.9.0-dev.12_e927cb5cef5d11fc35f640292ed562fc
       '@bentley/imodeljs-common': 1.9.0-dev.12_1ca749f23558c57e84ee9accdb46c258
       '@bentley/imodeljs-i18n': 1.9.0-dev.12_bfffef20337ac4d051ba079edafdffb1
-      '@types/chai': 4.2.5
+      '@types/chai': 4.2.6
       '@types/chai-as-promised': 7.1.2
       '@types/fs-extra': 5.1.0
       '@types/mocha': 5.2.7
@@ -5006,8 +5006,8 @@ packages:
       sinon: 7.5.0
       ts-node: 7.0.1
       tsconfig-paths: 3.9.0
-      tslint: 5.20.1_typescript@3.7.2
-      typescript: 3.7.2
+      tslint: 5.20.1_typescript@3.7.3
+      typescript: 3.7.3
       xmldom: 0.1.27
     dev: false
     name: '@rush-temp/schema-roundtrip'
@@ -5025,7 +5025,7 @@ packages:
       '@bentley/imodeljs-clients': 1.9.0-dev.12_9f5eb064204cc83579ed9f0c5cfe80c1
       '@bentley/imodeljs-clients-backend': 1.9.0-dev.12_e927cb5cef5d11fc35f640292ed562fc
       '@bentley/imodeljs-common': 1.9.0-dev.12_1ca749f23558c57e84ee9accdb46c258
-      '@types/chai': 4.2.5
+      '@types/chai': 4.2.6
       '@types/chai-as-promised': 7.1.2
       '@types/fs-extra': 5.1.0
       '@types/mocha': 5.2.7
@@ -5046,8 +5046,8 @@ packages:
       sinon: 7.5.0
       ts-node: 7.0.1
       tsconfig-paths: 3.9.0
-      tslint: 5.20.1_typescript@3.7.2
-      typescript: 3.7.2
+      tslint: 5.20.1_typescript@3.7.3
+      typescript: 3.7.3
       xmldom: 0.1.27
     dev: false
     id: 'file:projects/schema-validator.tgz'
