@@ -2,7 +2,7 @@
   "name": "@bentley/schema-roundtrip",
   "description": "Command line tool de-serializes and re-serializes a schmema with optional comparison.",
   "license": "MIT",
-  "version": "0.1.9",
+  "version": "0.2.0",
   "bin": {
     "schema-roundtrip": "./lib/index.js"
   },
@@ -20,7 +20,7 @@
     "test": "betools test-tsnode --testDir=./test/",
     "test:watch": "betools test-tsnode --testDir=./test/ --watch",
     "cover": "nyc node ./node_modules/@bentley/build-tools/scripts/test-tsnode.js --testDir=./test/ --tscPaths",
-    "cli-dev": "cd .. & rush publish --publish --pack --include-all & npm install -g ./common/temp/artifacts/packages/bentley-schema-roundtrip-0.1.9.tgz"
+    "cli-dev": "cd .. & rush publish --publish --pack --include-all & npm install -g ./common/temp/artifacts/packages/bentley-schema-roundtrip-0.2.0.tgz"
   },
   "keywords": [
     "Bentley",
@@ -63,7 +63,7 @@
     "@bentley/imodeljs-clients-backend": "1.9.0-dev.12",
     "@bentley/imodeljs-common": "1.9.0-dev.12",
     "@bentley/imodeljs-i18n": "1.9.0-dev.12",
-    "@bentley/schema-comparer": "^0.1.9",
+    "@bentley/schema-comparer": "^0.2.0",
     "@types/xmldom": "^0.1.29",
     "chalk": "^2.4.1",
     "commander": "^2.19.0",

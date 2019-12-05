@@ -84,6 +84,6 @@ export class NativeSchemaXmlFileLocater extends EC.SchemaFileLocater implements 
   }
 
   private isEC31Schema(schemaText: string): boolean {
-    return /<ECSchema.*xmlns=".*ECXML.3.1"/.test(schemaText);
+    return /<ECSchema[^>]*xmlns=".*ECXML.3.1"/.test(schemaText);
   }
 }

@@ -7,7 +7,6 @@
 
 const commander = require("commander");
 const chalk = require("chalk");
-
 const SchemaComparison = require("../lib/SchemaComparison").SchemaComparison;
 const ComparisonResultType = require("../lib/SchemaComparison").ComparisonResultType;
 const CompareOptions = require("../lib/SchemaComparison").CompareOptions;
@@ -32,7 +31,7 @@ program.parse(process.argv);
 
 if (process.argv.length === 0) program.help();
 
-if (!program.input || !program.output) {
+if (!program.input) {
   // tslint:disable-next-line:no-console
   console.log(chalk.default.red("Invalid input. For help use the '-h' option."));
   process.exit(1);
