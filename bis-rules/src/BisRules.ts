@@ -327,6 +327,8 @@ export const Diagnostics = {
 // tslint:disable-next-line:variable-name
 export const BisRuleSet: EC.IRuleSet = {
   name: ruleSetName,
+  schemaExclusionSet: ["ECDbFileInfo", "ECDbMap", "ECDbMeta", "ECDbSchemaPolicies", "ECDbSystem"],
+
   schemaRules: [
     schemaXmlVersionMustBeTheLatest,
     schemaMustNotReferenceOldStandardSchemas,

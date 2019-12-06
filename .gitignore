@@ -19,6 +19,9 @@ package-dep_build.json
 *.build.log
 *.build.error.log
 package-lock.json
+# ignnore change logs for now
+**/changelog.json
+**/changelog.md
 
 # docs
 /public

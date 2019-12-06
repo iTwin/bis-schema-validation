@@ -1,0 +1,55 @@
+trigger:
+- master
+
+workspace:
+  clean: all
+
+pool:
+  name: 
+  demands:
+  - Agent.OS -equals Windows_NT
+  - npm
+
+steps:
+  - checkout: self
+  - script: 'git checkout --track origin/master'
+    displayName: 'Switching to master '
+
+  - script: |
+      rush version --bump
+
+    failOnStderr: true
+    displayName: 'Update to new dev version on master'
+
+  - script: |
+      REM Adds the changes.
+      git add .
+   
+      git status
+      
+    failOnStderr: true
+    displayName: 'Git add'
+
+  - powershell: |
+      # Get the new version number.
+      $json = Get-Content -Raw -Path common/config/rush/version-policies.json | ConvertFrom-Json
+
+      $newVersion = $json[0].version
+
+      Write-Host The new version is $newVersion
+      Write-Host Committing version bump...
+
+      git commit -m "$newVersion"
+      
+      Write-Host "##vso[build.updatebuildnumber]bis-schema-validation_$newVersion"
+
+    failOnStderr: true
+    displayName: 'Get version and committing'
+
+  - task: CmdLine@1
+    displayName: 'Push version bump'
+    inputs:
+      filename: git
+      arguments: 'push origin master -q'
+      failOnStandardError: true
+

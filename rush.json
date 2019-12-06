@@ -1,5 +1,5 @@
 {
-  "rushVersion": "5.10.3",
+  "rushVersion": "5.17.2",
   "pnpmVersion": "3.5.3",
   "nodeSupportedVersionRange": ">=10.6.0 <11.0.0",
   "projectFolderMinDepth": 1,
@@ -9,22 +9,26 @@
     {
       "packageName": "@bentley/schema-roundtrip",
       "projectFolder": "schema-roundtrip",
-      "shouldPublish": true
+      "shouldPublish": true,
+      "versionPolicyName": "bsv-versions"
     },
     {
       "packageName": "@bentley/schema-comparer",
       "projectFolder": "schema-comparer",
-      "shouldPublish": true
+      "shouldPublish": true,
+      "versionPolicyName": "bsv-versions"
     },
     {
       "packageName": "@bentley/schema-validator",
       "projectFolder": "schema-validator",
-      "shouldPublish": true
+      "shouldPublish": true,
+      "versionPolicyName": "bsv-versions"
     },
     {
       "packageName": "@bentley/bis-rules",
       "projectFolder": "bis-rules",
-      "shouldPublish": true
+      "shouldPublish": true,
+      "versionPolicyName": "bsv-versions"
     }
   ]
 }
