@@ -2,7 +2,7 @@
   "name": "@bentley/bis-rules",
   "description": "Contains BIS rules for schema validation.",
   "license": "MIT",
-  "version": "0.2.427",
+  "version": "0.2.428",
   "main": "lib/bis-rules.js",
   "typings": "lib/bis-rules",
   "repository": {
