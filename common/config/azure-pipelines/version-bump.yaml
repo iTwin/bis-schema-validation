@@ -1,5 +1,4 @@
-trigger:
-- master
+trigger: none
 
 workspace:
   clean: all
@@ -24,9 +23,9 @@ steps:
   - script: |
       REM Adds the changes.
       git add .
-   
+
       git status
-      
+
     failOnStderr: true
     displayName: 'Git add'
 
@@ -40,7 +39,7 @@ steps:
       Write-Host Committing version bump...
 
       git commit -m "$newVersion"
-      
+
       Write-Host "##vso[build.updatebuildnumber]bis-schema-validation_$newVersion"
 
     failOnStderr: true
