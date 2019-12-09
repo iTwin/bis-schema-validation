@@ -2,7 +2,7 @@
   {
     "policyName": "bsv-versions",
     "definitionName": "lockStepVersion",
-    "version": "0.2.360",
+    "version": "0.2.361",
     "nextBump": "patch"
   }
 ]
