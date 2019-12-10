@@ -56,7 +56,7 @@ export abstract class SchemaCompareReporter implements ISchemaCompareReporter {
    * Allows the implementation to handle the formatted string representation of an ISchemaChange entry.
    * @param message
    */
-  protected abstract reportFormattedChange(message: string): void;
+  protected abstract reportFormattedChange(message: string, change?: ISchemaChange): void;
 
   private reportSchemaChanges(changes: SchemaChanges) {
     if (changes.allDiagnostics.length === 0)
@@ -436,11 +436,11 @@ export abstract class SchemaCompareReporter implements ISchemaCompareReporter {
 
   private reportChange(depth: number, change: ISchemaChange, markAsRemoved?: boolean) {
     const changeType = this.getChangeType(change, markAsRemoved);
-    this.reportLine(changeType, depth, change.toString());
+    this.reportLine(changeType, depth, change.toString(), change);
   }
 
-  private reportLine(changeType: string, depth: number, text: string) {
+  private reportLine(changeType: string, depth: number, text: string, change?: ISchemaChange) {
     const message = `${changeType}${this.getTabDepth(depth)}${text}`;
-    this.reportFormattedChange(message);
+    this.reportFormattedChange(message, change);
   }
 }

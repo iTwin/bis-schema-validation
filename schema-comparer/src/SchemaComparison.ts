@@ -8,7 +8,7 @@ import * as path from "path";
 
 import { Schema, SchemaContext, SchemaComparer, ISchemaCompareReporter } from "@bentley/ecschema-metadata";
 import { FileSchemaCompareReporter } from "./FileSchemaCompareReporter";
-import { CollectionSchemaCompareReporter } from "./CollectionSchemaCompareReporter";
+import { CollectionSchemaCompareReporter, IFormattedSchemaChange } from "./CollectionSchemaCompareReporter";
 import { SchemaDeserializer } from "./SchemaDeserializer";
 
 /**
@@ -25,6 +25,7 @@ export enum ComparisonResultType {
  * Defines the object returned after schema comparison.
  */
 export interface IComparisonResult {
+  compareCode?: string;
   resultType?: ComparisonResultType;
   resultText: string;
 }
@@ -216,9 +217,10 @@ export class SchemaComparison {
     });
   }
 
-  private static createComparisonResults(diagnostics: string[], results: IComparisonResult[]) {
+  private static createComparisonResults(diagnostics: IFormattedSchemaChange[], results: IComparisonResult[]) {
     for (const diag of diagnostics) {
-      results.push({ resultType: ComparisonResultType.Delta, resultText: " " + diag });
+      const code = diag.change ? diag.change.diagnostic.code : undefined;
+      results.push({ resultType: ComparisonResultType.Delta, resultText: " " + diag, compareCode: code });
     }
   }
 }
