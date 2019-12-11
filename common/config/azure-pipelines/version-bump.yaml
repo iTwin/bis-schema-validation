@@ -1,4 +1,5 @@
-trigger: none
+trigger:
+- master
 
 workspace:
   clean: all
@@ -38,7 +39,7 @@ steps:
       Write-Host The new version is $newVersion
       Write-Host Committing version bump...
 
-      git commit -m "$newVersion"
+      git commit -m "$newVersion [skip ci]"
 
       Write-Host "##vso[build.updatebuildnumber]bis-schema-validation_$newVersion"
 

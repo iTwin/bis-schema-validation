@@ -57,7 +57,7 @@ stages:
         inputs:
           filename: node
           arguments: './common/scripts/install-run-rush.js publish --publish --pack --include-all'
-        condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual'))
+        condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual', 'BuildCompletion'))
       - task: PythonScript@0
         displayName: 'Gather packages for release'
         inputs:
@@ -118,22 +118,22 @@ stages:
               print ("All packages are up-to-date.")
 
           arguments: '$(Build.ArtifactStagingDirectory) $(Build.SourcesDirectory)'
-        condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual'))
+        condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual', 'BuildCompletion'))
       - script: |
           dir $(Build.ArtifactStagingDirectory)\bis-schema-tools\packages
           dir $(Build.ArtifactStagingDirectory)\
           dir $(Build.ArtifactStagingDirectory)\bis-schema-tools\
-        condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual'))
+        condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual', 'BuildCompletion'))
       - task: PublishPipelineArtifact@1
         displayName: 'Publish Artifact: packages'
         inputs:
           targetPath: '$(Build.ArtifactStagingDirectory)/bis-schema-tools/packages'
           artifact: packages
-        condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual'))
+        condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual', 'BuildCompletion'))
 - stage: publish
   dependsOn: build
   displayName: Publish
-  condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual'))
+  condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual', 'BuildCompletion'))
   jobs:
   - job: publish_artifacts
     displayName: Publish packages to Artifacts
