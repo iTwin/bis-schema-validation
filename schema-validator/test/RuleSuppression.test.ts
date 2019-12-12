@@ -55,7 +55,7 @@ describe("Rule Suppression Tests", () => {
 
       const result = await ruleSuppressionSet.koqMustNotUseUnitlessRatios(koq);
       expect(result).to.be.false;
-    })
+    });
 
     it("koqMustUseSIUnitForPersistenceUnit is suppressed for KindOfQuantity named 'ONE' in schemas named ProcessFunctional or ProcessPhysical.", async () => {
       const schemaPath = path.join(koqAssetsDir, "ProcessFunctional.ecschema.xml");

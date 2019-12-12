@@ -41,11 +41,11 @@ export class SchemaDeserializer {
     this.configureFileLocater(schemaContext, referencePaths);
 
     try {
-    const schema = await schemaContext.getSchema(schemaKey, EC.SchemaMatchType.Exact);
-    if (!schema)
-      throw new EC.ECObjectsError(EC.ECObjectsStatus.UnableToLocateSchema, `Unable to locate schema '${schemaKey.name}'`);
+      const schema = await schemaContext.getSchema(schemaKey, EC.SchemaMatchType.Exact);
+      if (!schema)
+        throw new EC.ECObjectsError(EC.ECObjectsStatus.UnableToLocateSchema, `Unable to locate schema '${schemaKey.name}'`);
 
-    return schema;
+      return schema;
     } finally {
       // This can be removed when/if the NativeSchemaXmlFIleLocater is removed
       IModelHost.shutdown();

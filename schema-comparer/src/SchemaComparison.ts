@@ -220,7 +220,7 @@ export class SchemaComparison {
   private static createComparisonResults(diagnostics: IFormattedSchemaChange[], results: IComparisonResult[]) {
     for (const diag of diagnostics) {
       const code = diag.change ? diag.change.diagnostic.code : undefined;
-      results.push({ resultType: ComparisonResultType.Delta, resultText: " " + diag, compareCode: code });
+      results.push({ resultType: ComparisonResultType.Delta, resultText: " " + diag.message, compareCode: code });
     }
   }
 }

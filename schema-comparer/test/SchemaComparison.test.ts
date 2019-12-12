@@ -57,7 +57,26 @@ describe("SchemaValidater Tests", () => {
     const actualOutFile = path.resolve(outDir, "SchemaA.compare.log");
     const expectedOutText = fs.readFileSync(expectedOutFile, "utf8");
     const actualOutText = fs.readFileSync(actualOutFile, "utf8");
-    expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));;
+    expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));
+  });
+
+  it("Compare, differences found, results reported correctly", async () => {
+    const schemaAFile = path.resolve(assetsDir, "SchemaA.ecschema.xml");
+    const schemaBFile = path.resolve(referencesDir, "SchemaB.ecschema.xml");
+    const options = new CompareOptions(schemaAFile, schemaBFile, [referencesDir], outDir);
+
+    const results = await SchemaComparison.compare(options);
+
+    expect(results[0].resultText).to.equal("Schema Comparison Results");
+    expect(results[1].resultText).to.equal(" -Schema(SchemaA)");
+    expect(results[2].resultText).to.equal(" -\tSchemaKey: SchemaA.01.01.01 -> SchemaB.02.02.02");
+    expect(results[3].resultText).to.equal(" -\tAlias: a -> b");
+    expect(results[4].resultText).to.equal(" -\tLabel: SchemaA -> SchemaB");
+    expect(results[5].resultText).to.equal(" -\tSchemaReferences");
+    expect(results[6].resultText).to.equal(" -\t\tSchema(SchemaB)");
+    expect(results[7].resultText).to.equal(" +Schema(SchemaB)");
+    expect(results[8].resultText).to.equal(" +\tSchemaReferences");
+    expect(results[9].resultText).to.equal(" +\t\tSchema(SchemaD)");
   });
 
   it("Compare, bad schema A path, results contain error", async () => {
