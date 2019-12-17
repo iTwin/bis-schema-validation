@@ -134,7 +134,7 @@ describe("SchemaCompareReporter Tests", () => {
 
       expect(reporterSpy.calledWithExactly("!Schema(TestSchema)", undefined)).to.be.true;
       expect(reporterSpy.calledWithExactly("!\tSchemaReferences", undefined)).to.be.true;
-      const change = changes.schemaReferenceChanges[0];
+      const change = changes.missingSchemaReferences[0];
       expect(reporterSpy.calledWithExactly("-\t\tSchema(ReferenceSchema)", change)).to.be.true;
     });
 
@@ -149,8 +149,23 @@ describe("SchemaCompareReporter Tests", () => {
 
       expect(reporterSpy.calledWithExactly("!Schema(TestSchema)", undefined)).to.be.true;
       expect(reporterSpy.calledWithExactly("!\tSchemaReferences", undefined)).to.be.true;
-      const change = changes.schemaReferenceChanges[0];
+      const change = changes.missingSchemaReferences[0];
       expect(reporterSpy.calledWithExactly("+\t\tSchema(ReferenceSchema)", change)).to.be.true;
+    });
+
+    it("Schema reference version difference, correct message reported", async () => {
+      const refSchema = new Schema(new SchemaContext(), "ReferenceSchema", "ref", 2, 0, 0);
+      const diag = new SchemaCompareDiagnostics.SchemaReferenceDelta(schemaB, [refSchema, "01.00.00", "02.00.00"]);
+      const changes = new SchemaChanges(schemaA);
+      changes.addDiagnostic(diag);
+      const reporter = new TestSchemaCompareReporter(schemaA, schemaB);
+
+      reporter.report(changes);
+
+      expect(reporterSpy.calledWithExactly("!Schema(TestSchema)", undefined)).to.be.true;
+      expect(reporterSpy.calledWithExactly("!\tSchemaReferences", undefined)).to.be.true;
+      const change = changes.schemaReferenceDeltas[0];
+      expect(reporterSpy.calledWithExactly("!\t\tSchema(ReferenceSchema): 01.00.00 -> 02.00.00", change)).to.be.true;
     });
   });
 
