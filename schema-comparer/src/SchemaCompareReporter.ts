@@ -70,9 +70,12 @@ export abstract class SchemaCompareReporter implements ISchemaCompareReporter {
       this.reportChange(SCHEMA_DEPTH + 1, change);
     }
 
-    if (changes.schemaReferenceChanges.length > 0) {
+    if (changes.missingSchemaReferences.length > 0 || changes.schemaReferenceDeltas.length > 0) {
       this.reportHeader(SCHEMA_DEPTH + 1, "SchemaReferences");
-      for (const change of changes.schemaReferenceChanges) {
+      for (const change of changes.missingSchemaReferences) {
+        this.reportChange(SCHEMA_DEPTH + 2, change);
+      }
+      for (const change of changes.schemaReferenceDeltas) {
         this.reportChange(SCHEMA_DEPTH + 2, change);
       }
     }
