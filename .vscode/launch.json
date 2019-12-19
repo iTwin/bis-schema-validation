@@ -62,5 +62,19 @@
       "protocol": "inspector",
       "outputCapture": "std"
     },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Run imodel-schema-validator Tests",
+      "program": "${workspaceFolder}/imodel-schema-validator/node_modules/@bentley/build-tools/scripts/test-tsnode.js",
+      "cwd": "${workspaceFolder}/imodel-schema-validator",
+      "args": [
+        "--testDir=${workspaceFolder}/imodel-schema-validator/test",
+        "--debug"
+      ],
+      "port": 9229,
+      "protocol": "inspector",
+      "outputCapture": "std"
+    },
   ]
 }
