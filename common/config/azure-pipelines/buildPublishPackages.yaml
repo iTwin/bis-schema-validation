@@ -6,13 +6,12 @@ stages:
   jobs:
   - job: build_packages
     displayName: Build
-    strategy:
-      maxParallel: 2
-      matrix:
-        'Windows':
-          os: vs2017-win2016
     pool:
-      vmImage: $(os)
+      name: 
+      demands:
+      - Agent.OS -equals Windows_NT
+      - npm
+
     workspace:
       clean: all
     steps:
@@ -24,8 +23,43 @@ stages:
           versionSpec: 10.15.0
           checkLatest: true
 
-  
-  
+      - task: NuGetCommand@2
+        displayName: 'Download Nuget of Signoff Tool'
+        inputs:
+          command: custom
+          arguments: 'install  -OutputDirectory $(System.DefaultWorkingDirectory) -Source '
+
+      - powershell: |
+          $dir = Get-ChildItem $(System.DefaultWorkingDirectory) | Where-Object {$_.name -like "*"}
+   
+          Write-Host "SignoffToolPath=$(System.DefaultWorkingDirectory)\$dir\lib\native\"
+          Write-Host "##vso[task.setvariable variable=SignoffToolPath]$(System.DefaultWorkingDirectory)\$dir\lib\native\"
+        failOnStderr: true
+        displayName: 'Set Env for Signoff Tool Path'
+        env:
+          rootDir: $(System.DefaultWorkingDirectory)
+          packageName: 
+
+      #Your build pipeline references a secret variable named ‘artifactsRegistryToken’. This variable is pulled from the 'arzure-artifacts-npm-token' variable group.  You must authorize this build to use that group: https://docs.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=yaml#use-a-variable-group
+      - powershell: |
+          $npmrcDir = "$(Build.Repository.LocalPath)"
+          
+          if(!(Test-Path -Path $npmrcDir)){
+              mkdir $npmrcDir
+          }
+          
+          $npmrcFile = $npmrcDir + "/.npmrc"
+          
+          
+          
+          
+          
+          
+          
+          
+          
+
+        displayName: 'Seed npmrc'
 
       - script: node ./common/scripts/install-run-rush.js install
         displayName: Rush install
@@ -37,6 +71,11 @@ stages:
         displayName: Rush build
       - script: node ./common/scripts/install-run-rush.js cover
         displayName: Rush cover
+        env:
+          imsUserName: $(imsUserName)
+          imsPassword: $(imsPassword)
+          Mapped_domUserName: $(Mapped_domUserName)
+          Mapped_domPassword: $(Mapped_domPassword)
 
       - task: PublishCodeCoverageResults@1
         displayName: Publish bis-rules code coverage
@@ -156,8 +195,26 @@ stages:
         artifactName: packages
         targetPath: $(packsDir)
 
+    #Your build pipeline references a secret variable named ‘artifactsRegistryToken’. This variable is pulled from the 'arzure-artifacts-npm-token' variable group.  You must authorize this build to use that group: https://docs.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=yaml#use-a-variable-group
+    - powershell: |
+        $npmrcDir = "$(Build.Repository.LocalPath)"
+        
+        if(!(Test-Path -Path $npmrcDir)){
+            mkdir $npmrcDir
+        }
+        
+        $npmrcFile = $npmrcDir + "/.npmrc"
+        
+        
+        
+        
+        
+        
+        
+        
+        
 
-
+      displayName: 'Seed npmrc'
 
     - powershell: |
 
