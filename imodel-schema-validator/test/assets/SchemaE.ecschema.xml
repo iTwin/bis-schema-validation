@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ECSchema schemaName="SchemaE" alias="e" version="1.1.1" xmlns="http://www.bentley.com/schemas/Bentley.ECXML.3.2" displayLabel="SchemaE" description="This is a test Schema.">
+  <ECCustomAttributes>
+    <DynamicSchema xmlns="SchemaC.3.3.3"/>
+  </ECCustomAttributes>
+</ECSchema>

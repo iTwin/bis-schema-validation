@@ -4,6 +4,7 @@
     "no-console": false,
     "no-string-literal": false,
     "deprecation": false,
+    "no-unused-variable": false,
     "prefer-for-of": false,
     "object-literal-shorthand": false
   }

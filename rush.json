@@ -29,6 +29,12 @@
       "projectFolder": "bis-rules",
       "shouldPublish": true,
       "versionPolicyName": "bsv-versions"
+    },
+    {
+      "packageName": "@bentley/imodel-schema-validator",
+      "projectFolder": "imodel-schema-validator",
+      "shouldPublish": true,
+      "versionPolicyName": "bsv-versions"
     }
   ]
 }
