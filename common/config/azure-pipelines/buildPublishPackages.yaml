@@ -31,7 +31,7 @@ stages:
 
       - powershell: |
           $dir = Get-ChildItem $(System.DefaultWorkingDirectory) | Where-Object {$_.name -like "*"}
-   
+
           Write-Host "SignoffToolPath=$(System.DefaultWorkingDirectory)\$dir\lib\native\"
           Write-Host "##vso[task.setvariable variable=SignoffToolPath]$(System.DefaultWorkingDirectory)\$dir\lib\native\"
         failOnStderr: true
@@ -42,14 +42,14 @@ stages:
 
       #Your build pipeline references a secret variable named ‘artifactsRegistryToken’. This variable is pulled from the 'arzure-artifacts-npm-token' variable group.  You must authorize this build to use that group: https://docs.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=yaml#use-a-variable-group
       - powershell: |
-          $npmrcDir = "$(Build.Repository.LocalPath)"
-          
+          $npmrcDir = "$(System.DefaultWorkingDirectory)/common/config/rush"
+
           if(!(Test-Path -Path $npmrcDir)){
               mkdir $npmrcDir
           }
-          
+
           $npmrcFile = $npmrcDir + "/.npmrc"
-          
+
           
           
           
@@ -195,26 +195,8 @@ stages:
         artifactName: packages
         targetPath: $(packsDir)
 
-    #Your build pipeline references a secret variable named ‘artifactsRegistryToken’. This variable is pulled from the 'arzure-artifacts-npm-token' variable group.  You must authorize this build to use that group: https://docs.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=yaml#use-a-variable-group
-    - powershell: |
-        $npmrcDir = "$(Build.Repository.LocalPath)"
-        
-        if(!(Test-Path -Path $npmrcDir)){
-            mkdir $npmrcDir
-        }
-        
-        $npmrcFile = $npmrcDir + "/.npmrc"
-        
-        
-        
-        
-        
-        
-        
-        
-        
 
-      displayName: 'Seed npmrc'
+
 
     - powershell: |
 
