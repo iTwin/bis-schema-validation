@@ -31,7 +31,7 @@ stages:
 
       - powershell: |
           $dir = Get-ChildItem $(System.DefaultWorkingDirectory) | Where-Object {$_.name -like "SchemaSignoffNuGet_x64*"}
-   
+
           Write-Host "SignoffToolPath=$(System.DefaultWorkingDirectory)\$dir\lib\native\SchemaSignoffTool.exe"
           Write-Host "##vso[task.setvariable variable=SignoffToolPath]$(System.DefaultWorkingDirectory)\$dir\lib\native\SchemaSignoffTool.exe"
         failOnStderr: true
@@ -42,14 +42,14 @@ stages:
 
       #Your build pipeline references a secret variable named ‘artifactsRegistryToken’. This variable is pulled from the 'arzure-artifacts-npm-token' variable group.  You must authorize this build to use that group: https://docs.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=yaml#use-a-variable-group
       - powershell: |
-          $npmrcDir = "$(Build.Repository.LocalPath)"
-          
+          $npmrcDir = "$(System.DefaultWorkingDirectory)/common/config/rush"
+
           if(!(Test-Path -Path $npmrcDir)){
               mkdir $npmrcDir
           }
-          
+
           $npmrcFile = $npmrcDir + "/.npmrc"
-          
+
           Out-File -FilePath $npmrcFile -Encoding ascii -InputObject "@bentley:registry=https://pkgs.dev.azure.com/bentleycs/_packaging/Packages/npm/registry/"
           Out-File -FilePath $npmrcFile -Encoding ascii -InputObject "always-auth=true" -Append
           Out-File -FilePath $npmrcFile -Encoding ascii -InputObject "//pkgs.dev.azure.com/bentleycs/_packaging/Packages/npm/registry/:username=Packages" -Append
@@ -195,26 +195,8 @@ stages:
         artifactName: packages
         targetPath: $(packsDir)
 
-    #Your build pipeline references a secret variable named ‘artifactsRegistryToken’. This variable is pulled from the 'arzure-artifacts-npm-token' variable group.  You must authorize this build to use that group: https://docs.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=yaml#use-a-variable-group
-    - powershell: |
-        $npmrcDir = "$(Build.Repository.LocalPath)"
-        
-        if(!(Test-Path -Path $npmrcDir)){
-            mkdir $npmrcDir
-        }
-        
-        $npmrcFile = $npmrcDir + "/.npmrc"
-        
-        Out-File -FilePath $npmrcFile -Encoding ascii -InputObject "@bentley:registry=https://pkgs.dev.azure.com/bentleycs/_packaging/Packages/npm/registry/"
-        Out-File -FilePath $npmrcFile -Encoding ascii -InputObject "always-auth=true" -Append
-        Out-File -FilePath $npmrcFile -Encoding ascii -InputObject "//pkgs.dev.azure.com/bentleycs/_packaging/Packages/npm/registry/:username=Packages" -Append
-        Out-File -FilePath $npmrcFile -Encoding ascii -InputObject "//pkgs.dev.azure.com/bentleycs/_packaging/Packages/npm/registry/:_password=$(artifactsRegistryToken)" -Append
-        Out-File -FilePath $npmrcFile -Encoding ascii -InputObject "//pkgs.dev.azure.com/bentleycs/_packaging/Packages/npm/registry/:email=npm requires email to be set but doesn't use the value" -Append
-        Out-File -FilePath $npmrcFile -Encoding ascii -InputObject "//pkgs.dev.azure.com/bentleycs/_packaging/Packages/npm/:username=Packages" -Append
-        Out-File -FilePath $npmrcFile -Encoding ascii -InputObject "//pkgs.dev.azure.com/bentleycs/_packaging/Packages/npm/:_password=$(artifactsRegistryToken)" -Append
-        Out-File -FilePath $npmrcFile -Encoding ascii -InputObject "//pkgs.dev.azure.com/bentleycs/_packaging/Packages/npm/:email=npm requires email to be set but doesn't use the value" -Append
-
-      displayName: 'Seed npmrc'
+    - template: ./seed-npmrc.yaml
+      parameters: { artifactsRegistryToken: $(artifactsRegistryToken) }
 
     - powershell: |
         $artifactPaths = Get-ChildItem "$(packsDir)\*.tgz"
