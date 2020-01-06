@@ -5,6 +5,7 @@
 
 import * as path from "path";
 import { ECSchemaXmlContext } from "@bentley/imodeljs-backend";
+import { FileSchemaKey } from "@bentley/ecschema-locaters";
 import * as EC from "@bentley/ecschema-metadata";
 
 /**
@@ -33,7 +34,7 @@ export class NativeSchemaXmlFileLocater extends EC.SchemaFileLocater implements 
    * @param context The SchemaContext that will control the lifetime of the schema.
    */
   public getSchemaSync<T extends EC.Schema>(key: EC.SchemaKey, matchType: EC.SchemaMatchType, context: EC.SchemaContext): T | undefined {
-    const candidates: EC.FileSchemaKey[] = this.findEligibleSchemaKeys(key, matchType, "xml");
+    const candidates: FileSchemaKey[] = this.findEligibleSchemaKeys(key, matchType, "xml");
 
     if (!candidates || candidates.length === 0)
       return undefined;

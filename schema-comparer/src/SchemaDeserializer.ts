@@ -6,6 +6,7 @@
 import * as path from "path";
 import * as fs from "fs";
 import * as EC from "@bentley/ecschema-metadata";
+import { SchemaJsonFileLocater, SchemaXmlFileLocater } from "@bentley/ecschema-locaters";
 import { IModelHost } from "@bentley/imodeljs-backend";
 import { Config } from "@bentley/imodeljs-clients";
 import { NativeSchemaXmlFileLocater } from "./NativeSchemaXmlFileLocater";
@@ -68,7 +69,7 @@ export class SchemaDeserializer {
       referencePaths = [];
     referencePaths.push(path.dirname(schemaFilePath));
 
-    const locater = new EC.SchemaJsonFileLocater();
+    const locater = new SchemaJsonFileLocater();
     locater.addSchemaSearchPaths(referencePaths);
     context.addLocater(locater);
 
@@ -90,7 +91,7 @@ export class SchemaDeserializer {
   }
 
   private configureFileLocater(schemaContext: EC.SchemaContext, referencePaths: string[]) {
-    const xmlSchemaLocater = new EC.SchemaXmlFileLocater();
+    const xmlSchemaLocater = new SchemaXmlFileLocater();
     schemaContext.addLocater(xmlSchemaLocater);
     xmlSchemaLocater.addSchemaSearchPaths(referencePaths);
   }
