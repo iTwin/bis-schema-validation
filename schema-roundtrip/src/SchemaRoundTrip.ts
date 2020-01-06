@@ -6,8 +6,9 @@
 import * as fs from "fs-extra";
 import * as path from "path";
 import { DOMParser, XMLSerializer } from "xmldom";
+import { SchemaXmlFileLocater } from "@bentley/ecschema-locaters";
 import { SchemaComparison, ComparisonResultType, IComparisonResult } from "@bentley/schema-comparer";
-import { Schema, SchemaContext, SchemaXmlFileLocater, SchemaMatchType, SchemaKey, ECVersion } from "@bentley/ecschema-metadata";
+import { Schema, SchemaContext, SchemaMatchType, SchemaKey, ECVersion } from "@bentley/ecschema-metadata";
 
 /**
  * Defines the possible message types associated with
