@@ -27,6 +27,7 @@ program.option("-e, --environment <required>", "DEV, QA and PROD are available e
 program.option("-b, --baseSchemaRefDir <required>", "Root directory of all released schemas (root of BisSchemas repo).");
 program.option("-o, --output <required>", "The path where output files will be generated.");
 program.option("-n, --signOffExecutable  <required>", "The path where  is placed.");
+program.option("-c, --checkReleaseDynamicSchema", "Check all dynamic schemas within iModel. Default is false.");
 program.option("--getLaunchCodes");
 program.option("-d, --domUserName <required>", "Domain username");
 program.option("-s, --domPassword <required>", "Domain password");
@@ -41,7 +42,6 @@ enum iModelValidationResultTypes {
   Failed,
   Skipped,
   Error,
-  NotFound,
 }
 
 /**
@@ -74,6 +74,7 @@ function validateInput() {
     console.log("   -b, --baseSchemaRefDir             :Root directory of all released schemas (root of BisSchemas repo).");
     console.log("   -o, --output                       :The path where output files will be generated.");
     console.log("   -n, --signOffExecutable            :The path where  is placed.");
+    console.log("   -c, --checkReleaseDynamicSchema    :Check all dynamic schemas within iModel. Default is false.");
     throw new Error("Some thing missing from required arguments and their values.");
   }
 
@@ -122,6 +123,7 @@ async function verifyIModelSchemas() {
   const tmpDir: any = process.env.TMP;
   const validationDir: string = path.join(tmpDir, "SchemaValidation");
   const briefcaseDir: string = path.join(validationDir, "Briefcases", program.iModelName);
+  let checkReleaseDynamicSchema = false;
 
   if (fs.existsSync(briefcaseDir)) {
     console.log("Old briefcase directory removed.");
@@ -134,6 +136,10 @@ async function verifyIModelSchemas() {
 
   if (program.imsAuth) {
     console.log("Authentication Type is IMS.");
+  }
+
+  if (program.checkReleaseDynamicSchema) {
+    checkReleaseDynamicSchema = true;
   }
 
   const iModelSchemaDir = await IModelProvider.exportSchemasFromIModel(program.imsAuth, program.projectId, program.iModelName, briefcaseDir, program.userName, program.password, program.environment);
@@ -156,7 +162,7 @@ async function verifyIModelSchemas() {
     if (index !== -1) { releasedSchemaDirectories.splice(index, 1); }
 
     // find out if a schema is dynamic or not
-    if (isDynamicSchema(iModelSchemaPath)) {
+    if (isDynamicSchema(iModelSchemaPath) && (!checkReleaseDynamicSchema)) {
       console.log(chalk.default.grey("Skipping difference audit for ", name, version, ". The schema is a dynamic schema and released versions of dynamic schemas are not saved."));
       validationResult.comparer = iModelValidationResultTypes.Skipped;
       validationResult.sha1Comparison = iModelValidationResultTypes.Skipped;
@@ -174,7 +180,7 @@ async function verifyIModelSchemas() {
 
       if (!releasedSchemaPath) {
         console.log(chalk.default.grey("Skipping difference audit for ", name, version, ". No released schema found."));
-        validationResult.comparer = iModelValidationResultTypes.NotFound; // fail if no released schema found
+        validationResult.comparer = iModelValidationResultTypes.Skipped; // fail if no released schema found
       } else {
         validationResult.releasedSchemaSha1 = getSha1Hash(program.signOffExecutable, releasedSchemaPath, releasedSchemaDirectories.join(";"));
         const comparisonResult = await compareSchema(iModelSchemaPath, releasedSchemaPath, releasedSchemaDirectories, program.output, validationResult);
@@ -209,22 +215,39 @@ export function isDynamicSchema(schemaPath: string): boolean {
 }
 
 /**
+ * Check if violation is of type error
+ */
+export function ruleViolationError(line: string) {
+  if (/Error\sBIS-\d+:/g.test(line)) {
+    return true;
+  }
+  return false;
+}
+
+/**
  * Performs Schema Validation
  */
 async function validateSchema(imodelSchemaPath: string, referencePaths: string[], validationResult: IModelValidationResult) {
   try {
     const validationOptions: ValidationOptions = new ValidationOptions(imodelSchemaPath, referencePaths, false, program.output);
     const validatorResult = await SchemaValidator.validate(validationOptions);
-    // IModelHost.shutdown(); // temporary solution for the issue coming from the validator
     for (const line of validatorResult) {
       switch (line.resultType) {
         case ValidationResultType.RuleViolation:
           console.log(chalk.default.yellow(line.resultText));
-          validationResult.validator = iModelValidationResultTypes.Failed;
+          // Allow warnings to be skipped
+          if (ruleViolationError(line.resultText)) {
+            validationResult.validator = iModelValidationResultTypes.Failed;
+          }
           break;
         case ValidationResultType.Error:
           console.log(chalk.default.red(line.resultText));
-          validationResult.validator = iModelValidationResultTypes.Error;
+          // skip the validation for the schemas which are not supported
+          if (line.resultText.toLowerCase().includes("standard schemas are not supported by this tool")) {
+            validationResult.validator = iModelValidationResultTypes.Skipped;
+          } else {
+            validationResult.validator = iModelValidationResultTypes.Error;
+          }
           break;
         default:
           console.log(chalk.default.green(line.resultText));
@@ -299,6 +322,7 @@ function displayResults(results: IModelValidationResult[]) {
 
   let validFailed = 0;
   let validError = 0;
+  let validSkipped = 0;
   let diffChanged = 0;
   let diffErrors = 0;
   let diffSkipped = 0;
@@ -328,6 +352,11 @@ function displayResults(results: IModelValidationResult[]) {
         console.log("   > Schema validation against BIS rules           ", chalk.default.red("<failed>"));
         console.log("       An error occurred during the BIS validation audit. See log for errors. (search for \"BEGIN VALIDATION AND DIFFERENCE AUDIT: %s.%s\")", item.name, item.version);
         validError++;
+        break;
+      case iModelValidationResultTypes.Skipped:
+        console.log("   > Schema validation against BIS rules           ", chalk.default.yellow("<skipped>"));
+        console.log("       Standard schemas are not supported by this tool. (search for \"BEGIN VALIDATION AND DIFFERENCE AUDIT: %s.%s\")", item.name, item.version);
+        validSkipped++;
         break;
       default:
         console.log("   > Schema validation against BIS rules           ", chalk.default.red("<failed>"));
@@ -407,14 +436,15 @@ function displayResults(results: IModelValidationResult[]) {
 
   console.log("\n\n------------------ SUMMARY -----------------");
   console.log("BIS Rule Violations:               ", validFailed);
-  console.log("Validation Errors:                 ", validError);
+  console.log("BIS Rule Validation Skipped:       ", validSkipped);
+  console.log("BIS Rule Validation Errors:        ", validError);
   console.log("Differences Found:                 ", diffChanged);
   console.log("Differences Skipped:               ", diffSkipped);
   console.log("Differences Errors:                ", diffErrors);
   console.log("Checksums Failed:                  ", checksumFailed);
   console.log("Checksums Skipped:                 ", checksumSkipped);
   console.log("Approval and Verification Failed:  ", approvalFailed);
-  console.log("Approval and Verification Skipped:  ", approvalSkipped);
+  console.log("Approval and Verification Skipped: ", approvalSkipped);
   console.log("--------------------------------------------");
 
   if (diffChanged === 0 && diffErrors === 0 && validFailed === 0 && checksumFailed === 0 && approvalFailed === 0) {

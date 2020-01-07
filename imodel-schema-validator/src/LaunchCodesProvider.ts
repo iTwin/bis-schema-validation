@@ -141,7 +141,7 @@ export class LaunchCodesProvider {
    */
   public checkApprovalAndVerification(schemaName: string, index: number | undefined, launchCodes: any): boolean {
     if (index !== undefined && launchCodes.checksumInfo[index]["SchemaName"].toLowerCase() === schemaName.toLowerCase()) {
-      if (launchCodes.checksumInfo[index]["ok"].toLowerCase() === "yes" && launchCodes.checksumInfo[index]["ok1"].toLowerCase() === "yes") {
+      if (launchCodes.checksumInfo[index]["ok"].toLowerCase() === "yes") {
         return true;
       }
     }
