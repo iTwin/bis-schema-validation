@@ -3,7 +3,7 @@
 * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
 * Licensed under the MIT License. See LICENSE.md in the project root for license terms.
 *--------------------------------------------------------------------------------------------*/
-import { isDynamicSchema, referenceOnlyDifference } from "../src/iModelSchemaValidator";
+import { isDynamicSchema, referenceOnlyDifference, ruleViolationError } from "../src/iModelSchemaValidator";
 import { SchemaComparison, CompareOptions} from "@bentley/schema-comparer";
 import { expect } from "chai";
 import * as path from "path";
@@ -58,4 +58,15 @@ describe ("iModelSchemaValidator Tests", async () => {
     }
     expect(referenceOnly).to.equal(true);
   });
+
+  it ("Rule Violation, Violation is of type error", async () => {
+    const violation = ruleViolationError("Error BIS-001: Test rule.");
+    expect(violation).to.equal(true);
+  });
+
+  it ("Rule Violation, Violation is not of type error", async () => {
+    const violation = ruleViolationError("Warning BIS-001: Test rule");
+    expect(violation).to.equals(false);
+  });
+
 });
