@@ -3,9 +3,8 @@
 * Licensed under the MIT License. See LICENSE.md in the project root for license terms.
 *--------------------------------------------------------------------------------------------*/
 
-import { IModelDb, IModelHost, IModelHostConfiguration, OpenParams, BackendRequestContext, AuthorizedBackendRequestContext } from "@bentley/imodeljs-backend";
-import { assert, ClientRequestContext } from "@bentley/bentleyjs-core";
-import { IModelHubClient, ImsActiveSecureTokenClient, AuthorizationToken, AccessToken, ImsUserCredentials, ImsDelegationSecureTokenClient, Config } from "@bentley/imodeljs-clients";
+import { IModelDb, IModelHost, IModelHostConfiguration, OpenParams, AuthorizedBackendRequestContext } from "@bentley/imodeljs-backend";
+import { IModelHubClient, AccessToken, Config } from "@bentley/imodeljs-clients";
 import { OidcConfiguration, getToken } from "@bentley/oidc-signin-tool";
 import { IModelVersion } from "@bentley/imodeljs-common";
 import * as rimraf from "rimraf";
@@ -37,34 +36,6 @@ export class IModelProvider {
     }
     Config.App.set("imjs_default_relying_party_uri", "''");
     IModelHost.startup(iModelHostConfiguration);
-  }
-
-  /**
-   * Authorize a user to connect with iModelHub.
-   * @param requestContext: It is the ImsUserCredentials.
-   * @param userCredentials: It is the ClientRequestContext.
-   */
-  private static async authorizeUser(requestContext: ClientRequestContext, userCredentials: ImsUserCredentials): Promise<AccessToken> {
-    const authToken: AuthorizationToken = await (new ImsActiveSecureTokenClient()).getToken(requestContext, userCredentials);
-    assert(!!authToken);
-    const accessToken: AccessToken = await (new ImsDelegationSecureTokenClient()).getToken(requestContext, authToken!);
-    assert(!!accessToken);
-
-    return accessToken;
-  }
-
-  /**
-   * Connects to iModelHub using IMS credentials.
-   * @param userName: It's IMS username.
-   * @param password: It's IMS user password.
-   */
-  public static async imsConnect(username: string, pword: string = "") {
-    const user: ImsUserCredentials = {
-      email: username,
-      password: pword,
-    };
-    const accessToken = await this.authorizeUser(new BackendRequestContext(), user);
-    return new AuthorizedBackendRequestContext(accessToken);
   }
 
   /**
@@ -124,16 +95,11 @@ export class IModelProvider {
    * Gets an iModel from Hub and exports it's schemas to the input schemaDir
    * @param projectId: The Id of a project on iModelHub.
    * @param iModelName:  The name of an iModel within the project.
-   * @param userName: The IMS user name.
-   * @param password: The IMS user's password.
+   * @param userName: Username for OIDC Auth.
+   * @param password: Password for OIDC Auth.
    */
-  public static async exportIModelSchemas(imsAuth: boolean, projectId: string, iModelName: string, schemaDir: string, userName: string, password: string) {
-    let requestContext;
-    if (!imsAuth) {
-      requestContext = await this.oidcConnect(userName, password, this._regionCode);
-    } else {
-      requestContext = await this.imsConnect(userName, password);
-    }
+  public static async exportIModelSchemas(projectId: string, iModelName: string, schemaDir: string, userName: string, password: string) {
+    const requestContext = await this.oidcConnect(userName, password, this._regionCode);
     const iModelId = await this.getIModelId(requestContext, projectId, iModelName); // iModel Id based upon iModel name and Project Id
     if (!iModelId) {
       throw new Error("iModel either not exist or not found!");
@@ -160,13 +126,13 @@ export class IModelProvider {
    * @param projectId: The Id of a project on iModelHub.
    * @param iModelName: The name of an iModel within the project.
    * @param workingDir: The working directory used.
-   * @param userName: The IMS user name.
-   * @param password: The IMS user's password.
+   * @param userName: Username for OIDC Auth.
+   * @param password: Password for OIDC Auth.
    */
-  public static async exportSchemasFromIModel(imsAuth: boolean, projectId: string, iModelName: string, workingDir: string, userName: string, password: string, env: string): Promise<string> {
+  public static async exportSchemasFromIModel(projectId: string, iModelName: string, workingDir: string, userName: string, password: string, env: string): Promise<string> {
     IModelProvider.setupHost(env.toUpperCase(), workingDir);
     const iModelSchemaDir: string = path.join(workingDir, "exported");
-    await IModelProvider.exportIModelSchemas(imsAuth, projectId, iModelName, iModelSchemaDir, userName, password);
+    await IModelProvider.exportIModelSchemas(projectId, iModelName, iModelSchemaDir, userName, password);
     IModelHost.shutdown();
 
     return iModelSchemaDir;

@@ -18,9 +18,8 @@ import * as readdirp from "readdirp";
 
 const program = new commander.Command("iModel-Schema-Validator NPM CLI");
 program.option("--verifyIModelSchemas");
-program.option("-a, --imsAuth", "To use IMS as authentication type to connect to iModelHub. Default is OIDC.");
-program.option("-u, --userName <required>", "Username for connecting with HUB. Provide IMS username if --imsAuth.");
-program.option("-p, --password <required>", "Password for connecting with HUB. Provide IMS password if --imsAuth.");
+program.option("-u, --userName <required>", "Username for connecting with HUB using OIDC Auth.");
+program.option("-p, --password <required>", "Password for connecting with HUB using OIDC Auth.");
 program.option("-r, --projectId <required>", "Id of project on HUB.");
 program.option("-i, --iModelName <required>", "Name of iModel (case sensitive) within project on HUB.");
 program.option("-e, --environment <required>", "DEV, QA and PROD are available environments.");
@@ -42,6 +41,7 @@ enum iModelValidationResultTypes {
   Failed,
   Skipped,
   Error,
+  NotFound,
 }
 
 /**
@@ -65,7 +65,6 @@ export interface IModelValidationResult {
 function validateInput() {
   if (process.argv.length < 18) {
     console.log("usage : index.js --verifyIModelSchemas");
-    console.log("   -a, --imsAuth                      :To use IMS as authentication type to connect to iModelHub. Default is OIDC.");
     console.log("   -u, --userName                     :Username for connecting with HUB");
     console.log("   -p, --password                     :Password for connecting with HUB.");
     console.log("   -r, --projectId                    :Id of project on HUB.");
@@ -134,15 +133,11 @@ async function verifyIModelSchemas() {
   fs.mkdirSync(briefcaseDir, { recursive: true });
   console.log("Briefcase Directory: " + briefcaseDir);
 
-  if (program.imsAuth) {
-    console.log("Authentication Type is IMS.");
-  }
-
   if (program.checkReleaseDynamicSchema) {
     checkReleaseDynamicSchema = true;
   }
 
-  const iModelSchemaDir = await IModelProvider.exportSchemasFromIModel(program.imsAuth, program.projectId, program.iModelName, briefcaseDir, program.userName, program.password, program.environment);
+  const iModelSchemaDir = await IModelProvider.exportSchemasFromIModel(program.projectId, program.iModelName, briefcaseDir, program.userName, program.password, program.environment);
   const releasedSchemaDirectories = await generateSchemaDirectoryLists(program.baseSchemaRefDir);
 
   const results: IModelValidationResult[] = [];
@@ -179,8 +174,14 @@ async function verifyIModelSchemas() {
       }
 
       if (!releasedSchemaPath) {
-        console.log(chalk.default.grey("Skipping difference audit for ", name, version, ". No released schema found."));
-        validationResult.comparer = iModelValidationResultTypes.Skipped; // fail if no released schema found
+        if (isDynamicSchema(iModelSchemaPath)) {
+          console.log(chalk.default.grey("Skipping difference audit for ", name, version, ". No released schema found."));
+          validationResult.comparer = iModelValidationResultTypes.Skipped; // skip if no released schema found in case of dynamic schemas
+        } else {
+          console.log(chalk.default.grey("Skipping difference audit for ", name, version, ". No released schema found."));
+          validationResult.comparer = iModelValidationResultTypes.NotFound; // fail if no released schema found
+        }
+
       } else {
         validationResult.releasedSchemaSha1 = getSha1Hash(program.signOffExecutable, releasedSchemaPath, releasedSchemaDirectories.join(";"));
         const comparisonResult = await compareSchema(iModelSchemaPath, releasedSchemaPath, releasedSchemaDirectories, program.output, validationResult);
