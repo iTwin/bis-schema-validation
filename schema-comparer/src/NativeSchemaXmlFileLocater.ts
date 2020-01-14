@@ -5,7 +5,7 @@
 
 import * as path from "path";
 import { ECSchemaXmlContext } from "@bentley/imodeljs-backend";
-import { FileSchemaKey } from "@bentley/ecschema-locaters";
+import { FileSchemaKey, SchemaFileLocater } from "@bentley/ecschema-locaters";
 import * as EC from "@bentley/ecschema-metadata";
 
 /**
@@ -13,7 +13,7 @@ import * as EC from "@bentley/ecschema-metadata";
  * from the file system using configurable search paths.
  * @internal This is a workaround the current lack of a full xml parser.
  */
-export class NativeSchemaXmlFileLocater extends EC.SchemaFileLocater implements EC.ISchemaLocater {
+export class NativeSchemaXmlFileLocater extends SchemaFileLocater implements EC.ISchemaLocater {
 
   /**
    * Attempts to retrieve a Schema with the given SchemaKey by using the configured search paths
@@ -50,7 +50,7 @@ export class NativeSchemaXmlFileLocater extends EC.SchemaFileLocater implements 
     if (!schemaText)
       return undefined;
 
-    if (!this.isEC31Schema(schemaText))
+    if (!this.isEC31Schema(schemaText) && !this.isECv2Schema(schemaText))
       return undefined;
 
     this.addSchemaSearchPaths([path.dirname(schemaPath)]);
@@ -61,8 +61,8 @@ export class NativeSchemaXmlFileLocater extends EC.SchemaFileLocater implements 
     }
 
     try {
-    const schemaJson = nativeContext!.readSchemaFromXmlFile(schemaPath);
-    return EC.Schema.fromJsonSync(schemaJson, context) as T;
+      const schemaJson = nativeContext!.readSchemaFromXmlFile(schemaPath);
+      return EC.Schema.fromJsonSync(schemaJson, context) as T;
     } catch (err) {
       if (err.message === "ReferencedSchemaNotFound")
         throw new EC.ECObjectsError(EC.ECObjectsStatus.UnableToLocateSchema, `Unable to load schema '${key.name}'. A referenced schema could not be found.`);
@@ -80,11 +80,38 @@ export class NativeSchemaXmlFileLocater extends EC.SchemaFileLocater implements 
       throw new EC.ECObjectsError(EC.ECObjectsStatus.InvalidSchemaXML, `Could not find the ECSchema 'schemaName' or 'version' tag in the given file.`);
     }
 
-    const key = new EC.SchemaKey(match.groups.name, EC.ECVersion.fromString(match.groups.version));
+    let ecVersion: EC.ECVersion;
+    if (this.isECv2Schema(schemaXml))
+      ecVersion = NativeSchemaXmlFileLocater.fromECv2String(match.groups.version);
+    else
+      ecVersion = EC.ECVersion.fromString(match.groups.version);
+
+    const key = new EC.SchemaKey(match.groups.name, ecVersion);
     return key;
+  }
+
+  /**
+   * Parses a valid EC 2.0 version string and returns an ECVersion object. The second digit becomes the minor version,
+   * and a zero is inserted as the 'write' digit. Example: "1.1" -> "1.0.1".
+   * @param versionString A valid EC 2.0 version string of the format, 'RR.mm'.
+   */
+  public static fromECv2String(versionString: string): EC.ECVersion {
+    const [read, minor] = versionString.split(".");
+
+    if (!read)
+      throw new EC.ECObjectsError(EC.ECObjectsStatus.InvalidECVersion, `The read version is missing from version string, ${versionString}`);
+
+    if (!minor)
+      throw new EC.ECObjectsError(EC.ECObjectsStatus.InvalidECVersion, `The minor version is missing from version string, ${versionString}`);
+
+    return new EC.ECVersion(+read, 0, +minor);
   }
 
   private isEC31Schema(schemaText: string): boolean {
     return /<ECSchema[^>]*xmlns=".*ECXML.3.1"/.test(schemaText);
+  }
+
+  private isECv2Schema(schemaText: string): boolean {
+    return /<ECSchema[^>]*xmlns=".*ECXML.2.0"/.test(schemaText);
   }
 }

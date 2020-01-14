@@ -5,7 +5,6 @@
 
 import { expect, use } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
-
 import * as path from "path";
 import * as utils from "./utilities/utils";
 import * as EC from "@bentley/ecschema-metadata";
@@ -14,7 +13,7 @@ import { IModelHost } from "@bentley/imodeljs-backend";
 
 use(chaiAsPromised);
 
-describe("SchemaXmlFileDeserializer", () => {
+describe("SchemaDeserializer", () => {
   const assetDeserializationDir = path.join(utils.getAssetsDir(), "xml-deserialization");
   const refDir = path.join(assetDeserializationDir, "references");
 
@@ -51,6 +50,18 @@ describe("SchemaXmlFileDeserializer", () => {
     const schemaD = await context.getSchema(new EC.SchemaKey("SchemaD", 4, 0, 4), EC.SchemaMatchType.Exact);
     expect(schemaD).not.to.be.undefined;
     expect(result === schemaD).to.be.true;
+  });
+
+  it("EC v2.0 schema, should successfully deserialize schema.", async () => {
+    const deserializer = new SchemaDeserializer();
+    const schemaPath = path.join(assetDeserializationDir, "ECv2Schema.ecschema.xml");
+
+    const context = new EC.SchemaContext();
+    const result = await deserializer.deserializeXmlFile(schemaPath, context);
+
+    const schema = await context.getSchema(new EC.SchemaKey("ECv2Schema", 1, 0, 1), EC.SchemaMatchType.Exact);
+    expect(schema).not.to.be.undefined;
+    expect(result === schema).to.be.true;
   });
 
   it("Non-existent reference schema, throws.", async () => {
