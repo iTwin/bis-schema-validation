@@ -117,7 +117,17 @@ export class SchemaDeserializer {
       throw new EC.ECObjectsError(EC.ECObjectsStatus.InvalidSchemaXML, `Could not find the ECSchema 'schemaName' or 'version' tag in the given file.`);
     }
 
-    const key = new EC.SchemaKey(match.groups.name, EC.ECVersion.fromString(match.groups.version));
+    let ecVersion: EC.ECVersion;
+    if (this.isECv2Schema(schemaXml))
+      ecVersion = NativeSchemaXmlFileLocater.fromECv2String(match.groups.version);
+    else
+      ecVersion = EC.ECVersion.fromString(match.groups.version);
+
+    const key = new EC.SchemaKey(match.groups.name, ecVersion);
     return key;
+  }
+
+  private isECv2Schema(schemaText: string): boolean {
+    return /<ECSchema[^>]*xmlns=".*ECXML.2.0"/.test(schemaText);
   }
 }

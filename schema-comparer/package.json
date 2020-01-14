@@ -20,7 +20,7 @@
     "test": "betools test-tsnode --testDir=./test/",
     "test:watch": "betools test-tsnode --testDir=./test/ --watch",
     "cover": "nyc node ./node_modules/@bentley/build-tools/scripts/test-tsnode.js --testDir=./test/ --tscPaths",
-    "cli-dev": "cd .. & rush publish --publish --pack --include-all & npm install -g ./common/temp/artifacts/packages/bentley-schema-comparer-0.2.2.tgz"
+    "cli-dev": "cd .. & rush publish --publish --pack --include-all & npm install -g ./common/temp/artifacts/packages/bentley-schema-comparer-0.2.8.tgz"
   },
   "keywords": [
     "Bentley",
@@ -55,15 +55,15 @@
     "typescript": "^3.3.1"
   },
   "dependencies": {
-    "@bentley/bentleyjs-core": "1.10.0-dev.22",
-    "@bentley/ecschema-metadata": "1.10.0-dev.22",
-    "@bentley/ecschema-locaters": "1.10.0-dev.22",
-    "@bentley/geometry-core": "1.10.0-dev.22",
-    "@bentley/imodeljs-backend": "1.10.0-dev.22",
-    "@bentley/imodeljs-clients": "1.10.0-dev.22",
-    "@bentley/imodeljs-clients-backend": "1.10.0-dev.22",
-    "@bentley/imodeljs-common": "1.10.0-dev.22",
-    "@bentley/imodeljs-i18n": "1.10.0-dev.22",
+    "@bentley/bentleyjs-core": "1.11.0-dev.6",
+    "@bentley/ecschema-metadata": "1.11.0-dev.6",
+    "@bentley/ecschema-locaters": "1.11.0-dev.6",
+    "@bentley/geometry-core": "1.11.0-dev.6",
+    "@bentley/imodeljs-backend": "1.11.0-dev.6",
+    "@bentley/imodeljs-clients": "1.11.0-dev.6",
+    "@bentley/imodeljs-clients-backend": "1.11.0-dev.6",
+    "@bentley/imodeljs-common": "1.11.0-dev.6",
+    "@bentley/imodeljs-i18n": "1.11.0-dev.6",
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
     "fs-extra": "^7.0.1"
