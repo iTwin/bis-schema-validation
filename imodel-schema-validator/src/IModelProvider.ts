@@ -45,8 +45,10 @@ export class IModelProvider {
    * @param regionCode: The code according to the environment
    */
   private static async getTokenFromSigninTool(username: string, password: string, regionCode: number): Promise<AccessToken> {
+    let postfix = "";
+    if (regionCode === 0) { postfix = "-prod"; }
     const config: OidcConfiguration = {
-      clientId: "imodel-schema-validator-spa",
+      clientId: "imodel-schema-validator-spa" + postfix,
       redirectUri: "http://localhost:3000/signin-callback",
     };
 

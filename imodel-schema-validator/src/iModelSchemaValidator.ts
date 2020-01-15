@@ -384,9 +384,14 @@ function displayResults(results: IModelValidationResult[]) {
         console.log("       Skipped difference audit. See log for errors. (search for \"BEGIN VALIDATION AND DIFFERENCE AUDIT: %s.%s\")", item.name, item.version);
         diffSkipped++;
         break;
-      default:
+      case iModelValidationResultTypes.NotFound:
         console.log("   > Schema content verification                   ", chalk.default.red("<failed>"));
         console.log("       Failed to perform the difference audit. There is no released schema for: %s.%s\")", item.name, item.version);
+        diffErrors++;
+        break;
+      default:
+        console.log("   > Schema content verification                   ", chalk.default.red("<failed>"));
+        console.log("       Failed to perform the difference audit for: %s.%s\")", item.name, item.version);
         diffErrors++;
     }
 
