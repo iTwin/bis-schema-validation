@@ -11,6 +11,8 @@ stages:
       demands:
       - Agent.OS -equals Windows_NT
       - npm
+    variables:
+    - group: azure-artifacts-npm-token
 
     workspace:
       clean: all
@@ -27,7 +29,7 @@ stages:
         displayName: 'Download Nuget of Signoff Tool'
         inputs:
           command: custom
-          arguments: 'install SchemaSignoffNuGet_x64 -OutputDirectory $(System.DefaultWorkingDirectory) -Source https://www.nuget.org/'
+          arguments: 'install SchemaSignoffNuGet_x64 -OutputDirectory $(System.DefaultWorkingDirectory) -Source https://www.nuget.org/n'
 
       - powershell: |
           $dir = Get-ChildItem $(System.DefaultWorkingDirectory) | Where-Object {$_.name -like "SchemaSignoffNuGet_x64*"}
