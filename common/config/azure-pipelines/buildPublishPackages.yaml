@@ -93,11 +93,8 @@ stages:
           summaryFileLocation: '$(Build.SourcesDirectory)/schema-validator/lib/test/coverage/cobertura-coverage.xml'
           reportDirectory: '$(Build.Repository.LocalPath)/schema-validator/lib/test/coverage/lcov-report'
 
-      - task: CmdLine@1
+      - script: rush publish --publish --pack --include-all
         displayName: 'rush publish pack'
-        inputs:
-          filename: node
-          arguments: './common/scripts/install-run-rush.js publish --publish --pack --include-all'
         condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual', 'BuildCompletion'))
       - task: PythonScript@0
         displayName: 'Gather packages for release'
