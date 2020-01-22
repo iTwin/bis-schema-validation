@@ -183,7 +183,10 @@ stages:
     pool:
       vmImage: $(os)
     variables:
-      packsDir: $(System.ArtifactsDirectory)/packages/
+    - group: azure-artifacts-npm-token
+    - name: packsDir
+      value: $(System.ArtifactsDirectory)/packages/
+
     steps:
     - checkout: none
       clean: true
