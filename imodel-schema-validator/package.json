@@ -52,9 +52,6 @@
     "nyc": "^13.0.1",
     "ts-node": "^7.0.1"
   },
-  "publishConfig": {
-    "registry": "https://www.npmjs.com/"
-  },
   "nyc": {
     "nycrc-path": "./node_modules/@bentley/build-tools/.nycrc",
     "lines": 80,

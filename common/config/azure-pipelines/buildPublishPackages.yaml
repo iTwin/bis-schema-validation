@@ -11,6 +11,8 @@ stages:
       demands:
       - Agent.OS -equals Windows_NT
       - npm
+    variables:
+  
 
     workspace:
       clean: all
@@ -27,7 +29,7 @@ stages:
         displayName: 'Download Nuget of Signoff Tool'
         inputs:
           command: custom
-          arguments: 'install  -OutputDirectory $(System.DefaultWorkingDirectory) -Source '
+          arguments: 'install  -OutputDirectory $(System.DefaultWorkingDirectory) -Source n'
 
       - powershell: |
           $dir = Get-ChildItem $(System.DefaultWorkingDirectory) | Where-Object {$_.name -like "*"}
