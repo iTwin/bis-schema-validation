@@ -63,15 +63,15 @@ stages:
 
         displayName: 'Seed npmrc'
 
-      - script: node ./common/scripts/install-run-rush.js install
+      - script: rush install
         displayName: Rush install
-      - script: node ./common/scripts/install-run-rush.js clean
+      - script: rush clean
         displayName: Rush clean
-      - script: node ./common/scripts/install-run-rush.js lint
+      - script: rush lint
         displayName: Rush lint
-      - script: node ./common/scripts/install-run-rush.js build
+      - script: rush build
         displayName: Rush build
-      - script: node ./common/scripts/install-run-rush.js cover
+      - script: rush cover
         displayName: Rush cover
         env:
           imsUserName: $(imsUserName)
