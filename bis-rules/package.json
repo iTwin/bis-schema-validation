@@ -51,9 +51,6 @@
     "@bentley/ecschema-metadata": "1.11.0-dev.6",
     "@bentley/imodeljs-backend": "1.11.0-dev.6"
   },
-  "publishConfig": {
-    "registry": "https://www.npmjs.com/"
-  },
   "nyc": {
     "include": [
       "src/**/*.ts"

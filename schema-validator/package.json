@@ -70,9 +70,6 @@
     "commander": "^2.19.0",
     "fs-extra": "^7.0.1"
   },
-  "publishConfig": {
-    "registry": "https://www.npmjs.com/"
-  },
   "nyc": {
     "include": [
       "src/**/*.ts"
