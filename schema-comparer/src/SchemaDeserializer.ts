@@ -6,15 +6,25 @@
 import * as path from "path";
 import * as fs from "fs";
 import * as EC from "@bentley/ecschema-metadata";
-import { SchemaJsonFileLocater, SchemaXmlFileLocater } from "@bentley/ecschema-locaters";
+import { SchemaJsonFileLocater } from "@bentley/ecschema-locaters";
 import { IModelHost } from "@bentley/imodeljs-backend";
 import { Config } from "@bentley/imodeljs-clients";
-import { NativeSchemaXmlFileLocater } from "./NativeSchemaXmlFileLocater";
+import { SchemaXmlFileLocater } from "./SchemaXmlFileLocater";
 
 /**
  * Deserializes ECXml and ECJson schema files.
  */
 export class SchemaDeserializer {
+  private _referenceMatchType: EC.SchemaMatchType;
+
+  /**
+   * Initializes a new SchemaDeserializer
+   * @param referenceMatchType Optional SchemaMatchType to use when locating referenced schemas. Default is LatestWriteCompatible.
+   */
+  constructor(referenceMatchType: EC.SchemaMatchType = EC.SchemaMatchType.LatestWriteCompatible) {
+    this._referenceMatchType = referenceMatchType;
+  }
+
   /**
    * Deserializes the specified ECXml schema file in the given schema context.
    * @param schemaFilePath The path to a valid ECXml schema file.
@@ -32,13 +42,10 @@ export class SchemaDeserializer {
       referencePaths = [];
     referencePaths.push(path.dirname(schemaFilePath));
 
-    // The following two lines can be removed (and shutdown below) when/if the NativeSchemaXmlFIleLocater is removed
+    // The following two lines can be removed (and shutdown below) when/if the SchemaXmlFileLocater (native deserialization) is removed
     (Config as any)._appConfig = new (Config as any)(); // Needed to avoid crash in backend when calling IModelHost.startup.
     IModelHost.startup();
 
-    // Native file locater is registered first. If not a EC 3.1 schema, it will return
-    // undefined and allow the normal EC.SchemaXmlFileLocater to get the schema.
-    this.configureNativeFileLocater(schemaContext, referencePaths);
     this.configureFileLocater(schemaContext, referencePaths);
 
     try {
@@ -48,7 +55,7 @@ export class SchemaDeserializer {
 
       return schema;
     } finally {
-      // This can be removed when/if the NativeSchemaXmlFIleLocater is removed
+      // This can be removed when/if the SchemaXmlFIleLocater (native deserialization) is removed
       IModelHost.shutdown();
     }
   }
@@ -84,14 +91,8 @@ export class SchemaDeserializer {
     return EC.Schema.fromJson(schemaJson, context);
   }
 
-  private configureNativeFileLocater(schemaContext: EC.SchemaContext, referencePaths: string[]) {
-    const xmlSchemaLocater = new NativeSchemaXmlFileLocater();
-    schemaContext.addLocater(xmlSchemaLocater);
-    xmlSchemaLocater.addSchemaSearchPaths(referencePaths);
-  }
-
   private configureFileLocater(schemaContext: EC.SchemaContext, referencePaths: string[]) {
-    const xmlSchemaLocater = new SchemaXmlFileLocater();
+    const xmlSchemaLocater = new SchemaXmlFileLocater(this._referenceMatchType);
     schemaContext.addLocater(xmlSchemaLocater);
     xmlSchemaLocater.addSchemaSearchPaths(referencePaths);
   }
@@ -119,7 +120,7 @@ export class SchemaDeserializer {
 
     let ecVersion: EC.ECVersion;
     if (this.isECv2Schema(schemaXml))
-      ecVersion = NativeSchemaXmlFileLocater.fromECv2String(match.groups.version);
+      ecVersion = SchemaXmlFileLocater.fromECv2String(match.groups.version);
     else
       ecVersion = EC.ECVersion.fromString(match.groups.version);
 

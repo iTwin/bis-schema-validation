@@ -29,30 +29,31 @@ describe ("iModelSchemaValidator Tests", async () => {
     let referenceOnly = true;
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir, { recursive: true });
-      const compareOptions: CompareOptions = new CompareOptions(schemaAFile, schemaBFile, [references], outputDir);
+      const compareOptions: CompareOptions = new CompareOptions(schemaAFile, schemaBFile, [references], [references], outputDir);
       const comparisonResults = await SchemaComparison.compare(compareOptions);
       referenceOnly = referenceOnlyDifference(comparisonResults);
     } else {
-      const compareOptions: CompareOptions = new CompareOptions(schemaAFile, schemaBFile, [references], outputDir);
+      const compareOptions: CompareOptions = new CompareOptions(schemaAFile, schemaBFile, [references], [references], outputDir);
       const comparisonResults = await SchemaComparison.compare(compareOptions);
       referenceOnly = referenceOnlyDifference(comparisonResults);
     }
     expect(referenceOnly).to.equal(false);
   });
 
-  it ("Schema Comparison, Difference is reference only", async () => {
+  it("Schema Comparison, Difference is reference only", async () => {
     const schemaAFile = path.resolve(path.normalize(__dirname + "/assets/"), "SchemaD.ecschema.xml");
     const schemaBFile = path.resolve(path.normalize(__dirname + "/assets/subAssets/"), "SchemaD.ecschema.xml");
-    const references = path.normalize(__dirname + "/assets/references/");
+    const referencesA = [path.normalize(__dirname + "/assets/references/")];
+    const referencesB = [referencesA[0], path.normalize(__dirname + "/assets/")];
     const outputDir = path.normalize(__dirname + "/../lib/test/");
     let referenceOnly = false;
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir, { recursive: true });
-      const compareOptions: CompareOptions = new CompareOptions(schemaAFile, schemaBFile, [references], outputDir);
+      const compareOptions: CompareOptions = new CompareOptions(schemaAFile, schemaBFile, referencesA, referencesB, outputDir);
       const comparisonResults = await SchemaComparison.compare(compareOptions);
       referenceOnly = referenceOnlyDifference(comparisonResults);
     } else {
-      const compareOptions: CompareOptions = new CompareOptions(schemaAFile, schemaBFile, [references], outputDir);
+      const compareOptions: CompareOptions = new CompareOptions(schemaAFile, schemaBFile, referencesA, referencesB, outputDir);
       const comparisonResults = await SchemaComparison.compare(compareOptions);
       referenceOnly = referenceOnlyDifference(comparisonResults);
     }

@@ -56,7 +56,7 @@ export class FileSchemaCompareReporter extends SchemaCompareReporter {
   private initializesStream(schemaName: string, outPath: string) {
     const realDir = path.normalize(outPath) + path.sep;
     if (!fs.pathExistsSync(realDir))
-        throw new Error(`The out directory ${realDir} does not exist.`);
+      throw new Error(`The out directory ${realDir} does not exist.`);
 
     const baseFile = realDir + schemaName + ".compare.log";
     this._stream = fs.createWriteStream(baseFile);
