@@ -267,7 +267,7 @@ async function validateSchema(imodelSchemaPath: string, referencePaths: string[]
 async function compareSchema(imodelSchemaPath: string, releasedSchemaPath: string, referencePaths: string[], output: string, validationResult: IModelValidationResult): Promise<IComparisonResult[]> {
   let comparisonResults;
   try {
-    const compareOptions: CompareOptions = new CompareOptions(imodelSchemaPath, releasedSchemaPath, referencePaths, output);
+    const compareOptions: CompareOptions = new CompareOptions(imodelSchemaPath, releasedSchemaPath, [], referencePaths, output);
     comparisonResults = await SchemaComparison.compare(compareOptions);
     for (const line of comparisonResults) {
       switch (line.resultType) {

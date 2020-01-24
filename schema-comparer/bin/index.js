@@ -12,9 +12,14 @@ const ComparisonResultType = require("../lib/SchemaComparison").ComparisonResult
 const CompareOptions = require("../lib/SchemaComparison").CompareOptions;
 
 
-function ref(value, refs) {
-  refs.push(value);
-  return refs;
+function ref1(value, _notUsed) {
+  const values = value.split(",");
+  return values.map(s => s.trim());
+}
+
+function ref2(value, _notUsed) {
+  const values = value.split(",");
+  return values.map(s => s.trim());
 }
 
 function input(value, inputs) {
@@ -25,7 +30,8 @@ function input(value, inputs) {
 const program = new commander.Command("schema-compare");
 program.option("-i, --input [required]", "The paths to an XML EC Schema files (Ex. '-i c:\\dir1\\SchemaA.ecschema.xml -i c:\\dir2\\SchemaB.ecschema.xml').", input, []);
 program.option("-o, --output [optional]", "Directory to put the comparison output file in the format 'SchemaA.compare.log'.");
-program.option("-r, --ref [optional path]", "Optional paths to search when locating schema references (Ex. '-r c:\\dir1 -r c:\\dir2').", ref, []);
+program.option("--ref1 [optional path]", "Comma-separated list of paths to search when locating schema 1 references (Ex. '-r1 c:\\dir1, c:\\dir2').", ref1);
+program.option("--ref2 [optional path]", "Comma-separated list of paths to search when locating schema 2 references (Ex. '-r2 c:\\dir1, c:\\dir2').", ref2);
 
 program.parse(process.argv);
 
@@ -42,7 +48,7 @@ console.log("\nPerforming schema comparison...");
 
 async function compare() {
   try {
-    const options = new CompareOptions(program.input[0], program.input[1], program.ref, program.output);
+    const options = new CompareOptions(program.input[0], program.input[1], program.ref1, program.ref2, program.output);
     const results = await SchemaComparison.compare(options);
     for (const line of results) {
       switch (line.resultType) {

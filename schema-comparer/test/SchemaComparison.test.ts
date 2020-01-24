@@ -33,7 +33,7 @@ describe("SchemaValidater Tests", () => {
     const compareSpy = sinon.spy(SchemaComparison, "compareLoadedSchemas");
     const schemaAFile = path.resolve(assetsDir, "SchemaA.ecschema.xml");
     const schemaBFile = path.resolve(referencesDir, "SchemaB.ecschema.xml");
-    const options = new CompareOptions(schemaAFile, schemaBFile, [referencesDir]);
+    const options = new CompareOptions(schemaAFile, schemaBFile, [referencesDir], []);
 
     await SchemaComparison.compare(options);
 
@@ -49,7 +49,7 @@ describe("SchemaValidater Tests", () => {
   it("Compare two schema files, out directory specified, result file created correctly", async () => {
     const schemaAFile = path.resolve(assetsDir, "SchemaA.ecschema.xml");
     const schemaBFile = path.resolve(assetsDir, "SchemaA.ecschema.xml");
-    const options = new CompareOptions(schemaAFile, schemaBFile, [referencesDir], outDir);
+    const options = new CompareOptions(schemaAFile, schemaBFile, [referencesDir], [referencesDir], outDir);
 
     await SchemaComparison.compare(options);
 
@@ -63,7 +63,7 @@ describe("SchemaValidater Tests", () => {
   it("Compare, differences found, results reported correctly", async () => {
     const schemaAFile = path.resolve(assetsDir, "SchemaA.ecschema.xml");
     const schemaBFile = path.resolve(referencesDir, "SchemaB.ecschema.xml");
-    const options = new CompareOptions(schemaAFile, schemaBFile, [referencesDir], outDir);
+    const options = new CompareOptions(schemaAFile, schemaBFile, [referencesDir], [], outDir);
 
     const results = await SchemaComparison.compare(options);
 
@@ -79,10 +79,21 @@ describe("SchemaValidater Tests", () => {
     expect(results[9].resultText).to.equal(" +\t\tSchema(SchemaD)");
   });
 
+  it("Compare, schema A reference exact version not found, results contain error", async () => {
+    const schemaAFile = path.resolve(assetsDir, "RefVersionTest.ecschema.xml");
+    const schemaBFile = path.resolve(referencesDir, "SchemaB.ecschema.xml");
+    const options = new CompareOptions(schemaAFile, schemaBFile, [referencesDir], []);
+
+    const results = await SchemaComparison.compare(options);
+
+    expect(results[1].resultType).to.equal(ComparisonResultType.Error);
+    expect(results[1].resultText).to.contain(`Could not locate the referenced schema, SchemaB.2.2.1, of RefVersionTest`);
+  });
+
   it("Compare, bad schema A path, results contain error", async () => {
     const schemaAFile = path.resolve(assetsDir, "DoesNotExist.ecschema.xml");
     const schemaBFile = path.resolve(referencesDir, "SchemaB.ecschema.xml");
-    const options = new CompareOptions(schemaAFile, schemaBFile, [referencesDir]);
+    const options = new CompareOptions(schemaAFile, schemaBFile, [referencesDir], []);
 
     const results = await SchemaComparison.compare(options);
 
@@ -92,7 +103,7 @@ describe("SchemaValidater Tests", () => {
 
   it("Compare, schema A path not to a file, results contain error", async () => {
     const schemaBFile = path.resolve(referencesDir, "SchemaB.ecschema.xml");
-    const options = new CompareOptions(assetsDir, schemaBFile, [referencesDir]);
+    const options = new CompareOptions(assetsDir, schemaBFile, [referencesDir], []);
 
     const results = await SchemaComparison.compare(options);
 
@@ -103,7 +114,7 @@ describe("SchemaValidater Tests", () => {
   it("Compare, schema A path not to a schema file, results contain error", async () => {
     const schemaAFile = path.resolve(assetsDir, "TestSchema.compare.log");
     const schemaBFile = path.resolve(referencesDir, "SchemaB.ecschema.xml");
-    const options = new CompareOptions(schemaAFile, schemaBFile, [referencesDir]);
+    const options = new CompareOptions(schemaAFile, schemaBFile, [referencesDir], []);
 
     const results = await SchemaComparison.compare(options);
 
@@ -114,7 +125,7 @@ describe("SchemaValidater Tests", () => {
   it("Compare, bad schema B path, results contain error", async () => {
     const schemaAFile = path.resolve(assetsDir, "SchemaA.ecschema.xml");
     const schemaBFile = path.resolve(referencesDir, "DoesNotExist.ecschema.xml");
-    const options = new CompareOptions(schemaAFile, schemaBFile, [referencesDir]);
+    const options = new CompareOptions(schemaAFile, schemaBFile, [referencesDir], []);
 
     const results = await SchemaComparison.compare(options);
 
@@ -124,7 +135,7 @@ describe("SchemaValidater Tests", () => {
 
   it("Compare, schema B path not to a file, results contain error", async () => {
     const schemaAFile = path.resolve(assetsDir, "SchemaA.ecschema.xml");
-    const options = new CompareOptions(schemaAFile, assetsDir, [referencesDir]);
+    const options = new CompareOptions(schemaAFile, assetsDir, [referencesDir], []);
 
     const results = await SchemaComparison.compare(options);
 
@@ -135,7 +146,7 @@ describe("SchemaValidater Tests", () => {
   it("Compare, schema B path not to a schema file, results contain error", async () => {
     const schemaAFile = path.resolve(assetsDir, "SchemaA.ecschema.xml");
     const schemaBFile = path.resolve(assetsDir, "TestSchema.compare.log");
-    const options = new CompareOptions(schemaAFile, schemaBFile, [referencesDir]);
+    const options = new CompareOptions(schemaAFile, schemaBFile, [referencesDir], []);
 
     const results = await SchemaComparison.compare(options);
 
@@ -146,7 +157,7 @@ describe("SchemaValidater Tests", () => {
   it("CompareLoadedSchema, no differences found, results are correct", async () => {
     const schemaAFile = path.resolve(assetsDir, "SchemaA.ecschema.xml");
     const schemaBFile = path.resolve(assetsDir, "SchemaA.ecschema.xml");
-    const options = new CompareOptions(schemaAFile, schemaBFile, [referencesDir]);
+    const options = new CompareOptions(schemaAFile, schemaBFile, [referencesDir], [referencesDir]);
 
     const results = await SchemaComparison.compare(options);
 
@@ -160,7 +171,7 @@ describe("SchemaValidater Tests", () => {
     sinon.stub(SchemaComparer.prototype, "compareSchemas").throws(new Error("Some Error"));
     const schemaAFile = path.resolve(assetsDir, "SchemaA.ecschema.xml");
     const schemaBFile = path.resolve(assetsDir, "SchemaA.ecschema.xml");
-    const options = new CompareOptions(schemaAFile, schemaBFile, [referencesDir]);
+    const options = new CompareOptions(schemaAFile, schemaBFile, [referencesDir], [referencesDir]);
 
     const results = await SchemaComparison.compare(options);
 
@@ -174,7 +185,7 @@ describe("SchemaValidater Tests", () => {
     sinon.stub(SchemaDeserializer.prototype, "deserializeXmlFile").onFirstCall().throws(new Error("Some Error"));
     const schemaAFile = path.resolve(assetsDir, "SchemaA.ecschema.xml");
     const schemaBFile = path.resolve(assetsDir, "SchemaB.ecschema.xml");
-    const options = new CompareOptions(schemaAFile, schemaBFile, [referencesDir]);
+    const options = new CompareOptions(schemaAFile, schemaBFile, [referencesDir], []);
 
     const results = await SchemaComparison.compare(options);
 
@@ -190,7 +201,7 @@ describe("SchemaValidater Tests", () => {
     deserializeXmlFile.callThrough();
     const schemaAFile = path.resolve(assetsDir, "SchemaA.ecschema.xml");
     const schemaBFile = path.resolve(assetsDir, "SchemaB.ecschema.xml");
-    const options = new CompareOptions(schemaAFile, schemaBFile, [referencesDir]);
+    const options = new CompareOptions(schemaAFile, schemaBFile, [referencesDir], []);
 
     const results = await SchemaComparison.compare(options);
 

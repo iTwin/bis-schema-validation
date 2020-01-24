@@ -6,7 +6,7 @@
 import * as fs from "fs-extra";
 import * as path from "path";
 
-import { Schema, SchemaContext, SchemaComparer, ISchemaCompareReporter } from "@bentley/ecschema-metadata";
+import { Schema, SchemaContext, SchemaComparer, ISchemaCompareReporter, SchemaMatchType } from "@bentley/ecschema-metadata";
 import { FileSchemaCompareReporter } from "./FileSchemaCompareReporter";
 import { CollectionSchemaCompareReporter, IFormattedSchemaChange } from "./CollectionSchemaCompareReporter";
 import { SchemaDeserializer } from "./SchemaDeserializer";
@@ -36,7 +36,8 @@ export interface IComparisonResult {
 export class CompareOptions {
   private _schemaAPath: string;
   private _schemaBPath: string;
-  private _referenceDirectories: string[];
+  private _referenceDirectoriesA: string[];
+  private _referenceDirectoriesB: string[];
   private _outputDir?: string;
 
   /**
@@ -45,10 +46,11 @@ export class CompareOptions {
    * @param referenceDirectories Optional paths in which to search for referenced schemas.
    * @param outputDir The directory where the output file(s) will be created.
    */
-  constructor(schemaAPath: string, schemaBPath: string, referenceDirectories: string[], outputDir?: string) {
+  constructor(schemaAPath: string, schemaBPath: string, referenceDirectoriesA: string[], referenceDirectoriesB: string[], outputDir?: string) {
     this._schemaAPath = schemaAPath;
     this._schemaBPath = schemaBPath;
-    this._referenceDirectories = referenceDirectories;
+    this._referenceDirectoriesA = referenceDirectoriesA;
+    this._referenceDirectoriesB = referenceDirectoriesB;
 
     if (outputDir)
       this._outputDir = path.normalize(outputDir);
@@ -64,9 +66,14 @@ export class CompareOptions {
     return this._schemaBPath;
   }
 
-  /** Gets the collection of directories to search for references. */
-  public get referenceDirectories(): string[] {
-    return this._referenceDirectories;
+  /** Gets the collection of directories to search for references belonging to Schema A. */
+  public get referenceDirectoriesA(): string[] {
+    return this._referenceDirectoriesA;
+  }
+
+  /** Gets the collection of directories to search for references belonging to Schema B. */
+  public get referenceDirectoriesB(): string[] {
+    return this._referenceDirectoriesB;
   }
 
   /** Gets the output directory. */
@@ -114,11 +121,11 @@ export class SchemaComparison {
 
     results.push({ resultType: ComparisonResultType.Message, resultText: headerText });
 
-    const baseLineSchema = await this.getSchema(schemaAPath, results, options.referenceDirectories);
+    const baseLineSchema = await this.getSchema(schemaAPath, results, options.referenceDirectoriesA);
     if (!baseLineSchema)
       return results;
 
-    const schemaToCompare = await this.getSchema(schemaBPath, results, options.referenceDirectories);
+    const schemaToCompare = await this.getSchema(schemaBPath, results, options.referenceDirectoriesB);
     if (!schemaToCompare)
       return results;
 
@@ -193,7 +200,7 @@ export class SchemaComparison {
     let schema: Schema | undefined;
     try {
       const context = new SchemaContext();
-      const deserializer = new SchemaDeserializer();
+      const deserializer = new SchemaDeserializer(SchemaMatchType.Exact);
 
       if (isJson)
         schema = await deserializer.deserializeJsonFile(schemaPath, context, referencePaths);

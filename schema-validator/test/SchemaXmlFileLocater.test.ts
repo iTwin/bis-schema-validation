@@ -6,12 +6,12 @@ import * as fs from "fs";
 import * as utils from "./utilities/utils";
 import * as EC from "@bentley/ecschema-metadata";
 import { ECSchemaXmlContext, IModelHost } from "@bentley/imodeljs-backend";
-import { NativeSchemaXmlFileLocater } from "../src/NativeSchemaXmlFileLocater";
+import { SchemaXmlFileLocater } from "../src/SchemaXmlFileLocater";
 import { SchemaFileLocater } from "@bentley/ecschema-locaters";
 
 use(chaiAsPromised);
 
-describe("NativeSchemaXmlFileLocater.test", () => {
+describe("SchemaXmlFileLocater.test", () => {
   const assetDeserializationDir = path.join(utils.getAssetsDir(), "xml-deserialization");
 
   beforeEach(() => {
@@ -24,7 +24,7 @@ describe("NativeSchemaXmlFileLocater.test", () => {
   });
 
   it("Schema XML has no version, getSchemaKey throws.", async () => {
-    const nativeLocater = new NativeSchemaXmlFileLocater();
+    const nativeLocater = new SchemaXmlFileLocater();
     const schemaPath = path.join(assetDeserializationDir, "SchemaNoVersion.ecschema.xml");
     const schemaString = fs.readFileSync(schemaPath, "utf8");
 
@@ -33,13 +33,13 @@ describe("NativeSchemaXmlFileLocater.test", () => {
 
   it("Schema XML has EC v2 version, getSchemaKey returns valid SchemaKey.", async () => {
     const schemaXml = `<ECSchema schemaName="SchemaA" version="1.1" xmlns="http://www.bentley.com/schemas/Bentley.ECXML.2.0"> </ECSchema>`;
-    const nativeLocater = new NativeSchemaXmlFileLocater();
+    const nativeLocater = new SchemaXmlFileLocater();
     const key = nativeLocater.getSchemaKey(schemaXml);
     expect(key).to.deep.equal(new EC.SchemaKey("SchemaA", new EC.ECVersion(1, 0, 1)));
   });
 
   it("No file exists, getSchemaSync returns undefined.", async () => {
-    const nativeLocater = new NativeSchemaXmlFileLocater();
+    const nativeLocater = new SchemaXmlFileLocater();
     nativeLocater.addSchemaSearchPath(assetDeserializationDir);
     const context = new EC.SchemaContext();
     const schemaKey = new EC.SchemaKey("SchemaA", 1, 1, 1);
@@ -49,7 +49,7 @@ describe("NativeSchemaXmlFileLocater.test", () => {
   });
 
   it("Read schema file returns undefined, getSchemaSync returns undefined.", async () => {
-    const nativeLocater = new NativeSchemaXmlFileLocater();
+    const nativeLocater = new SchemaXmlFileLocater();
     nativeLocater.addSchemaSearchPath(assetDeserializationDir);
     const context = new EC.SchemaContext();
     const schemaKey = new EC.SchemaKey("SchemaA", 1, 1, 1);
@@ -59,7 +59,7 @@ describe("NativeSchemaXmlFileLocater.test", () => {
   });
 
   it("ECSchemaXmlContext.readSchemaFromXmlFile throws non-reference error, getSchemaSync re-throws.", async () => {
-    const nativeLocater = new NativeSchemaXmlFileLocater();
+    const nativeLocater = new SchemaXmlFileLocater();
     nativeLocater.addSchemaSearchPath(assetDeserializationDir);
     const context = new EC.SchemaContext();
     const schemaKey = new EC.SchemaKey("SchemaA", 1, 1, 1);
@@ -70,29 +70,29 @@ describe("NativeSchemaXmlFileLocater.test", () => {
 
   describe("fromECv2String", () => {
     it("should succeed with properly formed version string", () => {
-      const testVersion = NativeSchemaXmlFileLocater.fromECv2String("1.3");
+      const testVersion = SchemaXmlFileLocater.fromECv2String("1.3");
       expect(testVersion.read).equals(1);
       expect(testVersion.write).equals(0);
       expect(testVersion.minor).equals(3);
     });
 
     it("should fail with a non-number as the read version in the string", () => {
-      const testVersion = NativeSchemaXmlFileLocater.fromECv2String("NotNumber.44");
+      const testVersion = SchemaXmlFileLocater.fromECv2String("NotNumber.44");
       expect(testVersion).does.not.haveOwnProperty("read");
       expect(testVersion.write).equals(0);
       expect(testVersion.minor).equals(44);
     });
 
     it("should fail with a non-number as the minor version in the string", () => {
-      const testVersion = NativeSchemaXmlFileLocater.fromECv2String("10.NotNumber");
+      const testVersion = SchemaXmlFileLocater.fromECv2String("10.NotNumber");
       expect(testVersion).does.not.haveOwnProperty("minor");
       expect(testVersion.read).equals(10);
       expect(testVersion.write).equals(0);
     });
 
     it("should throw for an incomplete version string", () => {
-      expect(() => NativeSchemaXmlFileLocater.fromECv2String("")).to.throw(EC.ECObjectsError, "The read version is missing from version string, ");
-      expect(() => NativeSchemaXmlFileLocater.fromECv2String("10")).to.throw(EC.ECObjectsError, "The minor version is missing from version string, 10");
+      expect(() => SchemaXmlFileLocater.fromECv2String("")).to.throw(EC.ECObjectsError, "The read version is missing from version string, ");
+      expect(() => SchemaXmlFileLocater.fromECv2String("10")).to.throw(EC.ECObjectsError, "The minor version is missing from version string, 10");
     });
   });
 });
