@@ -25,6 +25,25 @@ stages:
           versionSpec: 10.15.0
           checkLatest: true
 
+      - powershell: |
+          $nugetConfigDir = "$(Build.Repository.LocalPath)"
+    
+          if(!(Test-Path -Path $nugetConfigDir)){
+              mkdir $nugetConfigDir
+          }
+    
+          $nugetConfigFile = $nugetConfigDir + "/NuGet.Config"
+
+          
+          
+          
+          
+          
+          
+          
+
+        displayName: 'Seed NugetConfig'  
+
       - task: NuGetCommand@2
         displayName: 'Download Nuget of Signoff Tool'
         inputs:
