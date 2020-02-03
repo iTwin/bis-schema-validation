@@ -39,14 +39,16 @@ export class CompareOptions {
   private _referenceDirectoriesA: string[];
   private _referenceDirectoriesB: string[];
   private _outputDir?: string;
+  private _schemaMatchType: SchemaMatchType = SchemaMatchType.Exact;
 
   /**
    * Initializes a new CompareOptions instance.
    * @param schemaAPath The path to a EC XML schema file.
    * @param referenceDirectories Optional paths in which to search for referenced schemas.
    * @param outputDir The directory where the output file(s) will be created.
+   * @param schemaMatchType The SchemaMatchType to be used when locating schema references. Defaults to 'Exact' if not specified.
    */
-  constructor(schemaAPath: string, schemaBPath: string, referenceDirectoriesA: string[], referenceDirectoriesB: string[], outputDir?: string) {
+  constructor(schemaAPath: string, schemaBPath: string, referenceDirectoriesA: string[], referenceDirectoriesB: string[], outputDir?: string, schemaMatchType?: SchemaMatchType) {
     this._schemaAPath = schemaAPath;
     this._schemaBPath = schemaBPath;
     this._referenceDirectoriesA = referenceDirectoriesA;
@@ -54,6 +56,9 @@ export class CompareOptions {
 
     if (outputDir)
       this._outputDir = path.normalize(outputDir);
+
+    if (undefined !== schemaMatchType)
+      this._schemaMatchType = schemaMatchType;
   }
 
   /** Gets the path to the first schema. */
@@ -79,6 +84,11 @@ export class CompareOptions {
   /** Gets the output directory. */
   public get outputDir(): string | undefined {
     return this._outputDir;
+  }
+
+  /** Gets the SchemaMatchType used when locating schema references */
+  public get schemaMatchType(): SchemaMatchType {
+    return this._schemaMatchType;
   }
 }
 
@@ -121,11 +131,11 @@ export class SchemaComparison {
 
     results.push({ resultType: ComparisonResultType.Message, resultText: headerText });
 
-    const baseLineSchema = await this.getSchema(schemaAPath, results, options.referenceDirectoriesA);
+    const baseLineSchema = await this.getSchema(schemaAPath, results, options.referenceDirectoriesA, options.schemaMatchType);
     if (!baseLineSchema)
       return results;
 
-    const schemaToCompare = await this.getSchema(schemaBPath, results, options.referenceDirectoriesB);
+    const schemaToCompare = await this.getSchema(schemaBPath, results, options.referenceDirectoriesB, options.schemaMatchType);
     if (!schemaToCompare)
       return results;
 
@@ -194,13 +204,13 @@ export class SchemaComparison {
     return schemaPath.endsWith(".ecschema.xml");
   }
 
-  private static async getSchema(schemaPath: string, results: IComparisonResult[], referencePaths?: string[]): Promise<Schema | undefined> {
+  private static async getSchema(schemaPath: string, results: IComparisonResult[], referencePaths: string[], schemaMatchType: SchemaMatchType): Promise<Schema | undefined> {
     const isJson = schemaPath.endsWith(".json");
 
     let schema: Schema | undefined;
     try {
       const context = new SchemaContext();
-      const deserializer = new SchemaDeserializer(SchemaMatchType.Exact);
+      const deserializer = new SchemaDeserializer(schemaMatchType);
 
       if (isJson)
         schema = await deserializer.deserializeJsonFile(schemaPath, context, referencePaths);

@@ -11,7 +11,7 @@ import * as sinon from "sinon";
 
 import * as utils from "./utilities/utils";
 import { SchemaComparison, CompareOptions, ComparisonResultType } from "../src/SchemaComparison";
-import { Schema, SchemaComparer } from "@bentley/ecschema-metadata";
+import { Schema, SchemaComparer, SchemaMatchType } from "@bentley/ecschema-metadata";
 import { SchemaDeserializer } from "../src/SchemaDeserializer";
 
 use(chaiAsPromised);
@@ -88,6 +88,40 @@ describe("SchemaValidater Tests", () => {
 
     expect(results[1].resultType).to.equal(ComparisonResultType.Error);
     expect(results[1].resultText).to.contain(`Could not locate the referenced schema, SchemaB.2.2.1, of RefVersionTest`);
+  });
+
+  it("Compare, schema B reference exact version not found, results contain error", async () => {
+    const schemaAFile = path.resolve(referencesDir, "SchemaB.ecschema.xml");
+    const schemaBFile = path.resolve(assetsDir, "RefVersionTest.ecschema.xml");
+
+    const options = new CompareOptions(schemaAFile, schemaBFile, [referencesDir], []);
+
+    const results = await SchemaComparison.compare(options);
+
+    expect(results[1].resultType).to.equal(ComparisonResultType.Error);
+    expect(results[1].resultText).to.contain(`Could not locate the referenced schema, SchemaB.2.2.1, of RefVersionTest`);
+  });
+
+  it("Compare, schema A reference with older minor version, ref match type LatestReadCompatible, latest read version found", async () => {
+    const schemaAFile = path.resolve(assetsDir, "RefVersionTest.ecschema.xml");
+    const schemaBFile = path.resolve(referencesDir, "SchemaB.ecschema.xml");
+    const options = new CompareOptions(schemaAFile, schemaBFile, [referencesDir], [], undefined, SchemaMatchType.LatestReadCompatible);
+
+    const results = await SchemaComparison.compare(options);
+
+    expect(results.length).to.equal(11);
+    expect(results[1].resultText).to.contain("-Schema(RefVersionTest)");
+  });
+
+  it("Compare, schema B reference with older minor version, ref match type LatestReadCompatible, latest read version found", async () => {
+    const schemaAFile = path.resolve(assetsDir, "SchemaB.ecschema.xml");
+    const schemaBFile = path.resolve(assetsDir, "RefVersionTest.ecschema.xml");
+    const options = new CompareOptions(schemaAFile, schemaBFile, [], [referencesDir], undefined, SchemaMatchType.LatestReadCompatible);
+
+    const results = await SchemaComparison.compare(options);
+
+    expect(results.length).to.equal(9);
+    expect(results[1].resultText).to.contain("-Schema(SchemaB)");
   });
 
   it("Compare, bad schema A path, results contain error", async () => {
