@@ -324,7 +324,7 @@ packages:
       '@bentley/bentleyjs-core': 1.11.0-dev.6
       '@bentley/geometry-core': 1.11.0-dev.6_778072ff88782ce1121bb5b7ee8ab83d
       '@bentley/imodeljs-clients': 1.11.0-dev.6_9cd3e9a08a3cad165b2d86b7692fc823
-      openid-client: 3.12.0
+      openid-client: 3.12.1
       puppeteer: 1.19.0
     dev: false
     resolution:
@@ -407,7 +407,7 @@ packages:
       '@types/base64-js': 1.2.5
       '@types/jquery': 3.3.31
       base64-js: 1.3.1
-      follow-redirects: 1.9.0
+      follow-redirects: 1.10.0
       form-data: 2.5.1
       opener: 1.5.1
     dev: false
@@ -1761,14 +1761,14 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-1yD6RmLI1XBfxugvORwlck6f75tYL+iR0jqwsOrOxMZyGYqUuDhJ0l4AXdO1iX/FTs9cBAMEk1gWSEx1kSbylg==
-  /follow-redirects/1.9.0:
+  /follow-redirects/1.10.0:
     dependencies:
       debug: 3.2.6
     dev: false
     engines:
       node: '>=4.0'
     resolution:
-      integrity: sha512-CRcPzsSIbXyVDl0QI01muNDu69S8trU4jArW9LpOt2WtC6LyUJetcIrmfHsRBx7/Jb6GHJUiuqyYxPooFfNt6A==
+      integrity: sha512-4eyLK6s6lH32nOvLLwlIOnr9zrL8Sm+OvW4pVTJNoXeGzYIkHVf+pADQi+OJ0E67hiuSLezPVPyBcIZO50TmmQ==
   /for-in/1.0.2:
     dev: false
     engines:
@@ -2622,14 +2622,14 @@ packages:
     dev: false
     resolution:
       integrity: sha1-o6vicYryQaKykE+EpiWXDzia4yo=
-  /jose/1.20.0:
+  /jose/1.21.1:
     dependencies:
       asn1.js: 5.3.0
     dev: false
     engines:
       node: '>=10.13.0'
     resolution:
-      integrity: sha512-z38qBpt4+BkdmP38kxEwF1W2hvLrXWx3uNsxMoshd43e7C02RLF8+iMcnJITSDGEv2gg718GUCEu26zgMDhHFA==
+      integrity: sha512-+PYDNfE/AgtaGNYbpmsCaGap7TD12PAh6AGekFEh2xlHYdNPNWb6YUjcGcK+NNEUflrr2fGEBsbV9aAHrZGLew==
   /jquery/3.4.1:
     dev: false
     resolution:
@@ -3541,12 +3541,12 @@ packages:
       node: '>=6.9.0'
     resolution:
       integrity: sha512-t3hFD7xEoW1U25RyBcRFaL19fGGs6hNVTysq9pgmiltH0IVUPzH/bQV9w24pM5Q7MunnGv2/5XjIru6BQcWdxg==
-  /openid-client/3.12.0:
+  /openid-client/3.12.1:
     dependencies:
       '@types/got': 9.6.9
       base64url: 3.0.1
       got: 9.6.0
-      jose: 1.20.0
+      jose: 1.21.1
       lodash: 4.17.15
       lru-cache: 5.1.1
       make-error: 1.3.5
@@ -3557,7 +3557,7 @@ packages:
     engines:
       node: ^10.13.0 || >=12.0.0
     resolution:
-      integrity: sha512-QVuwLCSVFz240vXNXU9MQadOsC9D0+m6BsIjjnfNO9+2syOQW8vwZsg+fRk8sOY7xyRI9E+jirx1ctmVQYoG8g==
+      integrity: sha512-l8RgNDu9qejVtM09nWBxbL+sr2R3NJ3VYLu0gaU+wD/+elhEBkKUhuQLEEhzFjWEFK58n39CYv8ZQR4POKIT1g==
   /optimist/0.6.1:
     dependencies:
       minimist: 0.0.10
@@ -4140,7 +4140,7 @@ packages:
       integrity: sha512-AicPrAC7Qu1JxPCZ9ZgCZlY35QgFnNqc+0LtbRNxnVw4TXvjQ72wnuL9JQcEBgXkI9JM8MsT9kaQoHcpCRJOYA==
   /responselike/1.0.2:
     dependencies:
-      lowercase-keys: 1.0.0
+      lowercase-keys: 1.0.1
     dev: false
     resolution:
       integrity: sha1-kYcg7ztjHFZCvgaPFa3lpG9Loec=
@@ -5287,7 +5287,7 @@ packages:
     peerDependencies:
       '@bentley/imodeljs-i18n': '*'
     resolution:
-      integrity: sha512-MoWPiSegIjjpW0CUg0hFFL/EGlUVsFoYj8fukXexaShaiFt2X+ziDx5R4wBUKMHRc3/eEjRbVj+Mbz+CkXZGVg==
+      integrity: sha512-dEDKIoeTjRM9aXsttd2LsZpyrAGA+p0zrSfhHTRpl4S+Y3wLcLEDBO2x3R6rQSqW5ESfN5zbOrUrHQAygq+cRQ==
       tarball: 'file:projects/imodel-schema-validator.tgz'
     version: 0.0.0
   'file:projects/schema-comparer.tgz':
@@ -5371,7 +5371,7 @@ packages:
     dev: false
     name: '@rush-temp/schema-roundtrip'
     resolution:
-      integrity: sha512-GXwtInMgMT/wVzvPj2EPCz4wAt9xCF2Mwp+APZBFEpmoToDR4t6RFfqZQC3YeOTjtGd/SJze2nUDlCCQgQc4tA==
+      integrity: sha512-EAgfh9Y+d40JoUzG8KVMa5IHfA83c14MCJt9ApRkshbAD2tpOI2y8I+oEkE9reBXvzOyzENTJUD4Q2XZAnod4w==
       tarball: 'file:projects/schema-roundtrip.tgz'
     version: 0.0.0
   'file:projects/schema-validator.tgz_5c00953e9480a9fe3b6f5561a7a2a00c':
@@ -5415,7 +5415,7 @@ packages:
     peerDependencies:
       '@bentley/imodeljs-i18n': '*'
     resolution:
-      integrity: sha512-qsE4ofIXHFSO/ABxL/XsdCSdcdthasFjSLcrHLm58p1/Pwedwu0WFh8mx2bHIZjBi8xpv60CM1tilnN245UL1w==
+      integrity: sha512-df1LGEF5YrCYSzTOhFVDA1NWNIKVIzNpsik4IWrusJgQaKABsL99P9j+KHaRTEZF/zwFVxLf6wiEO8vcofhAKQ==
       tarball: 'file:projects/schema-validator.tgz'
     version: 0.0.0
 specifiers:
