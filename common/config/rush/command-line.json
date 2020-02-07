@@ -13,7 +13,8 @@
       "commandKind": "bulk",
       "summary": "Runs code coverage on each package",
       "description": "Iterates through each package in the monorepo and runs the 'cover' script",
-      "enableParallelism": true
+      "enableParallelism": true,
+      "allowWarningsInSuccessfulBuild": true
     },
     {
       "name": "lint",
