@@ -93,8 +93,8 @@ stages:
       - script: rush cover
         displayName: Rush cover
         env:
-          imsUserName: $(imsUserName)
-          imsPassword: $(imsPassword)
+          oidcUserName: $(oidcUserName)
+          oidcPassword: $(oidcPassword)
           Mapped_domUserName: $(Mapped_domUserName)
           Mapped_domPassword: $(Mapped_domPassword)
 
