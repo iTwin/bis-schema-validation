@@ -7,11 +7,17 @@ import * as chalk from "chalk";
  * @param schemaXmlPath: Path where schema xml file is located.
  * @param referencePaths: Schema reference paths.
  */
-export function getSha1Hash(exePath: string, schemaXmlPath: string, referencePaths: string): string {
+export function getSha1Hash(exePath: string, schemaXmlPath: string, referencePaths: string, isExactMatch: boolean): string {
   let sha1: string = "";
+  let args1;
   try {
     const cmd = exePath;
-    const args1 = [ "--computeSha1", "--schemas=" + schemaXmlPath, "--schemasReferenceSearchPaths=" + referencePaths];
+    if (!isExactMatch) {
+      args1 = ["--computeSha1", "--noExactMatch", "--schemas=" + schemaXmlPath, "--schemasReferenceSearchPaths=" + referencePaths];
+    } else {
+      args1 = ["--computeSha1", "--schemas=" + schemaXmlPath, "--schemasReferenceSearchPaths=" + referencePaths];
+    }
+
     const bbs = spawnSync(cmd, args1);
     const stdout = bbs.stdout.toString();
     if (stdout.includes("SHA1 hash: ")) {

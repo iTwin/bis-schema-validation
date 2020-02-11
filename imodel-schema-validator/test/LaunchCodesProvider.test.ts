@@ -39,7 +39,7 @@ describe ("LaunchCodesProvider Tests", async () => {
     const launchCodes =  await launchCodesProvider.getLaunchCodeDict(true);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     const schemaAFile = path.resolve(path.normalize(__dirname + "/assets/"), "SchemaA.ecschema.xml");
-    const sha1 = getSha1Hash(signOffExecutable, schemaAFile, "");
+    const sha1 = getSha1Hash(signOffExecutable, schemaAFile, "", false);
     const sha1Comparison = launchCodesProvider.compareCheckSums("SchemaA", sha1, launchCodes);
     expect(sha1Comparison.result).to.equal(false);
   });
@@ -49,9 +49,26 @@ describe ("LaunchCodesProvider Tests", async () => {
     const launchCodes =  await launchCodesProvider.getLaunchCodeDict(true);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     const schemaAFile = path.resolve(path.normalize(__dirname + "/assets/"), "SchemaA.ecschema.xml");
-    const sha1 = getSha1Hash(signOffExecutable, schemaAFile, "");
+    const sha1 = getSha1Hash(signOffExecutable, schemaAFile, "", false);
     const sha1Comparison = launchCodesProvider.compareCheckSums("SchemaA", sha1, launchCodes);
     const approvalResult = launchCodesProvider.checkApprovalAndVerification("SchemaA", sha1Comparison.schemaIndex, launchCodes);
     expect(approvalResult).to.equal(false);
+  });
+
+  it ("Approved and Verified Schema, Find index of a schema from bis checksum wiki json and check approval verification", async () => {
+    const launchCodesProvider: LaunchCodesProvider = new LaunchCodesProvider();
+    const launchCodes =  await launchCodesProvider.getLaunchCodeDict(true);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    const index = launchCodesProvider.findSchemaIndex("BisCore", "1.0.1", launchCodes);
+    const approvalResult = launchCodesProvider.checkApprovalAndVerification("BisCore", index, launchCodes);
+    expect(approvalResult).to.equal(true);
+  });
+
+  it ("Index of Schema, Find index of a schema from bis checksum wiki json", async () => {
+    const launchCodesProvider: LaunchCodesProvider = new LaunchCodesProvider();
+    const launchCodes =  await launchCodesProvider.getLaunchCodeDict(true);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    const index = launchCodesProvider.findSchemaIndex("SchemaA", "0.0.1", launchCodes);
+    expect(index).to.equal(undefined);
   });
 });
