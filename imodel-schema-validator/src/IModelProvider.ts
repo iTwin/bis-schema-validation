@@ -5,7 +5,7 @@
 
 import { IModelDb, IModelHost, IModelHostConfiguration, OpenParams, AuthorizedBackendRequestContext } from "@bentley/imodeljs-backend";
 import { IModelHubClient, AccessToken, Config } from "@bentley/imodeljs-clients";
-import { OidcConfiguration, getToken } from "@bentley/oidc-signin-tool";
+import { TestOidcConfiguration, TestUserCredentials, TestOidcClient } from "@bentley/oidc-signin-tool";
 import { IModelVersion } from "@bentley/imodeljs-common";
 import * as rimraf from "rimraf";
 import * as fs from "fs";
@@ -47,14 +47,23 @@ export class IModelProvider {
   private static async getTokenFromSigninTool(username: string, password: string, regionCode: number): Promise<AccessToken> {
     let postfix = "";
     if (regionCode === 0) { postfix = "-prod"; }
-    const config: OidcConfiguration = {
+
+    const oidcConfig: TestOidcConfiguration = {
       clientId: "imodel-schema-validator-spa" + postfix,
       redirectUri: "http://localhost:3000/signin-callback",
+      scope: "openid imodelhub",
+    };
+
+    const userCredentials: TestUserCredentials = {
+      email: username,
+      password: password,
     };
 
     let token;
     try {
-      token = await getToken(username, password, "openid imodelhub", config, regionCode);
+      const client = new TestOidcClient(oidcConfig, userCredentials);
+      client.deploymentRegion =  regionCode;
+      token = await client.getAccessToken();
     } catch (err) {
       const error = "oidc-signin-tool failed to generate token and failed with error: " + err;
       throw Error(error);
@@ -87,7 +96,7 @@ export class IModelProvider {
     const iModels = await client.iModels.get(requestContext, projectId);
     for (let num = 0; num < iModels.length; num++) {
       if (iModels[num].name === iModelName) {
-        return iModels[0].wsgId.toString();
+        return iModels[num].wsgId.toString();
       }
     }
     return;
@@ -103,6 +112,7 @@ export class IModelProvider {
   public static async exportIModelSchemas(projectId: string, iModelName: string, schemaDir: string, userName: string, password: string) {
     const requestContext = await this.oidcConnect(userName, password, this._regionCode);
     const iModelId = await this.getIModelId(requestContext, projectId, iModelName); // iModel Id based upon iModel name and Project Id
+
     if (!iModelId) {
       throw new Error("iModel either not exist or not found!");
     }

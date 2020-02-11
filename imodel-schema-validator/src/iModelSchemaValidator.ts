@@ -8,7 +8,7 @@ import { LaunchCodesProvider } from "./LaunchCodesProvider";
 import { getSha1Hash } from "./Sha1HashHelper";
 import { SchemaComparison, CompareOptions, ComparisonResultType, IComparisonResult } from "@bentley/schema-comparer";
 import { SchemaValidator, ValidationOptions, ValidationResultType } from "@bentley/schema-validator";
-import { SchemaCompareCodes } from "@bentley/ecschema-metadata";
+import { SchemaCompareCodes, SchemaMatchType } from "@bentley/ecschema-metadata";
 import * as path from "path";
 import * as commander from "commander";
 import * as chalk from "chalk";
@@ -183,8 +183,8 @@ async function verifyIModelSchemas() {
         }
 
       } else {
-        validationResult.releasedSchemaSha1 = getSha1Hash(program.signOffExecutable, releasedSchemaPath, releasedSchemaDirectories.join(";"));
-        const comparisonResult = await compareSchema(iModelSchemaPath, releasedSchemaPath, releasedSchemaDirectories, program.output, validationResult);
+        validationResult.releasedSchemaSha1 = getSha1Hash(program.signOffExecutable, releasedSchemaPath, releasedSchemaDirectories.join(";"), true);
+        const comparisonResult = await compareSchema(iModelSchemaPath, releasedSchemaPath, [iModelSchemaDir], releasedSchemaDirectories, program.output, SchemaMatchType.Exact, validationResult);
         // @bentley/schema-comparer is auto pushing the input schema path to reference array.
         // Removing this path to fix the bug in finding releasedSchemaFile otherwise it finds the iModel schema path
         const iModelSchemaDirIndex = releasedSchemaDirectories.indexOf(iModelSchemaDir);
@@ -192,15 +192,15 @@ async function verifyIModelSchemas() {
         const referenceOnly = referenceOnlyDifference(comparisonResult);
 
         // If difference status is reference only then check if loading in the same context fixes the issue.
-        if (referenceOnly) {
-          console.log("Schema ", name, version, " only has schema reference differences with the released version.");
+        if (validationResult.comparer === iModelValidationResultTypes.Passed || referenceOnly) {
+          console.log("Schema ", name, version, " has 'no' or 'reference only' difference with the released version.");
           console.log("Loading released schema in the iModel's context...");
-          validationResult.releasedSchemaIModelContextSha1 = getSha1Hash(program.signOffExecutable, releasedSchemaPath, iModelSchemaDir);
-          await compareSchema(iModelSchemaPath, releasedSchemaPath, [iModelSchemaDir], program.output, validationResult);
+          validationResult.releasedSchemaIModelContextSha1 = getSha1Hash(program.signOffExecutable, releasedSchemaPath, iModelSchemaDir, false);
+          await compareSchema(iModelSchemaPath, releasedSchemaPath, [iModelSchemaDir], [iModelSchemaDir], program.output, SchemaMatchType.LatestWriteCompatible, validationResult);
         }
       }
     }
-    validationResult.sha1 = getSha1Hash(program.signOffExecutable, iModelSchemaPath, releasedSchemaDirectories.join(";"));
+    validationResult.sha1 = getSha1Hash(program.signOffExecutable, iModelSchemaPath, iModelSchemaDir, true);
     results.push(validationResult);
     console.log("END VALIDATION AND DIFFERENCE AUDIT: ", name, version);
   }
@@ -264,10 +264,10 @@ async function validateSchema(imodelSchemaPath: string, referencePaths: string[]
 /**
  * Performs Schema Comparison and returns the a boolean telling that a schema has reference only difference or not
  */
-async function compareSchema(imodelSchemaPath: string, releasedSchemaPath: string, referencePaths: string[], output: string, validationResult: IModelValidationResult): Promise<IComparisonResult[]> {
+async function compareSchema(imodelSchemaPath: string, releasedSchemaPath: string, imodelSchemaReferencePaths: string[], releasedSchemaReferencePaths: string[], output: string, schemaMatchType: SchemaMatchType, validationResult: IModelValidationResult): Promise<IComparisonResult[]> {
   let comparisonResults;
   try {
-    const compareOptions: CompareOptions = new CompareOptions(imodelSchemaPath, releasedSchemaPath, [], referencePaths, output);
+    const compareOptions: CompareOptions = new CompareOptions(imodelSchemaPath, releasedSchemaPath, imodelSchemaReferencePaths, releasedSchemaReferencePaths, output, schemaMatchType);
     comparisonResults = await SchemaComparison.compare(compareOptions);
     for (const line of comparisonResults) {
       switch (line.resultType) {
@@ -304,6 +304,7 @@ export function referenceOnlyDifference(comparisonResults: IComparisonResult[]):
           referenceOnly = true;
         } else {
           // other errors are present
+          console.log(line.compareCode);
           referenceOnly = false;
           break;
         }
@@ -407,8 +408,8 @@ function displayResults(results: IModelValidationResult[]) {
         console.log("   > Schema SHA1 checksum verification             ", chalk.default.green("<passed>"));
       } else {
         const releasedSchemaChecksumResult = launchCodesProvider.compareCheckSums(item.name, item.releasedSchemaSha1, launchCodes);
-        if ((!item.releasedSchemaIModelContextSha1 && item.sha1 === item.releasedSchemaIModelContextSha1) ||
-          (item.comparer === iModelValidationResultTypes.Passed && releasedSchemaChecksumResult.result)) {
+        if ((item.comparer === iModelValidationResultTypes.Passed && releasedSchemaChecksumResult.result) ||
+          (item.releasedSchemaIModelContextSha1 && item.sha1 === item.releasedSchemaIModelContextSha1)) {
           // First check determines if loading the released schema into the iModel's context allowed the checksums to match.  This will be the case most of the time.
           // However, due to the way ECDb roundtrips schemas there are a few cases where the checksum will differ for the same exact schema. The second check comes
           // at this point to check that the released schema we found has the same checksum as the one in the wiki and there is no difference between that released
@@ -430,7 +431,20 @@ function displayResults(results: IModelValidationResult[]) {
       console.log("       Approvals validation is skipped intentionally for dynamic schemas");
       approvalSkipped++;
     } else {
-      const approvalResult = launchCodesProvider.checkApprovalAndVerification(item.name, checksumResult.schemaIndex, launchCodes);
+      let approvalResult = launchCodesProvider.checkApprovalAndVerification(item.name, checksumResult.schemaIndex, launchCodes);
+      if (!approvalResult) {
+        // Loading released schema into imodel context check will not match sha1 hash from wiki json so index of that schema will not found for approval validation
+        // Now here we are handling this specific case by first finding the index of schema in wiki json and then check for approval verification
+        try {
+          const rawVersion = item.version.split(".");
+          const version: string = Number(rawVersion[0]) + "." + Number(rawVersion[1]) + "." + Number(rawVersion[2]);
+          const schemaIndex = launchCodesProvider.findSchemaIndex(item.name, version, launchCodes);
+          approvalResult = launchCodesProvider.checkApprovalAndVerification(item.name, schemaIndex, launchCodes);
+        } catch (err) {
+          console.log("Unable to create the version string: " + err);
+        }
+      }
+
       if (approvalResult) {
         console.log("   > Released schema is approved and verified      ", chalk.default.green("<passed>"));
       } else {

@@ -168,4 +168,21 @@ export class LaunchCodesProvider {
     }
     return {result, schemaIndex};
   }
+
+  /**
+   * Find index of a schema based upon its version in json of checksum wiki
+   * @param schemaName: Name of the schema.
+   * @param version: It is the version of schema in format e.g 1.0.2.
+   * @param launchCodes: Json object containing the launchCodes.
+   */
+  public findSchemaIndex(schemaName: string, version: string, launchCodes: any) {
+    let schemaIndex: number | undefined;
+    for (let index = 0; index < launchCodes.checksumInfo.length; index++) {
+      if (launchCodes.checksumInfo[index]["SchemaName"].toLowerCase() === schemaName.toLowerCase() && launchCodes.checksumInfo[index]["Comment"].toLowerCase().includes(version)) {
+        schemaIndex = index;
+        return schemaIndex;
+      }
+    }
+    return schemaIndex;
+  }
 }
