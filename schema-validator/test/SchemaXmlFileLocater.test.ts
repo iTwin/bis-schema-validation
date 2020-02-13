@@ -13,6 +13,7 @@ use(chaiAsPromised);
 
 describe("SchemaXmlFileLocater.test", () => {
   const assetDeserializationDir = path.join(utils.getAssetsDir(), "xml-deserialization");
+  const refDir = path.join(assetDeserializationDir, "references");
 
   beforeEach(() => {
     IModelHost.startup();
@@ -48,6 +49,24 @@ describe("SchemaXmlFileLocater.test", () => {
     expect(nativeLocater.getSchemaSync(schemaKey, EC.SchemaMatchType.Exact, context)).to.be.undefined;
   });
 
+  it("getSchemaSync returns expected schema.", async () => {
+    const nativeLocater = new SchemaXmlFileLocater();
+    nativeLocater.addSchemaSearchPaths([assetDeserializationDir, refDir]);
+    const context = new EC.SchemaContext();
+    const schemaKey = new EC.SchemaKey("SchemaA", 1, 1, 1);
+    const schema = nativeLocater.getSchemaSync(schemaKey, EC.SchemaMatchType.Exact, context);
+    expect(schema?.schemaKey).to.eql(schemaKey);
+  });
+
+  it("getSchema returns expected schema.", async () => {
+    const nativeLocater = new SchemaXmlFileLocater();
+    nativeLocater.addSchemaSearchPaths([assetDeserializationDir, refDir]);
+    const context = new EC.SchemaContext();
+    const schemaKey = new EC.SchemaKey("SchemaA", 1, 1, 1);
+    const schema = await nativeLocater.getSchema(schemaKey, EC.SchemaMatchType.Exact, context);
+    expect(schema?.schemaKey).to.eql(schemaKey);
+  });
+
   it("Read schema file returns undefined, getSchemaSync returns undefined.", async () => {
     const nativeLocater = new SchemaXmlFileLocater();
     nativeLocater.addSchemaSearchPath(assetDeserializationDir);
@@ -60,7 +79,7 @@ describe("SchemaXmlFileLocater.test", () => {
 
   it("ECSchemaXmlContext.readSchemaFromXmlFile throws non-reference error, getSchemaSync re-throws.", async () => {
     const nativeLocater = new SchemaXmlFileLocater();
-    nativeLocater.addSchemaSearchPath(assetDeserializationDir);
+    nativeLocater.addSchemaSearchPaths([assetDeserializationDir, refDir]);
     const context = new EC.SchemaContext();
     const schemaKey = new EC.SchemaKey("SchemaA", 1, 1, 1);
     sinon.stub(ECSchemaXmlContext.prototype, "readSchemaFromXmlFile").throws(new Error("TestError"));

@@ -65,7 +65,7 @@ describe("SchemaDeserializer", () => {
     const schemaPath = path.join(assetDeserializationDir, "BadRefSchema.ecschema.xml");
     const context = new EC.SchemaContext();
 
-    await expect(deserializer.deserializeXmlFile(schemaPath, context, [refDir])).to.be.rejectedWith(EC.ECObjectsError, "Unable to load schema 'BadRefSchema'. A referenced schema could not be found.");
+    await expect(deserializer.deserializeXmlFile(schemaPath, context, [refDir])).to.be.rejectedWith(EC.ECObjectsError, "Unable to locate referenced schema: DoesNotExist.1.1.1");
   });
 
   it("Schema XML has no version, throws.", async () => {
@@ -142,7 +142,7 @@ describe("SchemaDeserializer", () => {
 
   it("should successfully parse schema PartialComprehensiveSchema", async () => {
     const schemaContext = new EC.SchemaContext();
-    const deserializer = new SchemaDeserializer();
+    const deserializer = new SchemaDeserializer(EC.SchemaMatchType.LatestWriteCompatible);
     const schemaPath = path.join(assetDeserializationDir, "PartialComprehensiveSchema.ecschema.xml");
     const partialComprehensiveSchema = await deserializer.deserializeXmlFile(schemaPath, schemaContext);
     expect(partialComprehensiveSchema).not.to.be.undefined;

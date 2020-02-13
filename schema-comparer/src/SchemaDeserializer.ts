@@ -46,10 +46,10 @@ export class SchemaDeserializer {
     (Config as any)._appConfig = new (Config as any)(); // Needed to avoid crash in backend when calling IModelHost.startup.
     IModelHost.startup();
 
-    this.configureFileLocater(schemaContext, referencePaths);
+    const locater = this.configureFileLocater(schemaContext, referencePaths);
 
     try {
-      const schema = await schemaContext.getSchema(schemaKey, EC.SchemaMatchType.Exact);
+      const schema = locater.loadSchema(schemaKey, EC.SchemaMatchType.Exact, schemaContext);
       if (!schema)
         throw new EC.ECObjectsError(EC.ECObjectsStatus.UnableToLocateSchema, `Unable to locate schema '${schemaKey.name}'`);
 
@@ -91,10 +91,11 @@ export class SchemaDeserializer {
     return EC.Schema.fromJson(schemaJson, context);
   }
 
-  private configureFileLocater(schemaContext: EC.SchemaContext, referencePaths: string[]) {
+  private configureFileLocater(schemaContext: EC.SchemaContext, referencePaths: string[]): SchemaXmlFileLocater {
     const xmlSchemaLocater = new SchemaXmlFileLocater(this._referenceMatchType);
     schemaContext.addLocater(xmlSchemaLocater);
     xmlSchemaLocater.addSchemaSearchPaths(referencePaths);
+    return xmlSchemaLocater;
   }
 
   private async readUtf8FileToString(filePath: string): Promise<string> {
