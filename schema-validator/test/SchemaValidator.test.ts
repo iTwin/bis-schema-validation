@@ -38,7 +38,7 @@ describe("SchemaValidater Tests", () => {
 
     await SchemaValidator.validate(options);
 
-    const expectedCount = 12;
+    const expectedCount = 13;
     expect(stub.callCount).to.equal(expectedCount, `Expected ${expectedCount} calls to validateFile`);
   });
 

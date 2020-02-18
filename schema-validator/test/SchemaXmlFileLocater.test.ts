@@ -12,8 +12,9 @@ import { SchemaFileLocater } from "@bentley/ecschema-locaters";
 use(chaiAsPromised);
 
 describe("SchemaXmlFileLocater.test", () => {
-  const assetDeserializationDir = path.join(utils.getAssetsDir(), "xml-deserialization");
+  const assetDeserializationDir = utils.getXmlDeserializationDir();
   const refDir = path.join(assetDeserializationDir, "references");
+  const assetsDir = utils.getAssetsDir();
 
   beforeEach(() => {
     IModelHost.startup();
@@ -37,6 +38,15 @@ describe("SchemaXmlFileLocater.test", () => {
     const nativeLocater = new SchemaXmlFileLocater();
     const key = nativeLocater.getSchemaKey(schemaXml);
     expect(key).to.deep.equal(new EC.SchemaKey("SchemaA", new EC.ECVersion(1, 0, 1)));
+  });
+
+  it("Schema XML has EC v2 nameSpacePrefix, alias set properly on deserialized schema.", async () => {
+    const nativeLocater = new SchemaXmlFileLocater();
+    nativeLocater.addSchemaSearchPath(assetDeserializationDir);
+    const context = new EC.SchemaContext();
+    const schemaKey = new EC.SchemaKey("ECv2Schema", 1, 0, 1);
+    const schema = nativeLocater.loadSchema(schemaKey, EC.SchemaMatchType.Exact, context);
+    expect(schema?.alias).to.equal("v2");
   });
 
   it("No file exists, getSchemaSync returns undefined.", async () => {
@@ -85,6 +95,15 @@ describe("SchemaXmlFileLocater.test", () => {
     sinon.stub(ECSchemaXmlContext.prototype, "readSchemaFromXmlFile").throws(new Error("TestError"));
 
     expect(() => nativeLocater.getSchemaSync(schemaKey, EC.SchemaMatchType.Exact, context)).to.throw(Error, "TestError");
+  });
+
+  it("EC 3.1 Schema, formats schema not locatable, getSchema throws.", async () => {
+    const nativeLocater = new SchemaXmlFileLocater();
+    nativeLocater.addSchemaSearchPaths([assetsDir]);
+    const context = new EC.SchemaContext();
+    const schemaKey = new EC.SchemaKey("SchemaB", 1, 1, 1);
+
+    expect(() => nativeLocater.getSchemaSync(schemaKey, EC.SchemaMatchType.Exact, context)).to.throw(EC.ECObjectsError, "Unable to locate the Formats schema which is required when loading EC 3.1 schemas.");
   });
 
   describe("fromECv2String", () => {
