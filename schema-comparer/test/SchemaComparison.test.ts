@@ -20,6 +20,7 @@ describe("SchemaValidater Tests", () => {
   const outDir = utils.getOutDir();
   const assetsDir = utils.getAssetsDir();
   const referencesDir = utils.getReferencesDir();
+  const deserializationDir = utils.getXmlDeserializationDir();
 
   beforeEach(async () => {
     await fs.remove(outDir + "SchemaA.compare.log");
@@ -116,7 +117,7 @@ describe("SchemaValidater Tests", () => {
   it("Compare, schema B reference with older minor version, ref match type LatestReadCompatible, latest read version found", async () => {
     const schemaAFile = path.resolve(assetsDir, "SchemaB.ecschema.xml");
     const schemaBFile = path.resolve(assetsDir, "RefVersionTest.ecschema.xml");
-    const options = new CompareOptions(schemaAFile, schemaBFile, [], [referencesDir], undefined, SchemaMatchType.LatestReadCompatible);
+    const options = new CompareOptions(schemaAFile, schemaBFile, [deserializationDir], [referencesDir], undefined, SchemaMatchType.LatestReadCompatible);
 
     const results = await SchemaComparison.compare(options);
 

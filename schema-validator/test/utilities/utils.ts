@@ -20,6 +20,10 @@ export function getRelationshipAssetDir(): string {
   return path.normalize(__dirname + "/../assets/relationshipSuppressions/");
 }
 
+export function getXmlDeserializationDir(): string {
+  return path.normalize(__dirname + "/../assets/xml-deserialization/");
+}
+
 export function getReferencesDir(): string {
   return path.normalize(__dirname + "/../assets/references/");
 }

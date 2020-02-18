@@ -5,7 +5,7 @@
 
 import * as path from "path";
 import { DOMParser } from "xmldom";
-import { ECSchemaXmlContext, SchemaKey as NativeSchemaKey } from "@bentley/imodeljs-backend";
+import { ECSchemaXmlContext } from "@bentley/imodeljs-backend";
 import { FileSchemaKey, SchemaFileLocater } from "@bentley/ecschema-locaters";
 import { ISchemaLocater, SchemaMatchType, Schema, SchemaKey, SchemaContext, SchemaReadHelper,
   ECObjectsError, ECObjectsStatus, XmlParser, ECVersion, SchemaGraphUtil } from "@bentley/ecschema-metadata";
@@ -139,17 +139,42 @@ export class SchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLo
   }
 
   private getSchemaFromNativeEnv(schemaKey: SchemaKey, schemaText: string, schemaPath: string, context: SchemaContext, refMatchType: SchemaMatchType): Schema {
-    const stubLocater = new StubSchemaXmlFileLocater();
-    stubLocater.addSchemaSearchPaths(this.searchPaths);
-    const schemaStub = stubLocater.loadSchema(schemaText, schemaPath, refMatchType);
-    const orderedSchemas = SchemaGraphUtil.buildDependencyOrderedSchemaList(schemaStub);
-
     const nativeContext = new ECSchemaXmlContext();
     for (const refPath of this.searchPaths) {
       nativeContext.addSchemaPath(refPath);
     }
 
-    for (const currentStub of orderedSchemas) {
+    const stubLocater = new StubSchemaXmlFileLocater();
+    stubLocater.addSchemaSearchPaths(this.searchPaths);
+
+    this.preloadUnitsFormatsSchema(stubLocater, context, nativeContext);
+
+    const schemaStub = stubLocater.loadSchema(schemaText, schemaPath, refMatchType);
+    const orderedSchemas = SchemaGraphUtil.buildDependencyOrderedSchemaList(schemaStub);
+
+    this.loadSchemasFromNative(orderedSchemas, schemaKey, context, nativeContext);
+
+    // Schema should always be found (!) as it was just added to the context above.
+    return context.getSchemaSync(schemaStub.schemaKey)!;
+  }
+
+  private preloadUnitsFormatsSchema(locater: ISchemaLocater, context: SchemaContext, nativeContext: ECSchemaXmlContext) {
+    const formatsKey = new SchemaKey("Formats", 1, 0, 0);
+    if (context.getCachedSchemaSync(formatsKey, SchemaMatchType.LatestWriteCompatible))
+      return;
+
+    const stubContext = new SchemaContext();
+    stubContext.addLocater(locater);
+    const schemaStub = locater.getSchemaSync(formatsKey, SchemaMatchType.LatestWriteCompatible, stubContext);
+    if (!schemaStub)
+      throw new ECObjectsError(ECObjectsStatus.UnableToLocateSchema, `Unable to locate the Formats schema which is required when loading EC 3.1 schemas.`);
+
+    const orderedSchemas = SchemaGraphUtil.buildDependencyOrderedSchemaList(schemaStub);
+    this.loadSchemasFromNative(orderedSchemas, formatsKey, context, nativeContext);
+  }
+
+  private loadSchemasFromNative(schemaStubs: Schema[], parentSchema: SchemaKey, context: SchemaContext, nativeContext: ECSchemaXmlContext) {
+    for (const currentStub of schemaStubs) {
       try {
         // If schema is already in the context skip it
         if (context.getCachedSchemaSync(currentStub.schemaKey, SchemaMatchType.Exact))
@@ -160,13 +185,10 @@ export class SchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLo
         Schema.fromJsonSync(schemaJson, context);
       } catch (err) {
         if (err.message === "ReferencedSchemaNotFound")
-          throw new ECObjectsError(ECObjectsStatus.UnableToLocateSchema, `Unable to load schema '${schemaKey.name}'. A referenced schema could not be found.`);
+          throw new ECObjectsError(ECObjectsStatus.UnableToLocateSchema, `Unable to load schema '${parentSchema.name}'. A referenced schema could not be found.`);
         throw (err);
       }
     }
-
-    // Schema should always be found (!) as it was just added to the context above.
-    return context.getSchemaSync(schemaStub.schemaKey)!;
   }
 
   private isEC31Schema(schemaText: string): boolean {
@@ -325,7 +347,14 @@ class StubSchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLocat
    * @param data The Schema XML as a string.
    */
   private getSchemaAlias(schemaXml: string): string {
-    const match = schemaXml.match(/<ECSchema.*alias="(?<alias>\w+)"/) as any;
+    let match: any;
+
+    if (isECv2Schema(schemaXml)) {
+      match = schemaXml.match(/<ECSchema.*nameSpacePrefix="(?<alias>\w+)"/) as any;
+    } else {
+      match = schemaXml.match(/<ECSchema.*alias="(?<alias>\w+)"/) as any;
+    }
+
     if (!match || !match.groups.alias) {
       throw new ECObjectsError(ECObjectsStatus.InvalidSchemaXML, `Could not find the ECSchema 'alias' tag in the given file.`);
     }

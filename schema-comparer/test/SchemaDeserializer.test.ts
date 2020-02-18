@@ -14,7 +14,7 @@ import { SchemaDeserializer } from "../src/SchemaDeserializer";
 use(chaiAsPromised);
 
 describe("SchemaDeserializer", () => {
-  const assetDeserializationDir = path.join(utils.getAssetsDir(), "xml-deserialization");
+  const assetDeserializationDir = utils.getXmlDeserializationDir();
   const refDir = path.join(assetDeserializationDir, "references");
 
   it("With references in separate folder, should successfully deserialize schema.", async () => {
@@ -41,7 +41,7 @@ describe("SchemaDeserializer", () => {
     const schemaPath = path.join(refDir, "SchemaD.ecschema.xml");
 
     const context = new EC.SchemaContext();
-    const result = await deserializer.deserializeXmlFile(schemaPath, context);
+    const result = await deserializer.deserializeXmlFile(schemaPath, context, [assetDeserializationDir]);
 
     const schemaD = await context.getSchema(new EC.SchemaKey("SchemaD", 4, 0, 4), EC.SchemaMatchType.Exact);
     expect(schemaD).not.to.be.undefined;
@@ -136,6 +136,22 @@ describe("SchemaDeserializer", () => {
     expect(unit!.schemaKey.toString()).to.eql("Units.01.00.00");
 
     const format = comprehensiveSchema.getReferenceSync("Formats");
+    expect(format).not.to.be.undefined;
+    expect(format!.schemaKey.toString()).to.eql("Formats.01.00.00");
+  });
+
+  it("should successfully parse test AecUnits schema", async () => {
+    const schemaContext = new EC.SchemaContext();
+    const deserializer = new SchemaDeserializer();
+    const schemaPath = path.join(assetDeserializationDir, "AecUnits.01.00.01.ecschema.xml");
+    const aecUnits = await deserializer.deserializeXmlFile(schemaPath, schemaContext);
+    expect(aecUnits).not.to.be.undefined;
+
+    const unit = aecUnits.getReferenceSync("Units");
+    expect(unit).not.to.be.undefined;
+    expect(unit!.schemaKey.toString()).to.eql("Units.01.00.00");
+
+    const format = aecUnits.getReferenceSync("Formats");
     expect(format).not.to.be.undefined;
     expect(format!.schemaKey.toString()).to.eql("Formats.01.00.00");
   });
