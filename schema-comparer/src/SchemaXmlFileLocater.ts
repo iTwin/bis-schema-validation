@@ -165,9 +165,15 @@ export class SchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLo
 
     const stubContext = new SchemaContext();
     stubContext.addLocater(locater);
+
+    // If the Formats schema can't be found, proceed with locating schemas. If it's actually
+    // required, errors will occur later on in the process
     const schemaStub = locater.getSchemaSync(formatsKey, SchemaMatchType.LatestWriteCompatible, stubContext);
-    if (!schemaStub)
-      throw new ECObjectsError(ECObjectsStatus.UnableToLocateSchema, `Unable to locate the Formats schema which is required when loading EC 3.1 schemas.`);
+    if (!schemaStub) {
+      // tslint:disable-next-line: no-console
+      console.log("The Formats schema could not be found. This may result in errors if the EC 3.1 schema requires it.");
+      return;
+    }
 
     const orderedSchemas = SchemaGraphUtil.buildDependencyOrderedSchemaList(schemaStub);
     this.loadSchemasFromNative(orderedSchemas, formatsKey, context, nativeContext);
