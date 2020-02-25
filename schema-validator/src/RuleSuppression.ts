@@ -86,6 +86,7 @@ export async function schemaClassDisplayLabelMustBeUnique(diagnostic: EC.AnyDiag
   const schemaList = [
     { name: "ProcessPidGraphical", version: new  EC.ECVersion(1, 99, 99) },
     { name: "RoadRailPhysical", version: new  EC.ECVersion(1, 99, 99) },
+    { name: "ProcessPhysical", version: new EC.ECVersion(1, 0, 1) },
   ];
 
   const schemaInfo = findSchemaInfo(schemaList, schema);
@@ -110,6 +111,35 @@ export async function schemaClassDisplayLabelMustBeUnique(diagnostic: EC.AnyDiag
     if (diagnostic.messageArgs && diagnostic.messageArgs.includes("RoadRailPhysical.TypicalSectionPointDefinition")
       && diagnostic.messageArgs.includes("RoadRailPhysical.GenericTypicalSectionPointDefinition")
       && diagnostic.messageArgs.includes("Typical Section Point Definition"))
+      return true;
+
+    return false;
+  }
+
+  if (schemaInfo.name === "ProcessPhysical") {
+    if (diagnostic.messageArgs && diagnostic.messageArgs.includes("ProcessPhysical.PipeAlignment")
+        && diagnostic.messageArgs.includes("ProcessPhysical.PIPE_GUIDE")
+        && diagnostic.messageArgs.includes("Pipe Guide"))
+      return true;
+
+    if (diagnostic.messageArgs && diagnostic.messageArgs.includes("ProcessPhysical.PipeClamp")
+        && diagnostic.messageArgs.includes("ProcessPhysical.PIPE_CLAMP")
+        && diagnostic.messageArgs.includes("Pipe Clamp"))
+      return true;
+
+    if (diagnostic.messageArgs && diagnostic.messageArgs.includes("ProcessPhysical.RiserClamp")
+        && diagnostic.messageArgs.includes("ProcessPhysical.RISER_CLAMP")
+        && diagnostic.messageArgs.includes("Riser Clamp"))
+      return true;
+
+    if (diagnostic.messageArgs && diagnostic.messageArgs.includes("ProcessPhysical.SpringHanger")
+        && diagnostic.messageArgs.includes("ProcessPhysical.SPRING_HANGER")
+        && diagnostic.messageArgs.includes("Spring Hanger"))
+      return true;
+
+    if (diagnostic.messageArgs && diagnostic.messageArgs.includes("ProcessPhysical.PLANT_BASE_OBJECT")
+        && diagnostic.messageArgs.includes("ProcessPhysical.DESIGN_STATE")
+        && diagnostic.messageArgs.includes("Design State"))
       return true;
 
     return false;
@@ -210,7 +240,7 @@ export async function propertyShouldNotBeOfTypeLong(_diagnostic: EC.AnyDiagnosti
 
 function findSchemaInfo(schemaList: ISchemaInfo[], schema: EC.Schema): ISchemaInfo | undefined {
   const matches = schemaList.filter((value) => value.name === schema.name);
-  const index = matches.findIndex((value) => 0 < value.version.compare(schema.schemaKey.version));
+  const index = matches.findIndex((value) => 0 <= value.version.compare(schema.schemaKey.version));
 
   return index >= 0 ? matches[index] : undefined;
 }

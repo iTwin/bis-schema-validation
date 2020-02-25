@@ -219,8 +219,64 @@ describe("Rule Suppression Tests", () => {
     });
 
     it("Schema RoadRailPhysical.02.00.00, rule not suppressed.", async () => {
-      createSchema("RoadRailPhysical", 2);
+      createSchema("RoadRailPhysical", 1, 0, 1);
       const diag = new BisRules.Diagnostics.SchemaClassDisplayLabelMustBeUnique(schema, ["ClassA", "ClassB", "TestLabel"]);
+
+      const result = await ruleSuppressionSet.schemaClassDisplayLabelMustBeUnique(diag, schema);
+      expect(result).to.be.false;
+    });
+
+    it("Schema ProcessPhysical.01.00.01 with classes PipeAlignment and PIPE_GUIDE, rule suppressed.", async () => {
+      createSchema("ProcessPhysical", 1, 0, 1);
+      const diag = new BisRules.Diagnostics.SchemaClassDisplayLabelMustBeUnique(schema, ["ProcessPhysical.PipeAlignment", "ProcessPhysical.PIPE_GUIDE", "Pipe Guide"]);
+
+      const result = await ruleSuppressionSet.schemaClassDisplayLabelMustBeUnique(diag, schema);
+      expect(result).to.be.true;
+    });
+
+    it("Schema ProcessPhysical.01.00.01 with classes PipeClamp and PIPE_CLAMP, rule suppressed.", async () => {
+      createSchema("ProcessPhysical", 1, 0, 1);
+      const diag = new BisRules.Diagnostics.SchemaClassDisplayLabelMustBeUnique(schema, ["ProcessPhysical.PipeClamp", "ProcessPhysical.PIPE_CLAMP", "Pipe Clamp"]);
+
+      const result = await ruleSuppressionSet.schemaClassDisplayLabelMustBeUnique(diag, schema);
+      expect(result).to.be.true;
+    });
+
+    it("Schema ProcessPhysical.01.00.01 with classes RiserClamp and RISER_CLAMP, rule suppressed.", async () => {
+      createSchema("ProcessPhysical", 1, 0, 1);
+      const diag = new BisRules.Diagnostics.SchemaClassDisplayLabelMustBeUnique(schema, ["ProcessPhysical.RiserClamp", "ProcessPhysical.RISER_CLAMP", "Riser Clamp"]);
+
+      const result = await ruleSuppressionSet.schemaClassDisplayLabelMustBeUnique(diag, schema);
+      expect(result).to.be.true;
+    });
+
+    it("Schema ProcessPhysical.01.00.01 with classes SpringHanger and SPRING_HANGER, rule suppressed.", async () => {
+      createSchema("ProcessPhysical", 1, 0, 1);
+      const diag = new BisRules.Diagnostics.SchemaClassDisplayLabelMustBeUnique(schema, ["ProcessPhysical.SpringHanger", "ProcessPhysical.SPRING_HANGER", "Spring Hanger"]);
+
+      const result = await ruleSuppressionSet.schemaClassDisplayLabelMustBeUnique(diag, schema);
+      expect(result).to.be.true;
+    });
+
+    it("Schema ProcessPhysical.01.00.01 with classes PLANT_BASE_OBJECT and DESIGN_STATE, rule suppressed.", async () => {
+      createSchema("ProcessPhysical", 1, 0, 1);
+      const diag = new BisRules.Diagnostics.SchemaClassDisplayLabelMustBeUnique(schema, ["ProcessPhysical.PLANT_BASE_OBJECT", "ProcessPhysical.DESIGN_STATE", "Design State"]);
+
+      const result = await ruleSuppressionSet.schemaClassDisplayLabelMustBeUnique(diag, schema);
+      expect(result).to.be.true;
+    });
+
+    it("Schema ProcessPhysical.01.00.01 with unknown class, rule not suppressed.", async () => {
+      createSchema("ProcessPhysical", 1, 0, 1);
+      const diag = new BisRules.Diagnostics.SchemaClassDisplayLabelMustBeUnique(schema, ["ProcessPhysical.ClassA", "ProcessPhysical.ClassB", "TestLabel"]);
+
+      const result = await ruleSuppressionSet.schemaClassDisplayLabelMustBeUnique(diag, schema);
+      expect(result).to.be.false;
+    });
+
+    it("Schema ProcessPhysical.01.01.01, rule not suppressed.", async () => {
+      createSchema("ProcessPhysical", 1, 1, 1);
+      const diag = new BisRules.Diagnostics.SchemaClassDisplayLabelMustBeUnique(schema, ["ProcessPhysical.PipeAlignment", "ProcessPhysical.PIPE_GUIDE", "Pipe Guide"]);
 
       const result = await ruleSuppressionSet.schemaClassDisplayLabelMustBeUnique(diag, schema);
       expect(result).to.be.false;

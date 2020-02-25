@@ -97,13 +97,13 @@ describe("SchemaXmlFileLocater.test", () => {
     expect(() => nativeLocater.getSchemaSync(schemaKey, EC.SchemaMatchType.Exact, context)).to.throw(Error, "TestError");
   });
 
-  it("EC 3.1 Schema, formats schema not locatable, getSchema throws.", async () => {
+  it("EC 3.1 Schema does not require Formats/Unit schema, formats schema not locatable, getSchema succeeds.", async () => {
     const nativeLocater = new SchemaXmlFileLocater();
     nativeLocater.addSchemaSearchPaths([assetsDir]);
     const context = new EC.SchemaContext();
     const schemaKey = new EC.SchemaKey("SchemaB", 1, 1, 1);
-
-    expect(() => nativeLocater.getSchemaSync(schemaKey, EC.SchemaMatchType.Exact, context)).to.throw(EC.ECObjectsError, "Unable to locate the Formats schema which is required when loading EC 3.1 schemas.");
+    const schema = nativeLocater.getSchemaSync(schemaKey, EC.SchemaMatchType.Exact, context);
+    expect(schema).to.not.be.undefined;
   });
 
   describe("fromECv2String", () => {
