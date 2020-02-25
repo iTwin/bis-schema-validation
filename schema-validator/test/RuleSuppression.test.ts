@@ -6,7 +6,7 @@
 import * as path from "path";
 import * as utils from "./utilities/utils";
 import { SchemaDeserializer } from "../src/SchemaDeserializer";
-import { SchemaContext, KindOfQuantity, RelationshipClass, Schema, SchemaKey, ECVersion, ECClass, PrimitiveType} from "@bentley/ecschema-metadata";
+import { SchemaContext, KindOfQuantity, RelationshipClass, Schema, SchemaKey, ECVersion, ECClass, PrimitiveType, AnyClass} from "@bentley/ecschema-metadata";
 import { MutableClass } from "@bentley/ecschema-metadata/lib/Metadata/Class";
 import { MutableSchema } from "@bentley/ecschema-metadata/lib/Metadata/Schema";
 import * as ruleSuppressionSet from "../src/RuleSuppression";
@@ -161,7 +161,7 @@ describe("Rule Suppression Tests", () => {
     });
   });
 
-  describe("BIS-007(Schema class display label must be unique) Tests", async () => {
+  describe("BIS-007 & BIS-100 (display label must be unique) Tests", async () => {
     it("Random schema name, rule not suppressed.", async () => {
       createSchema("TestSchema", 1);
       const diag = new BisRules.Diagnostics.SchemaClassDisplayLabelMustBeUnique(schema, ["ClassA", "ClassB", "TestLabel"]);
@@ -258,14 +258,6 @@ describe("Rule Suppression Tests", () => {
       expect(result).to.be.true;
     });
 
-    it("Schema ProcessPhysical.01.00.01 with classes PLANT_BASE_OBJECT and DESIGN_STATE, rule suppressed.", async () => {
-      createSchema("ProcessPhysical", 1, 0, 1);
-      const diag = new BisRules.Diagnostics.SchemaClassDisplayLabelMustBeUnique(schema, ["ProcessPhysical.PLANT_BASE_OBJECT", "ProcessPhysical.DESIGN_STATE", "Design State"]);
-
-      const result = await ruleSuppressionSet.schemaClassDisplayLabelMustBeUnique(diag, schema);
-      expect(result).to.be.true;
-    });
-
     it("Schema ProcessPhysical.01.00.01 with unknown class, rule not suppressed.", async () => {
       createSchema("ProcessPhysical", 1, 0, 1);
       const diag = new BisRules.Diagnostics.SchemaClassDisplayLabelMustBeUnique(schema, ["ProcessPhysical.ClassA", "ProcessPhysical.ClassB", "TestLabel"]);
@@ -279,6 +271,53 @@ describe("Rule Suppression Tests", () => {
       const diag = new BisRules.Diagnostics.SchemaClassDisplayLabelMustBeUnique(schema, ["ProcessPhysical.PipeAlignment", "ProcessPhysical.PIPE_GUIDE", "Pipe Guide"]);
 
       const result = await ruleSuppressionSet.schemaClassDisplayLabelMustBeUnique(diag, schema);
+      expect(result).to.be.false;
+    });
+  });
+
+  describe("BIS-100 (display label must be unique) Tests", async () => {
+    it("Schema ProcessPhysical.01.00.01 with class PLANT_BASE_OBJECT with DESIGN_STATE and DesignState property, duplicate label, rule suppressed.", async () => {
+      createSchema("ProcessPhysical", 1, 0, 1);
+      const testClass = await mutableSchema.createEntityClass("PLANT_BASE_OBJECT");
+      const diag = new BisRules.Diagnostics.MultiplePropertiesInClassWithSameLabel(testClass, ["ProcessPhysical.PLANT_BASE_OBJECT", "DESIGN_STATE", "DesignState", "Design State"]);
+
+      const result = await ruleSuppressionSet.multiplePropertiesInClassWithSameLabel(diag, testClass);
+      expect(result).to.be.true;
+    });
+
+    it("Schema ProcessPhysical.01.00.01 with unknown class, rule not suppressed.", async () => {
+      createSchema("ProcessPhysical", 1, 0, 1);
+      const testClass = await mutableSchema.createEntityClass("PLANT_BASE_OBJECT");
+      const diag = new BisRules.Diagnostics.MultiplePropertiesInClassWithSameLabel(testClass, ["ProcessPhysical.Unknown", "DESIGN_STATE", "DesignState", "Design State"]);
+
+      const result = await ruleSuppressionSet.multiplePropertiesInClassWithSameLabel(diag, testClass);
+      expect(result).to.be.false;
+    });
+
+    it("Schema ProcessPhysical.01.00.01 with different label, rule not suppressed.", async () => {
+      createSchema("ProcessPhysical", 1, 0, 1);
+      const testClass = await mutableSchema.createEntityClass("PLANT_BASE_OBJECT");
+      const diag = new BisRules.Diagnostics.MultiplePropertiesInClassWithSameLabel(testClass, ["ProcessPhysical.PLANT_BASE_OBJECT", "Unknown", "DesignState", "Design State"]);
+
+      const result = await ruleSuppressionSet.multiplePropertiesInClassWithSameLabel(diag, testClass);
+      expect(result).to.be.false;
+    });
+
+    it("Schema ProcessPhysical.01.00.01 with different properties, rule not suppressed.", async () => {
+      createSchema("ProcessPhysical", 1, 0, 1);
+      const testClass = await mutableSchema.createEntityClass("PLANT_BASE_OBJECT");
+      const diag = new BisRules.Diagnostics.MultiplePropertiesInClassWithSameLabel(testClass, ["ProcessPhysical.PLANT_BASE_OBJECT", "DESIGN_STATE_TEST", "DesignState", "Unknown"]);
+
+      const result = await ruleSuppressionSet.multiplePropertiesInClassWithSameLabel(diag, testClass);
+      expect(result).to.be.false;
+    });
+
+    it("Schema ProcessPhysical.01.01.01, rule not suppressed.", async () => {
+      createSchema("ProcessPhysical", 1, 1, 1);
+      const testClass = await mutableSchema.createEntityClass("PLANT_BASE_OBJECT");
+      const diag = new BisRules.Diagnostics.MultiplePropertiesInClassWithSameLabel(testClass as AnyClass, ["ProcessPhysical.PLANT_BASE_OBJECT", "DESIGN_STATE", "DesignState", "Design State"]);
+
+      const result = await ruleSuppressionSet.multiplePropertiesInClassWithSameLabel(diag, testClass);
       expect(result).to.be.false;
     });
   });
