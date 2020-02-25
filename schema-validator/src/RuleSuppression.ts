@@ -17,6 +17,10 @@ export const ruleSuppressionSet: EC.IRuleSuppressionSet = {
     // BIS-007
     { ruleCode: DiagnosticCodes.SchemaClassDisplayLabelMustBeUnique, rule: schemaClassDisplayLabelMustBeUnique },
   ],
+  classRuleSuppressions: [
+    // BIS-100
+    { ruleCode: DiagnosticCodes.MultiplePropertiesInClassWithSameLabel, rule: multiplePropertiesInClassWithSameLabel },
+  ],
   entityRuleSuppressions: [
     // BIS-605
     { ruleCode: DiagnosticCodes.ElementUniqueAspectMustHaveCorrespondingRelationship, rule: elementUniqueAspectMustHaveCorrespondingRelationship },
@@ -137,13 +141,27 @@ export async function schemaClassDisplayLabelMustBeUnique(diagnostic: EC.AnyDiag
         && diagnostic.messageArgs.includes("Spring Hanger"))
       return true;
 
-    if (diagnostic.messageArgs && diagnostic.messageArgs.includes("ProcessPhysical.PLANT_BASE_OBJECT")
-        && diagnostic.messageArgs.includes("ProcessPhysical.DESIGN_STATE")
-        && diagnostic.messageArgs.includes("Design State"))
-      return true;
-
     return false;
   }
+
+  return false;
+}
+
+/** Rule BIS-100 rule suppression. */
+export async function multiplePropertiesInClassWithSameLabel(diagnostic: EC.AnyDiagnostic, ecClass: EC.AnyClass): Promise<boolean> {
+  const schemaList = [
+    { name: "ProcessPhysical", version: new  EC.ECVersion(1, 0, 1) },
+  ];
+
+  const schemaInfo = findSchemaInfo(schemaList, ecClass.schema);
+  if (!schemaInfo)
+    return false;
+
+  if (diagnostic.messageArgs && diagnostic.messageArgs.includes("ProcessPhysical.PLANT_BASE_OBJECT")
+      && diagnostic.messageArgs.includes("DesignState")
+      && diagnostic.messageArgs.includes("DESIGN_STATE")
+      && diagnostic.messageArgs.includes("Design State"))
+    return true;
 
   return false;
 }
