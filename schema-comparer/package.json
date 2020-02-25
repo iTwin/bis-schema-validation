@@ -20,7 +20,7 @@
     "test": "betools test-tsnode --testDir=./test/",
     "test:watch": "betools test-tsnode --testDir=./test/ --watch",
     "cover": "nyc node ./node_modules/@bentley/build-tools/scripts/test-tsnode.js --testDir=./test/ --tscPaths",
-    "cli-dev": "cd .. & rush publish --publish --pack --include-all & npm install -g ./common/temp/artifacts/packages/bentley-schema-comparer-0.2.8.tgz"
+    "cli-dev": "cd .. & rush publish --publish --pack --include-all & npm install -g ./common/temp/artifacts/packages/bentley-schema-comparer-0.2.24.tgz"
   },
   "keywords": [
     "Bentley",

@@ -152,7 +152,12 @@ export class SchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLo
     const schemaStub = stubLocater.loadSchema(schemaText, schemaPath, refMatchType);
     const orderedSchemas = SchemaGraphUtil.buildDependencyOrderedSchemaList(schemaStub);
 
-    this.loadSchemasFromNative(orderedSchemas, schemaKey, context, nativeContext);
+    // Remove main schema (last), we have to load that separately based on configured SchemaMatchType
+    orderedSchemas.pop();
+    this.loadSchemasFromNative(orderedSchemas, schemaKey, context, nativeContext, SchemaMatchType.LatestWriteCompatible);
+
+    // Now load main schema
+    this.loadSchemasFromNative([schemaStub], schemaKey, context, nativeContext, refMatchType);
 
     // Schema should always be found (!) as it was just added to the context above.
     return context.getSchemaSync(schemaStub.schemaKey)!;
@@ -165,19 +170,25 @@ export class SchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLo
 
     const stubContext = new SchemaContext();
     stubContext.addLocater(locater);
+
+    // If the Formats schema can't be found, proceed with locating schemas. If it's actually
+    // required, errors will occur later on in the process
     const schemaStub = locater.getSchemaSync(formatsKey, SchemaMatchType.LatestWriteCompatible, stubContext);
-    if (!schemaStub)
-      throw new ECObjectsError(ECObjectsStatus.UnableToLocateSchema, `Unable to locate the Formats schema which is required when loading EC 3.1 schemas.`);
+    if (!schemaStub) {
+      // tslint:disable-next-line: no-console
+      console.log("The Formats schema could not be found. This may result in errors if the EC 3.1 schema requires it.");
+      return;
+    }
 
     const orderedSchemas = SchemaGraphUtil.buildDependencyOrderedSchemaList(schemaStub);
-    this.loadSchemasFromNative(orderedSchemas, formatsKey, context, nativeContext);
+    this.loadSchemasFromNative(orderedSchemas, formatsKey, context, nativeContext, SchemaMatchType.LatestWriteCompatible);
   }
 
-  private loadSchemasFromNative(schemaStubs: Schema[], parentSchema: SchemaKey, context: SchemaContext, nativeContext: ECSchemaXmlContext) {
+  private loadSchemasFromNative(schemaStubs: Schema[], parentSchema: SchemaKey, context: SchemaContext, nativeContext: ECSchemaXmlContext, matchType: SchemaMatchType) {
     for (const currentStub of schemaStubs) {
       try {
         // If schema is already in the context skip it
-        if (context.getCachedSchemaSync(currentStub.schemaKey, SchemaMatchType.Exact))
+        if (context.getCachedSchemaSync(currentStub.schemaKey, matchType))
           continue;
 
         const xmlKey = currentStub.schemaKey as FileSchemaKey;
@@ -253,7 +264,7 @@ class StubSchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLocat
     const schema = new Schema(context, maxCandidate, alias) as T;
     context.addSchemaSync(schema);
 
-    this.addSchemaReferences(schema, context, matchType);
+    this.addSchemaReferences(schema, context, SchemaMatchType.LatestWriteCompatible);
     return schema;
   }
 
