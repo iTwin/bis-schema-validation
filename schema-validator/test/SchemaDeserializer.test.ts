@@ -158,7 +158,7 @@ describe("SchemaDeserializer", () => {
 
   it("should successfully parse schema PartialComprehensiveSchema", async () => {
     const schemaContext = new EC.SchemaContext();
-    const deserializer = new SchemaDeserializer(EC.SchemaMatchType.LatestWriteCompatible);
+    const deserializer = new SchemaDeserializer();
     const schemaPath = path.join(assetDeserializationDir, "PartialComprehensiveSchema.ecschema.xml");
     const partialComprehensiveSchema = await deserializer.deserializeXmlFile(schemaPath, schemaContext);
     expect(partialComprehensiveSchema).not.to.be.undefined;
