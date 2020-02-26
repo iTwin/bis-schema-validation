@@ -15,16 +15,6 @@ import { SchemaXmlFileLocater } from "./SchemaXmlFileLocater";
  * Deserializes ECXml and ECJson schema files.
  */
 export class SchemaDeserializer {
-  private _referenceMatchType: EC.SchemaMatchType;
-
-  /**
-   * Initializes a new SchemaDeserializer
-   * @param referenceMatchType Optional SchemaMatchType to use when locating referenced schemas. Default is LatestWriteCompatible.
-   */
-  constructor(referenceMatchType: EC.SchemaMatchType = EC.SchemaMatchType.LatestWriteCompatible) {
-    this._referenceMatchType = referenceMatchType;
-  }
-
   /**
    * Deserializes the specified ECXml schema file in the given schema context.
    * @param schemaFilePath The path to a valid ECXml schema file.
@@ -92,7 +82,7 @@ export class SchemaDeserializer {
   }
 
   private configureFileLocater(schemaContext: EC.SchemaContext, referencePaths: string[]): SchemaXmlFileLocater {
-    const xmlSchemaLocater = new SchemaXmlFileLocater(this._referenceMatchType);
+    const xmlSchemaLocater = new SchemaXmlFileLocater();
     schemaContext.addLocater(xmlSchemaLocater);
     xmlSchemaLocater.addSchemaSearchPaths(referencePaths);
     return xmlSchemaLocater;

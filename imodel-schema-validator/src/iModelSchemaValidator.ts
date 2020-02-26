@@ -184,7 +184,7 @@ async function verifyIModelSchemas() {
 
       } else {
         validationResult.releasedSchemaSha1 = getSha1Hash(program.signOffExecutable, releasedSchemaPath, releasedSchemaDirectories.join(";"), true);
-        const comparisonResult = await compareSchema(iModelSchemaPath, releasedSchemaPath, [iModelSchemaDir], releasedSchemaDirectories, program.output, SchemaMatchType.Exact, validationResult);
+        const comparisonResult = await compareSchema(iModelSchemaPath, releasedSchemaPath, [iModelSchemaDir], releasedSchemaDirectories, program.output, validationResult);
         // @bentley/schema-comparer is auto pushing the input schema path to reference array.
         // Removing this path to fix the bug in finding releasedSchemaFile otherwise it finds the iModel schema path
         const iModelSchemaDirIndex = releasedSchemaDirectories.indexOf(iModelSchemaDir);
@@ -196,7 +196,7 @@ async function verifyIModelSchemas() {
           console.log("Schema ", name, version, " has 'no' or 'reference only' difference with the released version.");
           console.log("Loading released schema in the iModel's context...");
           validationResult.releasedSchemaIModelContextSha1 = getSha1Hash(program.signOffExecutable, releasedSchemaPath, iModelSchemaDir, false);
-          await compareSchema(iModelSchemaPath, releasedSchemaPath, [iModelSchemaDir], [iModelSchemaDir], program.output, SchemaMatchType.LatestWriteCompatible, validationResult);
+          await compareSchema(iModelSchemaPath, releasedSchemaPath, [iModelSchemaDir], [iModelSchemaDir], program.output, validationResult);
         }
       }
     }
@@ -264,10 +264,10 @@ async function validateSchema(imodelSchemaPath: string, referencePaths: string[]
 /**
  * Performs Schema Comparison and returns the a boolean telling that a schema has reference only difference or not
  */
-async function compareSchema(imodelSchemaPath: string, releasedSchemaPath: string, imodelSchemaReferencePaths: string[], releasedSchemaReferencePaths: string[], output: string, schemaMatchType: SchemaMatchType, validationResult: IModelValidationResult): Promise<IComparisonResult[]> {
+async function compareSchema(imodelSchemaPath: string, releasedSchemaPath: string, imodelSchemaReferencePaths: string[], releasedSchemaReferencePaths: string[], output: string, validationResult: IModelValidationResult): Promise<IComparisonResult[]> {
   let comparisonResults;
   try {
-    const compareOptions: CompareOptions = new CompareOptions(imodelSchemaPath, releasedSchemaPath, imodelSchemaReferencePaths, releasedSchemaReferencePaths, output, schemaMatchType);
+    const compareOptions: CompareOptions = new CompareOptions(imodelSchemaPath, releasedSchemaPath, imodelSchemaReferencePaths, releasedSchemaReferencePaths, output);
     comparisonResults = await SchemaComparison.compare(compareOptions);
     for (const line of comparisonResults) {
       switch (line.resultType) {

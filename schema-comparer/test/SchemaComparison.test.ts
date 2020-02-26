@@ -80,15 +80,23 @@ describe("SchemaValidater Tests", () => {
     expect(results[9].resultText).to.equal(" +\t\tSchema(SchemaD)");
   });
 
-  it("Compare, schema A reference exact version not found, results contain error", async () => {
+  it("Compare, schema A reference exact version not found, results returned successfully", async () => {
     const schemaAFile = path.resolve(assetsDir, "RefVersionTest.ecschema.xml");
     const schemaBFile = path.resolve(referencesDir, "SchemaB.ecschema.xml");
     const options = new CompareOptions(schemaAFile, schemaBFile, [referencesDir], []);
 
     const results = await SchemaComparison.compare(options);
 
-    expect(results[1].resultType).to.equal(ComparisonResultType.Error);
-    expect(results[1].resultText).to.contain(`Could not locate the referenced schema, SchemaB.2.2.1, of RefVersionTest`);
+    expect(results[0].resultText).to.equal("Schema Comparison Results");
+    expect(results[1].resultText).to.equal(" -Schema(RefVersionTest)");
+    expect(results[2].resultText).to.equal(" -\tSchemaKey: RefVersionTest.01.01.01 -> SchemaB.02.02.02");
+    expect(results[3].resultText).to.equal(" -\tAlias: a -> b");
+    expect(results[4].resultText).to.equal(" -\tLabel: RefVersionTest -> SchemaB");
+    expect(results[5].resultText).to.equal(" -\tSchemaReferences");
+    expect(results[6].resultText).to.equal(" -\t\tSchema(SchemaB)");
+    expect(results[7].resultText).to.equal(" +Schema(SchemaB)");
+    expect(results[8].resultText).to.equal(" +\tSchemaReferences");
+    expect(results[9].resultText).to.equal(" +\t\tSchema(SchemaC)");
   });
 
   it("Compare, schema B reference exact version not found, results contain error", async () => {
@@ -106,7 +114,7 @@ describe("SchemaValidater Tests", () => {
   it("Compare, schema A reference with older minor version, ref match type LatestReadCompatible, latest read version found", async () => {
     const schemaAFile = path.resolve(assetsDir, "RefVersionTest.ecschema.xml");
     const schemaBFile = path.resolve(referencesDir, "SchemaB.ecschema.xml");
-    const options = new CompareOptions(schemaAFile, schemaBFile, [referencesDir], [], undefined, SchemaMatchType.LatestReadCompatible);
+    const options = new CompareOptions(schemaAFile, schemaBFile, [referencesDir], [], undefined);
 
     const results = await SchemaComparison.compare(options);
 
@@ -117,7 +125,7 @@ describe("SchemaValidater Tests", () => {
   it("Compare, schema B reference with older minor version, ref match type LatestReadCompatible, latest read version found", async () => {
     const schemaAFile = path.resolve(assetsDir, "SchemaB.ecschema.xml");
     const schemaBFile = path.resolve(assetsDir, "RefVersionTest.ecschema.xml");
-    const options = new CompareOptions(schemaAFile, schemaBFile, [deserializationDir], [referencesDir], undefined, SchemaMatchType.LatestReadCompatible);
+    const options = new CompareOptions(schemaAFile, schemaBFile, [deserializationDir], [referencesDir], undefined);
 
     const results = await SchemaComparison.compare(options);
 

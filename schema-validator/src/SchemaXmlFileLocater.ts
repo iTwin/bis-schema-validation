@@ -18,23 +18,9 @@ function isECv2Schema(schemaText: string): boolean {
  * A SchemaLocater implementation for locating XML Schema files
  * from the file system using configurable search paths. For EC v31 and v2 schemas, the
  * native context (ECSchemaXmlContext from imodeljs-backend) will used for deserialization.
- * The [[SchemaMatchType]] can be specified in the constructor which will override the match
- * type specified in the [[SchemaXmlFileLocater.getSchema]] method.
  * @internal This is a workaround the current lack of a full xml parser.
  */
 export class SchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLocater {
-  private _matchType?: SchemaMatchType;
-
-  /**
-   * Initializes a new [[SchemaXmlFileLocater]] object.
-   * @param matchType If specified, the SchemaMatchType will override the match type specified
-   * in subsequent calls to [[SchemaXmlFileLocater.getSchema]].
-   */
-  constructor(matchType?: SchemaMatchType) {
-    super();
-    this._matchType = matchType;
-  }
-
   /**
    * Attempts to retrieve a Schema with the given SchemaKey by using the configured search paths
    * to locate the XML Schema file from the file system.
@@ -55,7 +41,6 @@ export class SchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLo
    * @param context The SchemaContext that will control the lifetime of the schema.
    */
   public getSchemaSync<T extends Schema>(key: SchemaKey, matchType: SchemaMatchType, context: SchemaContext): T | undefined {
-    matchType = this._matchType ? this._matchType : matchType;
     return this.loadSchema(key, matchType, context);
   }
 
@@ -86,8 +71,7 @@ export class SchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLo
     this.addSchemaSearchPaths([path.dirname(schemaPath)]);
 
     if (this.isEC31Schema(schemaText) || isECv2Schema(schemaText)) {
-      const refMatchType = this._matchType ? this._matchType : matchType;
-      return this.getSchemaFromNativeEnv(key, schemaText, schemaPath, context, refMatchType) as T;
+      return this.getSchemaFromNativeEnv(key, schemaText, schemaPath, context) as T;
     }
 
     const parser = new DOMParser();
@@ -138,7 +122,7 @@ export class SchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLo
     return new ECVersion(+read, 0, +minor);
   }
 
-  private getSchemaFromNativeEnv(schemaKey: SchemaKey, schemaText: string, schemaPath: string, context: SchemaContext, refMatchType: SchemaMatchType): Schema {
+  private getSchemaFromNativeEnv(schemaKey: SchemaKey, schemaText: string, schemaPath: string, context: SchemaContext): Schema {
     const nativeContext = new ECSchemaXmlContext();
     for (const refPath of this.searchPaths) {
       nativeContext.addSchemaPath(refPath);
@@ -149,15 +133,10 @@ export class SchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLo
 
     this.preloadUnitsFormatsSchema(stubLocater, context, nativeContext);
 
-    const schemaStub = stubLocater.loadSchema(schemaText, schemaPath, refMatchType);
+    const schemaStub = stubLocater.loadSchema(schemaText, schemaPath);
     const orderedSchemas = SchemaGraphUtil.buildDependencyOrderedSchemaList(schemaStub);
 
-    // Remove main schema (last), we have to load that separately based on configured SchemaMatchType
-    orderedSchemas.pop();
     this.loadSchemasFromNative(orderedSchemas, schemaKey, context, nativeContext, SchemaMatchType.LatestWriteCompatible);
-
-    // Now load main schema
-    this.loadSchemasFromNative([schemaStub], schemaKey, context, nativeContext, refMatchType);
 
     // Schema should always be found (!) as it was just added to the context above.
     return context.getSchemaSync(schemaStub.schemaKey)!;
@@ -218,9 +197,8 @@ class StubSchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLocat
    * Loads a Schema from disk as a Promise.
    * @param schemaPath The path to the Schema file.
    * @param context The SchemaContext that will control the lifetime of the schema.
-   * @param refMatchType The SchemaMatchType to use when locating schema references.
    */
-  public loadSchema(schemaText: string, schemaPath: string, refMatchType: SchemaMatchType): Schema {
+  public loadSchema(schemaText: string, schemaPath: string): Schema {
     this.addSchemaSearchPaths([path.dirname(schemaPath)]);
     const key = this.getSchemaKey(schemaText);
     const alias = this.getSchemaAlias(schemaText);
@@ -229,7 +207,7 @@ class StubSchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLocat
 
     // Load the schema and return it
     const schema = new Schema(context, new FileSchemaKey(key, schemaPath, schemaText), alias);
-    this.addSchemaReferences(schema, context, refMatchType);
+    this.addSchemaReferences(schema, context, SchemaMatchType.LatestWriteCompatible);
     return schema;
   }
 
