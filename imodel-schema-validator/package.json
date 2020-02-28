@@ -33,7 +33,7 @@
     "@bentley/imodeljs-common": "2.0.0-dev.5",
     "@bentley/schema-comparer": "^0.2.27",
     "@bentley/schema-validator": "0.2.27",
-    "@bentley/oidc-signin-tool": "2.0.0-dev.5",
+    "@bentley/oidc-signin-tool": "2.0.0-dev.18",
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
     "httpntlm": "~1",

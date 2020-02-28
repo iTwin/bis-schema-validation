@@ -14,7 +14,7 @@ export class LaunchCodesProvider {
 
     const tmpDir: any = process.env.TMP;
     const date: any = new Date();
-    const launchCodesFilePath: string = path.join (tmpDir, "BIM_" + date.getHours() + "_launch_codes.json");
+    const launchCodesFilePath: string = path.join(tmpDir, "BIM_" + date.getHours() + "_launch_codes.json");
 
     return launchCodesFilePath;
   }
@@ -27,8 +27,8 @@ export class LaunchCodesProvider {
     const launchCodesFilePath = this.getLaunchCodesFilePath();
     let launchCodes;
 
-    if ( fs.existsSync(launchCodesFilePath) === false) {
-      if ( mustHave === true) {
+    if (fs.existsSync(launchCodesFilePath) === false) {
+      if (mustHave === true) {
         const error = "No recently downloaded launch codes found in  " + launchCodesFilePath + " please get those first (see --getLaunchCodes)";
         throw new Error(error);
       } else {
@@ -48,7 +48,7 @@ export class LaunchCodesProvider {
    * @param password: The domain password.
    */
   public async getCheckSumInfoFromWiki(username: string, password: string) {
-    return new Promise( (resolve: any, reject: any) => {
+    return new Promise((resolve: any, reject: any) => {
       httpntlm.get({
         url: "http:///bin/view.pl/Main/BisChecksum",
         username: username,
@@ -74,7 +74,7 @@ export class LaunchCodesProvider {
     let checker: number = 0;
     let count: number = 0;
     let checksums: any = [];
-    const data: any = { };
+    const data: any = {};
     data.checksumInfo = [];
     const lines = input.split(/\r?\n/);
 
@@ -127,7 +127,7 @@ export class LaunchCodesProvider {
         }
       }
     }
-    fs.writeFile (jsonFile, JSON.stringify(data),  (err) => {
+    fs.writeFile(jsonFile, JSON.stringify(data), (err) => {
       if (err) throw err;
     },
     );
@@ -162,11 +162,11 @@ export class LaunchCodesProvider {
         if (launchCodes.checksumInfo[index]["SHA1Checksum"] === sha1) {
           result = true;
           schemaIndex = index;
-          return {result, schemaIndex};
+          return { result, schemaIndex };
         }
       }
     }
-    return {result, schemaIndex};
+    return { result, schemaIndex };
   }
 
   /**
@@ -179,6 +179,12 @@ export class LaunchCodesProvider {
     let schemaIndex: number | undefined;
     for (let index = 0; index < launchCodes.checksumInfo.length; index++) {
       if (launchCodes.checksumInfo[index]["SchemaName"].toLowerCase() === schemaName.toLowerCase() && launchCodes.checksumInfo[index]["Comment"].toLowerCase().includes(version)) {
+        schemaIndex = index;
+        return schemaIndex;
+      }
+    }
+    for (let index = 0; index < launchCodes.checksumInfo.length; index++) {
+      if (launchCodes.checksumInfo[index]["SchemaName"].toLowerCase() === schemaName.toLowerCase()) {
         schemaIndex = index;
         return schemaIndex;
       }
