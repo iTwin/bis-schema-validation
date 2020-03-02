@@ -335,7 +335,7 @@ function displayResults(results: IModelValidationResult[]) {
   let checksumResult;
 
   const launchCodesProvider: LaunchCodesProvider = new LaunchCodesProvider();
-  const launchCodes = launchCodesProvider.getLaunchCodeDict(true);
+  const launchCodes = launchCodesProvider.getSchemaInventory(program.baseSchemaRefDir);
 
   console.log("\niModel schemas:");
   for (const item of results) {
@@ -431,18 +431,11 @@ function displayResults(results: IModelValidationResult[]) {
       console.log("       Approvals validation is skipped intentionally for dynamic schemas");
       approvalSkipped++;
     } else {
-      let approvalResult = launchCodesProvider.checkApprovalAndVerification(item.name, checksumResult.schemaIndex, launchCodes);
+      let approvalResult = launchCodesProvider.checkApprovalAndVerification(item.name, checksumResult.schemaIndex, checksumResult.inventorySchema, launchCodes);
       if (!approvalResult) {
-        // Loading released schema into imodel context check will not match sha1 hash from wiki json so index of that schema will not found for approval validation
-        // Now here we are handling this specific case by first finding the index of schema in wiki json and then check for approval verification
-        try {
-          const rawVersion = item.version.split(".");
-          const version: string = Number(rawVersion[0]) + "." + Number(rawVersion[1]) + "." + Number(rawVersion[2]);
-          const schemaIndex = launchCodesProvider.findSchemaIndex(item.name, version, launchCodes);
-          approvalResult = launchCodesProvider.checkApprovalAndVerification(item.name, schemaIndex, launchCodes);
-        } catch (err) {
-          console.log("Unable to create the version string: " + err);
-        }
+        const schemaInfo = launchCodesProvider.findSchemaInfo(item.name, item.version, launchCodes);
+        approvalResult = launchCodesProvider.checkApprovalAndVerification(item.name, schemaInfo.schemaIndex, schemaInfo.inventorySchema, launchCodes);
+
       }
 
       if (approvalResult) {
@@ -474,43 +467,10 @@ function displayResults(results: IModelValidationResult[]) {
   }
 }
 
-/**
- * Gets the launch codes information main function
- */
-async function getLaunchCodes() {
-
-  if (process.argv.length < 6) {
-    console.log("usage : iModelSchemaValidator.js --getLaunchCodes");
-    console.log("   options:");
-    console.log("        --domUserName      : Domain username");
-    console.log("        --domPassword      : Domain password");
-    throw new Error("Some thing missing from required arguments and their values.");
-  }
-
-  if (!program.domUserName || !program.domPassword) {
-    console.log(chalk.default.red("Invalid input. For help use the '-h' option."));
-    process.exit(1);
-  }
-
-  const launchCodesProvider: LaunchCodesProvider = new LaunchCodesProvider();
-  const data: any = await launchCodesProvider.getCheckSumInfoFromWiki(program.domUserName, program.domPassword);
-  if (data.toString().includes("Unauthorized")) {
-    throw new Error("Unauthorized request. Please verify domain username and password arguments.");
-  }
-  const launchCodesFilePath = launchCodesProvider.getLaunchCodesFilePath();
-  launchCodesProvider.writeCheckSumToJson(launchCodesFilePath, data);
-  console.log("Data is written to the JSON file: " + launchCodesFilePath);
-}
-
 if (program.verifyIModelSchemas === true) {
   verifyIModelSchemas().then()
     .catch((error) => {
       console.error(error);
       process.exit(1);
     });
-} else if (program.getLaunchCodes === true) {
-  getLaunchCodes().catch((error) => {
-    console.error(error);
-    process.exit(1);
-  });
 }

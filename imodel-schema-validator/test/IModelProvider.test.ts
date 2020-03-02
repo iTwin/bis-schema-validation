@@ -62,7 +62,7 @@ describe("IModelProvider Tests", async () => {
     expect(iModelId).to.equal("5ea12a05-bf33-4d44-a0d2-32d70bead4fc");
   });
 
-  it.skip("Get IModel Id Env PROD, Get an iModel id by its name", async () => {
+  it("Get IModel Id Env PROD, Get an iModel id by its name", async () => {
     IModelProvider.setupHost("PROD", briefcaseDir);
     const requestContext = await IModelProvider.oidcConnect(oidcUserName, oidcPassword, 0);
     const iModelId: any = await IModelProvider.getIModelId(requestContext, "c5a41e90-669b-47a6-8a3f-8b7287234a58", "test");
