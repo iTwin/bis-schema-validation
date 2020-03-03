@@ -9,7 +9,7 @@ dependencies:
   '@bentley/imodeljs-clients-backend': 2.0.0-dev.5_2b4572e24c02df8d667325d2c1a34dc9
   '@bentley/imodeljs-common': 2.0.0-dev.5_c4b9e0d3498fa3bf3b07553fe84081b9
   '@bentley/imodeljs-i18n': 2.0.0-dev.5_44eec033d7af799c25c4e0af5f7d121e
-  '@bentley/oidc-signin-tool': 2.0.0-dev.18
+  '@bentley/oidc-signin-tool': 2.0.0-dev.20
   '@rush-temp/bis-rules': 'file:projects/bis-rules.tgz_40f978a37624c51bbec01a36ea96a651'
   '@rush-temp/imodel-schema-validator': 'file:projects/imodel-schema-validator.tgz_b98c3cd08d97da4ee6943aeb9f16e049'
   '@rush-temp/schema-comparer': 'file:projects/schema-comparer.tgz'
@@ -148,10 +148,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-Wjg9/6VBbbG3Pe3/0xH/0HiPsxw=
-  /@bentley/bentleyjs-core/2.0.0-dev.18:
+  /@bentley/bentleyjs-core/2.0.0-dev.20:
     dev: false
     resolution:
-      integrity: sha1-z3Xdoz8ZHA4nmNoA7c36jn97ipQ=
+      integrity: sha1-BkvztZIwLp14PeAUKyeCzXyIXqM=
   /@bentley/bentleyjs-core/2.0.0-dev.5:
     dev: false
     resolution:
@@ -216,14 +216,14 @@ packages:
       '@bentley/imodeljs-i18n': ^2.0.0-dev.5
     resolution:
       integrity: sha1-vZ2/dR20xfL1Fy5UnaK2HSM9d9A=
-  /@bentley/geometry-core/2.0.0-dev.18_28917a9a2ff05d39a118072907a96dc2:
+  /@bentley/geometry-core/2.0.0-dev.20_6908eeaed87378c910d9417b0a149f18:
     dependencies:
-      '@bentley/bentleyjs-core': 2.0.0-dev.18
+      '@bentley/bentleyjs-core': 2.0.0-dev.20
     dev: false
     peerDependencies:
-      '@bentley/bentleyjs-core': ^2.0.0-dev.18
+      '@bentley/bentleyjs-core': ^2.0.0-dev.20
     resolution:
-      integrity: sha1-4yDr26gictj/Cg1nQxpkQg4kGJY=
+      integrity: sha1-SPG4z1vFRkIJlj5ZiGKG/oFw+dE=
   /@bentley/geometry-core/2.0.0-dev.5_44eec033d7af799c25c4e0af5f7d121e:
     dependencies:
       '@bentley/bentleyjs-core': 2.0.0-dev.5
@@ -287,9 +287,9 @@ packages:
       '@bentley/imodeljs-common': ^2.0.0-dev.5
     resolution:
       integrity: sha1-6qxfYTzAzZ1sDmyjO4d09k+rQoU=
-  /@bentley/imodeljs-clients/2.0.0-dev.18_28917a9a2ff05d39a118072907a96dc2:
+  /@bentley/imodeljs-clients/2.0.0-dev.20_6908eeaed87378c910d9417b0a149f18:
     dependencies:
-      '@bentley/bentleyjs-core': 2.0.0-dev.18
+      '@bentley/bentleyjs-core': 2.0.0-dev.20
       deep-assign: 2.0.0
       js-base64: 2.5.2
       oidc-client: 1.10.1
@@ -299,9 +299,9 @@ packages:
       xpath: 0.0.27
     dev: false
     peerDependencies:
-      '@bentley/bentleyjs-core': ^2.0.0-dev.18
+      '@bentley/bentleyjs-core': ^2.0.0-dev.20
     resolution:
-      integrity: sha1-0uME/6r8SmsNh0OEg70mxqaruWQ=
+      integrity: sha1-4Vz6baooB8dsP6AsY2JErZgdUM4=
   /@bentley/imodeljs-clients/2.0.0-dev.5_b21a4031c2b96fb85c7fa941637566a8:
     dependencies:
       '@bentley/bentleyjs-core': 2.0.0-dev.5
@@ -349,16 +349,16 @@ packages:
     requiresBuild: true
     resolution:
       integrity: sha1-DUCnAzS0VwzO16anf2iGS0Ygui4=
-  /@bentley/oidc-signin-tool/2.0.0-dev.18:
+  /@bentley/oidc-signin-tool/2.0.0-dev.20:
     dependencies:
-      '@bentley/bentleyjs-core': 2.0.0-dev.18
-      '@bentley/geometry-core': 2.0.0-dev.18_28917a9a2ff05d39a118072907a96dc2
-      '@bentley/imodeljs-clients': 2.0.0-dev.18_28917a9a2ff05d39a118072907a96dc2
+      '@bentley/bentleyjs-core': 2.0.0-dev.20
+      '@bentley/geometry-core': 2.0.0-dev.20_6908eeaed87378c910d9417b0a149f18
+      '@bentley/imodeljs-clients': 2.0.0-dev.20_6908eeaed87378c910d9417b0a149f18
       openid-client: 3.14.0
       puppeteer: 1.19.0
     dev: false
     resolution:
-      integrity: sha1-ThvaSZkt2511N6WrEdfzPGukesE=
+      integrity: sha1-C9WtQVAPRi2msc7U4X9sg4LfFsg=
   /@fimbul/bifrost/0.21.0_tslint@5.20.1+typescript@3.7.5:
     dependencies:
       '@fimbul/ymir': 0.21.0_tsutils@3.17.1+typescript@3.7.5
@@ -1011,7 +1011,7 @@ packages:
     dependencies:
       clone-response: 1.0.2
       get-stream: 5.1.0
-      http-cache-semantics: 4.0.4
+      http-cache-semantics: 4.1.0
       keyv: 3.1.0
       lowercase-keys: 2.0.0
       normalize-url: 4.5.0
@@ -2198,10 +2198,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-ObDhat2bYFvwqe89nar0hDtMrNI=
-  /http-cache-semantics/4.0.4:
+  /http-cache-semantics/4.1.0:
     dev: false
     resolution:
-      integrity: sha512-Z2EICWNJou7Tr9Bd2M2UqDJq3A9F2ePG9w3lIpjoyuSyXFP9QbniJVu3XQYytuw5ebmG7dXSXO9PgAjJG8DDKA==
+      integrity: sha512-carPklcUh7ROWRK7Cv27RPtdhYhUsela/ue5/jKzjegVvXDqM2ILE9Q2BGn9JZJh1g87cp56su/FgQSzcWS8cQ==
   /http-errors/1.7.3:
     dependencies:
       depd: 1.1.2
@@ -5335,7 +5335,7 @@ packages:
       '@bentley/imodeljs-clients': 2.0.0-dev.5_b21a4031c2b96fb85c7fa941637566a8
       '@bentley/imodeljs-clients-backend': 2.0.0-dev.5_2b4572e24c02df8d667325d2c1a34dc9
       '@bentley/imodeljs-common': 2.0.0-dev.5_c4b9e0d3498fa3bf3b07553fe84081b9
-      '@bentley/oidc-signin-tool': 2.0.0-dev.18
+      '@bentley/oidc-signin-tool': 2.0.0-dev.20
       '@types/chai': 4.2.9
       '@types/mocha': 5.2.7
       '@types/node': 10.12.18
@@ -5357,7 +5357,7 @@ packages:
     peerDependencies:
       '@bentley/imodeljs-i18n': '*'
     resolution:
-      integrity: sha512-mwPxoePUoSfDh/4at93EjYHi6jL2HbFnRKu6dpxXErz902Pxv7XwuG1IHBWK8NlJkbijYge8J9b97gZcsVyVjQ==
+      integrity: sha512-+el+IuuIvYYxTMj46hpq9lFRq1KqYL6MLJnOeJ9ZEuTYZshDGrN2QOTxtF5j4uqqll8rNXr/JEddM2RS5eQYwg==
       tarball: 'file:projects/imodel-schema-validator.tgz'
     version: 0.0.0
   'file:projects/schema-comparer.tgz':
@@ -5441,7 +5441,7 @@ packages:
     dev: false
     name: '@rush-temp/schema-roundtrip'
     resolution:
-      integrity: sha512-6yzT3oGov/nBpC/r8QU3DKe4Y3WzrS2+4cYzsMLW3YzYz5lY+pVCcC+4eZCNWLY5e4S9Pr73xeabBanUlwk1Tg==
+      integrity: sha512-FVgkdRYSTp8ntVSoGECknRHABrN/ix69WlPRt64zb5KVbuwEVtDI7S/yIaf3dWzPa6Fjg0j6mjF8hSoZgoUMng==
       tarball: 'file:projects/schema-roundtrip.tgz'
     version: 0.0.0
   'file:projects/schema-validator.tgz_b98c3cd08d97da4ee6943aeb9f16e049':
@@ -5485,7 +5485,7 @@ packages:
     peerDependencies:
       '@bentley/imodeljs-i18n': '*'
     resolution:
-      integrity: sha512-jqSzagAD/OsGTrnchGnKN3/ofT+xT6pxQHZSySOqezff6egyH0G4i78Pwlv73Zqs8o43qXdfGY+Ak8382wRZLA==
+      integrity: sha512-Z8yPr7pFgbNZk1LBHu1GIo9zpbsie5iX2mFVPGyt1pnD//X/i9R0nILIvUEv75wZG9gsj/rjh3sD8wzGzNRl5Q==
       tarball: 'file:projects/schema-validator.tgz'
     version: 0.0.0
 registry: ''
@@ -5500,7 +5500,7 @@ specifiers:
   '@bentley/imodeljs-clients-backend': 2.0.0-dev.5
   '@bentley/imodeljs-common': 2.0.0-dev.5
   '@bentley/imodeljs-i18n': 2.0.0-dev.5
-  '@bentley/oidc-signin-tool': 2.0.0-dev.18
+  '@bentley/oidc-signin-tool': 2.0.0-dev.20
   '@rush-temp/bis-rules': 'file:./projects/bis-rules.tgz'
   '@rush-temp/imodel-schema-validator': 'file:./projects/imodel-schema-validator.tgz'
   '@rush-temp/schema-comparer': 'file:./projects/schema-comparer.tgz'
