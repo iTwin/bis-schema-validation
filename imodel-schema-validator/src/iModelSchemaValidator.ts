@@ -36,11 +36,12 @@ program.parse(process.argv);
 /**
  * Defines the possible result types for all validations
  */
-enum iModelValidationResultTypes {
+export enum iModelValidationResultTypes {
   Passed,
   Failed,
   Skipped,
   Error,
+  ReferenceDifferenceWarning,
   NotFound,
 }
 
@@ -184,20 +185,14 @@ async function verifyIModelSchemas() {
 
       } else {
         validationResult.releasedSchemaSha1 = getSha1Hash(program.signOffExecutable, releasedSchemaPath, releasedSchemaDirectories.join(";"), true);
-        const comparisonResult = await compareSchema(iModelSchemaPath, releasedSchemaPath, [iModelSchemaDir], releasedSchemaDirectories, program.output, validationResult);
+        await compareSchema(iModelSchemaPath, releasedSchemaPath, [iModelSchemaDir], releasedSchemaDirectories, program.output, validationResult);
         // @bentley/schema-comparer is auto pushing the input schema path to reference array.
         // Removing this path to fix the bug in finding releasedSchemaFile otherwise it finds the iModel schema path
         const iModelSchemaDirIndex = releasedSchemaDirectories.indexOf(iModelSchemaDir);
         if (iModelSchemaDirIndex !== -1) { releasedSchemaDirectories.splice(iModelSchemaDirIndex, 1); }
-        const referenceOnly = referenceOnlyDifference(comparisonResult);
 
-        // If difference status is reference only then check if loading in the same context fixes the issue.
-        if (validationResult.comparer === iModelValidationResultTypes.Passed || referenceOnly) {
-          console.log("Schema ", name, version, " has 'no' or 'reference only' difference with the released version.");
-          console.log("Loading released schema in the iModel's context...");
+        if (validationResult.comparer === iModelValidationResultTypes.Passed || validationResult.comparer === iModelValidationResultTypes.ReferenceDifferenceWarning)
           validationResult.releasedSchemaIModelContextSha1 = getSha1Hash(program.signOffExecutable, releasedSchemaPath, iModelSchemaDir, false);
-          await compareSchema(iModelSchemaPath, releasedSchemaPath, [iModelSchemaDir], [iModelSchemaDir], program.output, validationResult);
-        }
       }
     }
     validationResult.sha1 = getSha1Hash(program.signOffExecutable, iModelSchemaPath, iModelSchemaDir, true);
@@ -264,14 +259,23 @@ async function validateSchema(imodelSchemaPath: string, referencePaths: string[]
 /**
  * Performs Schema Comparison and returns the a boolean telling that a schema has reference only difference or not
  */
-async function compareSchema(imodelSchemaPath: string, releasedSchemaPath: string, imodelSchemaReferencePaths: string[], releasedSchemaReferencePaths: string[], output: string, validationResult: IModelValidationResult): Promise<IComparisonResult[]> {
+export async function compareSchema(imodelSchemaPath: string, releasedSchemaPath: string, imodelSchemaReferencePaths: string[], releasedSchemaReferencePaths: string[], output: string, validationResult: IModelValidationResult): Promise<IComparisonResult[]> {
   let comparisonResults;
   try {
     const compareOptions: CompareOptions = new CompareOptions(imodelSchemaPath, releasedSchemaPath, imodelSchemaReferencePaths, releasedSchemaReferencePaths, output);
     comparisonResults = await SchemaComparison.compare(compareOptions);
+    let deltaExists = false;
     for (const line of comparisonResults) {
       switch (line.resultType) {
         case ComparisonResultType.Delta:
+          if (referenceDifference(line)) {
+            if (!deltaExists)
+              validationResult.comparer = iModelValidationResultTypes.ReferenceDifferenceWarning;
+            console.log(chalk.default.yellow(line.resultText));
+            break;
+          }
+          if (line.compareCode)
+            deltaExists = true;
           validationResult.comparer = iModelValidationResultTypes.Failed;
           console.log(chalk.default.yellow(line.resultText));
           break;
@@ -294,27 +298,15 @@ async function compareSchema(imodelSchemaPath: string, releasedSchemaPath: strin
 /**
  * Find out that difference of two schema's is reference only or not
  */
-export function referenceOnlyDifference(comparisonResults: IComparisonResult[]): boolean {
-  let referenceOnly = false;
-  try {
-    for (const line of comparisonResults) {
-      if (line.compareCode) {
-        // check for we have "missing reference" or "reference version different" issues
-        if (line.compareCode === SchemaCompareCodes.SchemaReferenceMissing || line.compareCode === SchemaCompareCodes.SchemaReferenceDelta) {
-          referenceOnly = true;
-        } else {
-          // other errors are present
-          console.log(line.compareCode);
-          referenceOnly = false;
-          break;
-        }
-      }
-    }
+function referenceDifference(comparisonResult: IComparisonResult): boolean {
+  if (!comparisonResult.compareCode)
+    return  false;
 
-  } catch (error) {
-    console.log(chalk.default.red("An error occurred while finding the difference type: " + error.message));
-  }
-  return referenceOnly;
+    // check for we have "missing reference" or "reference version different" issues
+  if (comparisonResult.compareCode === SchemaCompareCodes.SchemaReferenceDelta)
+    return true;
+
+  return false;
 }
 
 /**
@@ -327,6 +319,7 @@ function displayResults(results: IModelValidationResult[]) {
   let validSkipped = 0;
   let diffChanged = 0;
   let diffErrors = 0;
+  let diffWarnings = 0;
   let diffSkipped = 0;
   let checksumSkipped = 0;
   let checksumFailed = 0;
@@ -374,6 +367,11 @@ function displayResults(results: IModelValidationResult[]) {
         console.log("   > Schema content verification                   ", chalk.default.red("<failed>"));
         console.log("       Schema has changes with released one. See log for diff. (search for \"BEGIN VALIDATION AND DIFFERENCE AUDIT: %s.%s\")", item.name, item.version);
         diffChanged++;
+        break;
+      case iModelValidationResultTypes.ReferenceDifferenceWarning:
+        console.log("   > Schema content verification                   ", chalk.default.red("<warning>"));
+        console.log("       Schema has reference only differences with released one. See log for diff. (search for \"BEGIN VALIDATION AND DIFFERENCE AUDIT: %s.%s\")", item.name, item.version);
+        diffWarnings++;
         break;
       case iModelValidationResultTypes.Error:
         console.log("   > Schema content verification                   ", chalk.default.red("<failed>"));
@@ -454,6 +452,7 @@ function displayResults(results: IModelValidationResult[]) {
   console.log("Differences Found:                 ", diffChanged);
   console.log("Differences Skipped:               ", diffSkipped);
   console.log("Differences Errors:                ", diffErrors);
+  console.log("Differences Warnings:              ", diffWarnings);
   console.log("Checksums Failed:                  ", checksumFailed);
   console.log("Checksums Skipped:                 ", checksumSkipped);
   console.log("Approval and Verification Failed:  ", approvalFailed);

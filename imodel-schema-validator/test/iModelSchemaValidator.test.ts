@@ -3,7 +3,7 @@
 * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
 * Licensed under the MIT License. See LICENSE.md in the project root for license terms.
 *--------------------------------------------------------------------------------------------*/
-import { isDynamicSchema, referenceOnlyDifference, ruleViolationError } from "../src/iModelSchemaValidator";
+import { isDynamicSchema, compareSchema, ruleViolationError, IModelValidationResult, iModelValidationResultTypes } from "../src/iModelSchemaValidator";
 import { SchemaComparison, CompareOptions} from "@bentley/schema-comparer";
 import { expect } from "chai";
 import * as path from "path";
@@ -26,18 +26,15 @@ describe ("iModelSchemaValidator Tests", async () => {
     const schemaBFile = path.resolve(path.normalize(__dirname + "/assets/"), "SchemaB.ecschema.xml");
     const references = path.normalize(__dirname + "/assets/references/");
     const outputDir = path.normalize(__dirname + "/../lib/test/");
-    let referenceOnly = true;
+    const validationResult: IModelValidationResult = { name: "SchemaB", version: "01.01.01" };
+
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir, { recursive: true });
-      const compareOptions: CompareOptions = new CompareOptions(schemaAFile, schemaBFile, [], [references], outputDir);
-      const comparisonResults = await SchemaComparison.compare(compareOptions);
-      referenceOnly = referenceOnlyDifference(comparisonResults);
+      await compareSchema(schemaAFile, schemaBFile, [], [references], outputDir, validationResult);
     } else {
-      const compareOptions: CompareOptions = new CompareOptions(schemaAFile, schemaBFile, [], [references], outputDir);
-      const comparisonResults = await SchemaComparison.compare(compareOptions);
-      referenceOnly = referenceOnlyDifference(comparisonResults);
+      await compareSchema(schemaAFile, schemaBFile, [], [references], outputDir, validationResult);
     }
-    expect(referenceOnly).to.equal(false);
+    expect(validationResult.comparer).to.equal(iModelValidationResultTypes.Failed);
   });
 
   it ("Schema Comparison, Difference is reference only", async () => {
@@ -45,18 +42,15 @@ describe ("iModelSchemaValidator Tests", async () => {
     const schemaBFile = path.resolve(path.normalize(__dirname + "/assets/subAssets/"), "SchemaD.ecschema.xml");
     const references = path.normalize(__dirname + "/assets/references/");
     const outputDir = path.normalize(__dirname + "/../lib/test/");
-    let referenceOnly = false;
+    const validationResult: IModelValidationResult = { name: "SchemaD", version: "01.00.01" };
+
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir, { recursive: true });
-      const compareOptions: CompareOptions = new CompareOptions(schemaAFile, schemaBFile, [], [references], outputDir);
-      const comparisonResults = await SchemaComparison.compare(compareOptions);
-      referenceOnly = referenceOnlyDifference(comparisonResults);
+      await compareSchema(schemaAFile, schemaBFile, [references], [], outputDir, validationResult);
     } else {
-      const compareOptions: CompareOptions = new CompareOptions(schemaAFile, schemaBFile, [], [references], outputDir);
-      const comparisonResults = await SchemaComparison.compare(compareOptions);
-      referenceOnly = referenceOnlyDifference(comparisonResults);
+      await compareSchema(schemaAFile, schemaBFile, [references], [], outputDir, validationResult);
     }
-    expect(referenceOnly).to.equal(true);
+    expect(validationResult.comparer).to.equal(iModelValidationResultTypes.ReferenceDifferenceWarning);
   });
 
   it ("Rule Violation, Violation is of type error", async () => {
