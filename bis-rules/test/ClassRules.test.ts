@@ -77,6 +77,23 @@ describe("Class Rule Tests", () => {
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
 
+    it("Two properties with same label, dynamic schema, rule passes.", async () => {
+      (schema as MutableSchema).addCustomAttribute({ className: "CoreCustomAttributes.DynamicSchema" });
+      await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty", PrimitiveType.String);
+      const prop1 = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty1", PrimitiveType.String);
+      const prop2 = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty2", PrimitiveType.String);
+      // tslint:disable-next-line:no-string-literal
+      prop1!["_label"] = "TestLabel";
+      // tslint:disable-next-line:no-string-literal
+      prop2!["_label"] = "TestLabel";
+
+      const result = await Rules.multiplePropertiesInClassWithSameLabel(testClass);
+
+      for await (const _diagnostic of result!) {
+        expect(false, "Rule should have passed").to.be.true;
+      }
+    });
+
     it("Two properties with same label, different category, rule passes.", async () => {
       await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty", PrimitiveType.String);
       const prop1 = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty1", PrimitiveType.String);

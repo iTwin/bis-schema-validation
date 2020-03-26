@@ -228,6 +228,20 @@ describe("Schema Rule Tests", () => {
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
+
+    it("Duplicate display labels in dynamic schema, rule passes.", async () => {
+      const schema = new Schema(new SchemaContext(), "TestDynamicSchema", "ts", 1, 0, 0);
+      (schema as MutableSchema).addCustomAttribute({ className: "CoreCustomAttributes.DynamicSchema" });
+      const mutable = schema as MutableSchema;
+      mutable.addItem(new TestClass(schema, "TestEntityA", "LabelA"));
+      mutable.addItem(new TestClass(schema, "TestEntityB", "LabelA"));
+
+      const result = await Rules.schemaClassDisplayLabelMustBeUnique(schema);
+
+      for await (const _diagnostic of result!) {
+        expect(false, "Rule should have passed").to.be.true;
+      }
+    });
   });
 
   describe("SchemaShouldNotUseDeprecatedSchema", () => {
