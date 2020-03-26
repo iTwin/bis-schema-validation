@@ -7,6 +7,7 @@ import sinon = require("sinon");
 import { expect } from "chai";
 import * as Rules from "../../bis-rules/src/BisRules";
 import { SchemaContext, Schema, RelationshipClass } from "@bentley/ecschema-metadata";
+import { MutableSchema } from "@bentley/ecschema-metadata/lib/Metadata/Schema";
 import { DiagnosticCategory, DiagnosticType } from "@bentley/ecschema-metadata/lib/Validation/Diagnostic";
 import { createSchemaJsonWithItems } from "./utils/DeserializationHelpers";
 import { BisTestHelper } from "./utils/BisTestHelper";
@@ -786,6 +787,39 @@ describe("RelationshipClass Rule Tests", () => {
         expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
+    });
+
+    it("Embedding RelationshipClass with 'Has' in name, dynamic schema, rule passes.", async () => {
+      const schemaJson = {
+        TestHasRelationship: {
+          schemaItemType: "RelationshipClass",
+          strength: "embedding",
+          strengthDirection: "forward",
+          source: {
+            multiplicity: "(1..1)",
+            polymorphic: true,
+            roleLabel: "owns",
+            constraintClasses: [
+            ],
+          },
+          target: {
+            multiplicity: "(0..*)",
+            polymorphic: true,
+            roleLabel: "is owned by",
+            constraintClasses: [
+            ],
+          },
+        },
+      };
+      const schema = await getTestSchema(schemaJson);
+      (schema as MutableSchema).addCustomAttribute({ className: "CoreCustomAttributes.DynamicSchema" });
+      const relationship = (await schema.getItem("TestHasRelationship")) as RelationshipClass;
+
+      const result = await Rules.embeddingRelationshipsMustNotHaveHasInName(relationship);
+
+      for await (const _diagnostic of result!) {
+        expect(false, "Rule should have passed").to.be.true;
+      }
     });
 
     it("Holding RelationshipClass with 'Has' in name, rule passes.", async () => {

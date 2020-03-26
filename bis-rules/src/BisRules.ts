@@ -456,6 +456,10 @@ export async function* schemaWithDynamicInNameMustHaveDynamicSchemaCA(schema: EC
  * BIS Rule: Classes within the same schema cannot have the same display label.
  */
 export async function* schemaClassDisplayLabelMustBeUnique(schema: EC.Schema): AsyncIterable<EC.SchemaDiagnostic<any[]>> {
+  // Dynamic schema can have matching display labels
+  if (schema.customAttributes && schema.customAttributes.has("CoreCustomAttributes.DynamicSchema"))
+    return;
+
   const existingLabels = new Map<string, EC.ECClass>();
   for (const ecClass of schema.getClasses()) {
     if (undefined === ecClass.label)
@@ -785,6 +789,10 @@ export async function* embeddingRelationshipsMustNotHaveHasInName(relationshipCl
   if (relationshipClass.strength !== EC.StrengthType.Embedding)
     return;
 
+  // Dynamic schemas are excluded from this rule
+  if (relationshipClass.schema.customAttributes && relationshipClass.schema.customAttributes.has("CoreCustomAttributes.DynamicSchema"))
+    return;
+
   if (relationshipClass.name.includes("Has"))
     yield new Diagnostics.EmbeddingRelationshipsMustNotHaveHasInName(relationshipClass, [relationshipClass.fullName]);
 }
@@ -1058,6 +1066,10 @@ export async function* propertyMustNotUseCustomHandledPropertyRestriction(proper
 /** BIS Rule: Properties within the same class and category cannot have the same display label. */
 export async function* multiplePropertiesInClassWithSameLabel(ecClass: EC.AnyClass): AsyncIterable<EC.ClassDiagnostic<any[]>> {
   if (!ecClass.properties)
+    return;
+
+  // Dynamic schema can have matching display labels
+  if (ecClass.schema.customAttributes && ecClass.schema.customAttributes.has("CoreCustomAttributes.DynamicSchema"))
     return;
 
   const visitedProperties: EC.Property[] = [];
