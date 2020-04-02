@@ -3,7 +3,7 @@
 * Licensed under the MIT License. See LICENSE.md in the project root for license terms.
 *--------------------------------------------------------------------------------------------*/
 
-import { BriefcaseIModelDb, IModelHost, IModelHostConfiguration, OpenParams, AuthorizedBackendRequestContext } from "@bentley/imodeljs-backend";
+import { BriefcaseDb, IModelHost, IModelHostConfiguration, OpenParams, AuthorizedBackendRequestContext } from "@bentley/imodeljs-backend";
 import { IModelHubClient, AccessToken, Config } from "@bentley/imodeljs-clients";
 import { TestOidcConfiguration, TestUserCredentials, TestOidcClient } from "@bentley/oidc-signin-tool";
 import { IModelVersion } from "@bentley/imodeljs-common";
@@ -117,7 +117,7 @@ export class IModelProvider {
       throw new Error("iModel either not exist or not found!");
     }
 
-    const iModel: BriefcaseIModelDb = await BriefcaseIModelDb.open(requestContext, projectId, iModelId, OpenParams.fixedVersion(), IModelVersion.latest());
+    const iModel: BriefcaseDb = await BriefcaseDb.open(requestContext, projectId, iModelId, OpenParams.fixedVersion(), IModelVersion.latest());
 
     if (!iModel.isOpen) {
       const error = "iModel not open: " + iModelName;
