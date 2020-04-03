@@ -33,7 +33,7 @@ describe("Class Rule Tests", () => {
       // tslint:disable-next-line:no-string-literal
       prop2!["_label"] = "TestLabel";
 
-      const result = await Rules.multiplePropertiesInClassWithSameLabel(testClass);
+      const result = Rules.multiplePropertiesInClassWithSameLabel(testClass);
 
       let resultHasEntries = false;
       for await (const diagnostic of result!) {
@@ -62,7 +62,7 @@ describe("Class Rule Tests", () => {
       // tslint:disable-next-line:no-string-literal
       prop2!["_category"] = new DelayedPromiseWithProps(category.key, async () => category) as LazyLoadedSchemaItem<PropertyCategory>;
 
-      const result = await Rules.multiplePropertiesInClassWithSameLabel(testClass);
+      const result = Rules.multiplePropertiesInClassWithSameLabel(testClass);
 
       let resultHasEntries = false;
       for await (const diagnostic of result!) {
@@ -87,7 +87,7 @@ describe("Class Rule Tests", () => {
       // tslint:disable-next-line:no-string-literal
       prop2!["_label"] = "TestLabel";
 
-      const result = await Rules.multiplePropertiesInClassWithSameLabel(testClass);
+      const result = Rules.multiplePropertiesInClassWithSameLabel(testClass);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -110,7 +110,7 @@ describe("Class Rule Tests", () => {
       // tslint:disable-next-line:no-string-literal
       prop2!["_category"] = new DelayedPromiseWithProps(category2.key, async () => category2) as LazyLoadedSchemaItem<PropertyCategory>;
 
-      const result = await Rules.multiplePropertiesInClassWithSameLabel(testClass);
+      const result = Rules.multiplePropertiesInClassWithSameLabel(testClass);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -131,7 +131,7 @@ describe("Class Rule Tests", () => {
       // tslint:disable-next-line:no-string-literal
       prop2!["_category"] = new DelayedPromiseWithProps(category.key, async () => category) as LazyLoadedSchemaItem<PropertyCategory>;
 
-      const result = await Rules.multiplePropertiesInClassWithSameLabel(testClass);
+      const result = Rules.multiplePropertiesInClassWithSameLabel(testClass);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -158,51 +158,51 @@ describe("Class Rule Tests", () => {
             appliesTo: "Any",
             description: "Applied to an ECClass to indicate that a C++ subclass of DgnDomain::Handler will supply behavior for it at run-time. This custom attribute may only be used by BisCore or other core schemas.",
             modifier: "sealed",
-            schemaItemType: "CustomAttributeClass"
+            schemaItemType: "CustomAttributeClass",
           },
 
           TestEntity: {
             modifier: "none",
             schemaItemType: "EntityClass",
             customAttributes: [
-              { className: "BisCore.ClassHasHandler" }
+              { className: "BisCore.ClassHasHandler" },
             ],
             properties: [
               {
                 name: "IntProps",
                 type: "PrimitiveProperty",
-                typeName: "int"
-              }
-            ]
+                typeName: "int",
+              },
+            ],
           },
         },
       };
-      const schema = await Schema.fromJson(schemaJson, schemaContext);
+      const testSchema = await Schema.fromJson(schemaJson, schemaContext);
 
-      const testEntity = await schema.getItem<AnyClass>("TestEntity");
+      const testEntity = await testSchema.getItem<AnyClass>("TestEntity");
       expect(testEntity !== undefined, "TestEntity should be within TestSchema").to.be.true;
       expect(testEntity!.schema.name === schemaName, "TestEntity should be within TestSchema").to.be.true;
       expect(testEntity!.customAttributes!.has("BisCore.ClassHasHandler"), "TestEntity should be within TestSchema").to.be.true;
 
-      const result = await Rules.classHasHandlerCACannotAppliedOutsideCoreSchemas(testEntity!);
+      const result = Rules.classHasHandlerCACannotAppliedOutsideCoreSchemas(testEntity!);
       await testValidation(result, testEntity!);
-    };
+    }
 
     it("ClassHasHandler used inside BisCore, Generic, Functional Schema, Rule Passed", async () => {
       const testValidation = async (result: any, _testEntity: AnyClass) => {
         for await (const _diagnostic of result!) {
           expect(false, "Rule should pass").to.be.true;
         }
-      }
+      };
 
       // BisCore test
-      ClassHasHandlerRuleTest("BisCore", "bis", new SchemaContext(), testValidation);
+      await ClassHasHandlerRuleTest("BisCore", "bis", new SchemaContext(), testValidation);
 
       // Generic test
-      ClassHasHandlerRuleTest("Generic", "generic", await BisTestHelper.getNewContext(), testValidation);
+      await ClassHasHandlerRuleTest("Generic", "generic", await BisTestHelper.getNewContext(), testValidation);
 
       // Functional test
-      ClassHasHandlerRuleTest("Functional", "func", await BisTestHelper.getNewContext(), testValidation);
+      await ClassHasHandlerRuleTest("Functional", "func", await BisTestHelper.getNewContext(), testValidation);
     });
 
     it("ClassHasHandler used outside of BisCore, Generic, Functional Schema, Rule Violated", async () => {
@@ -218,9 +218,9 @@ describe("Class Rule Tests", () => {
           expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
         }
         expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
-      }
+      };
 
-      ClassHasHandlerRuleTest("TestSchema", "ts", await BisTestHelper.getNewContext(), testValidation);
+      await ClassHasHandlerRuleTest("TestSchema", "ts", await BisTestHelper.getNewContext(), testValidation);
     });
   });
 
@@ -233,12 +233,12 @@ describe("Class Rule Tests", () => {
       const deprecatedMutable = deprecatedClass as ECClass as MutableClass;
       deprecatedMutable.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
 
-      const testClass = await mutableSchema.createEntityClass("TestEntity");
-      const testClassMutable = testClass as ECClass as MutableClass;
+      const testEntity = await mutableSchema.createEntityClass("TestEntity");
+      const testClassMutable = testEntity as ECClass as MutableClass;
       testClassMutable.baseClass = new DelayedPromiseWithProps(deprecatedClass.key, async () => deprecatedClass) as LazyLoadedSchemaItem<EntityClass>;
       testClassMutable.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
 
-      const result = await Rules.classShouldNotDerivedFromDeprecatedClass(testClass);
+      const result = Rules.classShouldNotDerivedFromDeprecatedClass(testEntity);
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
       }
@@ -261,7 +261,7 @@ describe("Class Rule Tests", () => {
       normalEntityMutable.baseClass = new DelayedPromiseWithProps(deprecatedClass.key, async () => deprecatedClass) as LazyLoadedSchemaItem<EntityClass>;
       normalEntityMutable.addMixin(deprecatedMixin);
 
-      const result = await Rules.classShouldNotDerivedFromDeprecatedClass(normalEntity);
+      const result = Rules.classShouldNotDerivedFromDeprecatedClass(normalEntity);
       let resultHasEntries = false;
       for await (const diagnostic of result) {
         resultHasEntries = true;
@@ -287,7 +287,7 @@ describe("Class Rule Tests", () => {
       const normalMutable = normalRel as ECClass as MutableClass;
       normalMutable.baseClass = new DelayedPromiseWithProps(deprecatedRel.key, async () => deprecatedRel) as LazyLoadedSchemaItem<RelationshipClass>;
 
-      const result = await Rules.classShouldNotDerivedFromDeprecatedClass(normalRel);
+      const result = Rules.classShouldNotDerivedFromDeprecatedClass(normalRel);
       let resultHasEntries = false;
       for await (const diagnostic of result) {
         resultHasEntries = true;
@@ -326,7 +326,7 @@ describe("Class Rule Tests", () => {
       normalEntityMutable.baseClass = new DelayedPromiseWithProps(indirectDeprecatedClass.key, async () => deprecatedClass) as LazyLoadedSchemaItem<EntityClass>;
       normalEntityMutable.addMixin(indirectDeprecatedMixin);
 
-      const result = await Rules.classShouldNotDerivedFromDeprecatedClass(normalEntity);
+      const result = Rules.classShouldNotDerivedFromDeprecatedClass(normalEntity);
       let resultHasEntries = false;
       for await (const diagnostic of result) {
         resultHasEntries = true;
@@ -348,7 +348,7 @@ describe("Class Rule Tests", () => {
       const normalEntity = await mutableSchema.createEntityClass("Entity");
       normalEntity.baseClass = new DelayedPromiseWithProps(base.key, async () => base) as LazyLoadedSchemaItem<EntityClass>;
 
-      const result = await Rules.classShouldNotDerivedFromDeprecatedClass(normalEntity);
+      const result = Rules.classShouldNotDerivedFromDeprecatedClass(normalEntity);
       for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
@@ -364,7 +364,7 @@ describe("Class Rule Tests", () => {
       const entityMutable = normalEntity as ECClass as MutableClass;
       await entityMutable.createPrimitiveProperty("IntProp", PrimitiveType.Integer);
 
-      const result = await Rules.classShouldNotHaveDeprecatedProperty(normalEntity);
+      const result = Rules.classShouldNotHaveDeprecatedProperty(normalEntity);
       for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
@@ -374,15 +374,15 @@ describe("Class Rule Tests", () => {
       schema = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
       const mutableSchema = schema as MutableSchema;
 
-      const testClass = await mutableSchema.createEntityClass("TestEntity");
-      const testClassMutable = testClass as ECClass as MutableClass;
+      const testEntity = await mutableSchema.createEntityClass("TestEntity");
+      const testClassMutable = testEntity as ECClass as MutableClass;
       testClassMutable.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
 
       const deprecatedProp = await testClassMutable.createPrimitiveProperty("intProp", PrimitiveType.Integer);
       const deprecatedPropMutable = deprecatedProp as Property as MutableProperty;
       deprecatedPropMutable.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
 
-      const result = await Rules.classShouldNotHaveDeprecatedProperty(testClass);
+      const result = Rules.classShouldNotHaveDeprecatedProperty(testEntity);
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
       }
@@ -398,7 +398,7 @@ describe("Class Rule Tests", () => {
       const deprecatedMutable = deprecatedProp as Property as MutableProperty;
       deprecatedMutable.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
 
-      const result = await Rules.classShouldNotHaveDeprecatedProperty(normalEntity);
+      const result = Rules.classShouldNotHaveDeprecatedProperty(normalEntity);
       let resultHasEntries = false;
       for await (const diagnostic of result) {
         resultHasEntries = true;
@@ -427,7 +427,7 @@ describe("Class Rule Tests", () => {
       const entityMutable = normalEntity as ECClass as MutableClass;
       await entityMutable.createStructProperty("structProps", normalStruct);
 
-      const result = await Rules.classShouldNotHavePropertyOfDeprecatedStructClass(normalEntity);
+      const result = Rules.classShouldNotHavePropertyOfDeprecatedStructClass(normalEntity);
       for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
@@ -443,12 +443,12 @@ describe("Class Rule Tests", () => {
       await structMutable.createPrimitiveProperty("stringProps", PrimitiveType.String);
       structMutable.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
 
-      const testClass = await mutableSchema.createEntityClass("TestEntity");
-      const testClassMutable = testClass as ECClass as MutableClass;
+      const testEntity = await mutableSchema.createEntityClass("TestEntity");
+      const testClassMutable = testEntity as ECClass as MutableClass;
       testClassMutable.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
       await testClassMutable.createStructProperty("structProp", deprecatedStruct);
 
-      const result = await Rules.classShouldNotHavePropertyOfDeprecatedStructClass(testClass);
+      const result = Rules.classShouldNotHavePropertyOfDeprecatedStructClass(testEntity);
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
       }
@@ -464,14 +464,14 @@ describe("Class Rule Tests", () => {
       await structMutable.createPrimitiveProperty("stringProps", PrimitiveType.String);
       structMutable.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
 
-      const testClass = await mutableSchema.createEntityClass("TestEntity");
-      const testClassMutable = testClass as ECClass as MutableClass;
+      const testEntity = await mutableSchema.createEntityClass("TestEntity");
+      const testClassMutable = testEntity as ECClass as MutableClass;
 
       const deprecatedProp = await testClassMutable.createStructProperty("structProp", deprecatedStruct);
       const deprecatedPropMutable = deprecatedProp as Property as MutableProperty;
       deprecatedPropMutable.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
 
-      const result = await Rules.classShouldNotHavePropertyOfDeprecatedStructClass(testClass);
+      const result = Rules.classShouldNotHavePropertyOfDeprecatedStructClass(testEntity);
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
       }
@@ -491,12 +491,12 @@ describe("Class Rule Tests", () => {
       await entityMutable.createStructProperty("deprecatedStructProps", deprecatedStruct);
       await entityMutable.createStructArrayProperty("deprecatedStructArrayProps", deprecatedStruct);
 
-      const result = await Rules.classShouldNotHavePropertyOfDeprecatedStructClass(entityClass);
+      const result = Rules.classShouldNotHavePropertyOfDeprecatedStructClass(entityClass);
       let index = 0;
       for await (const diagnostic of result) {
         expect(diagnostic).to.not.be.undefined;
         expect(diagnostic!.ecDefinition).to.equal(entityClass);
-        if (index == 0)
+        if (index === 0)
           expect(diagnostic!.messageArgs).to.eql(["TestSchema.EntityClass", "deprecatedStructProps", "TestSchema.DeprecatedStruct"]);
         else
           expect(diagnostic!.messageArgs).to.eql(["TestSchema.EntityClass", "deprecatedStructArrayProps", "TestSchema.DeprecatedStruct"]);
@@ -523,7 +523,7 @@ describe("Class Rule Tests", () => {
       const entityMutable = entityClass as ECClass as MutableClass;
       entityMutable.addCustomAttribute({ className: "DeprecatedCustomAttribute" });
 
-      const result = await Rules.classShouldNotUseDeprecatedCustomAttributes(entityClass);
+      const result = Rules.classShouldNotUseDeprecatedCustomAttributes(entityClass);
       let index = 0;
       for await (const diagnostic of result) {
         expect(diagnostic).to.not.be.undefined;
@@ -552,7 +552,7 @@ describe("Class Rule Tests", () => {
       entityMutable.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
       entityMutable.addCustomAttribute({ className: "DeprecatedCustomAttribute" });
 
-      const result = await Rules.classShouldNotUseDeprecatedCustomAttributes(entityClass);
+      const result = Rules.classShouldNotUseDeprecatedCustomAttributes(entityClass);
       for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
@@ -568,7 +568,7 @@ describe("Class Rule Tests", () => {
       const entityMutable = entityClass as ECClass as MutableClass;
       entityMutable.addCustomAttribute({ className: "CustomAttribute" });
 
-      const result = await Rules.classShouldNotUseDeprecatedCustomAttributes(entityClass);
+      const result = Rules.classShouldNotUseDeprecatedCustomAttributes(entityClass);
       for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
@@ -582,7 +582,7 @@ describe("Class Rule Tests", () => {
       const entityMutable = entityClass as ECClass as MutableClass;
       entityMutable.addCustomAttribute({ className: "NonExistCA" });
 
-      const result = await Rules.classShouldNotUseDeprecatedCustomAttributes(entityClass);
+      const result = Rules.classShouldNotUseDeprecatedCustomAttributes(entityClass);
       for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
