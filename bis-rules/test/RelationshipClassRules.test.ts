@@ -72,7 +72,7 @@ describe("RelationshipClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
 
-      const result = await Rules.relationshipClassMustNotUseHoldingStrength(relationship);
+      const result = Rules.relationshipClassMustNotUseHoldingStrength(relationship);
 
       let resultHasEntries = false;
       for await (const diagnostic of result!) {
@@ -117,7 +117,7 @@ describe("RelationshipClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
 
-      const result = await Rules.relationshipClassMustNotUseHoldingStrength(relationship);
+      const result = Rules.relationshipClassMustNotUseHoldingStrength(relationship);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -156,7 +156,7 @@ describe("RelationshipClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
 
-      const result = await Rules.relationshipSourceMultiplicityUpperBoundRestriction(relationship);
+      const result = Rules.relationshipSourceMultiplicityUpperBoundRestriction(relationship);
 
       let resultHasEntries = false;
       for await (const diagnostic of result!) {
@@ -201,7 +201,7 @@ describe("RelationshipClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
 
-      const result = await Rules.relationshipSourceMultiplicityUpperBoundRestriction(relationship);
+      const result = Rules.relationshipSourceMultiplicityUpperBoundRestriction(relationship);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -238,7 +238,7 @@ describe("RelationshipClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
 
-      const result = await Rules.relationshipSourceMultiplicityUpperBoundRestriction(relationship);
+      const result = Rules.relationshipSourceMultiplicityUpperBoundRestriction(relationship);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -275,7 +275,7 @@ describe("RelationshipClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
 
-      const result = await Rules.relationshipSourceMultiplicityUpperBoundRestriction(relationship);
+      const result = Rules.relationshipSourceMultiplicityUpperBoundRestriction(relationship);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -314,7 +314,7 @@ describe("RelationshipClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
 
-      const result = await Rules.relationshipTargetMultiplicityUpperBoundRestriction(relationship);
+      const result = Rules.relationshipTargetMultiplicityUpperBoundRestriction(relationship);
 
       let resultHasEntries = false;
       for await (const diagnostic of result!) {
@@ -359,7 +359,7 @@ describe("RelationshipClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
 
-      const result = await Rules.relationshipTargetMultiplicityUpperBoundRestriction(relationship);
+      const result = Rules.relationshipTargetMultiplicityUpperBoundRestriction(relationship);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -396,7 +396,7 @@ describe("RelationshipClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
 
-      const result = await Rules.relationshipTargetMultiplicityUpperBoundRestriction(relationship);
+      const result = Rules.relationshipTargetMultiplicityUpperBoundRestriction(relationship);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -433,7 +433,7 @@ describe("RelationshipClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
 
-      const result = await Rules.relationshipTargetMultiplicityUpperBoundRestriction(relationship);
+      const result = Rules.relationshipTargetMultiplicityUpperBoundRestriction(relationship);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -476,7 +476,7 @@ describe("RelationshipClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
 
-      const result = await Rules.relationshipElementAspectContraintRestriction(relationship);
+      const result = Rules.relationshipElementAspectContraintRestriction(relationship);
 
       let resultHasEntries = false;
       for await (const diagnostic of result!) {
@@ -526,7 +526,7 @@ describe("RelationshipClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
 
-      const result = await Rules.relationshipElementAspectContraintRestriction(relationship);
+      const result = Rules.relationshipElementAspectContraintRestriction(relationship);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -568,7 +568,7 @@ describe("RelationshipClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
 
-      const result = await Rules.relationshipElementAspectContraintRestriction(relationship);
+      const result = Rules.relationshipElementAspectContraintRestriction(relationship);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -609,7 +609,7 @@ describe("RelationshipClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
 
-      const result = await Rules.relationshipElementAspectContraintRestriction(relationship);
+      const result = Rules.relationshipElementAspectContraintRestriction(relationship);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -650,7 +650,7 @@ describe("RelationshipClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
 
-      const result = await Rules.relationshipElementAspectContraintRestriction(relationship);
+      const result = Rules.relationshipElementAspectContraintRestriction(relationship);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -691,7 +691,7 @@ describe("RelationshipClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
 
-      const result = await Rules.relationshipElementAspectContraintRestriction(relationship);
+      const result = Rules.relationshipElementAspectContraintRestriction(relationship);
 
       let resultHasEntries = false;
       for await (const diagnostic of result!) {
@@ -740,7 +740,7 @@ describe("RelationshipClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
 
-      const result = await Rules.relationshipElementAspectContraintRestriction(relationship);
+      const result = Rules.relationshipElementAspectContraintRestriction(relationship);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -774,7 +774,7 @@ describe("RelationshipClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const relationship = (await schema.getItem("TestHasRelationship")) as RelationshipClass;
 
-      const result = await Rules.embeddingRelationshipsMustNotHaveHasInName(relationship);
+      const result = Rules.embeddingRelationshipsMustNotHaveHasInName(relationship);
 
       let resultHasEntries = false;
       for await (const diagnostic of result!) {
@@ -789,9 +789,9 @@ describe("RelationshipClass Rule Tests", () => {
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
 
-    it("Embedding RelationshipClass with 'Has' in name, dynamic schema, rule passes.", async () => {
+    it("Embedding RelationshipClass with 'has' (lowercase) in name, rule passes.", async () => {
       const schemaJson = {
-        TestHasRelationship: {
+        TestPhaseRelationship: {
           schemaItemType: "RelationshipClass",
           strength: "embedding",
           strengthDirection: "forward",
@@ -812,14 +812,85 @@ describe("RelationshipClass Rule Tests", () => {
         },
       };
       const schema = await getTestSchema(schemaJson);
-      (schema as MutableSchema).addCustomAttribute({ className: "CoreCustomAttributes.DynamicSchema" });
-      const relationship = (await schema.getItem("TestHasRelationship")) as RelationshipClass;
+      const relationship = (await schema.getItem("TestPhaseRelationship")) as RelationshipClass;
 
-      const result = await Rules.embeddingRelationshipsMustNotHaveHasInName(relationship);
+      const result = Rules.embeddingRelationshipsMustNotHaveHasInName(relationship);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
       }
+    });
+
+    it("Embedding RelationshipClass with 'hAs' in name, rule passes.", async () => {
+      const schemaJson = {
+        TesthAsRelationship: {
+          schemaItemType: "RelationshipClass",
+          strength: "embedding",
+          strengthDirection: "forward",
+          source: {
+            multiplicity: "(1..1)",
+            polymorphic: true,
+            roleLabel: "owns",
+            constraintClasses: [
+            ],
+          },
+          target: {
+            multiplicity: "(0..*)",
+            polymorphic: true,
+            roleLabel: "is owned by",
+            constraintClasses: [
+            ],
+          },
+        },
+      };
+      const schema = await getTestSchema(schemaJson);
+      const relationship = (await schema.getItem("TesthAsRelationship")) as RelationshipClass;
+
+      const result = Rules.embeddingRelationshipsMustNotHaveHasInName(relationship);
+
+      for await (const _diagnostic of result!) {
+        expect(false, "Rule should have passed").to.be.true;
+      }
+    });
+
+    it("Embedding RelationshipClass with '_hAs_' in name, rule violated.", async () => {
+      const schemaJson = {
+        Test_hAs_Relationship: {
+          schemaItemType: "RelationshipClass",
+          strength: "embedding",
+          strengthDirection: "forward",
+          source: {
+            multiplicity: "(1..1)",
+            polymorphic: true,
+            roleLabel: "owns",
+            constraintClasses: [
+            ],
+          },
+          target: {
+            multiplicity: "(0..*)",
+            polymorphic: true,
+            roleLabel: "is owned by",
+            constraintClasses: [
+            ],
+          },
+        },
+      };
+      const schema = await getTestSchema(schemaJson);
+      const relationship = (await schema.getItem("Test_hAs_Relationship")) as RelationshipClass;
+
+      const result = Rules.embeddingRelationshipsMustNotHaveHasInName(relationship);
+
+      let resultHasEntries = false;
+      for await (const diagnostic of result!) {
+        resultHasEntries = true;
+        expect(diagnostic).to.not.be.undefined;
+        expect(diagnostic!.ecDefinition).to.equal(relationship);
+        expect(diagnostic!.messageArgs).to.eql([relationship.fullName]);
+        expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
+        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.EmbeddingRelationshipsMustNotHaveHasInName);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
+      }
+      expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
 
     it("Holding RelationshipClass with 'Has' in name, rule passes.", async () => {
@@ -847,7 +918,7 @@ describe("RelationshipClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const relationship = (await schema.getItem("TestHasRelationship")) as RelationshipClass;
 
-      const result = await Rules.embeddingRelationshipsMustNotHaveHasInName(relationship);
+      const result = Rules.embeddingRelationshipsMustNotHaveHasInName(relationship);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -879,39 +950,7 @@ describe("RelationshipClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const relationship = (await schema.getItem("TestHasRelationship")) as RelationshipClass;
 
-      const result = await Rules.embeddingRelationshipsMustNotHaveHasInName(relationship);
-
-      for await (const _diagnostic of result!) {
-        expect(false, "Rule should have passed").to.be.true;
-      }
-    });
-
-    it("Embedding RelationshipClass with 'has' (lowercase) in name, rule passes.", async () => {
-      const schemaJson = {
-        TestPhaseRelationship: {
-          schemaItemType: "RelationshipClass",
-          strength: "embedding",
-          strengthDirection: "forward",
-          source: {
-            multiplicity: "(1..1)",
-            polymorphic: true,
-            roleLabel: "owns",
-            constraintClasses: [
-            ],
-          },
-          target: {
-            multiplicity: "(0..*)",
-            polymorphic: true,
-            roleLabel: "is owned by",
-            constraintClasses: [
-            ],
-          },
-        },
-      };
-      const schema = await getTestSchema(schemaJson);
-      const relationship = (await schema.getItem("TestPhaseRelationship")) as RelationshipClass;
-
-      const result = await Rules.embeddingRelationshipsMustNotHaveHasInName(relationship);
+      const result = Rules.embeddingRelationshipsMustNotHaveHasInName(relationship);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -983,7 +1022,7 @@ describe("RelationshipClass Rule Tests", () => {
 
       const schema = await getTestSchema(schemaJson);
       const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
-      const result = await Rules.relationshipConstraintShouldNotUseDeprecatedConstraintClass(relationship);
+      const result = Rules.relationshipConstraintShouldNotUseDeprecatedConstraintClass(relationship);
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
       }
@@ -1059,7 +1098,7 @@ describe("RelationshipClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
 
-      const result = await Rules.relationshipConstraintShouldNotUseDeprecatedConstraintClass(relationship);
+      const result = Rules.relationshipConstraintShouldNotUseDeprecatedConstraintClass(relationship);
       let index = 0;
       for await (const diagnostic of result) {
         expect(diagnostic).to.not.be.undefined;
@@ -1125,7 +1164,7 @@ describe("RelationshipClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
 
-      const result = await Rules.relationshipConstraintShouldNotUseDeprecatedAbstractConstraint(relationship);
+      const result = Rules.relationshipConstraintShouldNotUseDeprecatedAbstractConstraint(relationship);
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
       }
@@ -1170,7 +1209,7 @@ describe("RelationshipClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
 
-      const result = await Rules.relationshipConstraintShouldNotUseDeprecatedAbstractConstraint(relationship);
+      const result = Rules.relationshipConstraintShouldNotUseDeprecatedAbstractConstraint(relationship);
       let index = 0;
       for await (const diagnostic of result) {
         expect(diagnostic).to.not.be.undefined;
@@ -1259,7 +1298,7 @@ describe("RelationshipClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
 
-      const result = await Rules.relationshipConstraintShouldNotUseConstraintClassWithDeprecatedBase(relationship);
+      const result = Rules.relationshipConstraintShouldNotUseConstraintClassWithDeprecatedBase(relationship);
       let index = 0;
       for await (const diagnostic of result) {
         expect(diagnostic).to.not.be.undefined;
@@ -1350,7 +1389,7 @@ describe("RelationshipClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
 
-      const result = await Rules.relationshipConstraintShouldNotUseAbstractConstraintWithDeprecatedBase(relationship);
+      const result = Rules.relationshipConstraintShouldNotUseAbstractConstraintWithDeprecatedBase(relationship);
       let index = 0;
       for await (const diagnostic of result) {
         expect(diagnostic).to.not.be.undefined;
