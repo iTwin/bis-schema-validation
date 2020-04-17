@@ -558,8 +558,10 @@ export async function* entityClassMayNotInheritSameProperty(entity: EC.EntityCla
 
     if (seenProps.has(prop.name)) {
       const prevProp = seenProps.get(prop.name);
-      yield new Diagnostics.EntityClassMayNotInheritSameProperty(entity, [entity.fullName, prop.name, prevProp!.class.fullName, prop.class.fullName]);
-      continue;
+      if (prevProp?.class.fullName !== prop.class.fullName) {
+        yield new Diagnostics.EntityClassMayNotInheritSameProperty(entity, [entity.fullName, prop.name, prevProp!.class.fullName, prop.class.fullName]);
+        continue;
+      }
     }
 
     seenProps.set(prop.name, prop);
