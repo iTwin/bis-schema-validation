@@ -192,6 +192,24 @@ describe("EntityClass Rule Tests", () => {
       }
     });
 
+    it("Base class and child class have same mixin, rule passes.", async () => {
+      const mixin = new Mixin(testSchema, "TestMixin");
+      await (mixin as unknown as MutableClass).createPrimitiveProperty("TestPropertyA", PrimitiveType.Integer);
+
+      const baseEntity = new EntityClass(testSchema, "BaseEntity") as ECClass;
+      await (baseEntity as MutableEntityClass).addMixin(mixin);
+
+      const childEntity = new EntityClass(testSchema, "TestEntity");
+      await (childEntity as MutableEntityClass).addMixin(mixin);
+      childEntity.baseClass = new DelayedPromiseWithProps(baseEntity.key, async () => baseEntity) as LazyLoadedSchemaItem<EntityClass>;
+
+      const result = await Rules.entityClassMayNotInheritSameProperty(childEntity);
+
+      for await (const _diagnostic of result!) {
+        expect(false, "Rule should have passed").to.be.true;
+      }
+    });
+
     it("No mixins, getProperties not called.", async () => {
       const baseEntity = new EntityClass(testSchema, "BaseEntity") as ECClass;
       await (baseEntity as MutableClass).createPrimitiveProperty("TestPropertyA", PrimitiveType.Integer);
