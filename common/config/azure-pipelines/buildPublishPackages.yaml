@@ -20,18 +20,18 @@ stages:
       - checkout: self
         clean: all
       - task: NodeTool@0
-        displayName: 'Install Node 10.15.x'
+        displayName: 'Install Node 12.16.0'
         inputs:
-          versionSpec: 10.15.0
+          versionSpec: 12.16.0
           checkLatest: true
 
       - powershell: |
           $nugetConfigDir = "$(Build.Repository.LocalPath)"
-    
+
           if(!(Test-Path -Path $nugetConfigDir)){
               mkdir $nugetConfigDir
           }
-    
+
           $nugetConfigFile = $nugetConfigDir + "/NuGet.Config"
 
           Out-File -FilePath $nugetConfigFile -Encoding ascii -InputObject '<?xml version="1.0" encoding="utf-8"?>'
@@ -42,7 +42,7 @@ stages:
           Out-File -FilePath $nugetConfigFile -Encoding ascii -InputObject '</packageSources>' -Append
           Out-File -FilePath $nugetConfigFile -Encoding ascii -InputObject '</configuration>' -Append
 
-        displayName: 'Seed NugetConfig'  
+        displayName: 'Seed NugetConfig'
 
       - task: NuGetCommand@2
         displayName: 'Download Nuget of Signoff Tool'

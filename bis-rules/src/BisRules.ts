@@ -795,7 +795,12 @@ export async function* embeddingRelationshipsMustNotHaveHasInName(relationshipCl
   if (relationshipClass.schema.customAttributes && relationshipClass.schema.customAttributes.has("CoreCustomAttributes.DynamicSchema"))
     return;
 
+  // includes method is case-sensitive
   if (relationshipClass.name.includes("Has"))
+    yield new Diagnostics.EmbeddingRelationshipsMustNotHaveHasInName(relationshipClass, [relationshipClass.fullName]);
+
+  // case-insensitive search for '_has_'
+  if (relationshipClass.name.match(/_has_/i))
     yield new Diagnostics.EmbeddingRelationshipsMustNotHaveHasInName(relationshipClass, [relationshipClass.fullName]);
 }
 
