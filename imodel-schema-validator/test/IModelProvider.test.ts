@@ -25,7 +25,7 @@ describe("IModelProvider Tests", async () => {
     IModelHost.shutdown();
   });
 
-  it("Get IModel Id Env QA, Get an iModel id by its name", async () => {
+  it.skip("Get IModel Id Env QA, Get an iModel id by its name", async () => {
     IModelProvider.setupHost("QA", briefcaseDir);
     const requestContext = await IModelProvider.oidcConnect(oidcUserName, oidcPassword, 102);
     const iModelId: any = await IModelProvider.getIModelId(requestContext, "9cf0d519-0436-446b-83b4-182752c9a4eb", "validation");
@@ -33,7 +33,7 @@ describe("IModelProvider Tests", async () => {
     expect(iModelId).to.equal("367ac967-9894-4434-842a-9d3557b3ddbd");
   });
 
-  it("Wrong IModel Name, When user insert wrong iModel name.", async () => {
+  it.skip("Wrong IModel Name, When user insert wrong iModel name.", async () => {
     IModelProvider.setupHost("QA", briefcaseDir);
     const requestContext = await IModelProvider.oidcConnect(oidcUserName, oidcPassword, 102);
     const iModelId: any = await IModelProvider.getIModelId(requestContext, "9cf0d519-0436-446b-83b4-182752c9a4eb", "val");
@@ -41,7 +41,7 @@ describe("IModelProvider Tests", async () => {
     expect(iModelId, "undefined");
   });
 
-  it("Export XML Schemas, Get local iModel connection and export the schemas present in it.", async () => {
+  it.skip("Export XML Schemas, Get local iModel connection and export the schemas present in it.", async () => {
     const iModelSchemaDir = await IModelProvider.exportSchemasFromIModel("9cf0d519-0436-446b-83b4-182752c9a4eb", "validation", briefcaseDir, oidcUserName, oidcPassword, "QA");
     let result = false;
     if (iModelSchemaDir) {
@@ -54,7 +54,7 @@ describe("IModelProvider Tests", async () => {
     expect(result).to.equal(true);
   });
 
-  it("Get IModel Id Env DEV, Get an iModel id by its name", async () => {
+  it.skip("Get IModel Id Env DEV, Get an iModel id by its name", async () => {
     IModelProvider.setupHost("DEV", briefcaseDir);
     const requestContext = await IModelProvider.oidcConnect(oidcUserName, oidcPassword, 103);
     const iModelId: any = await IModelProvider.getIModelId(requestContext, "28e761f7-2692-44bd-be31-5cbac5115a98", "validationtest");
@@ -62,7 +62,7 @@ describe("IModelProvider Tests", async () => {
     expect(iModelId).to.equal("5ea12a05-bf33-4d44-a0d2-32d70bead4fc");
   });
 
-  it("Get IModel Id Env PROD, Get an iModel id by its name", async () => {
+  it.skip("Get IModel Id Env PROD, Get an iModel id by its name", async () => {
     IModelProvider.setupHost("PROD", briefcaseDir);
     const requestContext = await IModelProvider.oidcConnect(oidcUserName, oidcPassword, 0);
     const iModelId: any = await IModelProvider.getIModelId(requestContext, "c5a41e90-669b-47a6-8a3f-8b7287234a58", "test");

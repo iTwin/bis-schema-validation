@@ -16,6 +16,7 @@ stages:
     steps:
       - checkout: self
         clean: all
+      - checkout: bis-schemas
       - task: NodeTool@0
         displayName: 'Install Node 12.16.0'
         inputs:
@@ -46,41 +47,46 @@ stages:
       - template: seed-npmrc.yaml
         parameters: { artifactsRegistryToken: $(artifactsRegistryToken) }
 
-      - script: node $(System.DefaultWorkingDirectory)/common/scripts/install-run-rush.js check
+      - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js check
         displayName: Rush check
-      - script: node $(System.DefaultWorkingDirectory)/common/scripts/install-run-rush.js install
+        workingDirectory: $(Build.SourcesDirectory)/bis-schema-validation
+      - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js install
         displayName: Rush install
-      - script: node $(System.DefaultWorkingDirectory)/common/scripts/install-run-rush.js clean
+        workingDirectory: $(Build.SourcesDirectory)/bis-schema-validation
+      - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js clean
         displayName: Rush clean
-      - script: node $(System.DefaultWorkingDirectory)/common/scripts/install-run-rush.js lint
+        workingDirectory: $(Build.SourcesDirectory)/bis-schema-validation
+      - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js lint
         displayName: Rush lint
-      - script: node $(System.DefaultWorkingDirectory)/common/scripts/install-run-rush.js build
+        workingDirectory: $(Build.SourcesDirectory)/bis-schema-validation
+      - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js build
         displayName: Rush build
-      - script: node $(System.DefaultWorkingDirectory)/common/scripts/install-run-rush.js cover
+        workingDirectory: $(Build.SourcesDirectory)/bis-schema-validation
+      - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js cover
         displayName: Rush cover
+        workingDirectory: $(Build.SourcesDirectory)/bis-schema-validation
         env:
           oidcUserName: $(oidcUserName)
           oidcPassword: $(oidcPassword)
-          Mapped_domUserName: $(Mapped_domUserName)
-          Mapped_domPassword: $(Mapped_domPassword)
 
       - task: PublishCodeCoverageResults@1
         displayName: Publish bis-rules code coverage
         inputs:
           codeCoverageTool: Cobertura
-          summaryFileLocation: '$(System.DefaultWorkingDirectory)/bis-rules/lib/test/coverage/cobertura-coverage.xml'
-          reportDirectory: '$(System.DefaultWorkingDirectory)/bis-rules/lib/test/coverage/lcov-report'
+          summaryFileLocation: '$(System.DefaultWorkingDirectory)/bis-schema-validation/bis-rules/lib/test/coverage/cobertura-coverage.xml'
+          reportDirectory: '$(System.DefaultWorkingDirectory)/bis-schema-validation/bis-rules/lib/test/coverage/lcov-report'
 
       - task: PublishCodeCoverageResults@1
         displayName: Publish schema-validator code coverage
         inputs:
           codeCoverageTool: Cobertura
-          summaryFileLocation: '$(Build.SourcesDirectory)/schema-validator/lib/test/coverage/cobertura-coverage.xml'
-          reportDirectory: '$(Build.Repository.LocalPath)/schema-validator/lib/test/coverage/lcov-report'
+          summaryFileLocation: '$(Build.SourcesDirectory)/bis-schema-validation/schema-validator/lib/test/coverage/cobertura-coverage.xml'
+          reportDirectory: '$(Build.Repository.LocalPath)/bis-schema-validation/schema-validator/lib/test/coverage/lcov-report'
 
-      - script: node $(System.DefaultWorkingDirectory)/common/scripts/install-run-rush.js publish --publish --pack --include-all
+      - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js publish --publish --pack --include-all
         displayName: 'rush publish pack'
         condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual', 'BuildCompletion'))
+        workingDirectory: $(Build.SourcesDirectory)/bis-schema-validation
       - task: PythonScript@0
         displayName: 'Gather packages for release'
         inputs:
@@ -140,7 +146,7 @@ stages:
             else:
               print ("All packages are up-to-date.")
 
-          arguments: '$(Build.ArtifactStagingDirectory) $(Build.SourcesDirectory)'
+          arguments: '$(Build.ArtifactStagingDirectory) $(Build.SourcesDirectory)/bis-schema-validation'
         condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual', 'BuildCompletion'))
       - script: |
           dir $(Build.ArtifactStagingDirectory)\bis-schema-tools\packages
