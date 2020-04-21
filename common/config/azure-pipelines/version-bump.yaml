@@ -5,18 +5,23 @@ workspace:
   clean: all
 
 pool:
-  name: 
-  demands:
-  - Agent.OS -equals Windows_NT
-  - npm
+  vmImage: windows-latest
 
 steps:
   - checkout: self
+  - script: 'git config --local user.email imodeljsbot@users.noreply.github.com'
+    displayName: 'git config email'
+  - script: 'git config --local user.name iModeljsBot'
+    displayName: 'git config name'
   - script: 'git checkout --track origin/master'
     displayName: 'Switching to master '
+  - task: NodeTool@0
+    displayName: 'Install Node 12.16.0'
+    inputs:
+      versionSpec: 12.16.0
+      checkLatest: true
 
-  - script: |
-      rush version --bump
+  - script: node $(System.DefaultWorkingDirectory)/common/scripts/install-run-rush.js version --bump
 
     failOnStderr: true
     displayName: 'Update to new dev version on master'

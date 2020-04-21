@@ -7,10 +7,7 @@ stages:
   - job: build_packages
     displayName: Build
     pool:
-      name: 
-      demands:
-      - Agent.OS -equals Windows_NT
-      - npm
+      vmImage: windows-latest
     variables:
   
 
@@ -25,24 +22,8 @@ stages:
           versionSpec: 12.16.0
           checkLatest: true
 
-      - powershell: |
-          $nugetConfigDir = "$(Build.Repository.LocalPath)"
-
-          if(!(Test-Path -Path $nugetConfigDir)){
-              mkdir $nugetConfigDir
-          }
-
-          $nugetConfigFile = $nugetConfigDir + "/NuGet.Config"
-
-          
-          
-          
-          
-          
-          
-          
-
-        displayName: 'Seed NugetConfig'
+      - template: seed-npmrc.yaml
+  
 
       - task: NuGetCommand@2
         displayName: 'Download Nuget of Signoff Tool'
@@ -62,35 +43,20 @@ stages:
           packageName: 
 
       #Your build pipeline references a secret variable named ‘artifactsRegistryToken’. This variable is pulled from the 'arzure-artifacts-npm-token' variable group.  You must authorize this build to use that group: https://docs.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=yaml#use-a-variable-group
-      - powershell: |
-          $npmrcDir = "$(System.DefaultWorkingDirectory)/common/config/rush"
+      - template: seed-npmrc.yaml
+  
 
-          if(!(Test-Path -Path $npmrcDir)){
-              mkdir $npmrcDir
-          }
-
-          $npmrcFile = $npmrcDir + "/.npmrc"
-
-          
-          
-          
-          
-          
-          
-          
-          
-
-        displayName: 'Seed npmrc'
-
-      - script: rush install
+      - script: node $(System.DefaultWorkingDirectory)/common/scripts/install-run-rush.js check
+        displayName: Rush check
+      - script: node $(System.DefaultWorkingDirectory)/common/scripts/install-run-rush.js install
         displayName: Rush install
-      - script: rush clean
+      - script: node $(System.DefaultWorkingDirectory)/common/scripts/install-run-rush.js clean
         displayName: Rush clean
-      - script: rush lint
+      - script: node $(System.DefaultWorkingDirectory)/common/scripts/install-run-rush.js lint
         displayName: Rush lint
-      - script: rush build
+      - script: node $(System.DefaultWorkingDirectory)/common/scripts/install-run-rush.js build
         displayName: Rush build
-      - script: rush cover
+      - script: node $(System.DefaultWorkingDirectory)/common/scripts/install-run-rush.js cover
         displayName: Rush cover
         env:
           oidcUserName: $(oidcUserName)
@@ -112,7 +78,7 @@ stages:
           summaryFileLocation: '$(Build.SourcesDirectory)/schema-validator/lib/test/coverage/cobertura-coverage.xml'
           reportDirectory: '$(Build.Repository.LocalPath)/schema-validator/lib/test/coverage/lcov-report'
 
-      - script: rush publish --publish --pack --include-all
+      - script: node $(System.DefaultWorkingDirectory)/common/scripts/install-run-rush.js publish --publish --pack --include-all
         displayName: 'rush publish pack'
         condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual', 'BuildCompletion'))
       - task: PythonScript@0
