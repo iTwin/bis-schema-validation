@@ -1,0 +1,14 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "build",
+			"path": "imodel-schema-validator/",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: build - imodel-schema-validator",
+			"detail": "tsc 1>&2 && npm run copy:assets"
+		}
+	]
+}

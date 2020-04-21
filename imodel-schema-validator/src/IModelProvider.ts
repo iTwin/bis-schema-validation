@@ -4,7 +4,9 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { BriefcaseDb, IModelHost, IModelHostConfiguration, OpenParams, AuthorizedBackendRequestContext } from "@bentley/imodeljs-backend";
-import { IModelHubClient, AccessToken, Config } from "@bentley/imodeljs-clients";
+import { AccessToken } from "@bentley/imodeljs-clients";
+import { Config } from "@bentley/bentleyjs-core";
+import { IModelHubClient } from "@bentley/imodelhub-client";
 import { TestOidcConfiguration, TestUserCredentials, TestOidcClient } from "@bentley/oidc-signin-tool";
 import { IModelVersion } from "@bentley/imodeljs-common";
 import * as rimraf from "rimraf";
