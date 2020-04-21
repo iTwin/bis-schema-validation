@@ -8,7 +8,7 @@ import * as fs from "fs";
 import * as EC from "@bentley/ecschema-metadata";
 import { SchemaJsonFileLocater } from "@bentley/ecschema-locaters";
 import { IModelHost } from "@bentley/imodeljs-backend";
-import { Config } from "@bentley/imodeljs-clients";
+import { Config } from "@bentley/bentleyjs-core";
 import { SchemaXmlFileLocater } from "./SchemaXmlFileLocater";
 
 /**
