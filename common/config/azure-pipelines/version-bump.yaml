@@ -23,7 +23,6 @@ steps:
 
   - script: node $(System.DefaultWorkingDirectory)/common/scripts/install-run-rush.js version --bump
 
-    failOnStderr: true
     displayName: 'Update to new dev version on master'
 
   - script: |
@@ -32,7 +31,6 @@ steps:
 
       git status
 
-    failOnStderr: true
     displayName: 'Git add'
 
   - powershell: |
@@ -48,13 +46,10 @@ steps:
 
       Write-Host "##vso[build.updatebuildnumber]bis-schema-validation_$newVersion"
 
-    failOnStderr: true
     displayName: 'Get version and committing'
 
-  - task: CmdLine@1
+  - script: 'git -c http.extraheader="AUTHORIZATION: bearer $(System.AccessToken)" push origin master --follow-tags'
     displayName: 'Push version bump'
-    inputs:
-      filename: git
-      arguments: 'push origin master -q'
-      failOnStandardError: true
+    condition: succeeded()
+
 
