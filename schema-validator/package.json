@@ -65,6 +65,7 @@
     "@bentley/imodeljs-clients": "2.0.0-dev.71",
     "@bentley/imodeljs-clients-backend": "2.0.0-dev.71",
     "@bentley/imodeljs-common": "2.0.0-dev.71",
+    "@bentley/imodelhub-client": "2.0.0-dev.71",
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
     "fs-extra": "^7.0.1",
