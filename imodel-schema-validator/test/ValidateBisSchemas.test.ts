@@ -5,6 +5,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import { expect } from "chai";
+import { Logger, LogLevel } from "@bentley/bentleyjs-core";
 import { FileSchemaKey } from "@bentley/ecschema-locaters";
 import { SchemaGraphUtil } from "@bentley/ecschema-metadata";
 import { SnapshotDb, IModelHost, BackendRequestContext } from "@bentley/imodeljs-backend";
@@ -31,6 +32,9 @@ describe("Import and validate schemas in bis-schemas repository", async () => {
   });
 
   it("Import latest released version of all schemas in bis-schemas repository into an iModel and perform all validations.", async () => {
+
+    Logger.initializeToConsole();
+    Logger.setLevelDefault(LogLevel.Error);
 
     const results: IModelValidationResult[] = [];
     const releasedSchemas = await generateReleasedSchemasList(bisSchemaRepo);
@@ -68,6 +72,9 @@ describe("Import and validate schemas in bis-schemas repository", async () => {
   });
 
   it("Import WIP version of all schemas from bis-schemas repository into an iModel and perform BIS-rules validation.", async () => {
+
+    Logger.initializeToConsole();
+    Logger.setLevelDefault(LogLevel.Error);
 
     const results: IModelValidationResult[] = [];
     let wipSchemas = await generateWIPSchemasList(bisSchemaRepo);
