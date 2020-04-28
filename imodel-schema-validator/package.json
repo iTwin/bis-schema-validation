@@ -19,7 +19,7 @@
     "build": "tsc 1>&2 && npm run copy:assets",
     "lint": "tslint --project . 1>&2",
     "test": "mocha -r ts-node/register test/**.test.ts --timeout 120000",
-    "tests:ValidateBisSchemas": "mocha -r ts-node/register test/ValidateBisSchemas.test.ts --timeout 120000",
+    "tests:ValidateBisSchemas": "mocha -r ts-node/register test/**.test.ts --grep \"Import latest released version of all schemas in bis-schemas repository into an iModel and perform all validations.\" --timeout 120000",
     "cover": "nyc node ./node_modules/@bentley/build-tools/scripts/test-tsnode.js --testDir=./test/ --tscPaths",
     "clean": "rimraf lib",
     "copy:assets": "cpx ./src/index.js ./lib"
