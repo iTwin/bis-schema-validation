@@ -39,9 +39,6 @@ stages:
           Write-Host "##vso[task.setvariable variable=SignoffToolPath]$(System.DefaultWorkingDirectory)\$dir\lib\native\"
         failOnStderr: true
         displayName: 'Set Env for Signoff Tool Path'
-        env:
-          rootDir: $(System.DefaultWorkingDirectory)
-          packageName: 
 
       #Your build pipeline references a secret variable named ‘artifactsRegistryToken’. This variable is pulled from the 'arzure-artifacts-npm-token' variable group.  You must authorize this build to use that group: https://docs.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=yaml#use-a-variable-group
       - template: seed-npmrc.yaml
