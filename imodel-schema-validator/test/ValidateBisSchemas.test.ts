@@ -19,6 +19,7 @@ import {
 describe("Import and validate schemas in bis-schemas repository", async () => {
   const bisSchemaRepo: any = process.env.BisSchemaRepo;
   const signOffExecutable: any = process.env.SignoffToolPath;
+  const skipSchema: any = process.env.skipSchemaFile; // To run the validation locally and to skip any problematic schema
   const tempDir: any = process.env.TMP;
   const imodelDir: string = path.join(tempDir, "SchemaValidation", "Briefcases", "validation");
   const imodelName: string = "testimodel";
@@ -81,9 +82,12 @@ describe("Import and validate schemas in bis-schemas repository", async () => {
     let schemaDirs = await generateSchemaDirectoryList(bisSchemaRepo);
 
     // Currently not validating Fasteners and Asset schemas until decide the solution
-    wipSchemas = removeSchemasFromList(wipSchemas, ["Fasteners.ecschema.xml", "Asset.ecschema.xml"]);
-    schemaDirs = schemaDirs.concat(wipSchemas.map((schemaPath) => path.dirname(schemaPath)));
+    if (!skipSchema)
+      wipSchemas = removeSchemasFromList(wipSchemas, ["Fasteners.ecschema.xml", "Asset.ecschema.xml"]);
+    else
+      wipSchemas = removeSchemasFromList(wipSchemas, [skipSchema]);
 
+    schemaDirs = schemaDirs.concat(wipSchemas.map((schemaPath) => path.dirname(schemaPath)));
     for (const wipSchema of wipSchemas) {
       IModelHost.startup();
       console.log("\nValidating WIP Schema: " + wipSchema);
