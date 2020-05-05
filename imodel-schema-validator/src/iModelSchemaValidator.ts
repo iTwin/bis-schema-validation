@@ -27,9 +27,6 @@ program.option("-b, --baseSchemaRefDir <required>", "Root directory of all relea
 program.option("-o, --output <required>", "The path where output files will be generated.");
 program.option("-n, --signOffExecutable  <required>", "The path where  is placed.");
 program.option("-c, --checkReleaseDynamicSchema", "Check all dynamic schemas within iModel. Default is false.");
-program.option("--getLaunchCodes");
-program.option("-d, --domUserName <required>", "Domain username");
-program.option("-s, --domPassword <required>", "Domain password");
 
 program.parse(process.argv);
 
