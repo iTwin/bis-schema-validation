@@ -3,7 +3,7 @@
 * Licensed under the MIT License. See LICENSE.md in the project root for license terms.
 *--------------------------------------------------------------------------------------------*/
 
-import { BriefcaseDb, IModelHost, IModelHostConfiguration, OpenParams, AuthorizedBackendRequestContext } from "@bentley/imodeljs-backend";
+import { BriefcaseDb, BriefcaseManager, IModelHost, IModelHostConfiguration, OpenParams, AuthorizedBackendRequestContext } from "@bentley/imodeljs-backend";
 import { AccessToken } from "@bentley/imodeljs-clients";
 import { Config } from "@bentley/bentleyjs-core";
 import { IModelHubClient } from "@bentley/imodelhub-client";
@@ -121,18 +121,23 @@ export class IModelProvider {
 
     const iModel: BriefcaseDb = await BriefcaseDb.open(requestContext, projectId, iModelId, OpenParams.fixedVersion(), IModelVersion.latest());
 
-    if (!iModel.isOpen) {
-      const error = "iModel not open: " + iModelName;
-      throw new Error(error);
-    }
+    try {
 
-    if (fs.existsSync(schemaDir)) {
-      rimraf.sync(schemaDir);
-    }
+      if (!iModel.isOpen) {
+        const error = "iModel not open: " + iModelName;
+        throw new Error(error);
+      }
 
-    fs.mkdirSync(schemaDir, { recursive: true });
-    iModel.briefcase.nativeDb.exportSchemas(schemaDir);
-    await iModel.close(requestContext);
+      if (fs.existsSync(schemaDir)) {
+        rimraf.sync(schemaDir);
+      }
+
+      fs.mkdirSync(schemaDir, { recursive: true });
+      iModel.briefcase.nativeDb.exportSchemas(schemaDir);
+    } finally {
+      await iModel.close(requestContext);
+      await BriefcaseManager.deleteBriefcase(requestContext, iModel.briefcase);
+    }
   }
 
   /**
