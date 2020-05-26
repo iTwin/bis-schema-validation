@@ -108,7 +108,12 @@ describe("Import and validate schemas in bis-schemas repository", async () => {
       const requestContext = new BackendRequestContext();
       const iModelPath = prepareOutputFile(imodelDir, imodelName);
       const imodel = SnapshotDb.createEmpty(iModelPath, { rootSubject: { name: "test-imodel" } });
-      await imodel.importSchemas(requestContext, schemaPaths);
+      try {
+        await imodel.importSchemas(requestContext, schemaPaths);
+      } catch (error) {
+        throw new Error( `Failed to import schema ${wipSchema} because ${error.toString()}`);
+      }
+
       imodel.saveChanges();
       imodel.nativeDb.exportSchemas(exportDir);
       imodel.close();
