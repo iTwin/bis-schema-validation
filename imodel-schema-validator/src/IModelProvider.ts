@@ -135,7 +135,6 @@ export class IModelProvider {
       fs.mkdirSync(schemaDir, { recursive: true });
       iModel.briefcase.nativeDb.exportSchemas(schemaDir);
     } finally {
-      await iModel.close(requestContext);
       await BriefcaseManager.deleteBriefcase(requestContext, iModel.briefcase);
     }
   }
