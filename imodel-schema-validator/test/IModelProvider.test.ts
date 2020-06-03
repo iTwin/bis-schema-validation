@@ -26,7 +26,7 @@ describe("IModelProvider Tests", async () => {
   });
 
   it.skip("Get IModel Id Env QA, Get an iModel id by its name", async () => {
-    IModelProvider.setupHost("QA", briefcaseDir);
+    await IModelProvider.setupHost("QA", briefcaseDir);
     const requestContext = await IModelProvider.oidcConnect(oidcUserName, oidcPassword, 102);
     const iModelId: any = await IModelProvider.getIModelId(requestContext, "9cf0d519-0436-446b-83b4-182752c9a4eb", "validation");
 
@@ -34,7 +34,7 @@ describe("IModelProvider Tests", async () => {
   });
 
   it.skip("Wrong IModel Name, When user insert wrong iModel name.", async () => {
-    IModelProvider.setupHost("QA", briefcaseDir);
+    await IModelProvider.setupHost("QA", briefcaseDir);
     const requestContext = await IModelProvider.oidcConnect(oidcUserName, oidcPassword, 102);
     const iModelId: any = await IModelProvider.getIModelId(requestContext, "9cf0d519-0436-446b-83b4-182752c9a4eb", "val");
 
@@ -55,7 +55,7 @@ describe("IModelProvider Tests", async () => {
   });
 
   it.skip("Get IModel Id Env DEV, Get an iModel id by its name", async () => {
-    IModelProvider.setupHost("DEV", briefcaseDir);
+    await IModelProvider.setupHost("DEV", briefcaseDir);
     const requestContext = await IModelProvider.oidcConnect(oidcUserName, oidcPassword, 103);
     const iModelId: any = await IModelProvider.getIModelId(requestContext, "28e761f7-2692-44bd-be31-5cbac5115a98", "validationtest");
 
@@ -63,7 +63,7 @@ describe("IModelProvider Tests", async () => {
   });
 
   it.skip("Get IModel Id Env PROD, Get an iModel id by its name", async () => {
-    IModelProvider.setupHost("PROD", briefcaseDir);
+    await IModelProvider.setupHost("PROD", briefcaseDir);
     const requestContext = await IModelProvider.oidcConnect(oidcUserName, oidcPassword, 0);
     const iModelId: any = await IModelProvider.getIModelId(requestContext, "c5a41e90-669b-47a6-8a3f-8b7287234a58", "test");
 

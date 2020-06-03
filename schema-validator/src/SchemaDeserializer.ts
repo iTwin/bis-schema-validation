@@ -34,7 +34,7 @@ export class SchemaDeserializer {
 
     // The following two lines can be removed (and shutdown below) when/if the SchemaXmlFileLocater (native deserialization) is removed
     (Config as any)._appConfig = new (Config as any)(); // Needed to avoid crash in backend when calling IModelHost.startup.
-    IModelHost.startup();
+    await IModelHost.startup();
 
     const locater = this.configureFileLocater(schemaContext, referencePaths);
 
@@ -46,7 +46,7 @@ export class SchemaDeserializer {
       return schema;
     } finally {
       // This can be removed when/if the SchemaXmlFIleLocater (native deserialization) is removed
-      IModelHost.shutdown();
+      await IModelHost.shutdown();
     }
   }
 
