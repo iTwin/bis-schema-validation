@@ -62,6 +62,7 @@
     "@bentley/ecschema-locaters": "2.2.0-dev.5",
     "@bentley/geometry-core": "2.2.0-dev.5",
     "@bentley/imodeljs-backend": "2.2.0-dev.5",
+    "@bentley/itwin-client": "2.2.0-dev.5",
     "@bentley/backend-itwin-client": "2.2.0-dev.5",
     "@bentley/imodeljs-common": "2.2.0-dev.5",
     "@bentley/imodelhub-client": "2.2.0-dev.5",
