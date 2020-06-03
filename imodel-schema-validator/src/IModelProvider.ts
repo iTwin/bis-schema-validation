@@ -4,11 +4,11 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { BriefcaseDb, BriefcaseManager, IModelHost, IModelHostConfiguration, OpenParams, AuthorizedBackendRequestContext } from "@bentley/imodeljs-backend";
-import { AccessToken } from "@bentley/imodeljs-clients";
+import { AccessToken } from "@bentley/itwin-client";
 import { Config } from "@bentley/bentleyjs-core";
 import { IModelHubClient } from "@bentley/imodelhub-client";
-import { TestOidcConfiguration, TestUserCredentials, TestOidcClient } from "@bentley/oidc-signin-tool";
-import { IModelVersion } from "@bentley/imodeljs-common";
+import { TestBrowserAuthorizationClientConfiguration, TestUserCredentials, TestBrowserAuthorizationClient } from "@bentley/oidc-signin-tool";
+import { BriefcaseProps, IModelVersion, SyncMode } from "@bentley/imodeljs-common";
 import * as rimraf from "rimraf";
 import * as fs from "fs";
 import * as path from "path";
@@ -24,7 +24,7 @@ export class IModelProvider {
    * @param env: The environment for which you want to setup the host.
    * @param briefcaseDir: The directory where .bim file will be downloaded.
    */
-  public static setupHost(env: string, briefcaseDir: string) {
+  public static async setupHost(env: string, briefcaseDir: string) {
     const iModelHostConfiguration = new IModelHostConfiguration();
     iModelHostConfiguration.briefcaseCacheDir = briefcaseDir;
     if (env === "DEV") {
@@ -37,7 +37,7 @@ export class IModelProvider {
       Config.App.set("imjs_buddi_resolve_url_using_region", this._regionCode);
     }
     Config.App.set("imjs_default_relying_party_uri", "''");
-    IModelHost.startup(iModelHostConfiguration);
+    await IModelHost.startup(iModelHostConfiguration);
   }
 
   /**
@@ -50,7 +50,7 @@ export class IModelProvider {
     let postfix = "";
     if (regionCode === 0) { postfix = "-prod"; }
 
-    const oidcConfig: TestOidcConfiguration = {
+    const oidcConfig: TestBrowserAuthorizationClientConfiguration = {
       clientId: "imodel-schema-validator-spa" + postfix,
       redirectUri: "http://localhost:3000/signin-callback",
       scope: "openid imodelhub",
@@ -63,7 +63,7 @@ export class IModelProvider {
 
     let token;
     try {
-      const client = new TestOidcClient(oidcConfig, userCredentials);
+      const client = new TestBrowserAuthorizationClient(oidcConfig, userCredentials);
       client.deploymentRegion =  regionCode;
       token = await client.getAccessToken();
     } catch (err) {
@@ -119,7 +119,11 @@ export class IModelProvider {
       throw new Error("iModel either not exist or not found!");
     }
 
-    const iModel: BriefcaseDb = await BriefcaseDb.open(requestContext, projectId, iModelId, OpenParams.fixedVersion(), IModelVersion.latest());
+    const briefcaseProps: BriefcaseProps = await BriefcaseManager.download(requestContext, projectId, iModelId, { syncMode: SyncMode.FixedVersion }, IModelVersion.latest());
+    requestContext.enter();
+
+    const iModel = await BriefcaseDb.open(requestContext, briefcaseProps.key);
+    requestContext.enter();
 
     try {
 
@@ -135,7 +139,8 @@ export class IModelProvider {
       fs.mkdirSync(schemaDir, { recursive: true });
       iModel.briefcase.nativeDb.exportSchemas(schemaDir);
     } finally {
-      await BriefcaseManager.deleteBriefcase(requestContext, iModel.briefcase);
+      iModel.close();
+      await BriefcaseManager.delete(requestContext, iModel.briefcaseKey);
     }
   }
 
@@ -148,10 +153,10 @@ export class IModelProvider {
    * @param password: Password for OIDC Auth.
    */
   public static async exportSchemasFromIModel(projectId: string, iModelName: string, workingDir: string, userName: string, password: string, env: string): Promise<string> {
-    IModelProvider.setupHost(env.toUpperCase(), workingDir);
+    await IModelProvider.setupHost(env.toUpperCase(), workingDir);
     const iModelSchemaDir: string = path.join(workingDir, "exported");
     await IModelProvider.exportIModelSchemas(projectId, iModelName, iModelSchemaDir, userName, password);
-    IModelHost.shutdown();
+    await IModelHost.shutdown();
 
     return iModelSchemaDir;
   }

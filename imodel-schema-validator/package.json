@@ -11,7 +11,7 @@
     "name": "Bentley Systems, Inc.",
     "url": "http://www.bentley.com"
   },
-  "version": "0.2.48",
+  "version": "0.2.49",
   "bin": {
     "imodel-schema-validator": "./lib/index.js"
   },
@@ -26,17 +26,17 @@
     "copy:assets": "cpx ./src/index.js ./lib"
   },
   "dependencies": {
-    "@bentley/bentleyjs-core": "2.0.0-dev.71",
-    "@bentley/ecschema-metadata": "2.0.0-dev.71",
-    "@bentley/geometry-core": "2.0.0-dev.71",
-    "@bentley/imodeljs-backend": "2.0.0-dev.71",
-    "@bentley/imodeljs-clients": "2.0.0-dev.71",
-    "@bentley/imodeljs-clients-backend": "2.0.0-dev.71",
-    "@bentley/imodeljs-common": "2.0.0-dev.71",
-    "@bentley/imodelhub-client": "2.0.0-dev.71",
-    "@bentley/schema-comparer": "^0.2.48",
-    "@bentley/schema-validator": "0.2.48",
-    "@bentley/oidc-signin-tool": "2.0.0-dev.71",
+    "@bentley/bentleyjs-core": "2.2.0-dev.5",
+    "@bentley/ecschema-metadata": "2.2.0-dev.5",
+    "@bentley/geometry-core": "2.2.0-dev.5",
+    "@bentley/imodeljs-backend": "2.2.0-dev.5",
+    "@bentley/itwin-client": "2.2.0-dev.5",
+    "@bentley/backend-itwin-client": "2.2.0-dev.5",
+    "@bentley/imodeljs-common": "2.2.0-dev.5",
+    "@bentley/imodelhub-client": "2.2.0-dev.5",
+    "@bentley/schema-comparer": "^0.2.49",
+    "@bentley/schema-validator": "0.2.49",
+    "@bentley/oidc-signin-tool": "2.2.0-dev.5",
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
     "httpntlm": "~1",
@@ -44,7 +44,7 @@
     "readdirp": "^3.0.0"
   },
   "devDependencies": {
-    "@bentley/ecschema-locaters": "2.0.0-dev.71",
+    "@bentley/ecschema-locaters": "2.2.0-dev.5",
     "@bentley/build-tools": "^1.1",
     "@types/node": "10.12.18",
     "@types/chai": "^4.1.7",
