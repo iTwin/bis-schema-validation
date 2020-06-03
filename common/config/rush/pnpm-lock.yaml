@@ -12,6 +12,7 @@ dependencies:
   '@bentley/imodeljs-i18n': 2.0.0-dev.71_2e388872cf18741d9f4693ce08ed7495
   '@bentley/oidc-signin-tool': 2.0.0-dev.71
   '@rush-temp/bis-rules': 'file:projects/bis-rules.tgz_08353c71f6d95faec710d99b0cc217b1'
+  '@rush-temp/imodel-quality-checker': 'file:projects/imodel-quality-checker.tgz_8a959412ef0497e0205c655ad2b42496'
   '@rush-temp/imodel-schema-validator': 'file:projects/imodel-schema-validator.tgz_9bfcd39856194a4db32da1b34d49e546'
   '@rush-temp/schema-comparer': 'file:projects/schema-comparer.tgz'
   '@rush-temp/schema-roundtrip': 'file:projects/schema-roundtrip.tgz_6178e00190e26a74fc746cce803b66e4'
@@ -6028,6 +6029,40 @@ packages:
       integrity: sha512-X2GTMzPMqn/71iTd5WDypFecQgXlooej4j4menNSt7xrxNKIPeO3Bls+u0g/6UNukHDpr803AT6l0pqUChODEw==
       tarball: 'file:projects/bis-rules.tgz'
     version: 0.0.0
+  'file:projects/imodel-quality-checker.tgz_8a959412ef0497e0205c655ad2b42496':
+    dependencies:
+      '@bentley/bentleyjs-core': 2.0.0-dev.71
+      '@bentley/build-tools': 1.14.1
+      '@bentley/ecschema-locaters': 2.0.0-dev.71_7d767cb6255eaec02d2cf75b22eae861
+      '@bentley/ecschema-metadata': 2.0.0-dev.71_d3f77bdf6d841a6dcf044cc36d8b3770
+      '@bentley/imodelhub-client': 2.0.0-dev.71_ef594e7f5d168bb14fccf3564e1a8eac
+      '@bentley/imodeljs-backend': 2.0.0-dev.71_183f94a2da24dc2b4440473a7b81d043
+      '@bentley/imodeljs-clients': 2.0.0-dev.71_2e388872cf18741d9f4693ce08ed7495
+      '@bentley/imodeljs-clients-backend': 2.0.0-dev.71_7dc116cb1d55de4d2b1f449e9872fb60
+      '@bentley/imodeljs-common': 2.0.0-dev.71_ff20fad57b177c6a4986e3baa6daed1b
+      '@bentley/oidc-signin-tool': 2.0.0-dev.71
+      '@types/chai': 4.2.11
+      '@types/mocha': 5.2.7
+      '@types/node': 10.12.18
+      chai: 4.2.0
+      chalk: 2.4.2
+      commander: 2.20.3
+      cpx: 1.5.0
+      mocha: 5.2.0
+      nyc: 13.3.0
+      rimraf: 2.7.1
+      ts-node: 7.0.1
+      typescript: 3.9.3
+    dev: false
+    id: 'file:projects/imodel-quality-checker.tgz'
+    name: '@rush-temp/imodel-quality-checker'
+    peerDependencies:
+      '@bentley/geometry-core': '*'
+      '@bentley/imodeljs-i18n': '*'
+    resolution:
+      integrity: sha512-J764adIHBVZ1yBNeEHgEXl996mJYddL2gxfic3dJxVKK61E/WnCk9vUIRMWYqk0r06qRBsQwxHQ3+e3e7aoI5w==
+      tarball: 'file:projects/imodel-quality-checker.tgz'
+    version: 0.0.0
   'file:projects/imodel-schema-validator.tgz_9bfcd39856194a4db32da1b34d49e546':
     dependencies:
       '@bentley/bentleyjs-core': 2.0.0-dev.71
@@ -6062,7 +6097,7 @@ packages:
     peerDependencies:
       '@bentley/imodeljs-i18n': '*'
     resolution:
-      integrity: sha512-eoWUPETnUx6cTBzQfpeVU+NRB2Vu+EMQltJDFp2uHVY0V0babqcgPMfk1lzPDYKo7NqzjVOxqTW7f5NutkYS0A==
+      integrity: sha512-WYJNnKuWpNHerzEstwfG4GBKZAY99Rr13whTn3RLpM0SvUjQ6mhbT45/OXPop16jkV2nz2uN6v5ZicSZntrY7w==
       tarball: 'file:projects/imodel-schema-validator.tgz'
     version: 0.0.0
   'file:projects/schema-comparer.tgz':
@@ -6150,7 +6185,7 @@ packages:
     peerDependencies:
       '@bentley/imodelhub-client': '*'
     resolution:
-      integrity: sha512-JZMmdmbZEXD2W+RmiqWuxUtHtUn/qF6pPb5+iDgX+ByoGPqFvfOhendscan/3dcPVFC09cosPc6RtJRY52o5Aw==
+      integrity: sha512-gvzORFufvrqo0lKYPRtnYcM+Oi6nI8Hr4ezC3pFS5re1T0efH74je1/HO+OdFM6Di7AI4DJKmBBfs07ypBM0aw==
       tarball: 'file:projects/schema-roundtrip.tgz'
     version: 0.0.0
   'file:projects/schema-validator.tgz_9bfcd39856194a4db32da1b34d49e546':
@@ -6195,9 +6230,10 @@ packages:
     peerDependencies:
       '@bentley/imodeljs-i18n': '*'
     resolution:
-      integrity: sha512-/zPau4W0FlIu9LA+1+GG9CXfKYyHxOi9orjpvwUJgr9n+Q0hYzJ6GMTm2Y69MsX0bxol+v+KQcVpncPKYs5mEA==
+      integrity: sha512-kjgUxu6/bbd1GoMWeIQfGblvhV1d5qEs/+Xv5CG/ciyA6Q+oPc/V8OjseSttyWWOQBilBVotJ5Nu5RHwlS8opw==
       tarball: 'file:projects/schema-validator.tgz'
     version: 0.0.0
+registry: ''
 specifiers:
   '@bentley/bentleyjs-core': 2.0.0-dev.71
   '@bentley/build-tools': ^1.1
@@ -6212,6 +6248,7 @@ specifiers:
   '@bentley/imodeljs-i18n': 2.0.0-dev.71
   '@bentley/oidc-signin-tool': 2.0.0-dev.71
   '@rush-temp/bis-rules': 'file:./projects/bis-rules.tgz'
+  '@rush-temp/imodel-quality-checker': 'file:./projects/imodel-quality-checker.tgz'
   '@rush-temp/imodel-schema-validator': 'file:./projects/imodel-schema-validator.tgz'
   '@rush-temp/schema-comparer': 'file:./projects/schema-comparer.tgz'
   '@rush-temp/schema-roundtrip': 'file:./projects/schema-roundtrip.tgz'
