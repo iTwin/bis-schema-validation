@@ -4,7 +4,8 @@
 *--------------------------------------------------------------------------------------------*/
 
 import * as EC from "@bentley/ecschema-metadata";
-import { DiagnosticCodes } from "@bentley/bis-rules";
+import { DiagnosticCodes as BisDiagnosticCodes } from "@bentley/bis-rules";
+import { CustomAttributeContainerProps } from "@bentley/ecschema-metadata/lib/Metadata/CustomAttribute";
 
 interface ISchemaInfo {
   name: string;
@@ -15,35 +16,38 @@ export const ruleSuppressionSet: EC.IRuleSuppressionSet = {
   name: "SuppressionSet",
   schemaRuleSuppressions: [
     // BIS-007
-    { ruleCode: DiagnosticCodes.SchemaClassDisplayLabelMustBeUnique, rule: schemaClassDisplayLabelMustBeUnique },
+    { ruleCode: BisDiagnosticCodes.SchemaClassDisplayLabelMustBeUnique, rule: schemaClassDisplayLabelMustBeUnique },
   ],
   classRuleSuppressions: [
     // BIS-100
-    { ruleCode: DiagnosticCodes.MultiplePropertiesInClassWithSameLabel, rule: multiplePropertiesInClassWithSameLabel },
+    { ruleCode: BisDiagnosticCodes.MultiplePropertiesInClassWithSameLabel, rule: multiplePropertiesInClassWithSameLabel },
   ],
   entityRuleSuppressions: [
     // BIS-605
-    { ruleCode: DiagnosticCodes.ElementUniqueAspectMustHaveCorrespondingRelationship, rule: elementUniqueAspectMustHaveCorrespondingRelationship },
+    { ruleCode: BisDiagnosticCodes.ElementUniqueAspectMustHaveCorrespondingRelationship, rule: elementUniqueAspectMustHaveCorrespondingRelationship },
     // BIS-607
-    { ruleCode: DiagnosticCodes.EntityClassesCannotDeriveFromModelClasses, rule: entityClassesCannotDeriveFromModelClasses },
+    { ruleCode: BisDiagnosticCodes.EntityClassesCannotDeriveFromModelClasses, rule: entityClassesCannotDeriveFromModelClasses },
     // BIS-609
-    { ruleCode: DiagnosticCodes.BisModelSubClassesCannotDefineProperties, rule: bisModelSubClassesCannotDefineProperties },
+    { ruleCode: BisDiagnosticCodes.BisModelSubClassesCannotDefineProperties, rule: bisModelSubClassesCannotDefineProperties },
   ],
   koqRuleSuppressions: [
     // BIS-1000
-    { ruleCode: DiagnosticCodes.KOQMustNotUseUnitlessRatios, rule: koqMustNotUseUnitlessRatios },
+    { ruleCode: BisDiagnosticCodes.KOQMustNotUseUnitlessRatios, rule: koqMustNotUseUnitlessRatios },
     // BIS-1001
-    { ruleCode: DiagnosticCodes.KOQMustUseSIUnitForPersistenceUnit, rule: koqMustUseSIUnitForPersistenceUnit },
+    { ruleCode: BisDiagnosticCodes.KOQMustUseSIUnitForPersistenceUnit, rule: koqMustUseSIUnitForPersistenceUnit },
     // BIS-1002
-    { ruleCode: DiagnosticCodes.KOQDuplicatePresentationFormat, rule: koqDuplicatePresentationFormat },
+    { ruleCode: BisDiagnosticCodes.KOQDuplicatePresentationFormat, rule: koqDuplicatePresentationFormat },
   ],
   propertyRuleSuppressions: [
     // BIS-1300
-    { ruleCode: DiagnosticCodes.PropertyShouldNotBeOfTypeLong, rule: propertyShouldNotBeOfTypeLong },
+    { ruleCode: BisDiagnosticCodes.PropertyShouldNotBeOfTypeLong, rule: propertyShouldNotBeOfTypeLong },
   ],
   relationshipRuleSuppressions: [
     // BIS-1505
-    { ruleCode: DiagnosticCodes.EmbeddingRelationshipsMustNotHaveHasInName, rule: embeddingRelationshipsMustNotHaveHasInName },
+    { ruleCode: BisDiagnosticCodes.EmbeddingRelationshipsMustNotHaveHasInName, rule: embeddingRelationshipsMustNotHaveHasInName },
+  ],
+  customAttributeInstanceSuppressions: [
+    {  ruleCode: EC.DiagnosticCodes.CustomAttributeSchemaMustBeReferenced, rule: customAttributeSchemaMustBeReferenced },
   ],
 };
 
@@ -252,6 +256,26 @@ export async function propertyShouldNotBeOfTypeLong(_diagnostic: EC.AnyDiagnosti
   if (schemaInfo.name === "BuildingCommon") {
     return "ABDIdentification.ElementId" === property.fullName;
   }
+
+  return false;
+}
+
+/** EC Rule EC-501 rule suppression. */
+export async function customAttributeSchemaMustBeReferenced(diagnostic: EC.AnyDiagnostic, container: CustomAttributeContainerProps): Promise<boolean> {
+  const schemaList = [
+    { name: "RoadRailAlignment", version: new  EC.ECVersion(2, 0, 1) },
+    { name: "Construction", version: new  EC.ECVersion(1, 0, 1) },
+  ];
+
+  const schemaInfo = findSchemaInfo(schemaList, container.schema);
+  if (!schemaInfo)
+    return false;
+
+  if (diagnostic.messageArgs && diagnostic.messageArgs[1] === "ECDbMap.DbIndexList")
+    return true;
+
+  if (schemaInfo.name === "Construction" && diagnostic.messageArgs && diagnostic.messageArgs[1] === "CoreCustomAttributes.HiddenProperty")
+    return true;
 
   return false;
 }
