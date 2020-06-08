@@ -4,24 +4,23 @@
 * Licensed under the MIT License. See LICENSE.md in the project root for license terms.
 *--------------------------------------------------------------------------------------------*/
 import { isDynamicSchema, compareSchema, ruleViolationError, IModelValidationResult, iModelValidationResultTypes } from "../src/iModelSchemaValidator";
-import { SchemaComparison, CompareOptions} from "@bentley/schema-comparer";
 import { expect } from "chai";
 import * as path from "path";
 import * as fs from "fs";
 
-describe ("iModelSchemaValidator Tests", async () => {
+describe("iModelSchemaValidator Tests", async () => {
 
-  it ("Dynamic Schema, A schema is a dynamic schema.", async () => {
+  it("Dynamic Schema, A schema is a dynamic schema.", async () => {
     const schemaFile = path.resolve(path.normalize(__dirname + "/assets/"), "SchemaE.ecschema.xml");
     expect(isDynamicSchema(schemaFile)).to.equal(true);
   });
 
-  it ("Dynamic Schema, A schema is not dynamic schema.", async () => {
+  it("Dynamic Schema, A schema is not dynamic schema.", async () => {
     const schemaFile = path.resolve(path.normalize(__dirname + "/assets/"), "SchemaA.ecschema.xml");
     expect(isDynamicSchema(schemaFile)).to.equal(false);
   });
 
-  it ("Schema Comparison, Difference is not reference only", async () => {
+  it("Schema Comparison, Difference is not reference only", async () => {
     const schemaAFile = path.resolve(path.normalize(__dirname + "/assets/"), "SchemaA.ecschema.xml");
     const schemaBFile = path.resolve(path.normalize(__dirname + "/assets/"), "SchemaB.ecschema.xml");
     const references = path.normalize(__dirname + "/assets/references/");
@@ -37,7 +36,7 @@ describe ("iModelSchemaValidator Tests", async () => {
     expect(validationResult.comparer).to.equal(iModelValidationResultTypes.Failed);
   });
 
-  it ("Schema Comparison, Difference is reference only", async () => {
+  it("Schema Comparison, Difference is reference only", async () => {
     const schemaAFile = path.resolve(path.normalize(__dirname + "/assets/"), "SchemaD.ecschema.xml");
     const schemaBFile = path.resolve(path.normalize(__dirname + "/assets/subAssets/"), "SchemaD.ecschema.xml");
     const references = path.normalize(__dirname + "/assets/references/");
@@ -53,13 +52,23 @@ describe ("iModelSchemaValidator Tests", async () => {
     expect(validationResult.comparer).to.equal(iModelValidationResultTypes.ReferenceDifferenceWarning);
   });
 
-  it ("Rule Violation, Violation is of type error", async () => {
+  it("BIS Rule Violation, Violation is of type error", async () => {
     const violation = ruleViolationError("Error BIS-001: Test rule.");
     expect(violation).to.equal(true);
   });
 
-  it ("Rule Violation, Violation is not of type error", async () => {
-    const violation = ruleViolationError("Warning BIS-001: Test rule");
+  it("BIS Rule Violation, Violation is not of type error", async () => {
+    const violation = ruleViolationError("Warning BIS-001: Test rule.");
+    expect(violation).to.equals(false);
+  });
+
+  it("EC Rule Violation, Violation is of type error", async () => {
+    const violation = ruleViolationError("Error ECObjects-101: Test rule.");
+    expect(violation).to.equal(true);
+  });
+
+  it("EC Rule Violation, Violation is not of type error", async () => {
+    const violation = ruleViolationError("Warning ECObjects-101: Test rule.");
     expect(violation).to.equals(false);
   });
 

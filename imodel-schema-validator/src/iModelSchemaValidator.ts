@@ -8,7 +8,7 @@ import { LaunchCodesProvider } from "./LaunchCodesProvider";
 import { getSha1Hash } from "./Sha1HashHelper";
 import { SchemaComparison, CompareOptions, ComparisonResultType, IComparisonResult } from "@bentley/schema-comparer";
 import { SchemaValidator, ValidationOptions, ValidationResultType } from "@bentley/schema-validator";
-import { SchemaCompareCodes, SchemaMatchType } from "@bentley/ecschema-metadata";
+import { SchemaCompareCodes } from "@bentley/ecschema-metadata";
 import * as path from "path";
 import * as commander from "commander";
 import * as chalk from "chalk";
@@ -251,7 +251,9 @@ export function isDynamicSchema(schemaPath: string): boolean {
  * Check if violation is of type error
  */
 export function ruleViolationError(line: string) {
-  if (/Error\sBIS-\d+:/g.test(line)) {
+  const bisRuleFailure = /Error\sBIS-\d+:/g.test(line);
+  const ecRuleFailure = /Error\sECObjects-\d+:/g.test(line);
+  if (bisRuleFailure || ecRuleFailure) {
     return true;
   }
   return false;
