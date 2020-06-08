@@ -5,7 +5,7 @@
 
 import * as fs from "fs";
 import * as path from "path";
-import { BriefcaseDb, SnapshotDb } from "@bentley/imodeljs-backend";
+import { BriefcaseDb, SnapshotDb, SqliteStatement } from "@bentley/imodeljs-backend";
 import { SchemaJsonFileLocater } from "@bentley/ecschema-locaters";
 import { Schema, SchemaContext } from "@bentley/ecschema-metadata";
 
@@ -28,9 +28,43 @@ export interface MetaData {
 }
 
 /**
+ * Array containing names of standard schemas
+ */
+export const standardSchemaNames = [
+  "Bentley_Standard_CustomAttributes",
+  "Bentley_Standard_Classes",
+  "Bentley_ECSchemaMap",
+  "EditorCustomAttributes",
+  "Bentley_Common_Classes",
+  "Dimension_Schema",
+  "iip_mdb_customAttributes",
+  "KindOfQuantity_Schema",
+  "rdl_customAttributes",
+  "SIUnitSystemDefaults",
+  "Unit_Attributes",
+  "Units_Schema",
+  "USCustomaryUnitSystemDefaults",
+  "ECDbMap",
+  "CoreCustomAttributes", // New EC3 Standard Schema
+  "ECv3ConversionAttributes", // New EC2 Standard Schema
+  "SchemaLocalizationCustomAttributes", // New EC3 Standard Schema
+  "Units", // New EC3 Standard Schema
+  "Formats", // New EC3 Standard Schema
+];
+
+/**
  * SchemaInfo provides information about the schemas within an iModel
  */
 export class SchemaInfo {
+
+  /**
+   * Checks if a schema is a standard schema or not
+   * @param schema: It is the schema object.
+   * @returns Boolean based upon the result.
+   */
+  public static isStandardSchema(schema: Schema) {
+    return standardSchemaNames.includes(schema.name);
+  }
 
   /**
    * Gets the schema names which are present within an iModel
@@ -141,5 +175,44 @@ export class SchemaInfo {
   public static sortMetaDataByPropertyCount(metaData: MetaData[]) {
     const sortedMetaData: MetaData[] = metaData.sort((a, b) => a.propertyCount - b.propertyCount).reverse();
     return sortedMetaData;
+  }
+
+  /**
+   * Get overflow table names present within an iModel.
+   * @param iModel It is the opened briefcase.
+   * @returns A list containing table names.
+   */
+  public static getOverflowTables(iModel: BriefcaseDb | SnapshotDb): string[] {
+    let tableCount;
+    const tableNames: string[] = [];
+    iModel.withPreparedSqliteStatement("SELECT COUNT(*) as count FROM sqlite_master WHERE type='table' AND name like '%_Overflow'", (stmt: SqliteStatement) => {
+      stmt.step();
+      tableCount = stmt.getRow().count;
+    });
+
+    iModel.withPreparedSqliteStatement("SELECT name FROM sqlite_master WHERE type='table' AND name like '%_Overflow'",
+      (stmt: SqliteStatement) => {
+        for (let index = 0; index < tableCount; index++) {
+          stmt.step();
+          const val1: any = stmt.getRow();
+          tableNames.push(val1.name);
+        }
+      });
+    return tableNames;
+  }
+
+  /**
+   * Find the number of columns in the overflow table
+   * @param iModel It is the opened briefcase.
+   * @param tableName Name of overflow table
+   * @returns The column count of a overflow table
+   */
+  public static getOverflowTableColumnCount(iModel: BriefcaseDb | SnapshotDb, tableName: string) {
+    let columnCount;
+    iModel.withPreparedSqliteStatement("SELECT * FROM " + tableName, (stmt: SqliteStatement) => {
+      stmt.step();
+      columnCount = stmt.getColumnCount();
+    });
+    return columnCount;
   }
 }
