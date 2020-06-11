@@ -22,11 +22,12 @@ const informationRecordModelName = "InformationRecordModel";
 const iParentElementName = "IParentElement";
 const iSubModeledElementName = "ISubModeledElement";
 const linkModelModelName = "LinkModel";
-const percentagePhenomenonName = "PERCENTAGE";
 const physicalModelName = "PhysicalModel";
 const siUnitSystemName = "SI";
 const spatialLocationModelName = "SpatialLocationModel";
 const validExtendedTypes = ["BeGuid", "GeometryStream", "Json"];
+const decimalPercent = "Units.DECIMAL_PERCENT";
+const coefficient = "Units.COEFFICIENT";
 
 const ruleSetName = "BIS";
 
@@ -126,7 +127,6 @@ export const DiagnosticCodes = {
   /**
    * KindOfQuantity Rules (1000-1099)
    */
-  KOQMustNotUseUnitlessRatios: getCode("1000"),
   KOQMustUseSIUnitForPersistenceUnit: getCode("1001"),
   KOQDuplicatePresentationFormat: getCode("1002"),
 
@@ -272,10 +272,6 @@ export const Diagnostics = {
   CustomAttributeClassCannotHaveBaseClasses: EC.createSchemaItemDiagnosticClass<EC.CustomAttributeClass, [string]>(DiagnosticCodes.CustomAttributeClassCannotHaveBaseClasses,
     "CustomAttribute class '{0}' has a base class, but CustomAttribute classes should not have base classes."),
 
-  /** Required message parameters: KindOfQuantity fullName */
-  KOQMustNotUseUnitlessRatios: EC.createSchemaItemDiagnosticClass<EC.KindOfQuantity, [string]>(DiagnosticCodes.KOQMustNotUseUnitlessRatios,
-    "KindOfQuantity '{0}' has persistence unit of Phenomenon 'PERCENTAGE'. Unitless ratios are not allowed. Use a ratio phenomenon which includes units like VOLUME_RATIO"),
-
   /** Required message parameters: KindOfQuantity fullName, UnitSystem fullName */
   KOQMustUseSIUnitForPersistenceUnit: EC.createSchemaItemDiagnosticClass<EC.KindOfQuantity, [string, string]>(DiagnosticCodes.KOQMustUseSIUnitForPersistenceUnit,
     "KindOfQuantity '{0}' has persistence unit of unit system '{1}' but must have an SI unit system"),
@@ -365,7 +361,6 @@ export const BisRuleSet: EC.IRuleSet = {
     customAttributeClassCannotHaveBaseClasses,
   ],
   kindOfQuantityRules: [
-    koqMustNotUseUnitlessRatios,
     koqMustUseSIUnitForPersistenceUnit,
     koqDuplicatePresentationFormat,
   ],
@@ -978,20 +973,6 @@ export async function* customAttributeClassCannotHaveBaseClasses(customAttribute
  * ************************************************************
  */
 
-/** BIS Rule: Kind Of Quantities must not use 'PERCENTAGE' or other unitless ratios. */
-export async function* koqMustNotUseUnitlessRatios(koq: EC.KindOfQuantity): AsyncIterable<EC.SchemaItemDiagnostic<EC.KindOfQuantity, any[]>> {
-  const unit = await koq.persistenceUnit;
-  if (!unit || !(unit instanceof EC.Unit))
-    return;
-
-  const phenomenon = await unit.phenomenon;
-  if (!phenomenon)
-    return;
-
-  if (phenomenon.name === percentagePhenomenonName)
-    yield new Diagnostics.KOQMustNotUseUnitlessRatios(koq, [koq.fullName]);
-}
-
 /** BIS Rule: Kind Of Quantities must use an SI Unit for their persistence unit. */
 export async function* koqMustUseSIUnitForPersistenceUnit(koq: EC.KindOfQuantity): AsyncIterable<EC.SchemaItemDiagnostic<EC.KindOfQuantity, any[]>> {
   const unit = await koq.persistenceUnit;
@@ -1002,8 +983,11 @@ export async function* koqMustUseSIUnitForPersistenceUnit(koq: EC.KindOfQuantity
   if (!unitSystem)
     return;
 
-  if (unitSystem.name !== siUnitSystemName)
+  if (unitSystem.name !== siUnitSystemName) {
+    if (unit.fullName === decimalPercent || unit.fullName === coefficient)
+      return;
     yield new Diagnostics.KOQMustUseSIUnitForPersistenceUnit(koq, [koq.fullName, unitSystem.fullName]);
+  }
 }
 
 /** BIS Rule: Kind Of Quantities must not have duplicate presentation formats. */

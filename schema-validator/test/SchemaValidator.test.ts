@@ -200,31 +200,22 @@ describe("SchemaValidater Tests", () => {
     describe("Kind of Quantity Tests", () => {
       const koqAssetsDir = utils.getKOQAssetDir();
 
-      it("KindOfQuantity named 'ONE' and schema named 'ProcessFunctional', so rule suppressed and warning logged.", async () => {
-        const schemaFile = path.resolve(koqAssetsDir, "ProcessFunctional.ecschema.xml");
+      it("KindOfQuantity using a MONETARY UNIT and schema named 'CifUnits', so rule suppressed and warning logged.", async () => {
+        const schemaFile = path.resolve(koqAssetsDir, "CifUnits.ecschema.xml");
         const options = new ValidationOptions(schemaFile, [assetDeserializationDir], false);
 
         const result = await SchemaValidator.validate(options);
-        expect(result[1].resultText).to.contain("Warning BIS-1000: KindOfQuantity");
-        expect(result[2].resultText).to.contain("Warning BIS-1001: KindOfQuantity");
+        expect(result.length).to.equal(2);
+        expect(result[1].resultText).to.contain("Warning BIS-1001: KindOfQuantity", `Actual result text '${result[1].resultText}'`);
       });
 
-      it("KindOfQuantity named 'ONE' but schema not named 'ProcessFunctional' or 'ProcessPhysical', so rule not suppressed and error logged.", async () => {
-        const schemaFile = path.resolve(koqAssetsDir, "BadNameSchema.ecschema.xml");
+      it("KindOfQuantity using a MONETARY UNIT but schema not named 'CifUnits', so rule not suppressed and error logged.", async () => {
+        const schemaFile = path.resolve(koqAssetsDir, "CifUnitsNo.ecschema.xml");
         const options = new ValidationOptions(schemaFile, [assetDeserializationDir], false);
 
         const result = await SchemaValidator.validate(options);
-        expect(result[1].resultText).to.contain("Error BIS-1000: KindOfQuantity");
-        expect(result[2].resultText).to.contain("Error BIS-1001: KindOfQuantity");
-      });
-
-      it("KindOfQuantity not named 'ONE', so rule suppressed and error logged.", async () => {
-        const schemaFile = path.resolve(koqAssetsDir, "ProcessPhysical.ecschema.xml");
-        const options = new ValidationOptions(schemaFile, [assetDeserializationDir], false);
-
-        const result = await SchemaValidator.validate(options);
-        expect(result[1].resultText).to.contain("Error BIS-1000: KindOfQuantity");
-        expect(result[2].resultText).to.contain("Error BIS-1001: KindOfQuantity");
+        expect(result.length).to.equal(2);
+        expect(result[1].resultText).to.contain("Error BIS-1001: KindOfQuantity", `Actual result text '${result[1].resultText}'`);
       });
     });
 

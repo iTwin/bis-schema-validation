@@ -31,8 +31,6 @@ export const ruleSuppressionSet: EC.IRuleSuppressionSet = {
     { ruleCode: BisDiagnosticCodes.BisModelSubClassesCannotDefineProperties, rule: bisModelSubClassesCannotDefineProperties },
   ],
   koqRuleSuppressions: [
-    // BIS-1000
-    { ruleCode: BisDiagnosticCodes.KOQMustNotUseUnitlessRatios, rule: koqMustNotUseUnitlessRatios },
     // BIS-1001
     { ruleCode: BisDiagnosticCodes.KOQMustUseSIUnitForPersistenceUnit, rule: koqMustUseSIUnitForPersistenceUnit },
     // BIS-1002
@@ -47,26 +45,18 @@ export const ruleSuppressionSet: EC.IRuleSuppressionSet = {
     { ruleCode: BisDiagnosticCodes.EmbeddingRelationshipsMustNotHaveHasInName, rule: embeddingRelationshipsMustNotHaveHasInName },
   ],
   customAttributeInstanceSuppressions: [
-    {  ruleCode: EC.DiagnosticCodes.CustomAttributeSchemaMustBeReferenced, rule: customAttributeSchemaMustBeReferenced },
+    { ruleCode: EC.DiagnosticCodes.CustomAttributeSchemaMustBeReferenced, rule: customAttributeSchemaMustBeReferenced },
   ],
 };
 
 /** Rule BIS-1001 rule suppression. */
 export async function koqMustUseSIUnitForPersistenceUnit(_diagnostic: EC.AnyDiagnostic, koq: EC.KindOfQuantity): Promise<boolean> {
-  if (koq.schema.name === "ProcessPhysical" || koq.schema.name === "ProcessFunctional") {
-    const schemaItem = await koq.schema.getItem("ONE");
-    if (!schemaItem) { return false; }
-    return schemaItem.schemaItemType ===  EC.SchemaItemType.KindOfQuantity;
-  }
-  return false;
-}
-
-/** Rule BIS-1000 rule suppression. */
-export async function koqMustNotUseUnitlessRatios(_diagnostic: EC.AnyDiagnostic, koq: EC.KindOfQuantity): Promise<boolean> {
-  if (koq.schema.name === "ProcessPhysical" || koq.schema.name === "ProcessFunctional") {
-    const schemaItem = await koq.schema.getItem("ONE");
-    if (!schemaItem) { return false; }
-    return schemaItem.schemaItemType ===  EC.SchemaItemType.KindOfQuantity;
+  if (koq.schema.name === "CifUnits") {
+    const persistenceUnit = await koq.persistenceUnit;
+    if (persistenceUnit?.fullName === "Units.MONETARY_UNIT" || persistenceUnit?.fullName === "CifUnits.MONETARY_UNIT_PER_J" ||
+      persistenceUnit?.fullName === "CifUnits.MONETARY_UNIT_PER_W" || persistenceUnit?.fullName === "CifUnits.MONETARY_UNIT_PER_CUB_M") {
+      return true;
+    }
   }
   return false;
 }
@@ -74,9 +64,8 @@ export async function koqMustNotUseUnitlessRatios(_diagnostic: EC.AnyDiagnostic,
 /** Rule BIS-1002 rule suppression. */
 export async function koqDuplicatePresentationFormat(_diagnostic: EC.AnyDiagnostic, koq: EC.KindOfQuantity): Promise<boolean> {
   if (koq.schema.name === "ProcessPhysical" || koq.schema.name === "ProcessFunctional") {
-    const schemaItem = await koq.schema.getItem("ONE");
-    if (!schemaItem) { return false; }
-    return schemaItem.schemaItemType ===  EC.SchemaItemType.KindOfQuantity;
+    if (koq.name === "ONE")
+      return true;
   }
   return false;
 }
@@ -92,8 +81,8 @@ export async function embeddingRelationshipsMustNotHaveHasInName(_diagnostic: EC
 /** Rule BIS-007 rule suppression. */
 export async function schemaClassDisplayLabelMustBeUnique(diagnostic: EC.AnyDiagnostic, schema: EC.Schema): Promise<boolean> {
   const schemaList = [
-    { name: "ProcessPidGraphical", version: new  EC.ECVersion(1, 99, 99) },
-    { name: "RoadRailPhysical", version: new  EC.ECVersion(1, 99, 99) },
+    { name: "ProcessPidGraphical", version: new EC.ECVersion(1, 99, 99) },
+    { name: "RoadRailPhysical", version: new EC.ECVersion(1, 99, 99) },
     { name: "ProcessPhysical", version: new EC.ECVersion(1, 0, 1) },
   ];
 
@@ -103,8 +92,8 @@ export async function schemaClassDisplayLabelMustBeUnique(diagnostic: EC.AnyDiag
 
   if (schemaInfo.name === "ProcessPidGraphical") {
     if (diagnostic.messageArgs && diagnostic.messageArgs.includes("ProcessPidGraphical.OpSettings")
-        && diagnostic.messageArgs.includes("ProcessPidGraphical.OpCheckOutId")
-        && diagnostic.messageArgs.includes("OpenPlant Settings"))
+      && diagnostic.messageArgs.includes("ProcessPidGraphical.OpCheckOutId")
+      && diagnostic.messageArgs.includes("OpenPlant Settings"))
       return true;
 
     return false;
@@ -126,23 +115,23 @@ export async function schemaClassDisplayLabelMustBeUnique(diagnostic: EC.AnyDiag
 
   if (schemaInfo.name === "ProcessPhysical") {
     if (diagnostic.messageArgs && diagnostic.messageArgs.includes("ProcessPhysical.PipeAlignment")
-        && diagnostic.messageArgs.includes("ProcessPhysical.PIPE_GUIDE")
-        && diagnostic.messageArgs.includes("Pipe Guide"))
+      && diagnostic.messageArgs.includes("ProcessPhysical.PIPE_GUIDE")
+      && diagnostic.messageArgs.includes("Pipe Guide"))
       return true;
 
     if (diagnostic.messageArgs && diagnostic.messageArgs.includes("ProcessPhysical.PipeClamp")
-        && diagnostic.messageArgs.includes("ProcessPhysical.PIPE_CLAMP")
-        && diagnostic.messageArgs.includes("Pipe Clamp"))
+      && diagnostic.messageArgs.includes("ProcessPhysical.PIPE_CLAMP")
+      && diagnostic.messageArgs.includes("Pipe Clamp"))
       return true;
 
     if (diagnostic.messageArgs && diagnostic.messageArgs.includes("ProcessPhysical.RiserClamp")
-        && diagnostic.messageArgs.includes("ProcessPhysical.RISER_CLAMP")
-        && diagnostic.messageArgs.includes("Riser Clamp"))
+      && diagnostic.messageArgs.includes("ProcessPhysical.RISER_CLAMP")
+      && diagnostic.messageArgs.includes("Riser Clamp"))
       return true;
 
     if (diagnostic.messageArgs && diagnostic.messageArgs.includes("ProcessPhysical.SpringHanger")
-        && diagnostic.messageArgs.includes("ProcessPhysical.SPRING_HANGER")
-        && diagnostic.messageArgs.includes("Spring Hanger"))
+      && diagnostic.messageArgs.includes("ProcessPhysical.SPRING_HANGER")
+      && diagnostic.messageArgs.includes("Spring Hanger"))
       return true;
 
     return false;
@@ -154,7 +143,7 @@ export async function schemaClassDisplayLabelMustBeUnique(diagnostic: EC.AnyDiag
 /** Rule BIS-100 rule suppression. */
 export async function multiplePropertiesInClassWithSameLabel(diagnostic: EC.AnyDiagnostic, ecClass: EC.AnyClass): Promise<boolean> {
   const schemaList = [
-    { name: "ProcessPhysical", version: new  EC.ECVersion(1, 0, 1) },
+    { name: "ProcessPhysical", version: new EC.ECVersion(1, 0, 1) },
   ];
 
   const schemaInfo = findSchemaInfo(schemaList, ecClass.schema);
@@ -162,9 +151,9 @@ export async function multiplePropertiesInClassWithSameLabel(diagnostic: EC.AnyD
     return false;
 
   if (diagnostic.messageArgs && diagnostic.messageArgs.includes("ProcessPhysical.PLANT_BASE_OBJECT")
-      && diagnostic.messageArgs.includes("DesignState")
-      && diagnostic.messageArgs.includes("DESIGN_STATE")
-      && diagnostic.messageArgs.includes("Design State"))
+    && diagnostic.messageArgs.includes("DesignState")
+    && diagnostic.messageArgs.includes("DESIGN_STATE")
+    && diagnostic.messageArgs.includes("Design State"))
     return true;
 
   return false;
@@ -173,7 +162,7 @@ export async function multiplePropertiesInClassWithSameLabel(diagnostic: EC.AnyD
 /** Rule BIS-605 rule suppression. */
 export async function elementUniqueAspectMustHaveCorrespondingRelationship(_diagnostic: EC.AnyDiagnostic, entity: EC.EntityClass): Promise<boolean> {
   const schemaList = [
-    { name: "BuildingCommon", version: new  EC.ECVersion(1, 99, 99) },
+    { name: "BuildingCommon", version: new EC.ECVersion(1, 99, 99) },
   ];
 
   const classList = [
@@ -187,10 +176,10 @@ export async function elementUniqueAspectMustHaveCorrespondingRelationship(_diag
 /** Rule BIS-607 rule suppression. */
 export async function entityClassesCannotDeriveFromModelClasses(_diagnostic: EC.AnyDiagnostic, entity: EC.EntityClass): Promise<boolean> {
   const schemaList = [
-    { name: "StructuralPhysical", version: new  EC.ECVersion(1, 99, 99) },
-    { name: "BuildingPhysical", version: new  EC.ECVersion(1, 99, 99) },
-    { name: "RoadRailAlignment", version: new  EC.ECVersion(1, 99, 99) },
-    { name: "RoadRailPhysical", version: new  EC.ECVersion(1, 99, 99) },
+    { name: "StructuralPhysical", version: new EC.ECVersion(1, 99, 99) },
+    { name: "BuildingPhysical", version: new EC.ECVersion(1, 99, 99) },
+    { name: "RoadRailAlignment", version: new EC.ECVersion(1, 99, 99) },
+    { name: "RoadRailPhysical", version: new EC.ECVersion(1, 99, 99) },
   ];
 
   const schemaInfo = findSchemaInfo(schemaList, entity.schema);
@@ -219,8 +208,8 @@ export async function entityClassesCannotDeriveFromModelClasses(_diagnostic: EC.
 /** Rule BIS-609 rule suppression. */
 export async function bisModelSubClassesCannotDefineProperties(_diagnostic: EC.AnyDiagnostic, entity: EC.EntityClass): Promise<boolean> {
   const schemaList = [
-    { name: "ScalableMesh", version: new  EC.ECVersion(1, 99, 99) },
-    { name: "Raster", version: new  EC.ECVersion(1, 99, 99) },
+    { name: "ScalableMesh", version: new EC.ECVersion(1, 99, 99) },
+    { name: "Raster", version: new EC.ECVersion(1, 99, 99) },
   ];
 
   const schemaInfo = findSchemaInfo(schemaList, entity.schema);
@@ -241,8 +230,8 @@ export async function bisModelSubClassesCannotDefineProperties(_diagnostic: EC.A
 /** Rule BIS-1300 rule suppression. */
 export async function propertyShouldNotBeOfTypeLong(_diagnostic: EC.AnyDiagnostic, property: EC.AnyProperty): Promise<boolean> {
   const schemaList = [
-    { name: "Markup", version: new  EC.ECVersion(1, 99, 99) },
-    { name: "BuildingCommon", version: new  EC.ECVersion(1, 99, 99) },
+    { name: "Markup", version: new EC.ECVersion(1, 99, 99) },
+    { name: "BuildingCommon", version: new EC.ECVersion(1, 99, 99) },
   ];
 
   const schemaInfo = findSchemaInfo(schemaList, property.schema);
@@ -263,8 +252,8 @@ export async function propertyShouldNotBeOfTypeLong(_diagnostic: EC.AnyDiagnosti
 /** EC Rule EC-501 rule suppression. */
 export async function customAttributeSchemaMustBeReferenced(diagnostic: EC.AnyDiagnostic, container: CustomAttributeContainerProps): Promise<boolean> {
   const schemaList = [
-    { name: "RoadRailAlignment", version: new  EC.ECVersion(2, 0, 1) },
-    { name: "Construction", version: new  EC.ECVersion(1, 0, 1) },
+    { name: "RoadRailAlignment", version: new EC.ECVersion(2, 0, 1) },
+    { name: "Construction", version: new EC.ECVersion(1, 0, 1) },
   ];
 
   const schemaInfo = findSchemaInfo(schemaList, container.schema);

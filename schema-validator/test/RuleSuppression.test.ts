@@ -6,7 +6,7 @@
 import * as path from "path";
 import * as utils from "./utilities/utils";
 import { SchemaDeserializer } from "../src/SchemaDeserializer";
-import { SchemaContext, KindOfQuantity, RelationshipClass, Schema, SchemaKey, ECVersion, ECClass, PrimitiveType, AnyClass} from "@bentley/ecschema-metadata";
+import { SchemaContext, KindOfQuantity, RelationshipClass, Schema, SchemaKey, ECVersion, ECClass, PrimitiveType, AnyClass } from "@bentley/ecschema-metadata";
 import { MutableClass } from "@bentley/ecschema-metadata/lib/Metadata/Class";
 import { MutableSchema } from "@bentley/ecschema-metadata/lib/Metadata/Schema";
 import * as ruleSuppressionSet from "../src/RuleSuppression";
@@ -34,68 +34,64 @@ describe("Rule Suppression Tests", () => {
       deserializer = new SchemaDeserializer();
     });
 
-    afterEach(() => {
-      IModelHost.shutdown();
+    afterEach(async () => {
+      await IModelHost.shutdown();
     });
 
-    it("koqMustNotUseUnitlessRatios is suppressed for KindOfQuantity named 'ONE' in schemas named ProcessFunctional or ProcessPhysical.", async () => {
-      const schemaPath = path.join(koqAssetsDir, "ProcessFunctional.ecschema.xml");
+    it("koqMustUseSIUnitForPersistenceUnit is suppressed for uses of MONETARY_UNIT related units in KOQs defined in the CifUnits schema.", async () => {
+      const schemaPath = path.join(koqAssetsDir, "CifUnits.ecschema.xml");
       const testSchema = await deserializer.deserializeXmlFile(schemaPath, new SchemaContext(), [assetDeserializationDir]);
-      const koq = await testSchema.getItem<KindOfQuantity>("ONE") as KindOfQuantity;
-      const diag = new BisRules.Diagnostics.KOQMustNotUseUnitlessRatios(koq, [koq.fullName]);
+      let koq = await testSchema.getItem<KindOfQuantity>("COST_PER_UNITVOLUME") as KindOfQuantity;
+      let diag = new BisRules.Diagnostics.KOQMustUseSIUnitForPersistenceUnit(koq, [koq.fullName, "Units.SI"]);
 
-      const result = await ruleSuppressionSet.koqMustNotUseUnitlessRatios(diag, koq);
-      expect(result).to.be.true;
+      let result = await ruleSuppressionSet.koqMustUseSIUnitForPersistenceUnit(diag, koq);
+      expect(result, koq.fullName).to.be.true;
+
+      koq = await testSchema.getItem<KindOfQuantity>("CURRENCY") as KindOfQuantity;
+      diag = new BisRules.Diagnostics.KOQMustUseSIUnitForPersistenceUnit(koq, [koq.fullName, "Units.SI"]);
+
+      result = await ruleSuppressionSet.koqMustUseSIUnitForPersistenceUnit(diag, koq);
+      expect(result, koq.fullName).to.be.true;
+
+      koq = await testSchema.getItem<KindOfQuantity>("CURRENCY_PER_ENERGY") as KindOfQuantity;
+      diag = new BisRules.Diagnostics.KOQMustUseSIUnitForPersistenceUnit(koq, [koq.fullName, "Units.SI"]);
+
+      result = await ruleSuppressionSet.koqMustUseSIUnitForPersistenceUnit(diag, koq);
+      expect(result, koq.fullName).to.be.true;
+
+      koq = await testSchema.getItem<KindOfQuantity>("CURRENCY_PER_POWER") as KindOfQuantity;
+      diag = new BisRules.Diagnostics.KOQMustUseSIUnitForPersistenceUnit(koq, [koq.fullName, "Units.SI"]);
+
+      result = await ruleSuppressionSet.koqMustUseSIUnitForPersistenceUnit(diag, koq);
+      expect(result, koq.fullName).to.be.true;
     });
 
-    it("koqMustNotUseUnitlessRatios is not suppressed for KindOfQuantity named 'ONE' in schemas not named ProcessFunctional or ProcessPhysical.", async () => {
-      const schemaPath = path.join(koqAssetsDir, "BadNameSchema.ecschema.xml");
+    it("koqMustUseSIUnitForPersistenceUnit is not suppressed for uses of MONETARY_UNIT related units in KOQs defined in schemas not named CifUnits.", async () => {
+      const schemaPath = path.join(koqAssetsDir, "CifUnitsNo.ecschema.xml");
       const testSchema = await deserializer.deserializeXmlFile(schemaPath, new SchemaContext(), [assetDeserializationDir]);
-      const koq = await testSchema.getItem<KindOfQuantity>("ONE") as KindOfQuantity;
-      const diag = new BisRules.Diagnostics.KOQMustNotUseUnitlessRatios(koq, [koq.fullName]);
+      let koq = await testSchema.getItem<KindOfQuantity>("COST_PER_UNITVOLUME") as KindOfQuantity;
+      let diag = new BisRules.Diagnostics.KOQMustUseSIUnitForPersistenceUnit(koq, [koq.fullName, "Units.SI"]);
 
-      const result = await ruleSuppressionSet.koqMustNotUseUnitlessRatios(diag, koq);
-      expect(result).to.be.false;
-    });
+      let result = await ruleSuppressionSet.koqMustUseSIUnitForPersistenceUnit(diag, koq);
+      expect(result, koq.fullName).to.be.false;
 
-    it("koqMustNotUseUnitlessRatios is not suppressed for KindOfQuantity not named 'ONE' in schemas named ProcessFunctional or ProcessPhysical.", async () => {
-      const schemaPath = path.join(koqAssetsDir, "ProcessPhysical.ecschema.xml");
-      const testSchema = await deserializer.deserializeXmlFile(schemaPath, new SchemaContext(), [assetDeserializationDir]);
-      const koq = await testSchema.getItem<KindOfQuantity>("THREE") as KindOfQuantity;
-      const diag = new BisRules.Diagnostics.KOQMustNotUseUnitlessRatios(koq, [koq.fullName]);
+      koq = await testSchema.getItem<KindOfQuantity>("CURRENCY") as KindOfQuantity;
+      diag = new BisRules.Diagnostics.KOQMustUseSIUnitForPersistenceUnit(koq, [koq.fullName, "Units.SI"]);
 
-      const result = await ruleSuppressionSet.koqMustNotUseUnitlessRatios(diag, koq);
-      expect(result).to.be.false;
-    });
+      result = await ruleSuppressionSet.koqMustUseSIUnitForPersistenceUnit(diag, koq);
+      expect(result, koq.fullName).to.be.false;
 
-    it("koqMustUseSIUnitForPersistenceUnit is suppressed for KindOfQuantity named 'ONE' in schemas named ProcessFunctional or ProcessPhysical.", async () => {
-      const schemaPath = path.join(koqAssetsDir, "ProcessFunctional.ecschema.xml");
-      const testSchema = await deserializer.deserializeXmlFile(schemaPath, new SchemaContext(), [assetDeserializationDir]);
-      const koq = await testSchema.getItem<KindOfQuantity>("ONE") as KindOfQuantity;
-      const diag = new BisRules.Diagnostics.KOQMustUseSIUnitForPersistenceUnit(koq, [koq.fullName, "TestUnitSystem"]);
+      koq = await testSchema.getItem<KindOfQuantity>("CURRENCY_PER_ENERGY") as KindOfQuantity;
+      diag = new BisRules.Diagnostics.KOQMustUseSIUnitForPersistenceUnit(koq, [koq.fullName, "Units.SI"]);
 
-      const result = await ruleSuppressionSet.koqMustUseSIUnitForPersistenceUnit(diag, koq);
-      expect(result).to.be.true;
-    });
+      result = await ruleSuppressionSet.koqMustUseSIUnitForPersistenceUnit(diag, koq);
+      expect(result, koq.fullName).to.be.false;
 
-    it("koqMustUseSIUnitForPersistenceUnit is not suppressed for KindOfQuantity named 'ONE' in schemas not named ProcessFunctional or ProcessPhysical.", async () => {
-      const schemaPath = path.join(koqAssetsDir, "BadNameSchema.ecschema.xml");
-      const testSchema = await deserializer.deserializeXmlFile(schemaPath, new SchemaContext(), [assetDeserializationDir]);
-      const koq = await testSchema.getItem<KindOfQuantity>("ONE") as KindOfQuantity;
-      const diag = new BisRules.Diagnostics.KOQMustUseSIUnitForPersistenceUnit(koq, [koq.fullName, "TestUnitSystem"]);
+      koq = await testSchema.getItem<KindOfQuantity>("CURRENCY_PER_POWER") as KindOfQuantity;
+      diag = new BisRules.Diagnostics.KOQMustUseSIUnitForPersistenceUnit(koq, [koq.fullName, "Units.SI"]);
 
-      const result = await ruleSuppressionSet.koqMustUseSIUnitForPersistenceUnit(diag, koq);
-      expect(result).to.be.false;
-    });
-
-    it("koqMustUseSIUnitForPersistenceUnit is not suppressed for KindOfQuantity not named 'ONE' in schemas named ProcessFunctional or ProcessPhysical.", async () => {
-      const schemaPath = path.join(koqAssetsDir, "ProcessPhysical.ecschema.xml");
-      const testSchema = await deserializer.deserializeXmlFile(schemaPath, new SchemaContext(), [assetDeserializationDir]);
-      const koq = await testSchema.getItem<KindOfQuantity>("THREE") as KindOfQuantity;
-      const diag = new BisRules.Diagnostics.KOQMustUseSIUnitForPersistenceUnit(koq, [koq.fullName, "TestUnitSystem"]);
-
-      const result = await ruleSuppressionSet.koqMustUseSIUnitForPersistenceUnit(diag, koq);
-      expect(result).to.be.false;
+      result = await ruleSuppressionSet.koqMustUseSIUnitForPersistenceUnit(diag, koq);
+      expect(result, koq.fullName).to.be.false;
     });
 
     it("koqDuplicatePresentationFormat is suppressed for KindOfQuantity named 'ONE' in schemas named ProcessFunctional or ProcessPhysical.", async () => {
