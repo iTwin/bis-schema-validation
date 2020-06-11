@@ -19,7 +19,7 @@ function createSchemaJson(koq: any) {
   }, {
     references: [
       {
-        name: "Formats",
+        name: "Units",
         version: "1.0.0",
       }
     ],
@@ -51,53 +51,14 @@ describe("KindOfQuantity Rule Tests", () => {
     context.addLocater(new TestSchemaLocater());
   });
 
-  describe("KOQMustNotUseUnitLessRatios tests", () => {
-    it("KindOfQuantity has 'PERCENTAGE' phenomenon, rule violated.", async () => {
-      const koqProps = {
-        ...baseJson,
-        relativeError: 1.234,
-        persistenceUnit: "Formats.PERCENT",
-        presentationUnits: [
-          "Formats.PERCENT",
-        ],
-      };
-      schema = await Schema.fromJson(createSchemaJson(koqProps), context);
-      const testKoq = await schema.getItem<KindOfQuantity>(koqProps.name) as KindOfQuantity;
-
-      const result = await iterableToArray(Rules.koqMustNotUseUnitlessRatios(testKoq));
-      expect(result.length).to.equal(1);
-      expect(result[0].ecDefinition).to.equal(testKoq);
-      expect(result[0].messageArgs).to.eql([testKoq.fullName]);
-      expect(result[0].category).to.equal(DiagnosticCategory.Error);
-      expect(result[0].code).to.equal(Rules.DiagnosticCodes.KOQMustNotUseUnitlessRatios);
-      expect(result[0].diagnosticType).to.equal(DiagnosticType.SchemaItem);
-    });
-
-    it("KindOfQuantity does not have 'PERCENTAGE' phenomenon, rule passes.", async () => {
-      const koqProps = {
-        ...baseJson,
-        relativeError: 1.234,
-        persistenceUnit: "Formats.IN",
-        presentationUnits: [
-          "Formats.IN",
-        ],
-      };
-      schema = await Schema.fromJson(createSchemaJson(koqProps), context);
-      const testKoq = await schema.getItem<KindOfQuantity>(koqProps.name) as KindOfQuantity;
-      const result = await iterableToArray(Rules.koqMustNotUseUnitlessRatios(testKoq));
-
-      expect(result.length).to.equal(0, "Rule should have passed.");
-    });
-  });
-
   describe("KOQMustUseSIUnitForPersistenceUnit tests", () => {
     it("KindOfQuantity does not have an 'SI' persistence unit, rule violated.", async () => {
       const koqProps = {
         ...baseJson,
         relativeError: 1.234,
-        persistenceUnit: "Formats.IN",
+        persistenceUnit: "Units.IN",
         presentationUnits: [
-          "Formats.IN",
+          "Units.IN",
         ],
       };
       schema = await Schema.fromJson(createSchemaJson(koqProps), context);
@@ -106,19 +67,122 @@ describe("KindOfQuantity Rule Tests", () => {
       const result = await iterableToArray(Rules.koqMustUseSIUnitForPersistenceUnit(testKoq));
       expect(result.length).to.equal(1);
       expect(result[0].ecDefinition).to.equal(testKoq);
-      expect(result[0].messageArgs).to.eql([testKoq.fullName, "Formats.USCustom"]);
+      expect(result[0].messageArgs).to.eql([testKoq.fullName, "Units.USCustom"]);
       expect(result[0].category).to.equal(DiagnosticCategory.Error);
       expect(result[0].code).to.equal(Rules.DiagnosticCodes.KOQMustUseSIUnitForPersistenceUnit);
       expect(result[0].diagnosticType).to.equal(DiagnosticType.SchemaItem);
+    });
+
+    it("KindOfQuantity uses 'COEFFICIENT' as storage unit, rule passes.", async () => {
+      const koqProps = {
+        ...baseJson,
+        relativeError: 1.234,
+        persistenceUnit: "Units.COEFFICIENT",
+      };
+      schema = await Schema.fromJson(createSchemaJson(koqProps), context);
+      const testKoq = await schema.getItem<KindOfQuantity>(koqProps.name) as KindOfQuantity;
+
+      const result = await iterableToArray(Rules.koqMustUseSIUnitForPersistenceUnit(testKoq));
+      expect(result.length).to.equal(0, "Rule should have passed because we made a special case for COEFFICIENT unit");
+    });
+
+    it("KindOfQuantity uses 'ONE' as storage unit, rule fails.", async () => {
+      const koqProps = {
+        ...baseJson,
+        relativeError: 1.234,
+        persistenceUnit: "Units.ONE",
+      };
+      schema = await Schema.fromJson(createSchemaJson(koqProps), context);
+      const testKoq = await schema.getItem<KindOfQuantity>(koqProps.name) as KindOfQuantity;
+
+      const result = await iterableToArray(Rules.koqMustUseSIUnitForPersistenceUnit(testKoq));
+      expect(result.length).to.equal(1);
+      expect(result[0].ecDefinition).to.equal(testKoq, "KindOfQuantity Definition not as expected");
+      expect(result[0].messageArgs).to.eql([testKoq.fullName, (await (await testKoq.persistenceUnit)?.unitSystem)?.fullName], "Message arguments not as expected");
+      expect(result[0].category).to.equal(DiagnosticCategory.Error, "Category not correct");
+      expect(result[0].code).to.equal(Rules.DiagnosticCodes.KOQMustUseSIUnitForPersistenceUnit, "Diagnostic code not correct");
+      expect(result[0].diagnosticType).to.equal(DiagnosticType.SchemaItem, "Diagnostic type not correct");
+    });
+    it("KindOfQuantity uses 'DECIMAL_PERCENT' as storage unit, rule passes.", async () => {
+      const koqProps = {
+        ...baseJson,
+        relativeError: 1.234,
+        persistenceUnit: "Units.DECIMAL_PERCENT",
+        presentationUnits: [
+          "Units.PERCENT",
+        ],
+      };
+      schema = await Schema.fromJson(createSchemaJson(koqProps), context);
+      const testKoq = await schema.getItem<KindOfQuantity>(koqProps.name) as KindOfQuantity;
+
+      const result = await iterableToArray(Rules.koqMustUseSIUnitForPersistenceUnit(testKoq));
+      expect(result.length).to.equal(0, "Rule should have passed because we made a special case for unitless ratios");
+    });
+
+    it("KindOfQuantity uses 'PERCENT' as storage unit, rule fails.", async () => {
+      const koqProps = {
+        ...baseJson,
+        relativeError: 1.234,
+        persistenceUnit: "Units.PERCENT",
+        presentationUnits: [
+          "Units.PERCENT",
+        ],
+      };
+      schema = await Schema.fromJson(createSchemaJson(koqProps), context);
+      const testKoq = await schema.getItem<KindOfQuantity>(koqProps.name) as KindOfQuantity;
+
+      const result = await iterableToArray(Rules.koqMustUseSIUnitForPersistenceUnit(testKoq));
+      expect(result.length).to.equal(1);
+      expect(result[0].ecDefinition).to.equal(testKoq, "KindOfQuantity Definition not as expected");
+      expect(result[0].messageArgs).to.eql([testKoq.fullName, (await (await testKoq.persistenceUnit)?.unitSystem)?.fullName], "Message arguments not as expected");
+      expect(result[0].category).to.equal(DiagnosticCategory.Error, "Category not correct");
+      expect(result[0].code).to.equal(Rules.DiagnosticCodes.KOQMustUseSIUnitForPersistenceUnit, "Diagnostic code not correct");
+      expect(result[0].diagnosticType).to.equal(DiagnosticType.SchemaItem, "Diagnostic type not correct");
+    });
+
+    it("KindOfQuantity uses 'MONETARY_UNIT' as storage unit, rule fails.", async () => {
+      const koqProps = {
+        ...baseJson,
+        relativeError: 1.234,
+        persistenceUnit: "Units.MONETARY_UNIT",
+      };
+      schema = await Schema.fromJson(createSchemaJson(koqProps), context);
+      const testKoq = await schema.getItem<KindOfQuantity>(koqProps.name) as KindOfQuantity;
+
+      const result = await iterableToArray(Rules.koqMustUseSIUnitForPersistenceUnit(testKoq));
+      expect(result.length).to.equal(1);
+      expect(result[0].ecDefinition).to.equal(testKoq, "KindOfQuantity definition not as expected");
+      expect(result[0].messageArgs).to.eql([testKoq.fullName, (await (await testKoq.persistenceUnit)?.unitSystem)?.fullName], "Message argument not as expected");
+      expect(result[0].category).to.equal(DiagnosticCategory.Error, "Category not correct");
+      expect(result[0].code).to.equal(Rules.DiagnosticCodes.KOQMustUseSIUnitForPersistenceUnit, "Code not correct");
+      expect(result[0].diagnosticType).to.equal(DiagnosticType.SchemaItem, "Type not correct");
+    });
+
+    it("KindOfQuantity uses 'US_DOLLAR' as storage unit, rule fails.", async () => {
+      const koqProps = {
+        ...baseJson,
+        relativeError: 1.234,
+        persistenceUnit: "Units.US_DOLLAR",
+      };
+      schema = await Schema.fromJson(createSchemaJson(koqProps), context);
+      const testKoq = await schema.getItem<KindOfQuantity>(koqProps.name) as KindOfQuantity;
+
+      const result = await iterableToArray(Rules.koqMustUseSIUnitForPersistenceUnit(testKoq));
+      expect(result.length).to.equal(1);
+      expect(result[0].ecDefinition).to.equal(testKoq, "KindOfQuantity definition not as expected");
+      expect(result[0].messageArgs).to.eql([testKoq.fullName, (await (await testKoq.persistenceUnit)?.unitSystem)?.fullName], "Message argument not as expected");
+      expect(result[0].category).to.equal(DiagnosticCategory.Error, "Category not correct");
+      expect(result[0].code).to.equal(Rules.DiagnosticCodes.KOQMustUseSIUnitForPersistenceUnit, "Code not correct");
+      expect(result[0].diagnosticType).to.equal(DiagnosticType.SchemaItem, "Type not correct");
     });
 
     it("KindOfQuantity does have an 'SI' persistence unit, rule passes.", async () => {
       const koqProps = {
         ...baseJson,
         relativeError: 1.234,
-        persistenceUnit: "Formats.M",
+        persistenceUnit: "Units.M",
         presentationUnits: [
-          "Formats.IN",
+          "Units.IN",
         ],
       };
       schema = await Schema.fromJson(createSchemaJson(koqProps), context);
@@ -134,13 +198,13 @@ describe("KindOfQuantity Rule Tests", () => {
       const koqProps = {
         ...baseJson,
         relativeError: 1.234,
-        persistenceUnit: "Formats.IN",
+        persistenceUnit: "Units.IN",
         presentationUnits: [
-          "Formats.IN",
-          "Formats.IN",
-          "Formats.FT",
-          "Formats.FT",
-          "Formats.M",
+          "Units.IN",
+          "Units.IN",
+          "Units.FT",
+          "Units.FT",
+          "Units.M",
         ],
       };
       schema = await Schema.fromJson(createSchemaJson(koqProps), context);
@@ -150,12 +214,12 @@ describe("KindOfQuantity Rule Tests", () => {
 
       expect(result.length).to.equal(2);
       expect(result[0].ecDefinition).to.equal(testKoq);
-      expect(result[0].messageArgs).to.eql([testKoq.fullName, "Formats.IN"]);
+      expect(result[0].messageArgs).to.eql([testKoq.fullName, "Units.IN"]);
       expect(result[0].category).to.equal(DiagnosticCategory.Error);
       expect(result[0].code).to.equal(Rules.DiagnosticCodes.KOQDuplicatePresentationFormat);
       expect(result[0].diagnosticType).to.equal(DiagnosticType.SchemaItem);
       expect(result[1].ecDefinition).to.equal(testKoq);
-      expect(result[1].messageArgs).to.eql([testKoq.fullName, "Formats.FT"]);
+      expect(result[1].messageArgs).to.eql([testKoq.fullName, "Units.FT"]);
       expect(result[1].category).to.equal(DiagnosticCategory.Error);
       expect(result[1].code).to.equal(Rules.DiagnosticCodes.KOQDuplicatePresentationFormat);
       expect(result[1].diagnosticType).to.equal(DiagnosticType.SchemaItem);
@@ -165,11 +229,11 @@ describe("KindOfQuantity Rule Tests", () => {
       const koqProps = {
         ...baseJson,
         relativeError: 1.234,
-        persistenceUnit: "Formats.IN",
+        persistenceUnit: "Units.IN",
         presentationUnits: [
-          "Formats.IN",
-          "Formats.FT",
-          "Formats.M",
+          "Units.IN",
+          "Units.FT",
+          "Units.M",
         ],
       };
       schema = await Schema.fromJson(createSchemaJson(koqProps), context);
@@ -185,12 +249,12 @@ describe("KindOfQuantity Rule Tests", () => {
         name: "LENGTH_SHORT",
         label: "Short Length",
         relativeError: 0.01,
-        persistenceUnit: "Formats.IN",
+        persistenceUnit: "Units.IN",
         presentationUnits: [
-          "Formats.IN",
-          "Formats.FT",
-          "Formats.IN"
-        ]
+          "Units.IN",
+          "Units.FT",
+          "Units.IN",
+        ],
       };
 
       const schemaJson = createSchemaJsonWithItems(
@@ -202,9 +266,9 @@ describe("KindOfQuantity Rule Tests", () => {
         {
           references: [
             {
-              name: "Formats",
+              name: "Units",
               version: "1.0.0",
-            }
+            },
           ],
         });
       schemaJson.name = "AecUnits";

@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@bentley/bis-rules",
+      "comment": "Modified rule allowing DECIMAL_PERCENT and COEFFICIENT as valid units",
+      "type": "none"
+    }
+  ],
+  "packageName": "@bentley/bis-rules",
+  "email": "Colin.Kerr"
+}

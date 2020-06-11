@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@bentley/schema-validator",
+      "comment": "Added suppressions allowing MONETARY_UNIT based units in the CifUnits schema",
+      "type": "none"
+    }
+  ],
+  "packageName": "@bentley/schema-validator",
+  "email": "Colin.Kerr"
+}

@@ -6,35 +6,50 @@
 import { SchemaKey, SchemaContext, Schema, SchemaMatchType, ISchemaLocater } from "@bentley/ecschema-metadata";
 
 const formatsKey = new SchemaKey("Formats", 1, 0, 0);
+const unitsKey = new SchemaKey("Units", 1, 0, 0);
 
 export class TestSchemaLocater implements ISchemaLocater {
   public async getSchema<T extends Schema>(schemaKey: SchemaKey, matchType: SchemaMatchType, context: SchemaContext): Promise<T | undefined> {
-    if (!schemaKey.matches(formatsKey, matchType))
-      return undefined;
+    if (schemaKey.matches(formatsKey, matchType))
+      return await Schema.fromJson(testFormatSchema, context) as T;
 
-    return (await Schema.fromJson(testFormatSchema, context)) as T;
+    if (schemaKey.matches(unitsKey, matchType))
+      return await Schema.fromJson(testUnitsSchema, context) as T;
+
+    return undefined;
   }
 
   public getSchemaSync<T extends Schema>(schemaKey: SchemaKey, matchType: SchemaMatchType, context: SchemaContext): T | undefined {
-    if (!schemaKey.matches(formatsKey, matchType))
-      return undefined;
+    if (schemaKey.matches(formatsKey, matchType))
+      return Schema.fromJsonSync(testFormatSchema, context) as T;
 
-    return Schema.fromJsonSync(testFormatSchema, context) as T;
+    if (schemaKey.matches(unitsKey, matchType))
+      return Schema.fromJsonSync(testUnitsSchema, context) as T;
+
+    return undefined;
   }
 }
 
-const testFormatSchema = {
+const testUnitsSchema = {
   $schema: "https://dev.bentley.com/json_schemas/ec/32/ecschema",
-  name: "Formats",
+  name: "Units",
   version: "1.0.0",
   items: {
     Length: {
       schemaItemType: "Phenomenon",
       definition: "LENGTH(1)",
     },
+    NUMBER: {
+      schemaItemType: "Phenomenon",
+      definition: "NUMBER",
+    },
     PERCENTAGE: {
       schemaItemType: "Phenomenon",
       definition: "NUMBER",
+    },
+    CURRENCY: {
+      schemaItemType: "Phenomenon",
+      definition: "CURRENCY",
     },
     USCustom: {
       schemaItemType: "UnitSystem",
@@ -42,59 +57,115 @@ const testFormatSchema = {
     SI: {
       schemaItemType: "UnitSystem",
     },
+    INTERNATIONAL: {
+      schemaItemType: "UnitSystem",
+    },
+    FINANCE: {
+      schemaItemType: "UnitSystem",
+    },
     M: {
       schemaItemType: "Unit",
       label: "m",
-      phenomenon: "Formats.Length",
-      unitSystem: "Formats.SI",
+      phenomenon: "Units.Length",
+      unitSystem: "Units.SI",
       definition: "M",
     },
     MILE: {
       schemaItemType: "Unit",
       label: "mile",
-      phenomenon: "Formats.Length",
-      unitSystem: "Formats.USCustom",
+      phenomenon: "Units.Length",
+      unitSystem: "Units.USCustom",
       definition: "YRD",
       numerator: 1760.0,
     },
     YRD: {
       schemaItemType: "Unit",
       label: "yard",
-      phenomenon: "Formats.Length",
-      unitSystem: "Formats.USCustom",
+      phenomenon: "Units.Length",
+      unitSystem: "Units.USCustom",
       definition: "FT",
       numerator: 3.0,
     },
     FT: {
       schemaItemType: "Unit",
       label: "foot",
-      phenomenon: "Formats.Length",
-      unitSystem: "Formats.USCustom",
+      phenomenon: "Units.Length",
+      unitSystem: "Units.USCustom",
       definition: "IN",
       numerator: 12.0,
     },
     IN: {
       schemaItemType: "Unit",
       label: "inch",
-      phenomenon: "Formats.Length",
-      unitSystem: "Formats.USCustom",
+      phenomenon: "Units.Length",
+      unitSystem: "Units.USCustom",
       definition: "MM",
       numerator: 25.4,
     },
     MILLIINCH: {
       schemaItemType: "Unit",
       label: "mil",
-      phenomenon: "Formats.Length",
-      unitSystem: "Formats.USCustom",
+      phenomenon: "Units.Length",
+      unitSystem: "Units.USCustom",
       definition: "[MILLI]*IN",
     },
     PERCENT: {
       schemaItemType: "Unit",
       label: "%",
-      phenomenon: "Formats.PERCENTAGE",
-      unitSystem: "Formats.USCustom",
+      phenomenon: "Units.PERCENTAGE",
+      unitSystem: "Units.INTERNATIONAL",
       definition: "ONE",
     },
+    DECIMAL_PERCENT: {
+      schemaItemType: "Unit",
+      label: "",
+      phenomenon: "Units.PERCENTAGE",
+      unitSystem: "Units.INTERNATIONAL",
+      definition: "PERCENT",
+      numerator: 100,
+    },
+    MONETARY_UNIT: {
+      schemaItemType: "Unit",
+      label: "¤",
+      phenomenon: "Units.CURRENCY",
+      unitSystem: "Units.FINANCE",
+      definition: "MONETARY_UNIT",
+    },
+    US_DOLLAR: {
+      schemaItemType: "Unit",
+      label: "$",
+      phenomenon: "Units.CURRENCY",
+      unitSystem: "Units.FINANCE",
+      definition: "US_DOLLAR",
+    },
+    COEFFICIENT: {
+      schemaItemType: "Unit",
+      label: "",
+      phenomenon: "Units.NUMBER",
+      unitSystem: "Units.INTERNATIONAL",
+      definition: "ONE",
+    },
+    ONE: {
+      schemaItemType: "Unit",
+      label: "one",
+      phenomenon: "Units.NUMBER",
+      unitSystem: "Units.INTERNATIONAL",
+      definition: "ONE",
+    },
+  },
+};
+
+const testFormatSchema = {
+  $schema: "https://dev.bentley.com/json_schemas/ec/32/ecschema",
+  name: "Formats",
+  version: "1.0.0",
+  references: [
+    {
+      name: "Units",
+      version: "01.00.00",
+    },
+  ],
+  items: {
     DefaultReal: {
       schemaItemType: "Format",
       type: "decimal",
@@ -109,7 +180,7 @@ const testFormatSchema = {
         spacer: "-",
         units: [
           {
-            name: "Formats.YRD",
+            name: "Units.YRD",
             label: "yard(s)",
           },
         ],
@@ -124,11 +195,11 @@ const testFormatSchema = {
         spacer: "-",
         units: [
           {
-            name: "Formats.YRD",
+            name: "Units.YRD",
             label: "yard(s)",
           },
           {
-            name: "Formats.FT",
+            name: "Units.FT",
             label: "feet",
           },
         ],
@@ -143,15 +214,15 @@ const testFormatSchema = {
         spacer: "-",
         units: [
           {
-            name: "Formats.YRD",
+            name: "Units.YRD",
             label: "yard(s)",
           },
           {
-            name: "Formats.FT",
+            name: "Units.FT",
             label: "feet",
           },
           {
-            name: "Formats.IN",
+            name: "Units.IN",
             label: "inch(es)",
           },
         ],
@@ -166,19 +237,19 @@ const testFormatSchema = {
         spacer: "-",
         units: [
           {
-            name: "Formats.MILE",
+            name: "Units.MILE",
             label: "mile(s)",
           },
           {
-            name: "Formats.YRD",
+            name: "Units.YRD",
             label: "yard(s)",
           },
           {
-            name: "Formats.FT",
+            name: "Units.FT",
             label: "feet",
           },
           {
-            name: "Formats.IN",
+            name: "Units.IN",
             label: "inch(es)",
           },
         ],

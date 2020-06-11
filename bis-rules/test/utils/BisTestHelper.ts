@@ -27,7 +27,7 @@ const coreCustomAttributesSchema = {
       description: "Identifies a schema or item within a schema as deprecated.  Deprecated things should not be used.",
       modifier: "sealed",
       schemaItemType: "CustomAttributeClass",
-   },
+    },
   },
 };
 
@@ -37,12 +37,12 @@ const bisCoreSchema = {
   name: "BisCore",
   version: "01.00.01",
   label: "BIS Core",
-  references : [
+  references: [
     {
-       name: "CoreCustomAttributes",
-       version: "01.00.01",
+      name: "CoreCustomAttributes",
+      version: "01.00.01",
     },
- ],
+  ],
   items: {
     Element: {
       modifier: "abstract",
@@ -81,7 +81,7 @@ const bisCoreSchema = {
       modifier: "none",
       schemaItemType: "RelationshipClass",
       source: {
-        constraintClasses: [ "BisCore.Element" ],
+        constraintClasses: ["BisCore.Element"],
         multiplicity: "(1..1)",
         polymorphic: true,
         roleLabel: "owns",
@@ -89,7 +89,7 @@ const bisCoreSchema = {
       strength: "embedding",
       strengthDirection: "forward",
       target: {
-        constraintClasses: [ "BisCore.ElementMultiAspect" ],
+        constraintClasses: ["BisCore.ElementMultiAspect"],
         multiplicity: "(0..*)",
         polymorphic: true,
         roleLabel: "is owned by",
@@ -99,7 +99,7 @@ const bisCoreSchema = {
       modifier: "none",
       schemaItemType: "RelationshipClass",
       source: {
-        constraintClasses: [ "BisCore.Element" ],
+        constraintClasses: ["BisCore.Element"],
         multiplicity: "(1..1)",
         polymorphic: true,
         roleLabel: "owns",
@@ -107,7 +107,7 @@ const bisCoreSchema = {
       strength: "embedding",
       strengthDirection: "forward",
       target: {
-        constraintClasses: [ "BisCore.ElementUniqueAspect" ],
+        constraintClasses: ["BisCore.ElementUniqueAspect"],
         multiplicity: "(0..*)",
         polymorphic: true,
         roleLabel: "is owned by",
@@ -145,7 +145,7 @@ const bisCoreSchema = {
       appliesTo: "Any",
       description: "Applied to an ECClass to indicate that a C++ subclass of DgnDomain::Handler will supply behavior for it at run-time. This custom attribute may only be used by BisCore or other core schemas.",
       modifier: "sealed",
-      schemaItemType: "CustomAttributeClass"
+      schemaItemType: "CustomAttributeClass",
     }
   },
 };
