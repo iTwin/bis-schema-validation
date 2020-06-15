@@ -19,7 +19,8 @@
     "test:schema-comparer": "cd schema-comparer && npm test -s",
     "cover:bis-rules": "cd bis-rules && npm run cover",
     "cover:schema-validator": "cd schema-validator && npm run cover",
-    "cover:schema-comparer": "cd schema-comparer && npm run cover"
+    "cover:schema-comparer": "cd schema-comparer && npm run cover",
+    "SchemaValidationRunner": "node ./common/scripts/SchemaValidationRunner.js"
   },
   "keywords": [
     "Bentley",
@@ -36,5 +37,6 @@
   },
   "//devDependencies": "NOTE: devDependencies will be empty here and instead specified in each package.",
   "devDependencies": {
+    "readdirp": "^3.3.0"
   }
 }

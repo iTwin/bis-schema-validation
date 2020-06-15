@@ -319,6 +319,448 @@ describe("Rule Suppression Tests", () => {
     });
   });
 
+  describe("BIS-101(ClassHasHandler applied outside core schemas) Tests", async () => {
+    it("Schema Grids.01.00.00 with class containing ClassHasHandler custom attribute, rule suppressed.", async () => {
+      createSchema("Grids", 1, 0, 0);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.true;
+    });
+
+    it("Schema Grids.01.00.01 with class containing ClassHasHandler custom attribute, rule not suppressed.", async () => {
+      createSchema("Grids", 1, 0, 1);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.false;
+    });
+
+    it("Schema Markup.01.00.00 with class containing ClassHasHandler custom attribute, rule suppressed.", async () => {
+      createSchema("Markup", 1, 0, 0);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.true;
+    });
+
+    it("Schema Markup.01.00.01 with class containing ClassHasHandler custom attribute, rule not suppressed.", async () => {
+      createSchema("Markup", 1, 0, 1);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.false;
+    });
+
+    it("Schema Construction.01.00.00 with class containing ClassHasHandler custom attribute, rule suppressed.", async () => {
+      createSchema("Construction", 1, 0, 2);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.true;
+    });
+
+    it("Schema Construction.01.00.01 with class containing ClassHasHandler custom attribute, rule not suppressed.", async () => {
+      createSchema("Construction", 1, 0, 3);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.false;
+    });
+
+    it("Schema StructuralPhysical.01.00.00 with class containing ClassHasHandler custom attribute, rule suppressed.", async () => {
+      createSchema("StructuralPhysical", 1, 0, 0);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.true;
+    });
+
+    it("Schema StructuralPhysical.01.00.01 with class containing ClassHasHandler custom attribute, rule not suppressed.", async () => {
+      createSchema("StructuralPhysical", 1, 0, 1);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.false;
+    });
+
+    it("Schema ThreeMx.01.00.00 with class containing ClassHasHandler custom attribute, rule suppressed.", async () => {
+      createSchema("ThreeMx", 1, 0, 0);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.true;
+    });
+
+    it("Schema ThreeMx.01.00.01 with class containing ClassHasHandler custom attribute, rule not suppressed.", async () => {
+      createSchema("ThreeMx", 1, 0, 1);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.false;
+    });
+
+    it("Schema ScalableMesh.01.00.01 with class containing ClassHasHandler custom attribute, rule suppressed.", async () => {
+      createSchema("ScalableMesh", 1, 0, 1);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.true;
+    });
+
+    it("Schema ScalableMesh.01.00.02 with class containing ClassHasHandler custom attribute, rule not suppressed.", async () => {
+      createSchema("ScalableMesh", 1, 0, 2);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.false;
+    });
+
+    it("Schema Raster.01.00.00 with class containing ClassHasHandler custom attribute, rule suppressed.", async () => {
+      createSchema("Raster", 1, 0, 0);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.true;
+    });
+
+    it("Schema Raster.01.00.01 with class containing ClassHasHandler custom attribute, rule not suppressed.", async () => {
+      createSchema("Raster", 1, 0, 1);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.false;
+    });
+
+    it("Schema PointCloud.01.00.00 with class containing ClassHasHandler custom attribute, rule suppressed.", async () => {
+      createSchema("PointCloud", 1, 0, 0);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.true;
+    });
+
+    it("Schema PointCloud.01.00.01 with class containing ClassHasHandler custom attribute, rule not suppressed.", async () => {
+      createSchema("PointCloud", 1, 0, 1);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.false;
+    });
+
+    it("Schema QuantityTakeoffsAspects.01.00.01 with class containing ClassHasHandler custom attribute, rule suppressed.", async () => {
+      createSchema("QuantityTakeoffsAspects", 1, 0, 1);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.true;
+    });
+
+    it("Schema QuantityTakeoffsAspects.01.00.02 with class containing ClassHasHandler custom attribute, rule not suppressed.", async () => {
+      createSchema("QuantityTakeoffsAspects", 1, 0, 2);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.false;
+    });
+
+    it("Schema ProcessFunctional.01.00.00 with class containing ClassHasHandler custom attribute, rule suppressed.", async () => {
+      createSchema("ProcessFunctional", 1, 0, 0);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.true;
+    });
+
+    it("Schema ProcessFunctional.01.00.01 with class containing ClassHasHandler custom attribute, rule not suppressed.", async () => {
+      createSchema("ProcessFunctional", 1, 0, 1);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.false;
+    });
+
+    it("Schema ProcessPhysical.01.00.01 with class containing ClassHasHandler custom attribute, rule suppressed.", async () => {
+      createSchema("ProcessPhysical", 1, 0, 1);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.true;
+    });
+
+    it("Schema ProcessPhysical.01.00.02 with class containing ClassHasHandler custom attribute, rule not suppressed.", async () => {
+      createSchema("ProcessPhysical", 1, 0, 2);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.false;
+    });
+
+    it("Schema ProcessPidGraphical.01.00.01 with class containing ClassHasHandler custom attribute, rule suppressed.", async () => {
+      createSchema("ProcessPidGraphical", 1, 0, 1);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.true;
+    });
+
+    it("Schema ProcessPidGraphical.01.00.02 with class containing ClassHasHandler custom attribute, rule not suppressed.", async () => {
+      createSchema("ProcessPidGraphical", 1, 0, 2);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.false;
+    });
+
+    it("Schema LinearReferencing.02.00.00 with class containing ClassHasHandler custom attribute, rule suppressed.", async () => {
+      createSchema("LinearReferencing", 2, 0, 0);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.true;
+    });
+
+    it("Schema LinearReferencing.02.00.01 with class containing ClassHasHandler custom attribute, rule not suppressed.", async () => {
+      createSchema("LinearReferencing", 2, 0, 1);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.false;
+    });
+
+    it("Schema ClassificationSystems.01.00.00 with class containing ClassHasHandler custom attribute, rule suppressed.", async () => {
+      createSchema("ClassificationSystems", 1, 0, 0);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.true;
+    });
+
+    it("Schema ClassificationSystems.01.00.01 with class containing ClassHasHandler custom attribute, rule not suppressed.", async () => {
+      createSchema("ClassificationSystems", 1, 0, 1);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.false;
+    });
+
+    it("Schema RoadRailPhysical.02.00.00 with class containing ClassHasHandler custom attribute, rule suppressed.", async () => {
+      createSchema("RoadRailPhysical", 2, 0, 0);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.true;
+    });
+
+    it("Schema RoadRailPhysical.02.00.01 with class containing ClassHasHandler custom attribute, rule not suppressed.", async () => {
+      createSchema("RoadRailPhysical", 2, 0, 1);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.false;
+    });
+
+    it("Schema RoadRailAlignment.02.00.00 with class containing ClassHasHandler custom attribute, rule suppressed.", async () => {
+      createSchema("RoadRailAlignment", 2, 0, 0);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.true;
+    });
+
+    it("Schema RoadRailAlignment.02.00.01 with class containing ClassHasHandler custom attribute, rule not suppressed.", async () => {
+      createSchema("RoadRailAlignment", 2, 0, 1);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.false;
+    });
+
+    it("Schema BridgeStructuralPhysical.01.00.00 with class containing ClassHasHandler custom attribute, rule suppressed.", async () => {
+      createSchema("BridgeStructuralPhysical", 1, 0, 0);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.true;
+    });
+
+    it("Schema BridgeStructuralPhysical.01.00.01 with class containing ClassHasHandler custom attribute, rule not suppressed.", async () => {
+      createSchema("BridgeStructuralPhysical", 1, 0, 1);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.false;
+    });
+
+    it("Schema BuildingSpatial.01.00.00 with class containing ClassHasHandler custom attribute, rule suppressed.", async () => {
+      createSchema("BuildingSpatial", 1, 0, 0);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.true;
+    });
+
+    it("Schema BuildingSpatial.01.00.01 with class containing ClassHasHandler custom attribute, rule not suppressed.", async () => {
+      createSchema("BuildingSpatial", 1, 0, 1);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.false;
+    });
+
+    it("Schema BuildingPhysical.01.00.00 with class containing ClassHasHandler custom attribute, rule suppressed.", async () => {
+      createSchema("BuildingPhysical", 1, 0, 0);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.true;
+    });
+
+    it("Schema BuildingPhysical.01.00.01 with class containing ClassHasHandler custom attribute, rule not suppressed.", async () => {
+      createSchema("BuildingPhysical", 1, 0, 1);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.false;
+    });
+
+    it("Schema ArchitecturalPhysical.01.00.00 with class containing ClassHasHandler custom attribute, rule suppressed.", async () => {
+      createSchema("ArchitecturalPhysical", 1, 0, 0);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.true;
+    });
+
+    it("Schema ArchitecturalPhysical.01.00.01 with class containing ClassHasHandler custom attribute, rule not suppressed.", async () => {
+      createSchema("ArchitecturalPhysical", 1, 0, 1);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.false;
+    });
+  });
+
   describe("BIS-605(Entity class requires ElementOwnsUniqueAspect relationship with this class supported as a target constraint) Tests", async () => {
     it("Random schema name, rule not suppressed.", async () => {
       createSchema("TestSchema", 1);

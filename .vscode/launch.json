@@ -76,5 +76,11 @@
       "protocol": "inspector",
       "outputCapture": "std"
     },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Run SchemaValidationRunner",
+      "program": "${workspaceFolder}/common/scripts/SchemaValidationRunner.js",
+    },
   ]
 }

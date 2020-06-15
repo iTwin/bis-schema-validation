@@ -42,8 +42,8 @@ dependencies:
   source-map-support: 0.5.19
   ts-node: 7.0.1
   tsconfig-paths: 3.9.0
-  tslint: 5.20.1_typescript@3.9.3
-  typescript: 3.9.3
+  tslint: 5.20.1_typescript@3.9.5
+  typescript: 3.9.5
   xmldom: 0.1.31
 lockfileVersion: 5.1
 packages:
@@ -212,7 +212,7 @@ packages:
       tslint: 5.20.1_typescript@3.7.5
       tslint-consistent-codestyle: 1.16.0_tslint@5.20.1+typescript@3.7.5
       tslint-eslint-rules: 5.4.0_tslint@5.20.1+typescript@3.7.5
-      tslint-etc: 1.10.1_tslint@5.20.1+typescript@3.7.5
+      tslint-etc: 1.11.0_tslint@5.20.1+typescript@3.7.5
       tsutils: 3.17.1_typescript@3.7.5
       typedoc: 0.16.11
       typedoc-plugin-external-module-name: 3.0.0_typedoc@0.16.11
@@ -590,24 +590,19 @@ packages:
     dev: false
     resolution:
       integrity: sha1-HBJhu+qhCoBVu8XYq4S3sq/IRqA=
-  /@types/events/3.0.0:
-    dev: false
-    resolution:
-      integrity: sha1-KGLz9Yqaf3w+eNefEw3U1xwlwqc=
   /@types/fs-extra/5.1.0:
     dependencies:
       '@types/node': 10.12.18
     dev: false
     resolution:
       integrity: sha1-KjJe+XkBUEo4KHGMOQ00uEJqEKE=
-  /@types/glob/7.1.1:
+  /@types/glob/7.1.2:
     dependencies:
-      '@types/events': 3.0.0
       '@types/minimatch': 3.0.3
       '@types/node': 10.12.18
     dev: false
     resolution:
-      integrity: sha1-qlmhxuP7xCHgfM0xqUTDDrpSFXU=
+      integrity: sha1-BsomUhNTpUXZSgrcdPOKWdIyyYc=
   /@types/got/9.6.11:
     dependencies:
       '@types/node': 10.12.18
@@ -649,17 +644,17 @@ packages:
     dev: false
     resolution:
       integrity: sha1-HTynZHGJFVhPzZ9jRGIbdnJmXGc=
-  /@types/node/12.12.43:
+  /@types/node/12.12.47:
     dev: false
     resolution:
-      integrity: sha1-tgzgR4IuUm56klLlCETu551Thv8=
+      integrity: sha1-UAe4hmovkVDegjNcp+JN0dWb37U=
   /@types/node/8.10.54:
     dev: false
     resolution:
       integrity: sha1-HIjrJTrBIQ8aWHaVP7cPfMSShAI=
   /@types/rimraf/2.0.4:
     dependencies:
-      '@types/glob': 7.1.1
+      '@types/glob': 7.1.2
       '@types/node': 10.12.18
     dev: false
     resolution:
@@ -784,7 +779,7 @@ packages:
       integrity: sha1-2y/nJG5Tb0DZtUQqOeEX191qJOA=
   /ajv/6.12.2:
     dependencies:
-      fast-deep-equal: 3.1.1
+      fast-deep-equal: 3.1.3
       fast-json-stable-stringify: 2.1.0
       json-schema-traverse: 0.4.1
       uri-js: 4.2.2
@@ -1744,7 +1739,7 @@ packages:
   /electron/8.3.1:
     dependencies:
       '@electron/get': 1.12.2
-      '@types/node': 12.12.43
+      '@types/node': 12.12.47
       extract-zip: 1.7.0
     dev: false
     engines:
@@ -1816,7 +1811,7 @@ packages:
     optional: true
     resolution:
       integrity: sha1-FLqDpdNz49MR5a/KKc9b+tllvzQ=
-  /escodegen/1.14.1:
+  /escodegen/1.14.2:
     dependencies:
       esprima: 4.0.1
       estraverse: 4.3.0
@@ -1829,7 +1824,7 @@ packages:
     optionalDependencies:
       source-map: 0.6.1
     resolution:
-      integrity: sha1-ugHQyCeLXpWppFNQFCAmZZAnpFc=
+      integrity: sha1-FKtxv1AmwqoIFzr7oixvMXMoSoQ=
   /esprima/2.7.3:
     dev: false
     engines:
@@ -2035,10 +2030,10 @@ packages:
       '0': node >=0.6.0
     resolution:
       integrity: sha1-lpGEQOMEGnpBT4xS48V06zw+HgU=
-  /fast-deep-equal/3.1.1:
+  /fast-deep-equal/3.1.3:
     dev: false
     resolution:
-      integrity: sha1-VFFFB3xQFJHjOxXsQIwpQ3bpSuQ=
+      integrity: sha1-On1WtVnWy8PrUSMlJE5hmmXGxSU=
   /fast-json-stable-stringify/2.1.0:
     dev: false
     resolution:
@@ -3146,7 +3141,7 @@ packages:
       cssstyle: 1.4.0
       data-urls: 1.1.0
       domexception: 1.0.1
-      escodegen: 1.14.1
+      escodegen: 1.14.2
       html-encoding-sniffer: 1.0.2
       left-pad: 1.3.0
       nwsapi: 2.2.0
@@ -5380,6 +5375,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-43qG/ajLuvI6BX9HPJ9Nxk5fwug=
+  /tslib/2.0.0:
+    dev: false
+    resolution:
+      integrity: sha1-GNE/wtzgQFHiDwdMyDh/2Aic5PM=
   /tslint-consistent-codestyle/1.16.0_tslint@5.20.1+typescript@3.7.5:
     dependencies:
       '@fimbul/bifrost': 0.21.0_tslint@5.20.1+typescript@3.7.5
@@ -5406,10 +5405,10 @@ packages:
       typescript: ^2.2.0 || ^3.0.0
     resolution:
       integrity: sha1-5IjMkYG/GT/lzXv8ohOnaV8XN7U=
-  /tslint-etc/1.10.1_tslint@5.20.1+typescript@3.7.5:
+  /tslint-etc/1.11.0_tslint@5.20.1+typescript@3.7.5:
     dependencies:
       '@phenomnomnominal/tsquery': 4.1.0_typescript@3.7.5
-      tslib: 1.13.0
+      tslib: 2.0.0
       tslint: 5.20.1_typescript@3.7.5
       tsutils: 3.17.1_typescript@3.7.5
       tsutils-etc: 1.2.2_tsutils@3.17.1
@@ -5419,7 +5418,7 @@ packages:
       tslint: ^5.0.0 || ^6.0.0
       typescript: ^2.3.0 || ^3.0.0
     resolution:
-      integrity: sha1-4O/tS48ssf4u0QS8cyqPwBqiglk=
+      integrity: sha1-OBmBGatzpbYHhUuvHBr3nMPfjWM=
   /tslint/5.20.1_typescript@3.7.5:
     dependencies:
       '@babel/code-frame': 7.10.1
@@ -5444,7 +5443,7 @@ packages:
       typescript: '>=2.3.0-dev || >=2.4.0-dev || >=2.5.0-dev || >=2.6.0-dev || >=2.7.0-dev || >=2.8.0-dev || >=2.9.0-dev || >=3.0.0-dev || >= 3.1.0-dev || >= 3.2.0-dev'
     resolution:
       integrity: sha1-5AHortoBUrxE3QfmFANPP4DGe30=
-  /tslint/5.20.1_typescript@3.9.3:
+  /tslint/5.20.1_typescript@3.9.5:
     dependencies:
       '@babel/code-frame': 7.10.1
       builtin-modules: 1.1.1
@@ -5458,8 +5457,8 @@ packages:
       resolve: 1.17.0
       semver: 5.7.1
       tslib: 1.13.0
-      tsutils: 2.29.0_typescript@3.9.3
-      typescript: 3.9.3
+      tsutils: 2.29.0_typescript@3.9.5
+      typescript: 3.9.5
     dev: false
     engines:
       node: '>=4.8.0'
@@ -5485,10 +5484,10 @@ packages:
       typescript: '>=2.1.0 || >=2.1.0-dev || >=2.2.0-dev || >=2.3.0-dev || >=2.4.0-dev || >=2.5.0-dev || >=2.6.0-dev || >=2.7.0-dev || >=2.8.0-dev || >=2.9.0-dev || >= 3.0.0-dev || >= 3.1.0-dev'
     resolution:
       integrity: sha1-MrSIUBRnrL7dS4VJhnOggSrKC5k=
-  /tsutils/2.29.0_typescript@3.9.3:
+  /tsutils/2.29.0_typescript@3.9.5:
     dependencies:
       tslib: 1.13.0
-      typescript: 3.9.3
+      typescript: 3.9.5
     dev: false
     peerDependencies:
       typescript: '>=2.1.0 || >=2.1.0-dev || >=2.2.0-dev || >=2.3.0-dev || >=2.4.0-dev || >=2.5.0-dev || >=2.6.0-dev || >=2.7.0-dev || >=2.8.0-dev || >=2.9.0-dev || >= 3.0.0-dev || >= 3.1.0-dev'
@@ -5610,13 +5609,13 @@ packages:
     hasBin: true
     resolution:
       integrity: sha1-BpLiH2X9QQi5MwI4qsEd0uF3oa4=
-  /typescript/3.9.3:
+  /typescript/3.9.5:
     dev: false
     engines:
       node: '>=4.2.0'
     hasBin: true
     resolution:
-      integrity: sha1-06yIg6l8JhOeQt9ek+7s4z1hC4o=
+      integrity: sha1-WG8NujAM3ovlLdGsT34QCcGxPzY=
   /uglify-js/3.9.4:
     dependencies:
       commander: 2.20.3
@@ -6054,8 +6053,8 @@ packages:
       source-map-support: 0.5.19
       ts-node: 7.0.1
       tsconfig-paths: 3.9.0
-      tslint: 5.20.1_typescript@3.9.3
-      typescript: 3.9.3
+      tslint: 5.20.1_typescript@3.9.5
+      typescript: 3.9.5
     dev: false
     id: 'file:projects/bis-rules.tgz'
     name: '@rush-temp/bis-rules'
@@ -6090,6 +6089,7 @@ packages:
       chalk: 2.4.2
       commander: 2.20.3
       cpx: 1.5.0
+      fs-extra: 7.0.1
       httpntlm: 1.7.6
       js-sha1: 0.6.0
       mocha: 5.2.0
@@ -6097,14 +6097,14 @@ packages:
       readdirp: 3.4.0
       rimraf: 2.7.1
       ts-node: 7.0.1
-      typescript: 3.9.3
+      typescript: 3.9.5
     dev: false
     id: 'file:projects/imodel-quality-checker.tgz'
     name: '@rush-temp/imodel-quality-checker'
     peerDependencies:
       '@bentley/imodeljs-i18n': '*'
     resolution:
-      integrity: sha512-BSAIecLTK0/2xD3fXxWZKdNloGK0DxY81loygq7S5/LRevlIjY8LetEE9iASLVhsD6lytMko8EfYNeUYUqzt2g==
+      integrity: sha512-bdVzpfCX8pmTPX+CqUaUBO1/vc7UCHwuz5olls0OOoEYQD8NOPrr/e1Onyp7nDAOeOVy+4NpGa8KQHTy3wEMqA==
       tarball: 'file:projects/imodel-quality-checker.tgz'
     version: 0.0.0
   'file:projects/imodel-schema-validator.tgz_71295fb012620a047ab5122cde86c16e':
@@ -6134,14 +6134,14 @@ packages:
       readdirp: 3.4.0
       rimraf: 2.7.1
       ts-node: 7.0.1
-      typescript: 3.9.3
+      typescript: 3.9.5
     dev: false
     id: 'file:projects/imodel-schema-validator.tgz'
     name: '@rush-temp/imodel-schema-validator'
     peerDependencies:
       '@bentley/imodeljs-i18n': '*'
     resolution:
-      integrity: sha512-hWKCdTMbyIb5lQ22xtG2Mp9xgsoYYYaCtVt7IgeuQO5i4TkbCrGaACa7O1O5YATCs8feUdRJnZBAQfEzlJ4dZQ==
+      integrity: sha512-M9lWscvmX82rbPAS6w3LaATGCrMbi+kJptAEN0I69XWenXj6+QNAAFEkpz2Ho7IX12OzhkiTipb51B0GwDSrtw==
       tarball: 'file:projects/imodel-schema-validator.tgz'
     version: 0.0.0
   'file:projects/schema-comparer.tgz':
@@ -6178,8 +6178,8 @@ packages:
       sinon: 7.5.0
       ts-node: 7.0.1
       tsconfig-paths: 3.9.0
-      tslint: 5.20.1_typescript@3.9.3
-      typescript: 3.9.3
+      tslint: 5.20.1_typescript@3.9.5
+      typescript: 3.9.5
       xmldom: 0.1.31
     dev: false
     name: '@rush-temp/schema-comparer'
@@ -6220,8 +6220,8 @@ packages:
       sinon: 7.5.0
       ts-node: 7.0.1
       tsconfig-paths: 3.9.0
-      tslint: 5.20.1_typescript@3.9.3
-      typescript: 3.9.3
+      tslint: 5.20.1_typescript@3.9.5
+      typescript: 3.9.5
       xmldom: 0.1.31
     dev: false
     id: 'file:projects/schema-roundtrip.tgz'
@@ -6229,7 +6229,7 @@ packages:
     peerDependencies:
       '@bentley/imodelhub-client': '*'
     resolution:
-      integrity: sha512-VqC2+WmlTPUnSkYAnOTh5wdpzedwzKUgqwpqVAvHAMdquwzjGRWHMpo1O874bchBZmQdC3k7ovEGzV2nxGnm7Q==
+      integrity: sha512-XwdwpnS27JI9APX3XyDdpblDdE3SXABM5iQWkq06DoeL2mEW1HeoK5OyxMZWAF6zQHuvCx7dcCbid1hWxL06PQ==
       tarball: 'file:projects/schema-roundtrip.tgz'
     version: 0.0.0
   'file:projects/schema-validator.tgz_71295fb012620a047ab5122cde86c16e':
@@ -6265,8 +6265,8 @@ packages:
       sinon: 7.5.0
       ts-node: 7.0.1
       tsconfig-paths: 3.9.0
-      tslint: 5.20.1_typescript@3.9.3
-      typescript: 3.9.3
+      tslint: 5.20.1_typescript@3.9.5
+      typescript: 3.9.5
       xmldom: 0.1.31
     dev: false
     id: 'file:projects/schema-validator.tgz'
@@ -6274,10 +6274,9 @@ packages:
     peerDependencies:
       '@bentley/imodeljs-i18n': '*'
     resolution:
-      integrity: sha512-fUckV/xeH0HqmhNwiyLoI+cHARRZaRIFCZ7fCXISkX6Had0XXcs2OsNW7SVFsSYXP6GUnkG3Tyrt3k6m5egNag==
+      integrity: sha512-VoBGX9WVKfnWxo1aCkLvb3vucqtF7sHZqQv2tTrA9HulITVx3xMd1I4IK8qVkyqa2FB5gz3PFYj3WHD0wdg0BQ==
       tarball: 'file:projects/schema-validator.tgz'
     version: 0.0.0
-registry: ''
 specifiers:
   '@bentley/backend-itwin-client': 2.2.0-dev.7
   '@bentley/bentleyjs-core': 2.2.0-dev.7
