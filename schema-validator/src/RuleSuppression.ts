@@ -21,6 +21,8 @@ export const ruleSuppressionSet: EC.IRuleSuppressionSet = {
   classRuleSuppressions: [
     // BIS-100
     { ruleCode: BisDiagnosticCodes.MultiplePropertiesInClassWithSameLabel, rule: multiplePropertiesInClassWithSameLabel },
+    // BIS-101
+    { ruleCode: BisDiagnosticCodes.ClassHasHandlerCACannotAppliedOutsideCoreSchemas, rule: classHasHandlerCACannotAppliedOutsideCoreSchemas },
   ],
   entityRuleSuppressions: [
     // BIS-605
@@ -154,6 +156,38 @@ export async function multiplePropertiesInClassWithSameLabel(diagnostic: EC.AnyD
     && diagnostic.messageArgs.includes("DesignState")
     && diagnostic.messageArgs.includes("DESIGN_STATE")
     && diagnostic.messageArgs.includes("Design State"))
+    return true;
+
+  return false;
+}
+
+/** Rule BIS-101 rule suppression. */
+export async function classHasHandlerCACannotAppliedOutsideCoreSchemas(_diagnostic: EC.AnyDiagnostic, ecClass: EC.AnyClass): Promise<boolean> {
+  const schemaList = [
+    { name: "Grids", version: new EC.ECVersion(1, 0, 0) },
+    { name: "Markup", version: new EC.ECVersion(1, 0, 0) },
+    { name: "Construction", version: new EC.ECVersion(1, 0, 2) },
+    { name: "StructuralPhysical", version: new EC.ECVersion(1, 0, 0) },
+    { name: "ThreeMx", version: new EC.ECVersion(1, 0, 0) },
+    { name: "ScalableMesh", version: new EC.ECVersion(1, 0, 1) },
+    { name: "Raster", version: new EC.ECVersion(1, 0, 0) },
+    { name: "PointCloud", version: new EC.ECVersion(1, 0, 0) },
+    { name: "QuantityTakeoffsAspects", version: new EC.ECVersion(1, 0, 1) },
+    { name: "ProcessFunctional", version: new EC.ECVersion(1, 0, 0) },
+    { name: "ProcessPhysical", version: new EC.ECVersion(1, 0, 1) },
+    { name: "ProcessPidGraphical", version: new EC.ECVersion(1, 0, 1) },
+    { name: "LinearReferencing", version: new EC.ECVersion(2, 0, 0) },
+    { name: "ClassificationSystems", version: new EC.ECVersion(1, 0, 0) },
+    { name: "RoadRailPhysical", version: new EC.ECVersion(2, 0, 0) },
+    { name: "RoadRailAlignment", version: new EC.ECVersion(2, 0, 0) },
+    { name: "BridgeStructuralPhysical", version: new EC.ECVersion(1, 0, 0) },
+    { name: "BuildingSpatial", version: new EC.ECVersion(1, 0, 0) },
+    { name: "BuildingPhysical", version: new EC.ECVersion(1, 0, 0) },
+    { name: "ArchitecturalPhysical", version: new EC.ECVersion(1, 0, 0) },
+  ];
+
+  const schemaInfo = findSchemaInfo(schemaList, ecClass.schema);
+  if (schemaInfo)
     return true;
 
   return false;

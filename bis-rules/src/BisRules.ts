@@ -102,6 +102,7 @@ export const DiagnosticCodes = {
   ClassShouldNotHaveDeprecatedProperty: getCode("103"),
   ClassShouldNotHavePropertyOfDeprecatedStructClass: getCode("104"),
   ClassShouldNotUseDeprecatedCustomAttributes: getCode("105"),
+  NoNewClassHasHandlerCAInCoreSchemas: getCode("106"),
 
   /**
    * CustomAttributeClass Rules (400-499)
@@ -300,6 +301,10 @@ export const Diagnostics = {
   ClassHasHandlerCACannotAppliedOutsideCoreSchemas: EC.createClassDiagnosticClass<[string, string]>(DiagnosticCodes.ClassHasHandlerCACannotAppliedOutsideCoreSchemas,
     "Class '{0}' in schema '{1}' has 'ClassHasHandler' Custom Attribute applied. 'ClassHasHandler' Custom Attribute not allowed outside of the BisCore, Functional, and Generic schemas. Consider using the SchemaHasBehavior Custom Attribute."),
 
+  /** Required message parameters: ECClass FullName,  Schema Name */
+  NoNewClassHasHandlerCAInCoreSchemas: EC.createClassDiagnosticClass<[string, string]>(DiagnosticCodes.NoNewClassHasHandlerCAInCoreSchemas,
+    "Class '{0}' in schema '{1}' has 'ClassHasHandler' Custom Attribute applied. 'ClassHasHandler' Custom Attribute not allowed on new classes within BisCore, Functional, and Generic schemas. Consider using the SchemaHasBehavior Custom Attribute."),
+
   /** Required message parameters: Current Schema FullName, Derived ECClass FullName, Base ECClass FullName */
   ClassShouldNotDerivedFromDeprecatedClass: EC.createClassDiagnosticClass<[string, string, string]>(DiagnosticCodes.ClassShouldNotDerivedFromDeprecatedClass,
     "Class '{0}' derived from a class, '{1}', which itself is or derives from a deprecated class, '{2}'."),
@@ -376,6 +381,7 @@ export const BisRuleSet: EC.IRuleSet = {
     classShouldNotHaveDeprecatedProperty,
     classShouldNotHavePropertyOfDeprecatedStructClass,
     classShouldNotUseDeprecatedCustomAttributes,
+    noNewClassHasHandlerCAInCoreSchemas,
   ],
   mixinRules: [
     mixinsCannotOverrideInheritedProperties,
@@ -1089,7 +1095,7 @@ export async function* multiplePropertiesInClassWithSameLabel(ecClass: EC.AnyCla
   }
 }
 
-/** BIS Rule: ClassHasHandler cannot applied outside of BisCore, Functional, and Generic Schema */
+/** BIS Rule: ClassHasHandler cannot be applied outside of BisCore, Functional, and Generic Schemas */
 export async function* classHasHandlerCACannotAppliedOutsideCoreSchemas(ecClass: EC.AnyClass): AsyncIterable<EC.ClassDiagnostic<any[]>> {
   if (ecClass.customAttributes === undefined)
     return;
@@ -1097,7 +1103,27 @@ export async function* classHasHandlerCACannotAppliedOutsideCoreSchemas(ecClass:
   const schemaName: string = ecClass.schema.name;
   const isExceptionSchema = (schemaName === "BisCore") || (schemaName === "Functional") || (schemaName === "Generic");
   if (!isExceptionSchema && ecClass.customAttributes.has(classHasHandlerCAFullName)) {
-    yield new Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(ecClass, [ecClass.fullName, ecClass.schema.name], EC.DiagnosticCategory.Warning);
+    yield new Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(ecClass, [ecClass.fullName, ecClass.schema.name], EC.DiagnosticCategory.Error);
+  }
+}
+
+/** BIS Rule: ClassHasHandler cannot be applied on new classes within BisCore, Functional, and Generic Schemas */
+export async function* noNewClassHasHandlerCAInCoreSchemas(ecClass: EC.AnyClass): AsyncIterable<EC.ClassDiagnostic<any[]>> {
+  if (ecClass.customAttributes === undefined)
+    return;
+
+  const schemaName: string = ecClass.schema.name;
+
+  if (schemaName === "BisCore" && ecClass.customAttributes.has(classHasHandlerCAFullName) && !bisCoreClassHasHandlerClasses.includes(ecClass.name)) {
+    yield new Diagnostics.NoNewClassHasHandlerCAInCoreSchemas(ecClass, [ecClass.fullName, ecClass.schema.name], EC.DiagnosticCategory.Error);
+  }
+
+  if (schemaName === "Functional" && ecClass.customAttributes.has(classHasHandlerCAFullName) && !functionalClassHasHandlerClasses.includes(ecClass.name)) {
+    yield new Diagnostics.NoNewClassHasHandlerCAInCoreSchemas(ecClass, [ecClass.fullName, ecClass.schema.name], EC.DiagnosticCategory.Error);
+  }
+
+  if (schemaName === "Generic" && ecClass.customAttributes.has(classHasHandlerCAFullName) && !genericClassHasHandlerClasses.includes(ecClass.name)) {
+    yield new Diagnostics.NoNewClassHasHandlerCAInCoreSchemas(ecClass, [ecClass.fullName, ecClass.schema.name], EC.DiagnosticCategory.Error);
   }
 }
 
@@ -1166,3 +1192,126 @@ export async function* classShouldNotUseDeprecatedCustomAttributes(ecClass: EC.A
       yield new Diagnostics.ClassShouldNotUseDeprecatedCustomAttributes(ecClass, [ecClass.fullName, customAttributeClass.fullName], EC.DiagnosticCategory.Warning);
   }
 }
+
+export const bisCoreClassHasHandlerClasses = [
+  "AnnotationElement2d",
+  "GeometricElement2d",
+  "Element",
+  "Model",
+  "CodeSpec",
+  "DrawingCategory",
+  "Category",
+  "DefinitionElement",
+  "InformationContentElement",
+  "AnnotationFrameStyle",
+  "AnnotationLeaderStyle",
+  "AnnotationTextStyle",
+  "AuxCoordSystem2d",
+  "AuxCoordSystem3d",
+  "AuxCoordSystemSpatial",
+  "GeometricModel2d",
+  "ViewDefinition2d",
+  "ViewDefinition",
+  "CategorySelector",
+  "DisplayStyle",
+  "SubCategory",
+  "ElementAspect",
+  "ColorBook",
+  "DefinitionModel",
+  "InformationModel",
+  "DefinitionPartition",
+  "InformationPartitionElement",
+  "DictionaryModel",
+  "DisplayStyle2d",
+  "DisplayStyle3d",
+  "Document",
+  "InformationCarrierElement",
+  "DocumentListModel",
+  "DocumentPartition",
+  "Drawing",
+  "DrawingGraphic",
+  "DrawingModel",
+  "DrawingViewDefinition",
+  "DriverBundleElement",
+  "ElementDrivesElement",
+  "EmbeddedFileLink",
+  "GeometricElement3d",
+  "SpatialCategory",
+  "GeometryPart",
+  "GraphicalType2d",
+  "GraphicalElement3d",
+  "TemplateRecipe2d",
+  "GroupInformationElement",
+  "GroupInformationModel",
+  "GroupInformationPartition",
+  "InformationRecordElement",
+  "InformationRecordModel",
+  "InformationRecordPartition",
+  "LightLocation",
+  "SpatialLocationElement",
+  "LineStyle",
+  "LinkModel",
+  "LinkPartition",
+  "ModelSelector",
+  "OrthographicViewDefinition",
+  "SpatialViewDefinition",
+  "ViewDefinition3d",
+  "RepositoryLink",
+  "UrlLink",
+  "PhysicalElement",
+  "PhysicalMaterial",
+  "PhysicalType",
+  "PhysicalModel",
+  "SpatialModel",
+  "PhysicalPartition",
+  "TemplateRecipe3d",
+  "RenderMaterial",
+  "RepositoryModel",
+  "RoleElement",
+  "RoleModel",
+  "SectionDrawing",
+  "SectionDrawingModel",
+  "ViewAttachment",
+  "Sheet",
+  "SheetTemplate",
+  "SheetBorder",
+  "SheetBorderTemplate",
+  "SheetModel",
+  "SheetViewDefinition",
+  "SpatialLocationType",
+  "SpatialLocationModel",
+  "SpatialLocationPartition",
+  "Subject",
+  "TemplateViewDefinition2d",
+  "TemplateViewDefinition3d",
+  "TextAnnotation2d",
+  "TextAnnotationData",
+  "TextAnnotation3d",
+  "TextAnnotationSeed",
+  "Texture",
+  "VolumeElement",
+  "WebMercatorModel",
+];
+
+export const functionalClassHasHandlerClasses = [
+  "FunctionalType",
+  "FunctionalBreakdownElement",
+  "FunctionalComponentElement",
+  "FunctionalComposite",
+  "FunctionalModel",
+  "FunctionalPartition",
+  "FunctionalPortion",
+];
+
+export const genericClassHasHandlerClasses = [
+  "Callout",
+  "DetailingSymbol",
+  "Graphic3d",
+  "GraphicalType2d",
+  "Group",
+  "GroupModel",
+  "PhysicalObject",
+  "PhysicalType",
+  "SpatialLocation",
+  "ViewAttachmentLabel",
+];

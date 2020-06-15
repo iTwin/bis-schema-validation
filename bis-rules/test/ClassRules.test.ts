@@ -213,7 +213,7 @@ describe("Class Rule Tests", () => {
           expect(diagnostic).to.not.be.undefined;
           expect(diagnostic!.ecDefinition).to.equal(testEntity!);
           expect(diagnostic!.messageArgs).to.eql([testEntity!.fullName, testEntity!.schema.name]);
-          expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
+          expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
           expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.ClassHasHandlerCACannotAppliedOutsideCoreSchemas);
           expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
         }
@@ -221,6 +221,91 @@ describe("Class Rule Tests", () => {
       };
 
       await ClassHasHandlerRuleTest("TestSchema", "ts", await BisTestHelper.getNewContext(), testValidation);
+    });
+  });
+
+  describe("NoNewClassHasHandlerCAInCoreSchemas", () => {
+    async function ClassHasHandlerRuleTest(schemaName: string, schemaAlias: string, className: string, schemaContext: SchemaContext, testValidation: (result: any, testEntity: AnyClass) => Promise<void>) {
+      let schemaJson = {
+        $schema: "https://dev.bentley.com/json_schemas/ec/32/ecschema",
+        name: schemaName,
+        alias: schemaAlias,
+        version: "01.00.01",
+        description: "This is a test schema",
+        references: [
+          {
+            name: "BisCore",
+            version: "01.00.01",
+          },
+        ],
+        items: {
+          ClassHasHandler: {
+            appliesTo: "Any",
+            description: "Applied to an ECClass to indicate that a C++ subclass of DgnDomain::Handler will supply behavior for it at run-time. This custom attribute may only be used by BisCore or other core schemas.",
+            modifier: "sealed",
+            schemaItemType: "CustomAttributeClass",
+          },
+
+          TestClassName: {
+            modifier: "none",
+            schemaItemType: "EntityClass",
+            customAttributes: [
+              { className: "BisCore.ClassHasHandler" },
+            ],
+          },
+        },
+      };
+      schemaJson = JSON.parse(JSON.stringify(schemaJson).replace("TestClassName", className));
+      const testSchema = await Schema.fromJson(schemaJson, schemaContext);
+      const testEntity = await testSchema.getItem<AnyClass>(className);
+      expect(testEntity !== undefined, `${className} should be within TestSchema`).to.be.true;
+      expect(testEntity!.schema.name === schemaName, `${className} schema name should be TestSchema`).to.be.true;
+      expect(testEntity!.customAttributes!.has("BisCore.ClassHasHandler"), `${className} should have BisCore.ClassHasHandler custom attribute`).to.be.true;
+
+      const result = Rules.noNewClassHasHandlerCAInCoreSchemas(testEntity!);
+      await testValidation(result, testEntity!);
+    }
+
+    it("ClassHasHandler used on existing class inside BisCore, Generic, Functional Schema, Rule Passes", async () => {
+      const testValidation = async (result: any, anyClass: AnyClass) => {
+        for await (const _diagnostic of result!) {
+          expect(false, `Rule NoNewClassHasHandlerCAInCoreSchemas should have passed for class '${anyClass.fullName}'`).to.be.true;
+        }
+      };
+
+      // BisCore test
+      for (const className of Rules.bisCoreClassHasHandlerClasses) {
+        await ClassHasHandlerRuleTest("BisCore", "bis", className, new SchemaContext(), testValidation);
+      }
+
+      // Generic test
+      for (const className of Rules.genericClassHasHandlerClasses) {
+        await ClassHasHandlerRuleTest("Generic", "generic", className, await BisTestHelper.getNewContext(), testValidation);
+      }
+
+      // Functional test
+      for (const className of Rules.functionalClassHasHandlerClasses) {
+        await ClassHasHandlerRuleTest("Functional", "func", className, await BisTestHelper.getNewContext(), testValidation);
+      }
+    });
+
+    it("ClassHasHandler used in new Class within BisCore, Generic, Functional Schema, Rule Violated", async () => {
+      const testValidation = async (result: any, anyClass: AnyClass) => {
+        let resultHasEntries = false;
+        for await (const diagnostic of result!) {
+          resultHasEntries = true;
+          expect(diagnostic).to.not.be.undefined;
+          expect(diagnostic!.ecDefinition).to.equal(anyClass!);
+          expect(diagnostic!.messageArgs).to.eql([anyClass!.fullName, anyClass!.schema.name]);
+          expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
+          expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.NoNewClassHasHandlerCAInCoreSchemas);
+          expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
+        }
+        expect(resultHasEntries, `Test should have passed for class '${anyClass.fullName}' as Rule violation as it should not be in the list of allowable classes for ClassHasHandler custom attribute.`).to.be.true;      };
+
+      await ClassHasHandlerRuleTest("BisCore", "bis", "NewClass", new SchemaContext(), testValidation);
+      await ClassHasHandlerRuleTest("Generic", "generic", "NewClass", await BisTestHelper.getNewContext(), testValidation);
+      await ClassHasHandlerRuleTest("Functional", "func", "NewClass", await BisTestHelper.getNewContext(), testValidation);
     });
   });
 
