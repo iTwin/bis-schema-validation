@@ -18,7 +18,7 @@ import {
 
 describe("Import and validate schemas in bis-schemas repository", async () => {
   const bisSchemaRepo: any = process.env.BisSchemaRepo;
-  const signOffExecutable: any = process.env.SignoffToolPath;
+  const signOffExecutable: any = process.env.SignoffToolPath; 
   const skipSchema: any = process.env.skipSchemaFile; // To run the validation locally and to skip any problematic schema
   const tempDir: any = process.env.TMP;
   const imodelDir: string = path.join(tempDir, "SchemaValidation", "Briefcases", "validation");

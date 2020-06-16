@@ -184,6 +184,7 @@ export async function classHasHandlerCACannotAppliedOutsideCoreSchemas(_diagnost
     { name: "BuildingSpatial", version: new EC.ECVersion(1, 0, 0) },
     { name: "BuildingPhysical", version: new EC.ECVersion(1, 0, 0) },
     { name: "ArchitecturalPhysical", version: new EC.ECVersion(1, 0, 0) },
+    { name: "DgnV8OpenRoadsDesigner", version: new EC.ECVersion(2, 0, 1) },
   ];
 
   const schemaInfo = findSchemaInfo(schemaList, ecClass.schema);
