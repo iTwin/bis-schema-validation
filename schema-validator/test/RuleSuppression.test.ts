@@ -759,6 +759,28 @@ describe("Rule Suppression Tests", () => {
 
       expect(result).to.be.false;
     });
+
+    it("Schema DgnV8OpenRoadsDesigner.02.00.01 with class containing ClassHasHandler custom attribute, rule suppressed.", async () => {
+      createSchema("DgnV8OpenRoadsDesigner", 2, 0, 1);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.true;
+    });
+
+    it("Schema DgnV8OpenRoadsDesigner.01.00.01 with class containing ClassHasHandler custom attribute, rule not suppressed.", async () => {
+      createSchema("DgnV8OpenRoadsDesigner", 2, 0, 2);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "BisCore.ClassHasHandler" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new BisRules.Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(testClass, [testClass.fullName, testClass.schema.name]);
+      const result = await ruleSuppressionSet.classHasHandlerCACannotAppliedOutsideCoreSchemas(diag, testClass);
+
+      expect(result).to.be.false;
+    });
   });
 
   describe("BIS-605(Entity class requires ElementOwnsUniqueAspect relationship with this class supported as a target constraint) Tests", async () => {
