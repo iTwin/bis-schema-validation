@@ -11,7 +11,7 @@
     "name": "Bentley Systems, Inc.",
     "url": "http://www.bentley.com"
   },
-  "version": "0.2.58",
+  "version": "0.2.59",
   "bin": {
     "imodel-schema-validator": "./lib/index.js"
   },
@@ -34,8 +34,8 @@
     "@bentley/backend-itwin-client": "2.3.0-dev.7",
     "@bentley/imodeljs-common": "2.3.0-dev.7",
     "@bentley/imodelhub-client": "2.3.0-dev.7",
-    "@bentley/schema-comparer": "^0.2.58",
-    "@bentley/schema-validator": "0.2.58",
+    "@bentley/schema-comparer": "^0.2.59",
+    "@bentley/schema-validator": "0.2.59",
     "@bentley/oidc-signin-tool": "2.3.0-dev.7",
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
