@@ -35,20 +35,39 @@ function prepareOutputFile(iModelDir: string, imodelName): string {
  * @param schemaDir The directory where schema will go.
  * @returns The path where schema is created.
  */
-function createSchema(propCount: number, schemaDir: string): string {
-  const schemaPath = path.join(schemaDir, "TestPropsSchema-" + propCount + ".01.00.00.ecschema.xml");
+function createSchema(schemaDir: string): string {
+  const schemaPath = path.join(schemaDir, "TestPropsSchema.01.00.00.ecschema.xml");
   if (!IModelJsFs.existsSync(schemaPath)) {
     let xml = `<?xml version="1.0" encoding="UTF-8"?>
-  <ECSchema schemaName="TestPropsSchema" alias="tps" version="01.00" xmlns="http://www.bentley.com/schemas/Bentley.ECXML.3.1">
-      <ECSchemaReference name="BisCore" version="01.00" alias="bis"/>
-      <ECEntityClass typeName="PropElement">
-          <BaseClass>bis:SpatialLocationElement</BaseClass>`;
-    for (let i = 0; i < propCount; ++i) {
-      const propName: string = "PrimProp" + i.toString();
-      xml = xml + `<ECProperty propertyName="` + propName + `" typeName="string"/>`;
-    }
-    xml = xml + `</ECEntityClass>
-      </ECSchema>`;
+    <ECSchema schemaName="TestPropsSchema" alias="tps" version="01.00" xmlns="http://www.bentley.com/schemas/Bentley.ECXML.3.1">
+        <ECSchemaReference name="BisCore" version="01.00" alias="bis"/>
+        <ECEntityClass typeName="ElementProp">
+          <BaseClass>bis:AuxCoordSystem2d</BaseClass>
+          <ECProperty propertyName="ElementProp0" typeName="string"/>
+          <ECProperty propertyName="ElementProp1" typeName="string"/>
+          <ECProperty propertyName="ElementProp2" typeName="string"/>
+          <ECProperty propertyName="Angle" typeName="double"/>
+        </ECEntityClass>
+        <ECEntityClass typeName="ElementPropChild">
+          <BaseClass>ElementProp</BaseClass>
+          <ECProperty propertyName="ElementPropChildProp3" typeName="string"/>
+          <ECProperty propertyName="ElementPropChildProp4" typeName="string"/>
+        </ECEntityClass>
+
+        <ECEntityClass typeName="SpatialElementProp">
+          <BaseClass>ElementProp</BaseClass>
+          <ECProperty propertyName="SpecialProp1" typeName="string"/>
+          <ECProperty propertyName="SpecialProp2" typeName="string"/>
+          <ECProperty propertyName="SpecialProp3" typeName="string"/>
+          <ECProperty propertyName="ElementProp2" typeName="string"/>
+        </ECEntityClass>
+        <ECEntityClass typeName="SpatialElementPropChild">
+          <BaseClass>SpatialElementProp</BaseClass>
+          <ECProperty propertyName="SpecialChildProp4" typeName="string"/>
+          <ECProperty propertyName="SpecialChildProp5" typeName="string"/>
+          <ECProperty propertyName="SpecialChildProp6" typeName="string"/>
+        </ECEntityClass>
+    </ECSchema>`;
     IModelJsFs.writeFileSync(schemaPath, xml);
   }
   return schemaPath;
@@ -61,7 +80,7 @@ export async function createTestImodel(): Promise<string> {
   const imodelDir = path.normalize(__dirname + "/../../lib/test/imodel/");
   const iModelPath = prepareOutputFile(imodelDir, "props_20");
   const schemaDir = path.join(path.dirname(iModelPath), "schema");
-  const schemaFile = createSchema(50, schemaDir);
+  const schemaFile = createSchema(schemaDir);
   await IModelHost.startup();
   const requestContext = new BackendRequestContext();
   const imodel = SnapshotDb.createEmpty(iModelPath, { rootSubject: { name: "test-imodel" } });

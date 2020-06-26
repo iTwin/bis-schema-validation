@@ -10,6 +10,7 @@ import { IModelHost, SnapshotDb } from "@bentley/imodeljs-backend";
 import { MetadataExtraction, SchemaMetaData, MappingMetaData } from "../src/MetaDataExtraction";
 
 describe("MetadataExtraction Tests", async () => {
+
   const imodelDir = path.join(__dirname, "assets");
   const dynamicImodelFile = await createTestImodel();
 
@@ -72,7 +73,7 @@ describe("MetadataExtraction Tests", async () => {
     expect(notBisCount).to.equals(1);
   });
 
-  it("Get properties count of base classes of a class (When a property inherited from a class inside of BisCore)..", async () => {
+  it("Get properties count of base classes of a class (When property count is 0).", async () => {
     await IModelHost.startup();
     const iModel = SnapshotDb.openFile(dynamicImodelFile);
     const bisCount = await MetadataExtraction.getPropCountOfBaseClassesFromBis(iModel, "Generic", "ViewAttachmentLabelAnnotatesViewAttachment");
@@ -82,6 +83,26 @@ describe("MetadataExtraction Tests", async () => {
 
     expect(bisCount).to.equals(0);
     expect(notBisCount).to.equals(0);
+  });
+
+  it("Get properties count of base classes of a class [When 1 property override (Angle) from Bis].", async () => {
+    await IModelHost.startup();
+    const iModel = SnapshotDb.openFile(dynamicImodelFile);
+    const notBisCount = await MetadataExtraction.getPropCountOfBaseClassesNotFromBis(iModel, "TestPropsSchema", "ElementPropChild");
+    iModel.close();
+    await IModelHost.shutdown();
+
+    expect(notBisCount).to.equals(3);
+  });
+
+  it("Get properties count of base classes of a class [When 1 property override (ElementProp2) from Non Bis].", async () => {
+    await IModelHost.startup();
+    const iModel = SnapshotDb.openFile(dynamicImodelFile);
+    const notBisCount = await MetadataExtraction.getPropCountOfBaseClassesNotFromBis(iModel, "TestPropsSchema", "SpatialElementPropChild");
+    iModel.close();
+    await IModelHost.shutdown();
+
+    expect(notBisCount).to.equals(6);
   });
 
   it("Get properties count of a class excluding base class properties (success).", async () => {
