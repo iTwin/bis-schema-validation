@@ -25,7 +25,6 @@ program.option("-i, --iModelName <required>", "Name of iModel (case sensitive) w
 program.option("-e, --environment <required>", "DEV, QA and PROD are available environments.");
 program.option("-b, --baseSchemaRefDir <required>", "Root directory of all released schemas (root of BisSchemas repo).");
 program.option("-o, --output <required>", "The path where output files will be generated.");
-program.option("-n, --signOffExecutable  <required>", "The path where  is placed.");
 program.option("-c, --checkReleaseDynamicSchema", "Check all dynamic schemas within iModel. Default is false.");
 
 program.parse(process.argv);
@@ -70,13 +69,12 @@ async function validateInput() {
     console.log("   -e, --environment                  :DEV or QA environments.");
     console.log("   -b, --baseSchemaRefDir             :Root directory of all released schemas (root of BisSchemas repo).");
     console.log("   -o, --output                       :The path where output files will be generated.");
-    console.log("   -n, --signOffExecutable            :The path where  is placed.");
     console.log("   -c, --checkReleaseDynamicSchema    :Check all dynamic schemas within iModel. Default is false.");
     throw new Error("Some thing missing from required arguments and their values.");
   }
 
   if (!program.userName || !program.password || !program.projectId || !program.iModelName ||
-    !program.baseSchemaRefDir || !program.environment || !program.output || !program.signOffExecutable) {
+    !program.baseSchemaRefDir || !program.environment || !program.output) {
     console.log(chalk.default.red("Invalid input. For help use the '-h' option."));
     process.exit(1);
   }
@@ -90,11 +88,6 @@ async function validateInput() {
 
   if (!fs.existsSync(program.baseSchemaRefDir)) {
     const error = "baseSchemaRefDir: " + program.baseSchemaRefDir + " is incorrect.";
-    throw new Error(error);
-  }
-
-  if (!fs.existsSync(program.signOffExecutable)) {
-    const error = " does not exist at: " + program.signOffExecutable;
     throw new Error(error);
   }
 
@@ -117,7 +110,7 @@ async function validateInput() {
   }
 
   const iModelSchemaDir = await IModelProvider.exportSchemasFromIModel(program.projectId, program.iModelName, briefcaseDir, program.userName, program.password, program.environment);
-  await verifyIModelSchemas(iModelSchemaDir, checkReleaseDynamicSchema, program.baseSchemaRefDir, program.signOffExecutable, program.output);
+  await verifyIModelSchemas(iModelSchemaDir, checkReleaseDynamicSchema, program.baseSchemaRefDir, program.output);
 }
 
 /**
@@ -151,22 +144,22 @@ export async function generateSchemaDirectoryLists(schemaDirectory: any) {
 /**
  * Verifies an iModel schema
  */
-export async function verifyIModelSchema(iModelSchemaDir: string, iModelSchemaFile: string, checkReleaseDynamicSchema: boolean, baseSchemaRefDir: string, signOffExecutable: string, output: string): Promise<IModelValidationResult> {
+export async function verifyIModelSchema(iModelSchemaDir: string, iModelSchemaFile: string, checkReleaseDynamicSchema: boolean, baseSchemaRefDir: string, output: string): Promise<IModelValidationResult> {
   const releasedSchemaDirectories = await generateSchemaDirectoryLists(baseSchemaRefDir);
-  const validationResult = await applyValidations(iModelSchemaDir, iModelSchemaFile, releasedSchemaDirectories, checkReleaseDynamicSchema, signOffExecutable, output);
+  const validationResult = await applyValidations(iModelSchemaDir, iModelSchemaFile, releasedSchemaDirectories, checkReleaseDynamicSchema, output);
   return validationResult;
 }
 
 /**
  * Verifies iModel schemas
  */
-export async function verifyIModelSchemas(iModelSchemaDir: string, checkReleaseDynamicSchema: boolean, baseSchemaRefDir: string, signOffExecutable: string, output: string) {
+export async function verifyIModelSchemas(iModelSchemaDir: string, checkReleaseDynamicSchema: boolean, baseSchemaRefDir: string, output: string) {
 
   const results: IModelValidationResult[] = [];
   const releasedSchemaDirectories = await generateSchemaDirectoryLists(baseSchemaRefDir);
 
   for (const iModelSchemaFile of fs.readdirSync(iModelSchemaDir)) {
-    const validationResult = await applyValidations(iModelSchemaDir, iModelSchemaFile, releasedSchemaDirectories, checkReleaseDynamicSchema, signOffExecutable, output);
+    const validationResult = await applyValidations(iModelSchemaDir, iModelSchemaFile, releasedSchemaDirectories, checkReleaseDynamicSchema, output);
     results.push(validationResult);
   }
   displayResults(results, baseSchemaRefDir);
@@ -175,7 +168,7 @@ export async function verifyIModelSchemas(iModelSchemaDir: string, checkReleaseD
 /**
  * Apply all 4 validations
  */
-async function applyValidations(iModelSchemaDir: string, iModelSchemaFile: string, releasedSchemaDirectories: string[], checkReleaseDynamicSchema: boolean, signOffExecutable: string, output: string): Promise<IModelValidationResult> {
+async function applyValidations(iModelSchemaDir: string, iModelSchemaFile: string, releasedSchemaDirectories: string[], checkReleaseDynamicSchema: boolean, output: string): Promise<IModelValidationResult> {
   const iModelSchemaPath = path.join(iModelSchemaDir, iModelSchemaFile);
   const rawDetails = iModelSchemaFile.split(".");
   const name = rawDetails[0];
@@ -223,7 +216,7 @@ async function applyValidations(iModelSchemaDir: string, iModelSchemaFile: strin
       }
 
     } else {
-      validationResult.releasedSchemaSha1 = getSha1Hash(signOffExecutable, releasedSchemaPath, releasedSchemaDirectories.join(";"), true);
+      validationResult.releasedSchemaSha1 = getSha1Hash(releasedSchemaPath, releasedSchemaDirectories);
       await compareSchema(iModelSchemaPath, releasedSchemaPath, [iModelSchemaDir], releasedSchemaDirectories, output, validationResult);
       // @bentley/schema-comparer is auto pushing the input schema path to reference array.
       // Removing this path to fix the bug in finding releasedSchemaFile otherwise it finds the iModel schema path
@@ -231,10 +224,10 @@ async function applyValidations(iModelSchemaDir: string, iModelSchemaFile: strin
       if (iModelSchemaDirIndex !== -1) { releasedSchemaDirectories.splice(iModelSchemaDirIndex, 1); }
 
       if (validationResult.comparer === iModelValidationResultTypes.Passed || validationResult.comparer === iModelValidationResultTypes.ReferenceDifferenceWarning)
-        validationResult.releasedSchemaIModelContextSha1 = getSha1Hash(signOffExecutable, releasedSchemaPath, iModelSchemaDir, false);
+        validationResult.releasedSchemaIModelContextSha1 = getSha1Hash(releasedSchemaPath, [iModelSchemaDir]);
     }
   }
-  validationResult.sha1 = getSha1Hash(signOffExecutable, iModelSchemaPath, iModelSchemaDir, true);
+  validationResult.sha1 = getSha1Hash(iModelSchemaPath, [iModelSchemaDir]);
   console.log("END VALIDATION AND DIFFERENCE AUDIT: ", name, version);
   return validationResult;
 }
