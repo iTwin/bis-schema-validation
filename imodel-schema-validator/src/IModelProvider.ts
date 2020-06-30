@@ -116,7 +116,7 @@ export class IModelProvider {
     const iModelId = await this.getIModelId(requestContext, projectId, iModelName); // iModel Id based upon iModel name and Project Id
 
     if (!iModelId) {
-      throw new Error("iModel either not exist or not found!");
+      throw new Error("iModel either does not exist or cannot be found!");
     }
 
     const briefcaseProps: BriefcaseProps = await BriefcaseManager.download(requestContext, projectId, iModelId, { syncMode: SyncMode.FixedVersion }, IModelVersion.latest());

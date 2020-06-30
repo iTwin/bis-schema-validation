@@ -7,7 +7,7 @@
     "schema-validator": "./bin/index.js"
   },
   "main": "./lib/SchemaValidator.js",
-  "typings": "./lib/SchemaComparison",
+  "typings": "./lib/SchemaValidator",
   "repository": {
     "type": "git",
     "url": "https://github.com/iTwin/bis-schema-validation"

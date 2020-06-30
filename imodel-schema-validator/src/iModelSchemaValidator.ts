@@ -3,31 +3,15 @@
 * Licensed under the MIT License. See LICENSE.md in the project root for license terms.
 *--------------------------------------------------------------------------------------------*/
 
-import { IModelProvider } from "./IModelProvider";
 import { LaunchCodesProvider } from "./LaunchCodesProvider";
 import { getSha1Hash } from "./Sha1HashHelper";
 import { SchemaComparison, CompareOptions, ComparisonResultType, IComparisonResult } from "@bentley/schema-comparer";
 import { SchemaValidator, ValidationOptions, ValidationResultType } from "@bentley/schema-validator";
 import { SchemaCompareCodes } from "@bentley/ecschema-metadata";
 import * as path from "path";
-import * as commander from "commander";
 import * as chalk from "chalk";
 import * as fs from "fs";
-import * as rimraf from "rimraf";
 import * as readdirp from "readdirp";
-
-const program = new commander.Command("iModel-Schema-Validator NPM CLI");
-program.option("--verifyIModelSchemas");
-program.option("-u, --userName <required>", "Username for connecting with HUB using OIDC Auth.");
-program.option("-p, --password <required>", "Password for connecting with HUB using OIDC Auth.");
-program.option("-r, --projectId <required>", "Id of project on HUB.");
-program.option("-i, --iModelName <required>", "Name of iModel (case sensitive) within project on HUB.");
-program.option("-e, --environment <required>", "DEV, QA and PROD are available environments.");
-program.option("-b, --baseSchemaRefDir <required>", "Root directory of all released schemas (root of BisSchemas repo).");
-program.option("-o, --output <required>", "The path where output files will be generated.");
-program.option("-c, --checkReleaseDynamicSchema", "Check all dynamic schemas within iModel. Default is false.");
-
-program.parse(process.argv);
 
 /**
  * Defines the possible result types for all validations
@@ -54,91 +38,6 @@ export interface IModelValidationResult {
   comparer?: iModelValidationResultTypes;
   sha1Comparison?: iModelValidationResultTypes;
   approval?: iModelValidationResultTypes;
-}
-
-/**
- * Validates the command line inputs for verifyIModelSchemas function
- */
-async function validateInput() {
-  if (process.argv.length < 18) {
-    console.log("usage : index.js --verifyIModelSchemas");
-    console.log("   -u, --userName                     :Username for connecting with HUB");
-    console.log("   -p, --password                     :Password for connecting with HUB.");
-    console.log("   -r, --projectId                    :Id of project on HUB.");
-    console.log("   -i, --iModelName                   :Name of iModel (case sensitive) within project on HUB.");
-    console.log("   -e, --environment                  :DEV or QA environments.");
-    console.log("   -b, --baseSchemaRefDir             :Root directory of all released schemas (root of BisSchemas repo).");
-    console.log("   -o, --output                       :The path where output files will be generated.");
-    console.log("   -c, --checkReleaseDynamicSchema    :Check all dynamic schemas within iModel. Default is false.");
-    throw new Error("Some thing missing from required arguments and their values.");
-  }
-
-  if (!program.userName || !program.password || !program.projectId || !program.iModelName ||
-    !program.baseSchemaRefDir || !program.environment || !program.output) {
-    console.log(chalk.default.red("Invalid input. For help use the '-h' option."));
-    process.exit(1);
-  }
-
-  const env: string = program.environment.toUpperCase();
-  if (env.includes("QA") || env.includes("DEV") || env.includes("PROD")) {
-  } else {
-    const error = "Environment value is incorrect. DEV, QA and PROD are acceptable environment values. ";
-    throw new Error(error);
-  }
-
-  if (!fs.existsSync(program.baseSchemaRefDir)) {
-    const error = "baseSchemaRefDir: " + program.baseSchemaRefDir + " is incorrect.";
-    throw new Error(error);
-  }
-
-  const tmpDir: any = process.env.TMP;
-  const validationDir: string = path.join(tmpDir, "SchemaValidation");
-  const briefcaseDir: string = path.join(validationDir, "Briefcases", program.iModelName);
-  let checkReleaseDynamicSchema = false;
-
-  if (fs.existsSync(briefcaseDir)) {
-    console.log("Old briefcase directory removed.");
-    rimraf.sync(briefcaseDir);
-  }
-
-  // creating new briefcase dir
-  fs.mkdirSync(briefcaseDir, { recursive: true });
-  console.log("Briefcase Directory: " + briefcaseDir);
-
-  if (program.checkReleaseDynamicSchema) {
-    checkReleaseDynamicSchema = true;
-  }
-
-  const iModelSchemaDir = await IModelProvider.exportSchemasFromIModel(program.projectId, program.iModelName, briefcaseDir, program.userName, program.password, program.environment);
-  await verifyIModelSchemas(iModelSchemaDir, checkReleaseDynamicSchema, program.baseSchemaRefDir, program.output);
-}
-
-/**
- * Remove a list ECSchemaReferences from schema XML
- */
-export async function removeECSchemaReference(schemaFilePath: string, ecReferenceNames: string[]) {
-  let data = fs.readFileSync(schemaFilePath, "utf-8").split("\n");
-  ecReferenceNames.forEach((ecReference) => {
-    const ecReferenceRegex = new RegExp('<ECSchemaReference name="' + ecReference + '"');
-    data = data.filter((line) => ecReferenceRegex.test(line) !== true);
-  });
-
-  const writeStream = fs.createWriteStream(schemaFilePath);
-  data.forEach((line) => {
-    writeStream.write(line + "\n");
-  });
-  writeStream.end();
-}
-
-/**
- * Returns a pair of lists: unreleasedDirs, releasedDir
- * unreleasedDirs contains all non-release directories
- * releasedDir contains all release directories
- */
-export async function generateSchemaDirectoryLists(schemaDirectory: any) {
-  const filter: any = { fileFilter: "*.ecschema.xml", directoryFilter: ["!node_modules", "!.vscode"] };
-  const allSchemaDirs = (await readdirp.promise(schemaDirectory, filter)).map((schemaPath) => path.dirname(schemaPath.fullPath));
-  return Array.from(new Set(allSchemaDirs.filter((schemaDir) => /released/i.test(schemaDir))).keys());
 }
 
 /**
@@ -498,10 +397,30 @@ export function displayResults(results: IModelValidationResult[], baseSchemaRefD
   }
 }
 
-if (program.verifyIModelSchemas === true) {
-  validateInput().then()
-    .catch((error) => {
-      console.error(error);
-      process.exit(1);
-    });
+/**
+ * Remove a list ECSchemaReferences from schema XML
+ */
+async function removeECSchemaReference(schemaFilePath: string, ecReferenceNames: string[]) {
+  let data = fs.readFileSync(schemaFilePath, "utf-8").split("\n");
+  ecReferenceNames.forEach((ecReference) => {
+    const ecReferenceRegex = new RegExp('<ECSchemaReference name="' + ecReference + '"');
+    data = data.filter((line) => ecReferenceRegex.test(line) !== true);
+  });
+
+  const writeStream = fs.createWriteStream(schemaFilePath);
+  data.forEach((line) => {
+    writeStream.write(line + "\n");
+  });
+  writeStream.end();
+}
+
+/**
+ * Returns a pair of lists: unreleasedDirs, releasedDir
+ * unreleasedDirs contains all non-release directories
+ * releasedDir contains all release directories
+ */
+async function generateSchemaDirectoryLists(schemaDirectory: any) {
+  const filter: any = { fileFilter: "*.ecschema.xml", directoryFilter: ["!node_modules", "!.vscode"] };
+  const allSchemaDirs = (await readdirp.promise(schemaDirectory, filter)).map((schemaPath) => path.dirname(schemaPath.fullPath));
+  return Array.from(new Set(allSchemaDirs.filter((schemaDir) => /released/i.test(schemaDir))).keys());
 }
