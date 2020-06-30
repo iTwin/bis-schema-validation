@@ -36,7 +36,7 @@ describe("FileDiagnosticReporter Tests", () => {
       const actualOutFile = path.resolve(outDir, "TestSchema.compare.log");
       const expectedOutText = fs.readFileSync(expectedOutFile, "utf8");
       const actualOutText = fs.readFileSync(actualOutFile, "utf8");
-      expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));;
+      expect(utils.normalizeLineEnds(actualOutText)).to.equal(utils.normalizeLineEnds(expectedOutText));
       done();
     });
   });
