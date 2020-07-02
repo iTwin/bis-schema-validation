@@ -8,6 +8,7 @@ import * as path from "path";
 import { expect } from "chai";
 import * as extra from "fs-extra";
 import { Reporter } from "../src/Reporter";
+import { overflowTableBasedCharts } from "../src/iModelQualityChecker";
 import { SchemaMetaData, MetadataExtraction } from "../src/MetaDataExtraction";
 
 describe("Reporter class tests", async () => {
@@ -69,6 +70,30 @@ describe("Reporter class tests", async () => {
     if (fs.existsSync(filePath))
       result = true;
     expect(result).to.equals(true);
+  });
+
+  it("Create a canvasjs chart when overflow table and its data exist.", async () => {
+    let status = false;
+    const outDir = path.normalize(__dirname + "/../../imodel-quality-checker/lib/test/output/");
+    const overflowTable = "testSchema1_Overflow";
+    overflowTableBasedCharts(["testSchema1_Overflow"], metadata, 200, outDir);
+    const htmlFile = path.join(outDir, overflowTable + " All classes_Chart.html");
+    if (fs.existsSync(htmlFile)) {
+      status = true;
+    }
+    expect(status).to.equals(true);
+  });
+
+  it("Chart should not be created when overflow table does not exist.", async () => {
+    let status = false;
+    const overflowTable = "";
+    const outDir = path.normalize(__dirname + "/../../imodel-quality-checker/lib/test/output/");
+    overflowTableBasedCharts([], metadata, 200, outDir);
+    const htmlFile = path.join(outDir, overflowTable + " All classes_Chart.html");
+    if (fs.existsSync(htmlFile)) {
+      status = true;
+    }
+    expect(status).to.equals(false);
   });
 
 });
