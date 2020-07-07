@@ -20,7 +20,7 @@
     "cover:bis-rules": "cd bis-rules && npm run cover",
     "cover:schema-validator": "cd schema-validator && npm run cover",
     "cover:schema-comparer": "cd schema-comparer && npm run cover",
-    "SchemaValidationRunner": "node ./common/scripts/SchemaValidationRunner.js"
+    "validateBisSchemas": "node ./common/scripts/SchemaValidationRunner.js"
   },
   "keywords": [
     "Bentley",

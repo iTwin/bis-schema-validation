@@ -157,6 +157,7 @@ export const DiagnosticCodes = {
   RelationshipConstraintShouldNotUseDeperecatedAbstractConstraint: getCode("1507"),
   RelationshipConstraintShouldNotUseConstraintClassWithDeprecatedBase: getCode("1508"),
   RelationshipConstraintShouldNotUseAbstractConstraintWithDeprecatedBase: getCode("1509"),
+  NoAdditionalLinkTableRelationships: getCode("1510"),
 
   /**
    * StructClass Rules (1700-1799)
@@ -265,6 +266,9 @@ export const Diagnostics = {
   RelationshipConstraintShouldNotUseAbstractConstraintWithDeprecatedBase: EC.createSchemaItemDiagnosticClass<EC.RelationshipClass, [string, string, string, string, string]>(DiagnosticCodes.RelationshipConstraintShouldNotUseAbstractConstraintWithDeprecatedBase,
     "{0} Relationship Constraint of Relationship class '{1}' has abstract constraint '{2}' derived from base, '{3}', which itself is or derives from a deprecated class, {4}."),
 
+  NoAdditionalLinkTableRelationships: EC.createSchemaItemDiagnosticClass<EC.RelationshipClass, [string]>(DiagnosticCodes.NoAdditionalLinkTableRelationships,
+    "Relationship class '{0}' must derive from a BisCore schema relationship as it requires an iModel link table."),
+
   /** Required message parameters: StructClass fullName */
   StructsCannotHaveBaseClasses: EC.createSchemaItemDiagnosticClass<EC.StructClass, [string]>(DiagnosticCodes.StructsCannotHaveBaseClasses,
     "Struct class '{0}' has a base class, but structs should not have base classes."),
@@ -358,6 +362,7 @@ export const BisRuleSet: EC.IRuleSet = {
     relationshipConstraintShouldNotUseDeprecatedAbstractConstraint,
     relationshipConstraintShouldNotUseConstraintClassWithDeprecatedBase,
     relationshipConstraintShouldNotUseAbstractConstraintWithDeprecatedBase,
+    noAdditionalLinkTableRelationships,
   ],
   structClassRules: [
     structsCannotHaveBaseClasses,
@@ -955,7 +960,25 @@ export async function* relationshipConstraintShouldNotUseAbstractConstraintWithD
     yield diagnostic;
 }
 
-/** StructClass RULES
+/** BIS Rule: No additional link table relationships allowed. */
+export async function* noAdditionalLinkTableRelationships(relationshipClass: EC.RelationshipClass): AsyncIterable<EC.SchemaItemDiagnostic<EC.RelationshipClass, any[]>> {
+  if (relationshipClass.schema.name === bisCoreName)
+    return;
+
+  if (await relationshipClass.is("ElementRefersToElements", "BisCore") || await relationshipClass.is("ElementDrivesElement", "BisCore"))
+    return;
+
+  if (relationshipClass.properties && relationshipClass.properties.length > 0)
+    yield new Diagnostics.NoAdditionalLinkTableRelationships(relationshipClass, [relationshipClass.fullName]);
+
+  if ((relationshipClass.source.multiplicity === EC.RelationshipMultiplicity.zeroMany || relationshipClass.source.multiplicity === EC.RelationshipMultiplicity.oneMany) &&
+      (relationshipClass.target.multiplicity === EC.RelationshipMultiplicity.zeroMany || relationshipClass.target.multiplicity === EC.RelationshipMultiplicity.oneMany))
+    yield new Diagnostics.NoAdditionalLinkTableRelationships(relationshipClass, [relationshipClass.fullName]);
+
+  return;
+}
+
+/** StructClass RULES~
  * ************************************************************
  */
 
