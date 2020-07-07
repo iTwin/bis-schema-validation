@@ -113,6 +113,42 @@ const bisCoreSchema = {
         roleLabel: "is owned by",
       },
     },
+    ElementRefersToElements: {
+      modifier: "Abstract",
+      schemaItemType: "RelationshipClass",
+      source: {
+        constraintClasses: ["BisCore.Element"],
+        multiplicity: "(0..*)",
+        polymorphic: true,
+        roleLabel: "refers to",
+      },
+      strength: "referencing",
+      strengthDirection: "forward",
+      target: {
+        constraintClasses: ["BisCore.Element"],
+        multiplicity: "(0..*)",
+        polymorphic: true,
+        roleLabel: "is referenced by",
+      },
+    },
+    ElementDrivesElement: {
+      modifier: "None",
+      schemaItemType: "RelationshipClass",
+      source: {
+        constraintClasses: ["BisCore.Element"],
+        multiplicity: "(0..*)",
+        polymorphic: true,
+        roleLabel: "drives",
+      },
+      strength: "referencing",
+      strengthDirection: "forward",
+      target: {
+        constraintClasses: ["BisCore.Element"],
+        multiplicity: "(0..*)",
+        polymorphic: true,
+        roleLabel: "is driven by",
+      },
+    },
     PhysicalModel: {
       modifier: "none",
       schemaItemType: "EntityClass",

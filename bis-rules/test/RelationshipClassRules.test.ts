@@ -1412,4 +1412,411 @@ describe("RelationshipClass Rule Tests", () => {
       expect(index === 4, "There should be 4 warnings about abstract constraint class derived from deprecated base").to.be.true;
     });
   });
+
+  describe("NoAdditionalLinkTableRelationships", () => {
+    it("Relationship has properties, does not derive from BisCore relationship, rule violated.", async () => {
+      const schemaJson = {
+        TestRelationship: {
+          schemaItemType: "RelationshipClass",
+          strength: "embedding",
+          strengthDirection: "forward",
+          source: {
+            multiplicity: "(1..1)",
+            polymorphic: true,
+            roleLabel: "references",
+            abstractConstraint: "TestSchema.EntityA",
+            constraintClasses: [],
+          },
+          target: {
+            multiplicity: "(1..1)",
+            polymorphic: true,
+            roleLabel: "references",
+            abstractConstraint: "TestSchema.EntityB",
+            constraintClasses: [],
+          },
+          properties: [
+            {
+              type: "PrimitiveProperty",
+              typeName: "string",
+              name: "TestProperty",
+            },
+          ],
+        },
+        EntityA: {
+          schemaItemType: "EntityClass",
+        },
+        EntityB: {
+          schemaItemType: "EntityClass",
+        },
+      };
+
+      const schema = await getTestSchema(schemaJson);
+      const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
+
+      const result = Rules.noAdditionalLinkTableRelationships(relationship);
+
+      let resultHasEntries = false;
+      for await (const diagnostic of result) {
+        resultHasEntries = true;
+        expect(diagnostic).to.not.be.undefined;
+        expect(diagnostic!.ecDefinition).to.equal(relationship);
+        expect(diagnostic!.messageArgs).to.eql(["TestSchema.TestRelationship"]);
+        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.NoAdditionalLinkTableRelationships);
+        expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
+      }
+
+      expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
+    });
+
+    it("Relationship has properties, derives from Bis.ElementRefersToElements, rule passes.", async () => {
+      const schemaJson = {
+        TestRelationship: {
+          baseClass: "BisCore.ElementRefersToElements",
+          schemaItemType: "RelationshipClass",
+          strength: "embedding",
+          strengthDirection: "forward",
+          source: {
+            multiplicity: "(1..1)",
+            polymorphic: true,
+            roleLabel: "references",
+            abstractConstraint: "TestSchema.EntityA",
+            constraintClasses: [],
+          },
+          target: {
+            multiplicity: "(1..1)",
+            polymorphic: true,
+            roleLabel: "references",
+            abstractConstraint: "TestSchema.EntityB",
+            constraintClasses: [],
+          },
+          properties: [
+            {
+              type: "PrimitiveProperty",
+              typeName: "string",
+              name: "TestProperty",
+            },
+          ],
+        },
+        EntityA: {
+          schemaItemType: "EntityClass",
+        },
+        EntityB: {
+          schemaItemType: "EntityClass",
+        },
+      };
+
+      const schema = await getTestSchema(schemaJson);
+      const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
+
+      const result = Rules.noAdditionalLinkTableRelationships(relationship);
+
+      for await (const _diagnostic of result!) {
+        expect(false, "Rule should have passed").to.be.true;
+      }
+    });
+
+    it("Relationship has properties, derives from Bis.ElementDrivesElement, rule passes.", async () => {
+      const schemaJson = {
+        TestRelationship: {
+          baseClass: "BisCore.ElementDrivesElement",
+          schemaItemType: "RelationshipClass",
+          strength: "embedding",
+          strengthDirection: "forward",
+          source: {
+            multiplicity: "(1..1)",
+            polymorphic: true,
+            roleLabel: "references",
+            abstractConstraint: "TestSchema.EntityA",
+            constraintClasses: [],
+          },
+          target: {
+            multiplicity: "(1..1)",
+            polymorphic: true,
+            roleLabel: "references",
+            abstractConstraint: "TestSchema.EntityB",
+            constraintClasses: [],
+          },
+          properties: [
+            {
+              type: "PrimitiveProperty",
+              typeName: "string",
+              name: "TestProperty",
+            },
+          ],
+        },
+        EntityA: {
+          schemaItemType: "EntityClass",
+        },
+        EntityB: {
+          schemaItemType: "EntityClass",
+        },
+      };
+
+      const schema = await getTestSchema(schemaJson);
+      const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
+
+      const result = Rules.noAdditionalLinkTableRelationships(relationship);
+
+      for await (const _diagnostic of result!) {
+        expect(false, "Rule should have passed").to.be.true;
+      }
+    });
+
+    it("Relationship with both constraints with zero to many multiplicity, does not derive from BisCore relationship, rule violated.", async () => {
+      const schemaJson = {
+        TestRelationship: {
+          schemaItemType: "RelationshipClass",
+          strength: "embedding",
+          strengthDirection: "backward",
+          source: {
+            multiplicity: "(0..*)",
+            polymorphic: true,
+            roleLabel: "source label",
+            abstractConstraint: "TestSchema.EntityA",
+            constraintClasses: [],
+          },
+          target: {
+            multiplicity: "(0..*)",
+            polymorphic: true,
+            roleLabel: "target label",
+            abstractConstraint: "TestSchema.EntityB",
+            constraintClasses: [],
+          },
+        },
+        EntityA: {
+          schemaItemType: "EntityClass",
+        },
+        EntityB: {
+          schemaItemType: "EntityClass",
+        },
+      };
+
+      const schema = await getTestSchema(schemaJson);
+      const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
+
+      const result = Rules.noAdditionalLinkTableRelationships(relationship);
+
+      let resultHasEntries = false;
+      for await (const diagnostic of result) {
+        resultHasEntries = true;
+        expect(diagnostic).to.not.be.undefined;
+        expect(diagnostic!.ecDefinition).to.equal(relationship);
+        expect(diagnostic!.messageArgs).to.eql(["TestSchema.TestRelationship"]);
+        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.NoAdditionalLinkTableRelationships);
+        expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
+      }
+
+      expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
+    });
+
+    it("Relationship with both constraints with zero to many multiplicity, derives from BisCore.ElementRefersToElements, rule passes.", async () => {
+      const schemaJson = {
+        TestRelationship: {
+          baseClass: "BisCore.ElementRefersToElements",
+          schemaItemType: "RelationshipClass",
+          strength: "embedding",
+          strengthDirection: "backward",
+          source: {
+            multiplicity: "(0..*)",
+            polymorphic: true,
+            roleLabel: "source label",
+            abstractConstraint: "TestSchema.EntityA",
+            constraintClasses: [],
+          },
+          target: {
+            multiplicity: "(0..*)",
+            polymorphic: true,
+            roleLabel: "target label",
+            abstractConstraint: "TestSchema.EntityB",
+            constraintClasses: [],
+          },
+        },
+        EntityA: {
+          schemaItemType: "EntityClass",
+        },
+        EntityB: {
+          schemaItemType: "EntityClass",
+        },
+      };
+
+      const schema = await getTestSchema(schemaJson);
+      const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
+
+      const result = Rules.noAdditionalLinkTableRelationships(relationship);
+
+      for await (const _diagnostic of result!) {
+        expect(false, "Rule should have passed").to.be.true;
+      }
+    });
+
+    it("Relationship with both constraints with zero to many multiplicity, derives from BisCore.ElementDrivesElement, rule passes.", async () => {
+      const schemaJson = {
+        TestRelationship: {
+          baseClass: "BisCore.ElementDrivesElement",
+          schemaItemType: "RelationshipClass",
+          strength: "embedding",
+          strengthDirection: "backward",
+          source: {
+            multiplicity: "(0..*)",
+            polymorphic: true,
+            roleLabel: "source label",
+            abstractConstraint: "TestSchema.EntityA",
+            constraintClasses: [],
+          },
+          target: {
+            multiplicity: "(0..*)",
+            polymorphic: true,
+            roleLabel: "target label",
+            abstractConstraint: "TestSchema.EntityB",
+            constraintClasses: [],
+          },
+        },
+        EntityA: {
+          schemaItemType: "EntityClass",
+        },
+        EntityB: {
+          schemaItemType: "EntityClass",
+        },
+      };
+
+      const schema = await getTestSchema(schemaJson);
+      const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
+
+      const result = Rules.noAdditionalLinkTableRelationships(relationship);
+
+      for await (const _diagnostic of result!) {
+        expect(false, "Rule should have passed").to.be.true;
+      }
+    });
+
+    it("Relationship with both constraints with one to many multiplicity, does not derive from BisCore relationship, rule violated.", async () => {
+      const schemaJson = {
+        TestRelationship: {
+          schemaItemType: "RelationshipClass",
+          strength: "embedding",
+          strengthDirection: "backward",
+          source: {
+            multiplicity: "(1..*)",
+            polymorphic: true,
+            roleLabel: "source label",
+            abstractConstraint: "TestSchema.EntityA",
+            constraintClasses: [],
+          },
+          target: {
+            multiplicity: "(1..*)",
+            polymorphic: true,
+            roleLabel: "target label",
+            abstractConstraint: "TestSchema.EntityB",
+            constraintClasses: [],
+          },
+        },
+        EntityA: {
+          schemaItemType: "EntityClass",
+        },
+        EntityB: {
+          schemaItemType: "EntityClass",
+        },
+      };
+
+      const schema = await getTestSchema(schemaJson);
+      const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
+
+      const result = Rules.noAdditionalLinkTableRelationships(relationship);
+
+      let resultHasEntries = false;
+      for await (const diagnostic of result) {
+        resultHasEntries = true;
+        expect(diagnostic).to.not.be.undefined;
+        expect(diagnostic!.ecDefinition).to.equal(relationship);
+        expect(diagnostic!.messageArgs).to.eql(["TestSchema.TestRelationship"]);
+        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.NoAdditionalLinkTableRelationships);
+        expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
+      }
+
+      expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
+    });
+
+    it("Relationship with both constraints with one to many multiplicity, derives from BisCore.ElementRefersToElements, rule passes.", async () => {
+      const schemaJson = {
+        TestRelationship: {
+          baseClass: "BisCore.ElementRefersToElements",
+          schemaItemType: "RelationshipClass",
+          strength: "embedding",
+          strengthDirection: "backward",
+          source: {
+            multiplicity: "(1..*)",
+            polymorphic: true,
+            roleLabel: "source label",
+            abstractConstraint: "TestSchema.EntityA",
+            constraintClasses: [],
+          },
+          target: {
+            multiplicity: "(1..*)",
+            polymorphic: true,
+            roleLabel: "target label",
+            abstractConstraint: "TestSchema.EntityB",
+            constraintClasses: [],
+          },
+        },
+        EntityA: {
+          schemaItemType: "EntityClass",
+        },
+        EntityB: {
+          schemaItemType: "EntityClass",
+        },
+      };
+
+      const schema = await getTestSchema(schemaJson);
+      const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
+
+      const result = Rules.noAdditionalLinkTableRelationships(relationship);
+
+      for await (const _diagnostic of result!) {
+        expect(false, "Rule should have passed").to.be.true;
+      }
+    });
+
+    it("Relationship with both constraints with one to many multiplicity, derives from BisCore.ElementDrivesElement, rule passes.", async () => {
+      const schemaJson = {
+        TestRelationship: {
+          baseClass: "BisCore.ElementDrivesElement",
+          schemaItemType: "RelationshipClass",
+          strength: "embedding",
+          strengthDirection: "backward",
+          source: {
+            multiplicity: "(1..*)",
+            polymorphic: true,
+            roleLabel: "source label",
+            abstractConstraint: "TestSchema.EntityA",
+            constraintClasses: [],
+          },
+          target: {
+            multiplicity: "(1..*)",
+            polymorphic: true,
+            roleLabel: "target label",
+            abstractConstraint: "TestSchema.EntityB",
+            constraintClasses: [],
+          },
+        },
+        EntityA: {
+          schemaItemType: "EntityClass",
+        },
+        EntityB: {
+          schemaItemType: "EntityClass",
+        },
+      };
+
+      const schema = await getTestSchema(schemaJson);
+      const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
+
+      const result = Rules.noAdditionalLinkTableRelationships(relationship);
+
+      for await (const _diagnostic of result!) {
+        expect(false, "Rule should have passed").to.be.true;
+      }
+    });
+  });
 });
