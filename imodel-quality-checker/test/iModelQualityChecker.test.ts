@@ -5,6 +5,7 @@
 
 import * as path from "path";
 import { expect } from "chai";
+import * as rimraf from "rimraf";
 import * as extra from "fs-extra";
 import { createTestImodel } from "./utilities/utils";
 import { IModelHost, SnapshotDb } from "@bentley/imodeljs-backend";
@@ -16,7 +17,16 @@ describe("iModelQualityChecker Tests", async () => {
   const imodelDir = path.join(__dirname, "assets");
   const output = path.normalize(__dirname + "/../lib/test/output/");
   extra.ensureDirSync(output);
-  const dynamicImodelFile = await createTestImodel();
+  let dynamicImodelFile;
+
+  before(async () => {
+    dynamicImodelFile = await createTestImodel();
+  });
+
+  after(async () => {
+    if (dynamicImodelFile)
+      rimraf.sync(dynamicImodelFile);
+  });
 
   it("Get overflow table name for a class, if it exists.", async () => {
     await IModelHost.startup();
@@ -90,7 +100,7 @@ describe("iModelQualityChecker Tests", async () => {
     expect(overflowTableName).to.equals("bis_DefinitionElement_Overflow");
   });
 
-  it("Check overall workflow of the tool on a local BIM.", async () => {
+  it.skip("Check overall workflow of the tool on a local BIM.", async () => {
     const localBimPath = path.join(imodelDir, "props_50.bim");
     // tslint:disable-next-line: only-arrow-functions
     console.log = function () { };
