@@ -5,7 +5,7 @@
 
 import * as path from "path";
 import { expect } from "chai";
-import { createTestImodel } from "./utilities/utils"
+import { createTestImodel } from "./utilities/utils";
 import { IModelHost, SnapshotDb } from "@bentley/imodeljs-backend";
 import { MetadataExtraction, SchemaMetaData, MappingMetaData } from "../src/MetaDataExtraction";
 
@@ -215,8 +215,8 @@ describe("MetadataExtraction Tests", async () => {
     iModel.close();
     await IModelHost.shutdown();
 
-    expect(mappingInfo[0].tableName).to.equals("bis_Element");
-    expect(mappingInfo[0].columnName).to.equals("ModelId");
+    expect(mappingInfo[0].tableName).to.equals("bis_GeometricElement3d");
+    expect(mappingInfo[0].columnName).to.equals("BBoxHigh_X");
   });
 
   it("Get meta data about mapping (failure).", async () => {
@@ -249,9 +249,9 @@ describe("MetadataExtraction Tests", async () => {
 
     const statistics = MetadataExtraction.getStatistics(calculatePerformanceData);
     if (statistics) {
-      expect(statistics.Max).to.equals(68);
-      expect(statistics.Min).to.equals(8);
-      expect(statistics.Avg).to.equals(39);
+      expect(statistics.maxPropCount).to.equals(68);
+      expect(statistics.minPropCount).to.equals(8);
+      expect(statistics.avgPropCount).to.equals(39.00);
     }
   });
 });
