@@ -67,7 +67,23 @@ function createSchema(schemaDir: string): string {
           <ECProperty propertyName="SpecialChildProp5" typeName="string"/>
           <ECProperty propertyName="SpecialChildProp6" typeName="string"/>
         </ECEntityClass>
-    </ECSchema>`;
+        <ECEntityClass typeName="PropElementMapping_NonBisCase">
+          <BaseClass>ElementProp</BaseClass>
+            <ECProperty propertyName="ElementProp0" typeName="string"/>`;
+    for (let i = 0; i < 50; ++i) {
+      const propName: string = "PrimProp" + i.toString();
+      xml = xml + `<ECProperty propertyName="` + propName + `" typeName="string"/>`;
+    }
+    xml = xml + `</ECEntityClass>
+        <ECEntityClass typeName="PropElementMapping_BisCase">
+          <BaseClass>bis:AuxCoordSystem2d</BaseClass>
+            <ECProperty propertyName="Angle" typeName="double"/>`;
+    for (let i = 0; i < 50; ++i) {
+      const propName: string = "PrimProp" + i.toString();
+      xml = xml + `<ECProperty propertyName = "` + propName + `" typeName = "string" /> `;
+    }
+    xml = xml + `</ECEntityClass>` +
+      `</ECSchema>`;
     IModelJsFs.writeFileSync(schemaPath, xml);
   }
   return schemaPath;
@@ -84,7 +100,7 @@ export async function createTestImodel(): Promise<string> {
   await IModelHost.startup();
   const requestContext = new BackendRequestContext();
   const imodel = SnapshotDb.createEmpty(iModelPath, { rootSubject: { name: "test-imodel" } });
-  imodel.importSchemas(requestContext, [schemaFile]);
+  await imodel.importSchemas(requestContext, [schemaFile]);
   imodel.saveChanges();
   imodel.close();
   await IModelHost.shutdown();
