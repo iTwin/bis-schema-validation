@@ -3,8 +3,11 @@
 * Licensed under the MIT License. See LICENSE.md in the project root for license terms.
 *--------------------------------------------------------------------------------------------*/
 
+import * as fs from "fs";
 import * as path from "path";
 import { expect } from "chai";
+import * as rimraf from "rimraf";
+import * as extra from "fs-extra";
 import { createTestImodel } from "./utilities/utils";
 import { IModelHost, SnapshotDb } from "@bentley/imodeljs-backend";
 import { MetadataExtraction, SchemaMetaData, MappingMetaData } from "../src/MetaDataExtraction";
@@ -12,7 +15,38 @@ import { MetadataExtraction, SchemaMetaData, MappingMetaData } from "../src/Meta
 describe("MetadataExtraction Tests", async () => {
 
   const imodelDir = path.join(__dirname, "assets");
-  const dynamicImodelFile = await createTestImodel();
+  const output = path.normalize(__dirname + "/../lib/test/output/");
+  extra.ensureDirSync(output);
+  let dynamicImodelFile;
+  const summaryFile = path.join(output, "Summary.txt");
+
+  const calculatePerformanceData: SchemaMetaData[] = [
+    {
+      schemaName: "testSchema1", className: "testClass1", classPropCount: 30, baseClassesFromBisPropCount: 20,
+      baseClassesNotFromBisPropCount: 10, overflowTable: "testSchema1_Overflow", overflowColumnCount: 8, MetaData: [],
+    },
+    {
+      schemaName: "testSchema2", className: "testClass2", classPropCount: 100, baseClassesFromBisPropCount: 50,
+      baseClassesNotFromBisPropCount: 0, overflowTable: "testSchema1_Overflow", overflowColumnCount: 68, MetaData: [],
+    },
+    {
+      schemaName: "testSchema3", className: "testClass3", classPropCount: 25, baseClassesFromBisPropCount: 38,
+      baseClassesNotFromBisPropCount: 48, overflowTable: "testSchema1_Overflow", overflowColumnCount: 41, MetaData: [],
+    }];
+
+  before(async () => {
+    dynamicImodelFile = await createTestImodel();
+  });
+
+  after(async () => {
+    if (dynamicImodelFile)
+      rimraf.sync(dynamicImodelFile);
+  });
+
+  afterEach(async () => {
+    if (fs.existsSync(summaryFile))
+      rimraf.sync(summaryFile);
+  });
 
   it("Get schema names from an iModel.", async () => {
     await IModelHost.startup();
@@ -233,25 +267,30 @@ describe("MetadataExtraction Tests", async () => {
   });
 
   it("Get statistics of an overflow table (success).", async () => {
-    const calculatePerformanceData: SchemaMetaData[] = [
-      {
-        schemaName: "testSchema1", className: "testClass1", classPropCount: 30, baseClassesFromBisPropCount: 20,
-        baseClassesNotFromBisPropCount: 10, overflowTable: "testSchema1_Overflow", overflowColumnCount: 8, MetaData: [],
-      },
-      {
-        schemaName: "testSchema2", className: "testClass2", classPropCount: 100, baseClassesFromBisPropCount: 50,
-        baseClassesNotFromBisPropCount: 0, overflowTable: "testSchema1_Overflow", overflowColumnCount: 68, MetaData: [],
-      },
-      {
-        schemaName: "testSchema3", className: "testClass3", classPropCount: 25, baseClassesFromBisPropCount: 38,
-        baseClassesNotFromBisPropCount: 48, overflowTable: "testSchema1_Overflow", overflowColumnCount: 41, MetaData: [],
-      }];
-
     const statistics = MetadataExtraction.getStatistics(calculatePerformanceData);
     if (statistics) {
       expect(statistics.maxPropCount).to.equals(68);
       expect(statistics.minPropCount).to.equals(8);
       expect(statistics.avgPropCount).to.equals(39.00);
     }
+  });
+
+  it("Log performance data.", async () => {
+    MetadataExtraction.logPerformanceSummary(calculatePerformanceData, output);
+    let checker = false;
+    if (summaryFile) {
+      checker = true;
+    }
+    expect(checker).to.equals(true);
+  });
+
+  it("Log statistics.", async () => {
+    const statistics: any = MetadataExtraction.getStatistics(calculatePerformanceData);
+    MetadataExtraction.logStatistics("testSchema1_Overflow", statistics, output);
+    let checker = false;
+    if (summaryFile) {
+      checker = true;
+    }
+    expect(checker).to.equals(true);
   });
 });

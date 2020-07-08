@@ -6,6 +6,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import { expect } from "chai";
+import * as rimraf from "rimraf";
 import * as extra from "fs-extra";
 import { Reporter } from "../src/Reporter";
 import { overflowTableBasedCharts } from "../src/iModelQualityChecker";
@@ -27,6 +28,14 @@ describe("Reporter class tests", async () => {
       schemaName: "testSchema3", className: "testClass3", classPropCount: 25, baseClassesFromBisPropCount: 38,
       baseClassesNotFromBisPropCount: 48, overflowTable: "testSchema1_Overflow", overflowColumnCount: 41, MetaData: [],
     }];
+
+  const outDir = path.normalize(__dirname + "/../../imodel-quality-checker/lib/test/output/");
+  const libFile = path.join(outDir, "canvasjs.min.js");
+
+  afterEach(async () => {
+    if (libFile)
+      rimraf.sync(libFile);
+  });
 
   it("Write the performance data and statistics to the json file. (success)", () => {
 
@@ -75,27 +84,34 @@ describe("Reporter class tests", async () => {
   });
 
   it("Create a canvasjs chart when overflow table and its data exist.", async () => {
-    let status = false;
-    const outDir = path.normalize(__dirname + "/../../imodel-quality-checker/lib/test/output/");
+    let htmlFileStatus = false;
+    let libFileStatus = false;
     const overflowTable = "testSchema1_Overflow";
     overflowTableBasedCharts(["testSchema1_Overflow"], metadata, 200, outDir);
-    const htmlFile = path.join(outDir, overflowTable + " All classes_Chart.html");
+    const htmlFile = path.join(outDir, overflowTable + " All Classes_Chart.html");
     if (fs.existsSync(htmlFile)) {
-      status = true;
+      htmlFileStatus = true;
     }
-    expect(status).to.equals(true);
+    if (fs.existsSync(libFile)) {
+      libFileStatus = true;
+    }
+    expect(libFileStatus).to.equals(true);
+    expect(htmlFileStatus).to.equals(true);
   });
 
   it("Chart should not be created when overflow table does not exist.", async () => {
-    let status = false;
+    let htmlFileStatus = false;
+    let libFileStatus = false;
     const overflowTable = "";
-    const outDir = path.normalize(__dirname + "/../../imodel-quality-checker/lib/test/output/");
     overflowTableBasedCharts([], metadata, 200, outDir);
-    const htmlFile = path.join(outDir, overflowTable + " All classes_Chart.html");
+    const htmlFile = path.join(outDir, overflowTable + " All Classes_Chart.html");
     if (fs.existsSync(htmlFile)) {
-      status = true;
+      htmlFileStatus = true;
     }
-    expect(status).to.equals(false);
+    if (fs.existsSync(libFile)) {
+      libFileStatus = true;
+    }
+    expect(htmlFileStatus).to.equals(false);
+    expect(libFileStatus).to.equals(false);
   });
-
 });
