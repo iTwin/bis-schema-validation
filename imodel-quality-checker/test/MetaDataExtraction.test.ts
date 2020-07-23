@@ -22,16 +22,16 @@ describe("MetadataExtraction Tests", async () => {
 
   const calculatePerformanceData: SchemaMetaData[] = [
     {
-      schemaName: "testSchema1", className: "testClass1", classPropCount: 30, baseClassesFromBisPropCount: 20,
-      baseClassesNotFromBisPropCount: 10, overflowTable: "testSchema1_Overflow", overflowColumnCount: 8, MetaData: [],
+      schemaName: "testSchema1", className: "testClass1", classOwnPropCount: 30, baseClassesFromBisPropCount: 20,
+      baseClassesNotFromBisPropCount: 10, overflowTable: "testSchema1_Overflow", overflowColumnCount: 8, ownPropMetaData: [],
     },
     {
-      schemaName: "testSchema2", className: "testClass2", classPropCount: 100, baseClassesFromBisPropCount: 50,
-      baseClassesNotFromBisPropCount: 0, overflowTable: "testSchema1_Overflow", overflowColumnCount: 68, MetaData: [],
+      schemaName: "testSchema2", className: "testClass2", classOwnPropCount: 100, baseClassesFromBisPropCount: 50,
+      baseClassesNotFromBisPropCount: 0, overflowTable: "testSchema1_Overflow", overflowColumnCount: 68, ownPropMetaData: [],
     },
     {
-      schemaName: "testSchema3", className: "testClass3", classPropCount: 25, baseClassesFromBisPropCount: 38,
-      baseClassesNotFromBisPropCount: 48, overflowTable: "testSchema1_Overflow", overflowColumnCount: 41, MetaData: [],
+      schemaName: "testSchema3", className: "testClass3", classOwnPropCount: 25, baseClassesFromBisPropCount: 38,
+      baseClassesNotFromBisPropCount: 48, overflowTable: "testSchema1_Overflow", overflowColumnCount: 41, ownPropMetaData: [],
     }];
 
   before(async () => {
@@ -171,7 +171,7 @@ describe("MetadataExtraction Tests", async () => {
     await IModelHost.shutdown();
 
     expect(metaData[0].className).to.equal("AnnotationElement2d");
-    expect(metaData[0].classPropCount).to.equal(0);
+    expect(metaData[0].classOwnPropCount).to.equal(0);
     expect(metaData[0].baseClassesNotFromBisPropCount).to.equal(0);
     expect(metaData[0].baseClassesFromBisPropCount).to.equal(16);
   });
@@ -182,7 +182,8 @@ describe("MetadataExtraction Tests", async () => {
     const iModel = SnapshotDb.openFile(imodelFile);
     const properties: SchemaMetaData[] = await MetadataExtraction.getMetaData(iModel, "BisCore");
     const sortedMetaData: SchemaMetaData[] = MetadataExtraction.sortMetaDataByPropertyCount(properties);
-    const totalCount = sortedMetaData[0].baseClassesFromBisPropCount + sortedMetaData[0].baseClassesNotFromBisPropCount + sortedMetaData[0].classPropCount;
+    const totalCount = sortedMetaData[0].baseClassesFromBisPropCount +
+      sortedMetaData[0].baseClassesNotFromBisPropCount + sortedMetaData[0].classOwnPropCount;
     iModel.close();
     await IModelHost.shutdown();
 
@@ -250,7 +251,7 @@ describe("MetadataExtraction Tests", async () => {
     await IModelHost.shutdown();
 
     expect(mappingInfo[0].tableName).to.equals("bis_GeometricElement3d");
-    expect(mappingInfo[0].columnName).to.equals("BBoxHigh_X");
+    expect(mappingInfo[0].columnName).to.equals("js2");
   });
 
   it("Get meta data about mapping (failure).", async () => {

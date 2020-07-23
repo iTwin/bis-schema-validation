@@ -4,8 +4,6 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
-
-
     {
       "type": "node",
       "request": "launch",
@@ -70,6 +68,20 @@
       "cwd": "${workspaceFolder}/imodel-schema-validator",
       "args": [
         "--testDir=${workspaceFolder}/imodel-schema-validator/test",
+        "--debug"
+      ],
+      "port": 9229,
+      "protocol": "inspector",
+      "outputCapture": "std"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Run imodel-quality-checker Tests",
+      "program": "${workspaceFolder}/imodel-quality-checker/node_modules/@bentley/build-tools/scripts/test-tsnode.js",
+      "cwd": "${workspaceFolder}/imodel-quality-checker",
+      "args": [
+        "--testDir=${workspaceFolder}/imodel-quality-checker/test",
         "--debug"
       ],
       "port": 9229,
