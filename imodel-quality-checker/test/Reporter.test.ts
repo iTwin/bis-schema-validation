@@ -17,16 +17,16 @@ describe("Reporter class tests", async () => {
   extra.ensureDirSync(output);
   const metadata: SchemaMetaData[] = [
     {
-      schemaName: "testSchema1", className: "testClass1", classPropCount: 30, baseClassesFromBisPropCount: 20,
-      baseClassesNotFromBisPropCount: 10, overflowTable: "testSchema1_Overflow", overflowColumnCount: 8, MetaData: [],
+      schemaName: "testSchema1", className: "testClass1", classOwnPropCount: 30, baseClassesFromBisPropCount: 20,
+      baseClassesNotFromBisPropCount: 10, overflowTable: "testSchema1_Overflow", overflowColumnCount: 8, ownPropMetaData: [],
     },
     {
-      schemaName: "testSchema2", className: "testClass2", classPropCount: 100, baseClassesFromBisPropCount: 50,
-      baseClassesNotFromBisPropCount: 0, overflowTable: "testSchema1_Overflow", overflowColumnCount: 68, MetaData: [],
+      schemaName: "testSchema2", className: "testClass2", classOwnPropCount: 100, baseClassesFromBisPropCount: 50,
+      baseClassesNotFromBisPropCount: 0, overflowTable: "testSchema1_Overflow", overflowColumnCount: 68, ownPropMetaData: [],
     },
     {
-      schemaName: "testSchema3", className: "testClass3", classPropCount: 25, baseClassesFromBisPropCount: 38,
-      baseClassesNotFromBisPropCount: 48, overflowTable: "testSchema1_Overflow", overflowColumnCount: 41, MetaData: [],
+      schemaName: "testSchema3", className: "testClass3", classOwnPropCount: 25, baseClassesFromBisPropCount: 38,
+      baseClassesNotFromBisPropCount: 48, overflowTable: "testSchema1_Overflow", overflowColumnCount: 41, ownPropMetaData: [],
     }];
 
   const outDir = path.normalize(__dirname + "/../../imodel-quality-checker/lib/test/output/");
@@ -54,7 +54,7 @@ describe("Reporter class tests", async () => {
 
       expect(data["testSchema1_Overflow"][0].schemaName).to.equals("testSchema2");
       expect(data["testSchema1_Overflow"][0].className).to.equals("testClass2");
-      expect(data["testSchema1_Overflow"][0].classPropCount).to.equals(100);
+      expect(data["testSchema1_Overflow"][0].classOwnPropCount).to.equals(100);
       expect(data["testSchema1_Overflow"][0].overflowColumnCount).to.equals(68);
       expect(data["maxOverflowTableProperties"]).to.equals(68);
       expect(data["minOverflowTableProperties"]).to.equals(8);
@@ -71,9 +71,11 @@ describe("Reporter class tests", async () => {
 
   it("Write schema logs to a text file when we have classes in a schema.", () => {
     const logs: any = [];
-    const totalCount = metadata[0].baseClassesFromBisPropCount + metadata[0].baseClassesNotFromBisPropCount + metadata[0].classPropCount;
-    const classInfo: string = "->  class: " + metadata[0].className + "  properties: " + totalCount + " (own: " + metadata[0].classPropCount + " baseNotBis: " + metadata[0].baseClassesNotFromBisPropCount + " baseFromBis: " + metadata[0].baseClassesFromBisPropCount + ")";
-    logs.push({ classInfo: classInfo, mapping: metadata[0].MetaData });
+    const totalCount = metadata[0].baseClassesFromBisPropCount + metadata[0].baseClassesNotFromBisPropCount + metadata[0].classOwnPropCount;
+    const classInfo: string = "->  class: " + metadata[0].className + "  properties: " +
+      totalCount + " (own: " + metadata[0].classOwnPropCount + " baseNotBis: " +
+      metadata[0].baseClassesNotFromBisPropCount + " baseFromBis: " + metadata[0].baseClassesFromBisPropCount + ")";
+    logs.push({ classInfo: classInfo, mapping: metadata[0].ownPropMetaData });
     Reporter.writeSchemaOutput("testSchema2", logs, output);
     setTimeout(() => { console.log(); }, 10000);
     const filePath = path.join(output, "testSchema2.txt");
