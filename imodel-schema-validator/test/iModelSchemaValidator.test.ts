@@ -25,13 +25,13 @@ describe("iModelSchemaValidator Tests", async () => {
     const schemaBFile = path.resolve(path.normalize(__dirname + "/assets/"), "SchemaB.ecschema.xml");
     const references = path.normalize(__dirname + "/assets/references/");
     const outputDir = path.normalize(__dirname + "/../lib/test/");
-    const validationResult: IModelValidationResult = { name: "SchemaB", version: "01.01.01" };  
+    const validationResult: IModelValidationResult = { name: "SchemaB", version: "01.01.01" };
 
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir, { recursive: true });
-      await compareSchema(schemaAFile, schemaBFile, [], [references], outputDir, validationResult);
+      await compareSchema("SchemaA", "wip", schemaAFile, schemaBFile, [], [references], outputDir, validationResult);
     } else {
-      await compareSchema(schemaAFile, schemaBFile, [], [references], outputDir, validationResult);
+      await compareSchema("SchemaA", "wip", schemaAFile, schemaBFile, [], [references], outputDir, validationResult);
     }
     expect(validationResult.comparer).to.equal(iModelValidationResultTypes.Failed);
   });
@@ -45,9 +45,9 @@ describe("iModelSchemaValidator Tests", async () => {
 
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir, { recursive: true });
-      await compareSchema(schemaAFile, schemaBFile, [references], [], outputDir, validationResult);
+      await compareSchema("SchemaD", "wip", schemaAFile, schemaBFile, [references], [], outputDir, validationResult);
     } else {
-      await compareSchema(schemaAFile, schemaBFile, [references], [], outputDir, validationResult);
+      await compareSchema("SchemaD", "wip", schemaAFile, schemaBFile, [references], [], outputDir, validationResult);
     }
     expect(validationResult.comparer).to.equal(iModelValidationResultTypes.ReferenceDifferenceWarning);
   });

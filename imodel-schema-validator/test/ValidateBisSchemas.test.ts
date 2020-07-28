@@ -5,26 +5,34 @@
 import * as fs from "fs";
 import * as path from "path";
 import { expect } from "chai";
+import * as rimraf from "rimraf";
+import { Reporter } from "../src/Reporter";
 import { Logger, LogLevel } from "@bentley/bentleyjs-core";
 import { FileSchemaKey } from "@bentley/ecschema-locaters";
 import { SchemaGraphUtil } from "@bentley/ecschema-metadata";
 import { SnapshotDb, IModelHost, BackendRequestContext } from "@bentley/imodeljs-backend";
 import { StubSchemaXmlFileLocater } from "@bentley/ecschema-locaters/lib/StubSchemaXmlFileLocater";
-import { validateSchema, verifyIModelSchema, IModelValidationResult, iModelValidationResultTypes, displayResults } from "../src/iModelSchemaValidator";
+import { validateSchema, verifyIModelSchema, IModelValidationResult, iModelValidationResultTypes } from "../src/iModelSchemaValidator";
 import {
-  getSchemaInfo, removeSchemasFromList, prepareOutputFile, generateSchemaXMLName, getVerifiedSchemaName, getVersionString,
+  getSchemaInfo, prepareOutputFile, generateSchemaXMLName, getVerifiedSchemaName, getVersionString,
   excludeSchema, generateReleasedSchemasList, generateWIPSchemasList, generateSchemaDirectoryList, fixSchemaValidatorIssue,
 } from "./utilities/utils";
 
 describe("Import and validate schemas in bis-schemas repository", async () => {
   const bisSchemaRepo: any = process.env.BisSchemaRepo;
-  const skipSchema: any = process.env.skipSchemaFile; // To run the validation locally and to skip any problematic schema
   const tempDir: any = process.env.TMP;
   const imodelDir: string = path.join(tempDir, "SchemaValidation", "Briefcases", "validation");
   const imodelName: string = "testimodel";
   const exportDir: string = path.join(imodelDir, imodelName, "exported");
   const outputDir: string = path.join(imodelDir, imodelName, "logs");
   let ignoreList: any[];
+
+  before(async () => {
+    const dir = path.join(imodelDir, imodelName);
+    if (fs.existsSync(dir)) {
+      rimraf.sync(dir);
+    }
+  });
 
   beforeEach(async () => {
     const ignoreFile: string = path.join(bisSchemaRepo, "ignoreSchemaList.json");
@@ -36,19 +44,20 @@ describe("Import and validate schemas in bis-schemas repository", async () => {
     Logger.initializeToConsole();
     Logger.setLevelDefault(LogLevel.Error);
 
+    const outputLogs = path.join(outputDir, "released");
     const results: IModelValidationResult[] = [];
     const releasedSchemas = await generateReleasedSchemasList(bisSchemaRepo);
     const releaseFolders = await generateSchemaDirectoryList(bisSchemaRepo);
 
     for (const releasedSchema of releasedSchemas) {
-      IModelHost.startup();
+      await IModelHost.startup();
       console.log("\nValidating Released Schema: " + releasedSchema);
       const key = getSchemaInfo(releasedSchema);
       const schemaName = getVerifiedSchemaName(key.name, releasedSchema);
       const schemaVersion = getVersionString(key.readVersion, key.writeVersion, key.minorVersion);
 
       if (excludeSchema(schemaName, schemaVersion, ignoreList)) {
-        IModelHost.shutdown();
+        await IModelHost.shutdown();
         continue;
       }
 
@@ -64,11 +73,12 @@ describe("Import and validate schemas in bis-schemas repository", async () => {
       imodel.saveChanges();
       imodel.nativeDb.exportSchemas(exportDir);
       imodel.close();
-      IModelHost.shutdown();
-      const result = await verifyIModelSchema(exportDir, path.basename(releasedSchema), false, bisSchemaRepo, outputDir);
+      await IModelHost.shutdown();
+      const result = await verifyIModelSchema(exportDir, path.basename(releasedSchema), false, bisSchemaRepo, outputLogs);
       results.push(result);
     }
-    displayResults(results, bisSchemaRepo);
+    Reporter.logAllValidationsResults(results, bisSchemaRepo, outputLogs);
+    Reporter.displayAllValidationsResults(results, bisSchemaRepo);
   });
 
   it("Import WIP version of all schemas from bis-schemas repository into an iModel and perform BIS-rules validation.", async () => {
@@ -76,26 +86,21 @@ describe("Import and validate schemas in bis-schemas repository", async () => {
     Logger.initializeToConsole();
     Logger.setLevelDefault(LogLevel.Error);
 
+    const outputLogs = path.join(outputDir, "wip");
     const results: IModelValidationResult[] = [];
-    let wipSchemas = await generateWIPSchemasList(bisSchemaRepo);
+    const wipSchemas = await generateWIPSchemasList(bisSchemaRepo);
     let schemaDirs = await generateSchemaDirectoryList(bisSchemaRepo);
-
-    // Currently not validating Fasteners and Asset schemas until decide the solution
-    if (!skipSchema)
-      wipSchemas = removeSchemasFromList(wipSchemas, ["Fasteners.ecschema.xml", "Asset.ecschema.xml"]);
-    else
-      wipSchemas = removeSchemasFromList(wipSchemas, [skipSchema]);
 
     schemaDirs = schemaDirs.concat(wipSchemas.map((schemaPath) => path.dirname(schemaPath)));
     for (const wipSchema of wipSchemas) {
-      IModelHost.startup();
+      await IModelHost.startup();
       console.log("\nValidating WIP Schema: " + wipSchema);
       const key = getSchemaInfo(wipSchema);
       const schemaName = getVerifiedSchemaName(key.name, wipSchema);
       const schemaVersion = getVersionString(key.readVersion, key.writeVersion, key.minorVersion);
 
       if (excludeSchema(schemaName, schemaVersion, ignoreList)) {
-        IModelHost.shutdown();
+        await IModelHost.shutdown();
         continue;
       }
 
@@ -110,17 +115,17 @@ describe("Import and validate schemas in bis-schemas repository", async () => {
       try {
         await imodel.importSchemas(requestContext, schemaPaths);
       } catch (error) {
-        throw new Error( `Failed to import schema ${wipSchema} because ${error.toString()}`);
+        throw new Error(`Failed to import schema ${wipSchema} because ${error.toString()}`);
       }
 
       imodel.saveChanges();
       imodel.nativeDb.exportSchemas(exportDir);
       imodel.close();
-      IModelHost.shutdown();
+      await IModelHost.shutdown();
 
       const schemaXMLFile = generateSchemaXMLName(schemaName, schemaVersion);
       const validationResult: IModelValidationResult = { name: schemaName, version: "" };
-      await validateSchema(path.join(exportDir, schemaXMLFile), schemaDirs, validationResult, outputDir);
+      await validateSchema(schemaName, "wip", path.join(exportDir, schemaXMLFile), schemaDirs, validationResult, outputLogs);
       schemaDirs = fixSchemaValidatorIssue(exportDir, schemaDirs);
       if (validationResult.validator === iModelValidationResultTypes.Failed || validationResult.validator === iModelValidationResultTypes.Error) {
         results.push(validationResult);

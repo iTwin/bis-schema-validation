@@ -1,0 +1,373 @@
+/*---------------------------------------------------------------------------------------------
+* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+* Licensed under the MIT License. See LICENSE.md in the project root for license terms.
+*--------------------------------------------------------------------------------------------*/
+
+import * as fs from "fs";
+import * as path from "path";
+import * as chalk from "chalk";
+import { LaunchCodesProvider } from "./LaunchCodesProvider";
+import { IModelValidationResult, iModelValidationResultTypes } from "./iModelSchemaValidator";
+
+/**
+ * This class reports validation results
+ */
+export class Reporter {
+  private static _validError = 0;
+  private static _validSkipped = 0;
+  private static _diffWarnings = 0;
+  private static _diffSkipped = 0;
+  private static _checksumSkipped = 0;
+  private static _approvalSkipped = 0;
+  private static _checksumResult;
+  private static _launchCodesProvider = new LaunchCodesProvider();
+  public static approvalFailed = 0;
+  public static checksumFailed = 0;
+  public static validFailed = 0;
+  public static diffChanged = 0;
+  public static diffErrors = 0;
+
+  /**
+   * Write comparer and validator logs of a schema to a txt file.
+   * @param schemaName: It is the name of a schema,
+   * @param version: It is the version of a schema.
+   * @param logs: It is the message for logging.
+   * @param outputDir: The directory where output file will go.
+   */
+  public static writeToLogFile(schemaName: string, version: string, logs: string, outputDir: string): void {
+    const fileName = `${schemaName}.${version}.logs`;
+    const filePath = path.join(outputDir, fileName);
+    fs.appendFileSync(filePath, logs);
+  }
+
+  /**
+   * Ensure the directory for all validations results log file.
+   * @param output: It is the output directory.
+   */
+  private static allValidationLogsDir(output: string) {
+    const logDir = path.join(output, "AllValidationResults");
+    if (!fs.existsSync(logDir))
+      fs.mkdirSync(logDir, { recursive: true });
+    return logDir;
+  }
+
+  /**
+   * Log results of bis rules validation.
+   * @param result: It contains validation results data.
+   * @param fileDescriptor: It is the file descriptor.
+   */
+  private static logSchemaValidatorResult(result: IModelValidationResult, fileDescriptor: any) {
+    switch (result.validator) {
+      case iModelValidationResultTypes.Passed:
+        fs.writeSync(fileDescriptor, "   > Schema validation against BIS rules           <passed>\n");
+        break;
+      case iModelValidationResultTypes.Failed:
+        fs.writeSync(fileDescriptor, "   > Schema validation against BIS rules           <failed>\n");
+        fs.writeSync(fileDescriptor, `       BIS validation FAILED. See logs: ${result.name}.${result.version}.log")\n`);
+        this.validFailed++;
+        break;
+      case iModelValidationResultTypes.Error:
+        fs.writeSync(fileDescriptor, "   > Schema validation against BIS rules           <failed>\n");
+        fs.writeSync(fileDescriptor, `       An error occurred during the BIS validation audit. See logs: ${result.name}.${result.version}.log")\n`);
+        this._validError++;
+        break;
+      case iModelValidationResultTypes.Skipped:
+        fs.writeSync(fileDescriptor, "   > Schema validation against BIS rules           <skipped>\n");
+        fs.writeSync(fileDescriptor, `       Standard schemas are not supported by this tool.")\n`);
+        this._validSkipped++;
+        break;
+      default:
+        fs.writeSync(fileDescriptor, "   > Schema validation against BIS rules           <failed>\n");
+        fs.writeSync(fileDescriptor, `       Failed to perform the validation audit for: ${result.name}.${result.version}. See logs: ${result.name}.${result.version}.log")\n`);
+        this._validError++;
+    }
+  }
+
+  /**
+   * Log results of schema comparison validation.
+   * @param result: It contains results data.
+   * @param fileDescriptor: It is the file descriptor.
+   */
+  private static logSchemaComparerResult(result: IModelValidationResult, fileDescriptor: any) {
+    switch (result.comparer) {
+      case iModelValidationResultTypes.Passed:
+        fs.writeSync(fileDescriptor, "   > Schema content verification                   <passed>\n");
+        break;
+      case iModelValidationResultTypes.Failed:
+        fs.writeSync(fileDescriptor, "   > Schema content verification                   <failed>\n");
+        fs.writeSync(fileDescriptor, `       Schema has changes with released one. See logs: ${result.name}.${result.version}.log")\n`);
+        this.diffChanged++;
+        break;
+      case iModelValidationResultTypes.ReferenceDifferenceWarning:
+        fs.writeSync(fileDescriptor, "   > Schema content verification                   <warning>\n");
+        fs.writeSync(fileDescriptor, `       Schema has reference only differences with released one. See logs:  ${result.name}.${result.version}.log")\n`);
+        this._diffWarnings++;
+        break;
+      case iModelValidationResultTypes.Error:
+        fs.writeSync(fileDescriptor, "   > Schema content verification                   <failed>\n");
+        fs.writeSync(fileDescriptor, `       An error occurred during the difference audit. See logs:  ${result.name}.${result.version}.log")\n`);
+        this.diffErrors++;
+        break;
+      case iModelValidationResultTypes.Skipped:
+        fs.writeSync(fileDescriptor, "   > Schema content verification                   <skipped>\n");
+        this._diffSkipped++;
+        break;
+      case iModelValidationResultTypes.NotFound:
+        fs.writeSync(fileDescriptor, "   > Schema content verification                   <failed>\n");
+        fs.writeSync(fileDescriptor, `       Failed to perform the difference audit. There is no released schema for: ${result.name}.${result.version}\")\n`);
+        this.diffErrors++;
+        break;
+      default:
+        fs.writeSync(fileDescriptor, "   > Schema content verification                   <failed>\n");
+        fs.writeSync(fileDescriptor, `       Failed to perform the difference audit for: ${result.name}.${result.version}. See logs:  ${result.name}.${result.version}.log"")\n`);
+        this.diffErrors++;
+    }
+  }
+
+  /**
+   * Log results of Sha1 Hash comparison validation.
+   * @param result: It contains results data.
+   * @param fileDescriptor: It is the file descriptor.
+   * @param launchCodes: Json object containing the launchCodes.
+   */
+  private static logSha1HashComparisonResult(result: IModelValidationResult, fileDescriptor: any, launchCodes: any) {
+    if (result.sha1Comparison === iModelValidationResultTypes.Skipped) {
+      fs.writeSync(fileDescriptor, "   > Schema SHA1 checksum verification             <skipped>\n");
+      fs.writeSync(fileDescriptor, "       SHA1 checksum verification is skipped intentionally for dynamic schemas\n");
+      this._checksumSkipped++;
+    } else {
+      this._checksumResult = this._launchCodesProvider.compareCheckSums(result.name, result.sha1, launchCodes);
+      if (this._checksumResult.result) {
+        fs.writeSync(fileDescriptor, "   > Schema SHA1 checksum verification             <passed>\n");
+      } else {
+        const releasedSchemaChecksumResult = this._launchCodesProvider.compareCheckSums(result.name, result.releasedSchemaSha1, launchCodes);
+        if ((result.comparer === iModelValidationResultTypes.Passed && releasedSchemaChecksumResult.result) ||
+          (result.releasedSchemaIModelContextSha1 && result.sha1 === result.releasedSchemaIModelContextSha1)) {
+          fs.writeSync(fileDescriptor, "   > Schema SHA1 checksum verification             <passed with exception>\n");
+          fs.writeSync(fileDescriptor, "       The SHA1 checksum does not match the one in the wiki because of updates to schema references\n");
+          fs.writeSync(fileDescriptor, `       Released schema SHA1: ${result.releasedSchemaSha1}\n`);
+          fs.writeSync(fileDescriptor, "       The released schema was loaded into the context of the iModel's schemas and checksums matched.\n");
+          this._checksumResult = releasedSchemaChecksumResult;
+        } else {
+          fs.writeSync(fileDescriptor, "   > Schema SHA1 checksum verification             <failed>\n");
+          this.checksumFailed++;
+        }
+      }
+    }
+  }
+
+  /**
+   * Log approval validation results.
+   * @param result: It contains results data.
+   * @param fileDescriptor: It is the file descriptor.
+   * @param launchCodes: Json object containing the launchCodes.
+   */
+  private static logApprovalValidationResult(result: IModelValidationResult, fileDescriptor: any, launchCodes: any) {
+    if (result.approval === iModelValidationResultTypes.Skipped) {
+      fs.writeSync(fileDescriptor, "   > Released schema is approved and verified      <skipped>\n");
+      fs.writeSync(fileDescriptor, "       Approvals validation is skipped intentionally for dynamic schemas\n");
+      this._approvalSkipped++;
+    } else {
+      let approvalResult = this._launchCodesProvider.checkApprovalAndVerification(result.name, this._checksumResult.schemaIndex, this._checksumResult.inventorySchema, launchCodes);
+      if (!approvalResult) {
+        const schemaInfo = this._launchCodesProvider.findSchemaInfo(result.name, result.version, launchCodes);
+        approvalResult = this._launchCodesProvider.checkApprovalAndVerification(result.name, schemaInfo.schemaIndex, schemaInfo.inventorySchema, launchCodes);
+      }
+
+      if (approvalResult) {
+        fs.writeSync(fileDescriptor, "   > Released schema is approved and verified      <passed>\n");
+      } else {
+        fs.writeSync(fileDescriptor, "   > Released schema is approved and verified      <failed>\n");
+        this.approvalFailed++;
+      }
+    }
+  }
+
+  /**
+   * Display results of bis rules validation.
+   * @param result: It contains validation results data.
+   */
+  private static displaySchemaValidatorResult(result: IModelValidationResult) {
+    switch (result.validator) {
+      case iModelValidationResultTypes.Passed:
+        console.log("   > Schema validation against BIS rules           ", chalk.default.green("<passed>"));
+        break;
+      case iModelValidationResultTypes.Failed:
+        console.log("   > Schema validation against BIS rules           ", chalk.default.red("<failed>"));
+        console.log("       BIS validation FAILED. See log for errors. (search for \"BEGIN VALIDATION AND DIFFERENCE AUDIT: %s.%s\")", result.name, result.version);
+        break;
+      case iModelValidationResultTypes.Error:
+        console.log("   > Schema validation against BIS rules           ", chalk.default.red("<failed>"));
+        console.log("       An error occurred during the BIS validation audit. See log for errors. (search for \"BEGIN VALIDATION AND DIFFERENCE AUDIT: %s.%s\")", result.name, result.version);
+        break;
+      case iModelValidationResultTypes.Skipped:
+        console.log("   > Schema validation against BIS rules           ", chalk.default.yellow("<skipped>"));
+        console.log("       Standard schemas are not supported by this tool. (search for \"BEGIN VALIDATION AND DIFFERENCE AUDIT: %s.%s\")", result.name, result.version);
+        break;
+      default:
+        console.log("   > Schema validation against BIS rules           ", chalk.default.red("<failed>"));
+        console.log("       Failed to perform the validation audit for: %s.%s\")", result.name, result.version);
+    }
+  }
+
+  /**
+   * Display results of schema comparison validation.
+   * @param result: It contains results data.
+   */
+  private static displaySchemaComparerResult(result: IModelValidationResult) {
+    switch (result.comparer) {
+      case iModelValidationResultTypes.Passed:
+        console.log("   > Schema content verification                   ", chalk.default.green("<passed>"));
+        break;
+      case iModelValidationResultTypes.Failed:
+        console.log("   > Schema content verification                   ", chalk.default.red("<failed>"));
+        console.log("       Schema has changes with released one. See log for diff. (search for \"BEGIN VALIDATION AND DIFFERENCE AUDIT: %s.%s\")", result.name, result.version);
+        break;
+      case iModelValidationResultTypes.ReferenceDifferenceWarning:
+        console.log("   > Schema content verification                   ", chalk.default.red("<warning>"));
+        console.log("       Schema has reference only differences with released one. See log for diff. (search for \"BEGIN VALIDATION AND DIFFERENCE AUDIT: %s.%s\")", result.name, result.version);
+        break;
+      case iModelValidationResultTypes.Error:
+        console.log("   > Schema content verification                   ", chalk.default.red("<failed>"));
+        console.log("       An error occurred during the difference audit. See log for errors. (search for \"BEGIN VALIDATION AND DIFFERENCE AUDIT: %s.%s\")", result.name, result.version);
+        break;
+      case iModelValidationResultTypes.Skipped:
+        console.log("   > Schema content verification                   ", chalk.default.yellow("<skipped>"));
+        console.log("       Skipped difference audit. See log for errors. (search for \"BEGIN VALIDATION AND DIFFERENCE AUDIT: %s.%s\")", result.name, result.version);
+        break;
+      case iModelValidationResultTypes.NotFound:
+        console.log("   > Schema content verification                   ", chalk.default.red("<failed>"));
+        console.log("       Failed to perform the difference audit. There is no released schema for: %s.%s\")", result.name, result.version);
+        break;
+      default:
+        console.log("   > Schema content verification                   ", chalk.default.red("<failed>"));
+        console.log("       Failed to perform the difference audit for: %s.%s\")", result.name, result.version);
+    }
+  }
+
+  /**
+   * Display results of Sha1 Hash comparison validation.
+   * @param result: It contains results data.
+   * @param launchCodes: Json object containing the launchCodes.
+   */
+  private static displaySha1HashComparisonResult(result: IModelValidationResult, launchCodes: any) {
+    // skip checking against launch code, if the schema is dynamic schema
+    if (result.sha1Comparison === iModelValidationResultTypes.Skipped) {
+      console.log("   > Schema SHA1 checksum verification             ", chalk.default.yellow("<skipped>"));
+      console.log("       SHA1 checksum verification is skipped intentionally for dynamic schemas");
+    } else {
+      this._checksumResult = this._launchCodesProvider.compareCheckSums(result.name, result.sha1, launchCodes);
+      if (this._checksumResult.result) {
+        // This means that there was no difference and the schema did not have to be loaded into the iModel context.
+        console.log("   > Schema SHA1 checksum verification             ", chalk.default.green("<passed>"));
+      } else {
+        const releasedSchemaChecksumResult = this._launchCodesProvider.compareCheckSums(result.name, result.releasedSchemaSha1, launchCodes);
+        if ((result.comparer === iModelValidationResultTypes.Passed && releasedSchemaChecksumResult.result) ||
+          (result.releasedSchemaIModelContextSha1 && result.sha1 === result.releasedSchemaIModelContextSha1)) {
+          // First check determines if loading the released schema into the iModel's context allowed the checksums to match.  This will be the case most of the time.
+          // However, due to the way ECDb roundtrips schemas there are a few cases where the checksum will differ for the same exact schema. The second check comes
+          // at this point to check that the released schema we found has the same checksum as the one in the wiki and there is no difference between that released
+          // schema and the one within the iModel.
+          console.log("   > Schema SHA1 checksum verification             ", chalk.default.green("<passed with exception>"));
+          console.log("       The SHA1 checksum does not match the one in the wiki because of updates to schema references");
+          console.log("       Released schema SHA1: %s ", result.releasedSchemaSha1);
+          console.log("       The released schema was loaded into the context of the iModel's schemas and checksums matched.");
+          this._checksumResult = releasedSchemaChecksumResult;
+        } else {
+          console.log("   > Schema SHA1 checksum verification             ", chalk.default.red("<failed>"));
+        }
+      }
+    }
+  }
+
+  /**
+   * Display approval validation results.
+   * @param result: It contains results data.
+   * @param launchCodes: Json object containing the launchCodes.
+   */
+  private static displayApprovalValidationResult(result: IModelValidationResult, launchCodes: any) {
+    // skip checking against approvals, if the schema is dynamic schema
+    if (result.approval === iModelValidationResultTypes.Skipped) {
+      console.log("   > Released schema is approved and verified      ", chalk.default.yellow("<skipped>"));
+      console.log("       Approvals validation is skipped intentionally for dynamic schemas");
+    } else {
+      let approvalResult = this._launchCodesProvider.checkApprovalAndVerification(result.name, this._checksumResult.schemaIndex, this._checksumResult.inventorySchema, launchCodes);
+      if (!approvalResult) {
+        const schemaInfo = this._launchCodesProvider.findSchemaInfo(result.name, result.version, launchCodes);
+        approvalResult = this._launchCodesProvider.checkApprovalAndVerification(result.name, schemaInfo.schemaIndex, schemaInfo.inventorySchema, launchCodes);
+
+      }
+
+      if (approvalResult) {
+        console.log("   > Released schema is approved and verified      ", chalk.default.green("<passed>"));
+      } else {
+        console.log("   > Released schema is approved and verified      ", chalk.default.red("<failed>"));
+      }
+    }
+  }
+
+  /**
+   * Write results of all validations in log file.
+   * @param results It contains results data.
+   * @param baseSchemaRefDir: It is the root of bis-schemas directory.
+   * @param outputDir: Path of output directory.
+   */
+  public static logAllValidationsResults(results: IModelValidationResult[], baseSchemaRefDir: string, outputDir: string) {
+    const launchCodes = this._launchCodesProvider.getSchemaInventory(baseSchemaRefDir);
+    outputDir = this.allValidationLogsDir(outputDir);
+    const filePath = path.join(outputDir, "AllValidationsResults.logs");
+    const fd = fs.openSync(filePath, "a");
+    fs.writeSync(fd, "iModel schemas:");
+    for (const item of results) {
+      fs.writeSync(fd, `\n> ${item.name}.${item.version} SHA1(${item.sha1})\n`);
+      this.logSchemaValidatorResult(item, fd);
+      this.logSchemaComparerResult(item, fd);
+      this.logSha1HashComparisonResult(item, fd, launchCodes);
+      this.logApprovalValidationResult(item, fd, launchCodes);
+    }
+    fs.writeSync(fd, "\n\n------------------ SUMMARY -----------------\n");
+    fs.writeSync(fd, `BIS Rule Violations:               ${this.validFailed}\n`);
+    fs.writeSync(fd, `BIS Rule Validation Skipped:       ${this._validSkipped}\n`);
+    fs.writeSync(fd, `BIS Rule Validation Errors:        ${this._validError}\n`);
+    fs.writeSync(fd, `Differences Found:                 ${this.diffChanged}\n`);
+    fs.writeSync(fd, `Differences Skipped:               ${this._diffSkipped}\n`);
+    fs.writeSync(fd, `Differences Errors:                ${this.diffErrors}\n`);
+    fs.writeSync(fd, `Differences Warnings:              ${this._diffWarnings}\n`);
+    fs.writeSync(fd, `Checksums Failed:                  ${this.checksumFailed}\n`);
+    fs.writeSync(fd, `Checksums Skipped:                 ${this._checksumSkipped}\n`);
+    fs.writeSync(fd, `Approval and Verification Failed:  ${this.approvalFailed}\n`);
+    fs.writeSync(fd, `Approval and Verification Skipped: ${this._approvalSkipped}\n`);
+    fs.writeSync(fd, "--------------------------------------------");
+  }
+
+  /**
+   * Display results of all validations in log file.
+   * @param results It contains results data.
+   * @param baseSchemaRefDir: It is the root of bis-schemas directory.
+   * @param outputDir: Path of output directory.
+   */
+  public static displayAllValidationsResults(results: IModelValidationResult[], baseSchemaRefDir: string) {
+    const launchCodes = this._launchCodesProvider.getSchemaInventory(baseSchemaRefDir);
+    console.log("\niModel schemas:");
+    for (const item of results) {
+      console.log("\n> %s.%s SHA1(%s)", item.name, item.version, item.sha1);
+      this.displaySchemaValidatorResult(item);
+      this.displaySchemaComparerResult(item);
+      this.displaySha1HashComparisonResult(item, launchCodes);
+      this.displayApprovalValidationResult(item, launchCodes);
+    }
+    console.log("\n\n------------------ SUMMARY -----------------");
+    console.log("BIS Rule Violations:               ", this.validFailed);
+    console.log("BIS Rule Validation Skipped:       ", this._validSkipped);
+    console.log("BIS Rule Validation Errors:        ", this._validError);
+    console.log("Differences Found:                 ", this.diffChanged);
+    console.log("Differences Skipped:               ", this._diffSkipped);
+    console.log("Differences Errors:                ", this.diffErrors);
+    console.log("Differences Warnings:              ", this._diffWarnings);
+    console.log("Checksums Failed:                  ", this.checksumFailed);
+    console.log("Checksums Skipped:                 ", this._checksumSkipped);
+    console.log("Approval and Verification Failed:  ", this.approvalFailed);
+    console.log("Approval and Verification Skipped: ", this._approvalSkipped);
+    console.log("--------------------------------------------");
+  }
+}

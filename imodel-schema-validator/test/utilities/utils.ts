@@ -20,16 +20,21 @@ import { StubSchemaXmlFileLocater } from "@bentley/ecschema-locaters/lib/StubSch
 export function prepareOutputFile(iModelDir: string, imodelName): string {
   const outputDir = path.join(iModelDir, imodelName);
   const exportSchemaDir = path.join(outputDir, "exported");
-  const logs = path.join(outputDir, "logs");
+  const wipLogs = path.join(outputDir, "logs", "wip");
+  const releasedLogs = path.join(outputDir, "logs", "released");
+  const outputFile = path.join(outputDir, imodelName + ".bim");
 
-  if (fs.existsSync(outputDir)) {
-    rimraf.sync(outputDir);
+  if (!fs.existsSync(outputDir)) {
+    fs.mkdirSync(outputDir, { recursive: true });
+    fs.mkdirSync(exportSchemaDir);
+    fs.mkdirSync(wipLogs, { recursive: true });
+    fs.mkdirSync(releasedLogs, { recursive: true });
   }
 
-  fs.mkdirSync(outputDir, { recursive: true });
-  fs.mkdirSync(exportSchemaDir);
-  fs.mkdirSync(logs);
-  const outputFile = path.join(outputDir, imodelName + ".bim");
+  if (fs.existsSync(outputFile)) {
+    rimraf.sync(outputFile);
+  }
+
   return outputFile;
 }
 
