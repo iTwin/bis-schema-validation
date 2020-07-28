@@ -3,15 +3,16 @@
 * Licensed under the MIT License. See LICENSE.md in the project root for license terms.
 *--------------------------------------------------------------------------------------------*/
 
-import { LaunchCodesProvider } from "./LaunchCodesProvider";
-import { getSha1Hash } from "./Sha1HashHelper";
-import { SchemaComparison, CompareOptions, ComparisonResultType, IComparisonResult } from "@bentley/schema-comparer";
-import { SchemaValidator, ValidationOptions, ValidationResultType } from "@bentley/schema-validator";
-import { SchemaCompareCodes } from "@bentley/ecschema-metadata";
+import * as fs from "fs";
 import * as path from "path";
 import * as chalk from "chalk";
-import * as fs from "fs";
 import * as readdirp from "readdirp";
+import { Reporter } from "./Reporter";
+import { getSha1Hash } from "./Sha1HashHelper";
+import { LaunchCodesProvider } from "./LaunchCodesProvider";
+import { SchemaCompareCodes } from "@bentley/ecschema-metadata";
+import { SchemaValidator, ValidationOptions, ValidationResultType } from "@bentley/schema-validator";
+import { SchemaComparison, CompareOptions, ComparisonResultType, IComparisonResult } from "@bentley/schema-comparer";
 
 /**
  * Defines the possible result types for all validations
@@ -61,7 +62,14 @@ export async function verifyIModelSchemas(iModelSchemaDir: string, checkReleaseD
     const validationResult = await applyValidations(iModelSchemaDir, iModelSchemaFile, releasedSchemaDirectories, checkReleaseDynamicSchema, output);
     results.push(validationResult);
   }
-  displayResults(results, baseSchemaRefDir);
+  Reporter.logAllValidationsResults(results, baseSchemaRefDir, output);
+  Reporter.displayAllValidationsResults(results, baseSchemaRefDir);
+  if (Reporter.diffChanged === 0 && Reporter.diffErrors === 0 && Reporter.validFailed === 0 &&
+    Reporter.checksumFailed === 0 && Reporter.approvalFailed === 0) {
+    console.log("All validations passed successfully.");
+  } else {
+    throw Error("Failing the tool because a validation has failed.");
+  }
 }
 
 /**
@@ -82,7 +90,8 @@ async function applyValidations(iModelSchemaDir: string, iModelSchemaFile: strin
   }
 
   console.log("\nBEGIN VALIDATION AND DIFFERENCE AUDIT: %s.%s", name, version);
-  await validateSchema(iModelSchemaPath, releasedSchemaDirectories, validationResult, output);
+  Reporter.writeToLogFile(name, version, `BEGIN VALIDATION AND DIFFERENCE AUDIT: ${name}.${version}\n`, output);
+  await validateSchema(name, version, iModelSchemaPath, releasedSchemaDirectories, validationResult, output);
   // @bentley/schema-validator is auto pushing the input schema path to reference array.
   // Removing this path to fix the bug in finding releasedSchemaFile otherwise it finds the iModel schema path
   const index = releasedSchemaDirectories.indexOf(iModelSchemaDir);
@@ -90,7 +99,10 @@ async function applyValidations(iModelSchemaDir: string, iModelSchemaFile: strin
 
   // find out if a schema is dynamic or not
   if (isDynamicSchema(iModelSchemaPath) && (!checkReleaseDynamicSchema)) {
-    console.log(chalk.default.grey("Skipping difference audit for ", name, version, ". The schema is a dynamic schema and released versions of dynamic schemas are not saved."));
+    console.log(chalk.default.grey(`Skipping difference audit for ", ${name} ${version}.
+    The schema is a dynamic schema and released versions of dynamic schemas are not saved.`));
+    Reporter.writeToLogFile(name, version, `Skipping difference audit for ${name}.${version}.
+    The schema is a dynamic schema and released versions of dynamic schemas are not saved.\n`, output);
     validationResult.comparer = iModelValidationResultTypes.Skipped;
     validationResult.sha1Comparison = iModelValidationResultTypes.Skipped;
     validationResult.approval = iModelValidationResultTypes.Skipped;
@@ -108,15 +120,17 @@ async function applyValidations(iModelSchemaDir: string, iModelSchemaFile: strin
     if (!releasedSchemaPath) {
       if (isDynamicSchema(iModelSchemaPath)) {
         console.log(chalk.default.grey("Skipping difference audit for ", name, version, ". No released schema found."));
+        Reporter.writeToLogFile(name, version, `Skipping difference audit for ${name}.${version}. No released schema found.\n`, output);
         validationResult.comparer = iModelValidationResultTypes.Skipped; // skip if no released schema found in case of dynamic schemas
       } else {
         console.log(chalk.default.grey("Skipping difference audit for ", name, version, ". No released schema found."));
+        Reporter.writeToLogFile(name, version, `Skipping difference audit for ${name}.${version}. No released schema found.\n`, output);
         validationResult.comparer = iModelValidationResultTypes.NotFound; // fail if no released schema found
       }
 
     } else {
       validationResult.releasedSchemaSha1 = getSha1Hash(releasedSchemaPath, releasedSchemaDirectories);
-      await compareSchema(iModelSchemaPath, releasedSchemaPath, [iModelSchemaDir], releasedSchemaDirectories, output, validationResult);
+      await compareSchema(name, version, iModelSchemaPath, releasedSchemaPath, [iModelSchemaDir], releasedSchemaDirectories, output, validationResult);
       // @bentley/schema-comparer is auto pushing the input schema path to reference array.
       // Removing this path to fix the bug in finding releasedSchemaFile otherwise it finds the iModel schema path
       const iModelSchemaDirIndex = releasedSchemaDirectories.indexOf(iModelSchemaDir);
@@ -128,6 +142,7 @@ async function applyValidations(iModelSchemaDir: string, iModelSchemaFile: strin
   }
   validationResult.sha1 = getSha1Hash(iModelSchemaPath, [iModelSchemaDir]);
   console.log("END VALIDATION AND DIFFERENCE AUDIT: ", name, version);
+  Reporter.writeToLogFile(name, version, `END VALIDATION AND DIFFERENCE AUDIT: ${name}.${version}\n`, output);
   return validationResult;
 }
 
@@ -154,14 +169,15 @@ export function ruleViolationError(line: string) {
 /**
  * Performs Schema Validation
  */
-export async function validateSchema(imodelSchemaPath: string, referencePaths: string[], validationResult: IModelValidationResult, output: string) {
+export async function validateSchema(schemaName: string, version: string, imodelSchemaPath: string, referencePaths: string[], validationResult: IModelValidationResult, output: string) {
   try {
-    const validationOptions: ValidationOptions = new ValidationOptions(imodelSchemaPath, referencePaths, false, output);
+    const validationOptions: ValidationOptions = new ValidationOptions(imodelSchemaPath, referencePaths, false);
     const validatorResult = await SchemaValidator.validate(validationOptions);
     for (const line of validatorResult) {
       switch (line.resultType) {
         case ValidationResultType.RuleViolation:
           console.log(chalk.default.yellow(line.resultText));
+          Reporter.writeToLogFile(schemaName, version, line.resultText + "\n", output);
           // Allow warnings to be skipped
           if (ruleViolationError(line.resultText)) {
             validationResult.validator = iModelValidationResultTypes.Failed;
@@ -169,6 +185,7 @@ export async function validateSchema(imodelSchemaPath: string, referencePaths: s
           break;
         case ValidationResultType.Error:
           console.log(chalk.default.red(line.resultText));
+          Reporter.writeToLogFile(schemaName, version, line.resultText + "\n", output);
           // skip the validation for the schemas which are not supported
           if (line.resultText.toLowerCase().includes("standard schemas are not supported by this tool")) {
             validationResult.validator = iModelValidationResultTypes.Skipped;
@@ -178,11 +195,13 @@ export async function validateSchema(imodelSchemaPath: string, referencePaths: s
           break;
         default:
           console.log(chalk.default.green(line.resultText));
+          Reporter.writeToLogFile(schemaName, version, line.resultText + "\n", output);
           validationResult.validator = iModelValidationResultTypes.Passed;
       }
     }
   } catch (error) {
     console.log(chalk.default.red("An error occurred during validation: " + error.message));
+    Reporter.writeToLogFile(schemaName, version, "An error occurred during validation: " + error.message + "\n", output);
     validationResult.validator = iModelValidationResultTypes.Error;
   }
 }
@@ -190,10 +209,10 @@ export async function validateSchema(imodelSchemaPath: string, referencePaths: s
 /**
  * Performs Schema Comparison and returns the a boolean telling that a schema has reference only difference or not
  */
-export async function compareSchema(imodelSchemaPath: string, releasedSchemaPath: string, imodelSchemaReferencePaths: string[], releasedSchemaReferencePaths: string[], output: string, validationResult: IModelValidationResult): Promise<IComparisonResult[]> {
+export async function compareSchema(schemaName: string, version: string, imodelSchemaPath: string, releasedSchemaPath: string, imodelSchemaReferencePaths: string[], releasedSchemaReferencePaths: string[], output: string, validationResult: IModelValidationResult): Promise<IComparisonResult[]> {
   let comparisonResults;
   try {
-    const compareOptions: CompareOptions = new CompareOptions(imodelSchemaPath, releasedSchemaPath, imodelSchemaReferencePaths, releasedSchemaReferencePaths, output);
+    const compareOptions: CompareOptions = new CompareOptions(imodelSchemaPath, releasedSchemaPath, imodelSchemaReferencePaths, releasedSchemaReferencePaths);
     comparisonResults = await SchemaComparison.compare(compareOptions);
     let deltaExists = false;
     for (const line of comparisonResults) {
@@ -203,24 +222,29 @@ export async function compareSchema(imodelSchemaPath: string, releasedSchemaPath
             if (!deltaExists)
               validationResult.comparer = iModelValidationResultTypes.ReferenceDifferenceWarning;
             console.log(chalk.default.yellow(line.resultText));
+            Reporter.writeToLogFile(schemaName, version, line.resultText + "\n", output);
             break;
           }
           if (line.compareCode)
             deltaExists = true;
           validationResult.comparer = iModelValidationResultTypes.Failed;
           console.log(chalk.default.yellow(line.resultText));
+          Reporter.writeToLogFile(schemaName, version, line.resultText + "\n", output);
           break;
         case ComparisonResultType.Error:
           console.log(chalk.default.red(line.resultText));
+          Reporter.writeToLogFile(schemaName, version, line.resultText + "\n", output);
           validationResult.comparer = iModelValidationResultTypes.Error;
           break;
         default:
           console.log(chalk.default.green(line.resultText));
+          Reporter.writeToLogFile(schemaName, version, line.resultText + "\n", output);
           validationResult.comparer = iModelValidationResultTypes.Passed;
       }
     }
   } catch (err) {
     console.log(chalk.default.red("An error occurred during comparison: " + err.message));
+    Reporter.writeToLogFile(schemaName, version, "An error occurred during comparison: " + err.message + "\n", output);
     validationResult.comparer = iModelValidationResultTypes.Error;
   }
   return comparisonResults;
@@ -238,163 +262,6 @@ function referenceDifference(comparisonResult: IComparisonResult): boolean {
     return true;
 
   return false;
-}
-
-/**
- * Display the output
- */
-export function displayResults(results: IModelValidationResult[], baseSchemaRefDir: string) {
-
-  let validFailed = 0;
-  let validError = 0;
-  let validSkipped = 0;
-  let diffChanged = 0;
-  let diffErrors = 0;
-  let diffWarnings = 0;
-  let diffSkipped = 0;
-  let checksumSkipped = 0;
-  let checksumFailed = 0;
-  let approvalFailed = 0;
-  let approvalSkipped = 0;
-  let checksumResult;
-
-  const launchCodesProvider: LaunchCodesProvider = new LaunchCodesProvider();
-  const launchCodes = launchCodesProvider.getSchemaInventory(baseSchemaRefDir);
-
-  console.log("\niModel schemas:");
-  for (const item of results) {
-    console.log("\n> %s.%s SHA1(%s)", item.name, item.version, item.sha1);
-
-    switch (item.validator) {
-      case iModelValidationResultTypes.Passed:
-        console.log("   > Schema validation against BIS rules           ", chalk.default.green("<passed>"));
-        break;
-      case iModelValidationResultTypes.Failed:
-        console.log("   > Schema validation against BIS rules           ", chalk.default.red("<failed>"));
-        console.log("       BIS validation FAILED. See log for errors. (search for \"BEGIN VALIDATION AND DIFFERENCE AUDIT: %s.%s\")", item.name, item.version);
-        validFailed++;
-        break;
-      case iModelValidationResultTypes.Error:
-        console.log("   > Schema validation against BIS rules           ", chalk.default.red("<failed>"));
-        console.log("       An error occurred during the BIS validation audit. See log for errors. (search for \"BEGIN VALIDATION AND DIFFERENCE AUDIT: %s.%s\")", item.name, item.version);
-        validError++;
-        break;
-      case iModelValidationResultTypes.Skipped:
-        console.log("   > Schema validation against BIS rules           ", chalk.default.yellow("<skipped>"));
-        console.log("       Standard schemas are not supported by this tool. (search for \"BEGIN VALIDATION AND DIFFERENCE AUDIT: %s.%s\")", item.name, item.version);
-        validSkipped++;
-        break;
-      default:
-        console.log("   > Schema validation against BIS rules           ", chalk.default.red("<failed>"));
-        console.log("       Failed to perform the validation audit for: %s.%s\")", item.name, item.version);
-        validError++;
-    }
-
-    switch (item.comparer) {
-      case iModelValidationResultTypes.Passed:
-        console.log("   > Schema content verification                   ", chalk.default.green("<passed>"));
-        break;
-      case iModelValidationResultTypes.Failed:
-        console.log("   > Schema content verification                   ", chalk.default.red("<failed>"));
-        console.log("       Schema has changes with released one. See log for diff. (search for \"BEGIN VALIDATION AND DIFFERENCE AUDIT: %s.%s\")", item.name, item.version);
-        diffChanged++;
-        break;
-      case iModelValidationResultTypes.ReferenceDifferenceWarning:
-        console.log("   > Schema content verification                   ", chalk.default.red("<warning>"));
-        console.log("       Schema has reference only differences with released one. See log for diff. (search for \"BEGIN VALIDATION AND DIFFERENCE AUDIT: %s.%s\")", item.name, item.version);
-        diffWarnings++;
-        break;
-      case iModelValidationResultTypes.Error:
-        console.log("   > Schema content verification                   ", chalk.default.red("<failed>"));
-        console.log("       An error occurred during the difference audit. See log for errors. (search for \"BEGIN VALIDATION AND DIFFERENCE AUDIT: %s.%s\")", item.name, item.version);
-        diffErrors++;
-        break;
-      case iModelValidationResultTypes.Skipped:
-        console.log("   > Schema content verification                   ", chalk.default.yellow("<skipped>"));
-        console.log("       Skipped difference audit. See log for errors. (search for \"BEGIN VALIDATION AND DIFFERENCE AUDIT: %s.%s\")", item.name, item.version);
-        diffSkipped++;
-        break;
-      case iModelValidationResultTypes.NotFound:
-        console.log("   > Schema content verification                   ", chalk.default.red("<failed>"));
-        console.log("       Failed to perform the difference audit. There is no released schema for: %s.%s\")", item.name, item.version);
-        diffErrors++;
-        break;
-      default:
-        console.log("   > Schema content verification                   ", chalk.default.red("<failed>"));
-        console.log("       Failed to perform the difference audit for: %s.%s\")", item.name, item.version);
-        diffErrors++;
-    }
-
-    // skip checking against launch code, if the schema is dynamic schema
-    if (item.sha1Comparison === iModelValidationResultTypes.Skipped) {
-      console.log("   > Schema SHA1 checksum verification             ", chalk.default.yellow("<skipped>"));
-      console.log("       SHA1 checksum verification is skipped intentionally for dynamic schemas");
-      checksumSkipped++;
-    } else {
-      checksumResult = launchCodesProvider.compareCheckSums(item.name, item.sha1, launchCodes);
-      if (checksumResult.result) {
-        // This means that there was no difference and the schema did not have to be loaded into the iModel context.
-        console.log("   > Schema SHA1 checksum verification             ", chalk.default.green("<passed>"));
-      } else {
-        const releasedSchemaChecksumResult = launchCodesProvider.compareCheckSums(item.name, item.releasedSchemaSha1, launchCodes);
-        if ((item.comparer === iModelValidationResultTypes.Passed && releasedSchemaChecksumResult.result) ||
-          (item.releasedSchemaIModelContextSha1 && item.sha1 === item.releasedSchemaIModelContextSha1)) {
-          // First check determines if loading the released schema into the iModel's context allowed the checksums to match.  This will be the case most of the time.
-          // However, due to the way ECDb roundtrips schemas there are a few cases where the checksum will differ for the same exact schema. The second check comes
-          // at this point to check that the released schema we found has the same checksum as the one in the wiki and there is no difference between that released
-          // schema and the one within the iModel.
-          console.log("   > Schema SHA1 checksum verification             ", chalk.default.green("<passed with exception>"));
-          console.log("       The SHA1 checksum does not match the one in the wiki because of updates to schema references");
-          console.log("       Released schema SHA1: %s ", item.releasedSchemaSha1);
-          console.log("       The released schema was loaded into the context of the iModel's schemas and checksums matched.");
-          checksumResult = releasedSchemaChecksumResult;
-        } else {
-          console.log("   > Schema SHA1 checksum verification             ", chalk.default.red("<failed>"));
-          checksumFailed++;
-        }
-      }
-    }
-    // skip checking against approvals, if the schema is dynamic schema
-    if (item.approval === iModelValidationResultTypes.Skipped) {
-      console.log("   > Released schema is approved and verified      ", chalk.default.yellow("<skipped>"));
-      console.log("       Approvals validation is skipped intentionally for dynamic schemas");
-      approvalSkipped++;
-    } else {
-      let approvalResult = launchCodesProvider.checkApprovalAndVerification(item.name, checksumResult.schemaIndex, checksumResult.inventorySchema, launchCodes);
-      if (!approvalResult) {
-        const schemaInfo = launchCodesProvider.findSchemaInfo(item.name, item.version, launchCodes);
-        approvalResult = launchCodesProvider.checkApprovalAndVerification(item.name, schemaInfo.schemaIndex, schemaInfo.inventorySchema, launchCodes);
-
-      }
-
-      if (approvalResult) {
-        console.log("   > Released schema is approved and verified      ", chalk.default.green("<passed>"));
-      } else {
-        console.log("   > Released schema is approved and verified      ", chalk.default.red("<failed>"));
-        approvalFailed++;
-      }
-    }
-  }
-
-  console.log("\n\n------------------ SUMMARY -----------------");
-  console.log("BIS Rule Violations:               ", validFailed);
-  console.log("BIS Rule Validation Skipped:       ", validSkipped);
-  console.log("BIS Rule Validation Errors:        ", validError);
-  console.log("Differences Found:                 ", diffChanged);
-  console.log("Differences Skipped:               ", diffSkipped);
-  console.log("Differences Errors:                ", diffErrors);
-  console.log("Differences Warnings:              ", diffWarnings);
-  console.log("Checksums Failed:                  ", checksumFailed);
-  console.log("Checksums Skipped:                 ", checksumSkipped);
-  console.log("Approval and Verification Failed:  ", approvalFailed);
-  console.log("Approval and Verification Skipped: ", approvalSkipped);
-  console.log("--------------------------------------------");
-
-  if (diffChanged === 0 && diffErrors === 0 && validFailed === 0 && checksumFailed === 0 && approvalFailed === 0) {
-    console.log("All validations passed successfully.");
-  } else {
-    throw Error("Failing the tool because a validation has failed.");
-  }
 }
 
 /**
