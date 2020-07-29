@@ -9,7 +9,6 @@ import * as chalk from "chalk";
 import * as readdirp from "readdirp";
 import { Reporter } from "./Reporter";
 import { getSha1Hash } from "./Sha1HashHelper";
-import { LaunchCodesProvider } from "./LaunchCodesProvider";
 import { SchemaCompareCodes } from "@bentley/ecschema-metadata";
 import { SchemaValidator, ValidationOptions, ValidationResultType } from "@bentley/schema-validator";
 import { SchemaComparison, CompareOptions, ComparisonResultType, IComparisonResult } from "@bentley/schema-comparer";
@@ -62,14 +61,8 @@ export async function verifyIModelSchemas(iModelSchemaDir: string, checkReleaseD
     const validationResult = await applyValidations(iModelSchemaDir, iModelSchemaFile, releasedSchemaDirectories, checkReleaseDynamicSchema, output);
     results.push(validationResult);
   }
-  Reporter.logAllValidationsResults(results, baseSchemaRefDir, output);
-  Reporter.displayAllValidationsResults(results, baseSchemaRefDir);
-  if (Reporter.diffChanged === 0 && Reporter.diffErrors === 0 && Reporter.validFailed === 0 &&
-    Reporter.checksumFailed === 0 && Reporter.approvalFailed === 0) {
-    console.log("All validations passed successfully.");
-  } else {
-    throw Error("Failing the tool because a validation has failed.");
-  }
+
+  getResults(results, baseSchemaRefDir, output);
 }
 
 /**
@@ -290,4 +283,22 @@ async function generateSchemaDirectoryLists(schemaDirectory: any) {
   const filter: any = { fileFilter: "*.ecschema.xml", directoryFilter: ["!node_modules", "!.vscode"] };
   const allSchemaDirs = (await readdirp.promise(schemaDirectory, filter)).map((schemaPath) => path.dirname(schemaPath.fullPath));
   return Array.from(new Set(allSchemaDirs.filter((schemaDir) => /released/i.test(schemaDir))).keys());
+}
+
+/**
+ * Log and display results. Define success or failure scenario based upon results
+ * @param results Array containing the IModelValidationResult
+ * @param baseSchemaRefDir: Path of bis-schemas root directory
+ * @param output The directory where output logs will go.
+ */
+export function getResults(results: IModelValidationResult[], baseSchemaRefDir: string, output: string) {
+  const reporter = new Reporter();
+  reporter.logAllValidationsResults(results, baseSchemaRefDir, output);
+  reporter.displayAllValidationsResults(results, baseSchemaRefDir);
+  if (reporter.diffChanged === 0 && reporter.diffErrors === 0 && reporter.validFailed === 0 &&
+    reporter.checksumFailed === 0 && reporter.approvalFailed === 0) {
+    console.log("All validations passed successfully.");
+  } else {
+    throw Error("Failing the tool because a validation has failed.");
+  }
 }

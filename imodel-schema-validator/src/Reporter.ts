@@ -13,19 +13,19 @@ import { IModelValidationResult, iModelValidationResultTypes } from "./iModelSch
  * This class reports validation results
  */
 export class Reporter {
-  private static _validError = 0;
-  private static _validSkipped = 0;
-  private static _diffWarnings = 0;
-  private static _diffSkipped = 0;
-  private static _checksumSkipped = 0;
-  private static _approvalSkipped = 0;
-  private static _checksumResult;
-  private static _launchCodesProvider = new LaunchCodesProvider();
-  public static approvalFailed = 0;
-  public static checksumFailed = 0;
-  public static validFailed = 0;
-  public static diffChanged = 0;
-  public static diffErrors = 0;
+  private _validError = 0;
+  private _validSkipped = 0;
+  private _diffWarnings = 0;
+  private _diffSkipped = 0;
+  private _checksumSkipped = 0;
+  private _approvalSkipped = 0;
+  private _checksumResult;
+  private _launchCodesProvider = new LaunchCodesProvider();
+  public approvalFailed = 0;
+  public checksumFailed = 0;
+  public validFailed = 0;
+  public diffChanged = 0;
+  public diffErrors = 0;
 
   /**
    * Write comparer and validator logs of a schema to a txt file.
@@ -44,7 +44,7 @@ export class Reporter {
    * Ensure the directory for all validations results log file.
    * @param output: It is the output directory.
    */
-  private static allValidationLogsDir(output: string) {
+  private allValidationLogsDir(output: string) {
     const logDir = path.join(output, "AllValidationResults");
     if (!fs.existsSync(logDir))
       fs.mkdirSync(logDir, { recursive: true });
@@ -56,7 +56,7 @@ export class Reporter {
    * @param result: It contains validation results data.
    * @param fileDescriptor: It is the file descriptor.
    */
-  private static logSchemaValidatorResult(result: IModelValidationResult, fileDescriptor: any) {
+  private logSchemaValidatorResult(result: IModelValidationResult, fileDescriptor: any) {
     switch (result.validator) {
       case iModelValidationResultTypes.Passed:
         fs.writeSync(fileDescriptor, "   > Schema validation against BIS rules           <passed>\n");
@@ -88,7 +88,7 @@ export class Reporter {
    * @param result: It contains results data.
    * @param fileDescriptor: It is the file descriptor.
    */
-  private static logSchemaComparerResult(result: IModelValidationResult, fileDescriptor: any) {
+  private logSchemaComparerResult(result: IModelValidationResult, fileDescriptor: any) {
     switch (result.comparer) {
       case iModelValidationResultTypes.Passed:
         fs.writeSync(fileDescriptor, "   > Schema content verification                   <passed>\n");
@@ -130,7 +130,7 @@ export class Reporter {
    * @param fileDescriptor: It is the file descriptor.
    * @param launchCodes: Json object containing the launchCodes.
    */
-  private static logSha1HashComparisonResult(result: IModelValidationResult, fileDescriptor: any, launchCodes: any) {
+  private logSha1HashComparisonResult(result: IModelValidationResult, fileDescriptor: any, launchCodes: any) {
     if (result.sha1Comparison === iModelValidationResultTypes.Skipped) {
       fs.writeSync(fileDescriptor, "   > Schema SHA1 checksum verification             <skipped>\n");
       fs.writeSync(fileDescriptor, "       SHA1 checksum verification is skipped intentionally for dynamic schemas\n");
@@ -162,7 +162,7 @@ export class Reporter {
    * @param fileDescriptor: It is the file descriptor.
    * @param launchCodes: Json object containing the launchCodes.
    */
-  private static logApprovalValidationResult(result: IModelValidationResult, fileDescriptor: any, launchCodes: any) {
+  private logApprovalValidationResult(result: IModelValidationResult, fileDescriptor: any, launchCodes: any) {
     if (result.approval === iModelValidationResultTypes.Skipped) {
       fs.writeSync(fileDescriptor, "   > Released schema is approved and verified      <skipped>\n");
       fs.writeSync(fileDescriptor, "       Approvals validation is skipped intentionally for dynamic schemas\n");
@@ -187,7 +187,7 @@ export class Reporter {
    * Display results of bis rules validation.
    * @param result: It contains validation results data.
    */
-  private static displaySchemaValidatorResult(result: IModelValidationResult) {
+  private displaySchemaValidatorResult(result: IModelValidationResult) {
     switch (result.validator) {
       case iModelValidationResultTypes.Passed:
         console.log("   > Schema validation against BIS rules           ", chalk.default.green("<passed>"));
@@ -214,7 +214,7 @@ export class Reporter {
    * Display results of schema comparison validation.
    * @param result: It contains results data.
    */
-  private static displaySchemaComparerResult(result: IModelValidationResult) {
+  private displaySchemaComparerResult(result: IModelValidationResult) {
     switch (result.comparer) {
       case iModelValidationResultTypes.Passed:
         console.log("   > Schema content verification                   ", chalk.default.green("<passed>"));
@@ -250,7 +250,7 @@ export class Reporter {
    * @param result: It contains results data.
    * @param launchCodes: Json object containing the launchCodes.
    */
-  private static displaySha1HashComparisonResult(result: IModelValidationResult, launchCodes: any) {
+  private displaySha1HashComparisonResult(result: IModelValidationResult, launchCodes: any) {
     // skip checking against launch code, if the schema is dynamic schema
     if (result.sha1Comparison === iModelValidationResultTypes.Skipped) {
       console.log("   > Schema SHA1 checksum verification             ", chalk.default.yellow("<skipped>"));
@@ -285,7 +285,7 @@ export class Reporter {
    * @param result: It contains results data.
    * @param launchCodes: Json object containing the launchCodes.
    */
-  private static displayApprovalValidationResult(result: IModelValidationResult, launchCodes: any) {
+  private displayApprovalValidationResult(result: IModelValidationResult, launchCodes: any) {
     // skip checking against approvals, if the schema is dynamic schema
     if (result.approval === iModelValidationResultTypes.Skipped) {
       console.log("   > Released schema is approved and verified      ", chalk.default.yellow("<skipped>"));
@@ -312,7 +312,7 @@ export class Reporter {
    * @param baseSchemaRefDir: It is the root of bis-schemas directory.
    * @param outputDir: Path of output directory.
    */
-  public static logAllValidationsResults(results: IModelValidationResult[], baseSchemaRefDir: string, outputDir: string) {
+  public logAllValidationsResults(results: IModelValidationResult[], baseSchemaRefDir: string, outputDir: string) {
     const launchCodes = this._launchCodesProvider.getSchemaInventory(baseSchemaRefDir);
     outputDir = this.allValidationLogsDir(outputDir);
     const filePath = path.join(outputDir, "AllValidationsResults.logs");
@@ -346,7 +346,7 @@ export class Reporter {
    * @param baseSchemaRefDir: It is the root of bis-schemas directory.
    * @param outputDir: Path of output directory.
    */
-  public static displayAllValidationsResults(results: IModelValidationResult[], baseSchemaRefDir: string) {
+  public displayAllValidationsResults(results: IModelValidationResult[], baseSchemaRefDir: string) {
     const launchCodes = this._launchCodesProvider.getSchemaInventory(baseSchemaRefDir);
     console.log("\niModel schemas:");
     for (const item of results) {
