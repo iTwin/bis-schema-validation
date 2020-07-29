@@ -12,7 +12,7 @@ import { FileSchemaKey } from "@bentley/ecschema-locaters";
 import { SchemaGraphUtil } from "@bentley/ecschema-metadata";
 import { SnapshotDb, IModelHost, BackendRequestContext } from "@bentley/imodeljs-backend";
 import { StubSchemaXmlFileLocater } from "@bentley/ecschema-locaters/lib/StubSchemaXmlFileLocater";
-import { validateSchema, verifyIModelSchema, IModelValidationResult, iModelValidationResultTypes } from "../src/iModelSchemaValidator";
+import { validateSchema, verifyIModelSchema, IModelValidationResult, iModelValidationResultTypes, getResults } from "../src/iModelSchemaValidator";
 import {
   getSchemaInfo, prepareOutputFile, generateSchemaXMLName, getVerifiedSchemaName, getVersionString,
   excludeSchema, generateReleasedSchemasList, generateWIPSchemasList, generateSchemaDirectoryList, fixSchemaValidatorIssue,
@@ -77,8 +77,8 @@ describe("Import and validate schemas in bis-schemas repository", async () => {
       const result = await verifyIModelSchema(exportDir, path.basename(releasedSchema), false, bisSchemaRepo, outputLogs);
       results.push(result);
     }
-    Reporter.logAllValidationsResults(results, bisSchemaRepo, outputLogs);
-    Reporter.displayAllValidationsResults(results, bisSchemaRepo);
+
+    getResults(results, bisSchemaRepo, outputLogs);
   });
 
   it("Import WIP version of all schemas from bis-schemas repository into an iModel and perform BIS-rules validation.", async () => {
