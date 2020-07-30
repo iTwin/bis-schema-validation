@@ -15,7 +15,7 @@ import { ruleSuppressionSet } from "./RuleSuppression";
 import { BisRuleSet } from "@bentley/bis-rules";
 import { FileDiagnosticReporter } from "./FileDiagnosticReporter";
 import { CollectionDiagnosticReporter } from "./CollectionDiagnosticReporter";
-import { SchemaDeserializer } from "./SchemaDeserializer";
+import { SchemaDeserializer } from "@bentley/native-schema-locater";
 
 interface SchemaReferenceInfo {
   name: string;

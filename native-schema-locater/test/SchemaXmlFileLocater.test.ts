@@ -1,9 +1,13 @@
+/*---------------------------------------------------------------------------------------------
+* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+* Licensed under the MIT License. See LICENSE.md in the project root for license terms.
+*--------------------------------------------------------------------------------------------*/
+
 import { expect, use } from "chai";
 import * as sinon from "sinon";
 import * as chaiAsPromised from "chai-as-promised";
 import * as path from "path";
 import * as fs from "fs";
-import * as utils from "./utilities/utils";
 import * as EC from "@bentley/ecschema-metadata";
 import { ECSchemaXmlContext, IModelHost } from "@bentley/imodeljs-backend";
 import { SchemaXmlFileLocater } from "../src/SchemaXmlFileLocater";
@@ -12,9 +16,8 @@ import { SchemaFileLocater } from "@bentley/ecschema-locaters";
 use(chaiAsPromised);
 
 describe("SchemaXmlFileLocater.test", () => {
-  const assetDeserializationDir = utils.getXmlDeserializationDir();
-  const refDir = path.join(assetDeserializationDir, "references");
-  const assetsDir = utils.getAssetsDir();
+  const assetsDir = path.normalize(__dirname + "/assets/");
+  const refDir = path.join(assetsDir, "references");
 
   beforeEach(() => {
     IModelHost.startup();
@@ -27,7 +30,7 @@ describe("SchemaXmlFileLocater.test", () => {
 
   it("Schema XML has no version, getSchemaKey throws.", async () => {
     const nativeLocater = new SchemaXmlFileLocater();
-    const schemaPath = path.join(assetDeserializationDir, "SchemaNoVersion.ecschema.xml");
+    const schemaPath = path.join(assetsDir, "SchemaNoVersion.ecschema.xml");
     const schemaString = fs.readFileSync(schemaPath, "utf8");
 
     expect(() => nativeLocater.getSchemaKey(schemaString)).to.throw(EC.ECObjectsError, "Could not find the ECSchema 'schemaName' or 'version' tag in the given file.");
@@ -42,7 +45,7 @@ describe("SchemaXmlFileLocater.test", () => {
 
   it("Schema XML has EC v2 nameSpacePrefix, alias set properly on deserialized schema.", async () => {
     const nativeLocater = new SchemaXmlFileLocater();
-    nativeLocater.addSchemaSearchPath(assetDeserializationDir);
+    nativeLocater.addSchemaSearchPath(assetsDir);
     const context = new EC.SchemaContext();
     const schemaKey = new EC.SchemaKey("ECv2Schema", 1, 0, 1);
     const schema = nativeLocater.loadSchema(schemaKey, EC.SchemaMatchType.Exact, context);
@@ -51,7 +54,7 @@ describe("SchemaXmlFileLocater.test", () => {
 
   it("No file exists, getSchemaSync returns undefined.", async () => {
     const nativeLocater = new SchemaXmlFileLocater();
-    nativeLocater.addSchemaSearchPath(assetDeserializationDir);
+    nativeLocater.addSchemaSearchPath(assetsDir);
     const context = new EC.SchemaContext();
     const schemaKey = new EC.SchemaKey("SchemaA", 1, 1, 1);
     sinon.stub(SchemaFileLocater.prototype, "fileExistsSync").returns(false);
@@ -61,7 +64,7 @@ describe("SchemaXmlFileLocater.test", () => {
 
   it("getSchemaSync returns expected schema.", async () => {
     const nativeLocater = new SchemaXmlFileLocater();
-    nativeLocater.addSchemaSearchPaths([assetDeserializationDir, refDir]);
+    nativeLocater.addSchemaSearchPaths([assetsDir, refDir]);
     const context = new EC.SchemaContext();
     const schemaKey = new EC.SchemaKey("SchemaA", 1, 1, 1);
     const schema = nativeLocater.getSchemaSync(schemaKey, EC.SchemaMatchType.Exact, context);
@@ -70,7 +73,7 @@ describe("SchemaXmlFileLocater.test", () => {
 
   it("getSchema returns expected schema.", async () => {
     const nativeLocater = new SchemaXmlFileLocater();
-    nativeLocater.addSchemaSearchPaths([assetDeserializationDir, refDir]);
+    nativeLocater.addSchemaSearchPaths([assetsDir, refDir]);
     const context = new EC.SchemaContext();
     const schemaKey = new EC.SchemaKey("SchemaA", 1, 1, 1);
     const schema = await nativeLocater.getSchema(schemaKey, EC.SchemaMatchType.Exact, context);
@@ -79,7 +82,7 @@ describe("SchemaXmlFileLocater.test", () => {
 
   it("Read schema file returns undefined, getSchemaSync returns undefined.", async () => {
     const nativeLocater = new SchemaXmlFileLocater();
-    nativeLocater.addSchemaSearchPath(assetDeserializationDir);
+    nativeLocater.addSchemaSearchPath(assetsDir);
     const context = new EC.SchemaContext();
     const schemaKey = new EC.SchemaKey("SchemaA", 1, 1, 1);
     sinon.stub(SchemaFileLocater.prototype, "readUtf8FileToStringSync").returns(undefined);
@@ -89,7 +92,7 @@ describe("SchemaXmlFileLocater.test", () => {
 
   it("ECSchemaXmlContext.readSchemaFromXmlFile throws non-reference error, getSchemaSync re-throws.", async () => {
     const nativeLocater = new SchemaXmlFileLocater();
-    nativeLocater.addSchemaSearchPaths([assetDeserializationDir, refDir]);
+    nativeLocater.addSchemaSearchPaths([assetsDir, refDir]);
     const context = new EC.SchemaContext();
     const schemaKey = new EC.SchemaKey("SchemaA", 1, 1, 1);
     sinon.stub(ECSchemaXmlContext.prototype, "readSchemaFromXmlFile").throws(new Error("TestError"));
@@ -101,7 +104,7 @@ describe("SchemaXmlFileLocater.test", () => {
     const nativeLocater = new SchemaXmlFileLocater();
     nativeLocater.addSchemaSearchPaths([assetsDir]);
     const context = new EC.SchemaContext();
-    const schemaKey = new EC.SchemaKey("SchemaB", 1, 1, 1);
+    const schemaKey = new EC.SchemaKey("ECv31Schema", 1, 1, 1);
     const schema = nativeLocater.getSchemaSync(schemaKey, EC.SchemaMatchType.Exact, context);
     expect(schema).to.not.be.undefined;
   });
