@@ -6,10 +6,10 @@
 import * as fs from "fs-extra";
 import * as path from "path";
 
-import { Schema, SchemaContext, SchemaComparer, ISchemaCompareReporter, SchemaMatchType } from "@bentley/ecschema-metadata";
+import { Schema, SchemaContext, SchemaComparer, ISchemaCompareReporter } from "@bentley/ecschema-metadata";
 import { FileSchemaCompareReporter } from "./FileSchemaCompareReporter";
 import { CollectionSchemaCompareReporter, IFormattedSchemaChange } from "./CollectionSchemaCompareReporter";
-import { SchemaDeserializer } from "./SchemaDeserializer";
+import { SchemaDeserializer } from "@bentley/native-schema-locater";
 
 /**
  * Defines the possible message types associated with

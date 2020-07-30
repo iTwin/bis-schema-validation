@@ -5,15 +5,14 @@
 
 import * as path from "path";
 import * as utils from "./utilities/utils";
-import { SchemaDeserializer } from "../src/SchemaDeserializer";
-import { SchemaContext, KindOfQuantity, RelationshipClass, Schema, SchemaKey, ECVersion, ECClass, PrimitiveType, AnyClass } from "@bentley/ecschema-metadata";
+import { SchemaDeserializer } from "@bentley/native-schema-locater";
+import { Diagnostics as ECDiagnostics, SchemaContext, KindOfQuantity, RelationshipClass, Schema, SchemaKey, ECVersion, ECClass, PrimitiveType, AnyClass } from "@bentley/ecschema-metadata";
 import { MutableClass } from "@bentley/ecschema-metadata/lib/Metadata/Class";
 import { MutableSchema } from "@bentley/ecschema-metadata/lib/Metadata/Schema";
 import * as ruleSuppressionSet from "../src/RuleSuppression";
 import { expect } from "chai";
 import { IModelHost } from "@bentley/imodeljs-backend";
 import * as BisRules from "@bentley/bis-rules/lib/BisRules";
-import { Diagnostics as ECDiagnostics } from "@bentley/ecschema-metadata";
 
 describe("Rule Suppression Tests", () => {
   let schema: Schema;

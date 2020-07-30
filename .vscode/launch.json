@@ -94,5 +94,19 @@
       "name": "Run SchemaValidationRunner",
       "program": "${workspaceFolder}/common/scripts/SchemaValidationRunner.js",
     },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Run native-schema-locater Tests",
+      "program": "${workspaceFolder}/native-schema-locater/node_modules/@bentley/build-tools/scripts/test-tsnode.js",
+      "cwd": "${workspaceFolder}/native-schema-locater",
+      "args": [
+        "--testDir=${workspaceFolder}/native-schema-locater/test",
+        "--debug"
+      ],
+      "port": 9229,
+      "protocol": "inspector",
+      "outputCapture": "std"
+    }
   ]
 }

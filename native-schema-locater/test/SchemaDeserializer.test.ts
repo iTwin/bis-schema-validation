@@ -7,19 +7,19 @@ import { expect, use } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
 
 import * as path from "path";
-import * as utils from "./utilities/utils";
 import * as EC from "@bentley/ecschema-metadata";
 import { SchemaDeserializer } from "../src/SchemaDeserializer";
 
 use(chaiAsPromised);
 
+const assetsDir = path.normalize(__dirname + "/assets/");
+
 describe("SchemaDeserializer", () => {
-  const assetDeserializationDir = utils.getXmlDeserializationDir();
-  const refDir = path.join(assetDeserializationDir, "references");
+  const refDir = path.join(assetsDir, "references");
 
   it("With references in separate folder, should successfully deserialize schema.", async () => {
     const deserializer = new SchemaDeserializer();
-    const schemaPath = path.join(assetDeserializationDir, "SchemaA.ecschema.xml");
+    const schemaPath = path.join(assetsDir, "SchemaA.ecschema.xml");
 
     const context = new EC.SchemaContext();
     const result = await deserializer.deserializeXmlFile(schemaPath, context, [refDir]);
@@ -41,16 +41,16 @@ describe("SchemaDeserializer", () => {
     const schemaPath = path.join(refDir, "SchemaD.ecschema.xml");
 
     const context = new EC.SchemaContext();
-    const result = await deserializer.deserializeXmlFile(schemaPath, context, [assetDeserializationDir]);
+    const result = await deserializer.deserializeXmlFile(schemaPath, context, [assetsDir]);
 
-    const schemaD = await context.getSchema(new EC.SchemaKey("SchemaD", 4, 0, 4), EC.SchemaMatchType.Exact);
+    const schemaD = await context.getSchema(new EC.SchemaKey("SchemaD", 4, 4, 4), EC.SchemaMatchType.Exact);
     expect(schemaD).not.to.be.undefined;
     expect(result === schemaD).to.be.true;
   });
 
   it("EC v2.0 schema, should successfully deserialize schema.", async () => {
     const deserializer = new SchemaDeserializer();
-    const schemaPath = path.join(assetDeserializationDir, "ECv2Schema.ecschema.xml");
+    const schemaPath = path.join(assetsDir, "ECv2Schema.ecschema.xml");
 
     const context = new EC.SchemaContext();
     const result = await deserializer.deserializeXmlFile(schemaPath, context);
@@ -62,7 +62,7 @@ describe("SchemaDeserializer", () => {
 
   it("Non-existent reference schema, throws.", async () => {
     const deserializer = new SchemaDeserializer();
-    const schemaPath = path.join(assetDeserializationDir, "BadRefSchema.ecschema.xml");
+    const schemaPath = path.join(assetsDir, "BadRefSchema.ecschema.xml");
     const context = new EC.SchemaContext();
 
     await expect(deserializer.deserializeXmlFile(schemaPath, context, [refDir])).to.be.rejectedWith(EC.ECObjectsError, "Unable to locate referenced schema: DoesNotExist.1.1.1");
@@ -70,7 +70,7 @@ describe("SchemaDeserializer", () => {
 
   it("Schema XML has no version, throws.", async () => {
     const deserializer = new SchemaDeserializer();
-    const schemaPath = path.join(assetDeserializationDir, "SchemaNoVersion.ecschema.xml");
+    const schemaPath = path.join(assetsDir, "SchemaNoVersion.ecschema.xml");
     const context = new EC.SchemaContext();
 
     await expect(deserializer.deserializeXmlFile(schemaPath, context, [refDir])).to.be.rejectedWith(EC.ECObjectsError, "Could not find the ECSchema 'schemaName' or 'version' tag in the given file.");
@@ -78,7 +78,7 @@ describe("SchemaDeserializer", () => {
 
   it("Non-existent schema, throws.", async () => {
     const deserializer = new SchemaDeserializer();
-    const schemaPath = path.join(assetDeserializationDir, "DoesNotExist.ecschema.xml");
+    const schemaPath = path.join(assetsDir, "DoesNotExist.ecschema.xml");
     const context = new EC.SchemaContext();
 
     await expect(deserializer.deserializeXmlFile(schemaPath, context, [refDir])).to.be.rejectedWith(EC.ECObjectsError, `Unable to locate schema XML file at ${schemaPath}`);
@@ -87,7 +87,7 @@ describe("SchemaDeserializer", () => {
   it("Should successfully parse BisCore schema", async () => {
     const schemaContext = new EC.SchemaContext();
     const deserializer = new SchemaDeserializer();
-    const schemaPath = path.join(assetDeserializationDir, "BisCore.01.00.00.ecschema.xml");
+    const schemaPath = path.join(assetsDir, "BisCore.01.00.00.ecschema.xml");
     const biscore = await deserializer.deserializeXmlFile(schemaPath, schemaContext);
     expect(biscore).not.to.be.undefined;
 
@@ -107,7 +107,7 @@ describe("SchemaDeserializer", () => {
   it("Should successfully parse Format and Unit", async () => {
     const schemaContext = new EC.SchemaContext();
     const deserializer = new SchemaDeserializer();
-    const schemaPath = path.join(assetDeserializationDir, "Formats.01.00.00.ecschema.xml");
+    const schemaPath = path.join(assetsDir, "Formats.01.00.00.ecschema.xml");
     const format = await deserializer.deserializeXmlFile(schemaPath, schemaContext);
     expect(format).not.to.be.undefined;
 
@@ -119,7 +119,7 @@ describe("SchemaDeserializer", () => {
   it("should successfully parse comprehensive schema", async () => {
     const schemaContext = new EC.SchemaContext();
     const deserializer = new SchemaDeserializer();
-    const schemaPath = path.join(assetDeserializationDir, "ComprehensiveSchema.01.00.00.ecschema.xml");
+    const schemaPath = path.join(assetsDir, "ComprehensiveSchema.01.00.00.ecschema.xml");
     const comprehensiveSchema = await deserializer.deserializeXmlFile(schemaPath, schemaContext);
     expect(comprehensiveSchema).not.to.be.undefined;
 
@@ -143,7 +143,7 @@ describe("SchemaDeserializer", () => {
   it("should successfully parse test AecUnits schema", async () => {
     const schemaContext = new EC.SchemaContext();
     const deserializer = new SchemaDeserializer();
-    const schemaPath = path.join(assetDeserializationDir, "AecUnits.01.00.01.ecschema.xml");
+    const schemaPath = path.join(assetsDir, "AecUnits.01.00.01.ecschema.xml");
     const aecUnits = await deserializer.deserializeXmlFile(schemaPath, schemaContext);
     expect(aecUnits).not.to.be.undefined;
 
@@ -159,7 +159,7 @@ describe("SchemaDeserializer", () => {
   it("should successfully parse schema PartialComprehensiveSchema", async () => {
     const schemaContext = new EC.SchemaContext();
     const deserializer = new SchemaDeserializer();
-    const schemaPath = path.join(assetDeserializationDir, "PartialComprehensiveSchema.ecschema.xml");
+    const schemaPath = path.join(assetsDir, "PartialComprehensiveSchema.ecschema.xml");
     const partialComprehensiveSchema = await deserializer.deserializeXmlFile(schemaPath, schemaContext);
     expect(partialComprehensiveSchema).not.to.be.undefined;
 
@@ -263,7 +263,7 @@ describe("SchemaDeserializer", () => {
     // ^                   |
     // |___________________|
     let deserializer = new SchemaDeserializer();
-    let schemaPath = path.join(assetDeserializationDir, "cyclic-references", "round1", "SchemaB.ecschema.xml");
+    let schemaPath = path.join(assetsDir, "cyclic-references", "round1", "SchemaB.ecschema.xml");
     await expect(deserializer.deserializeXmlFile(schemaPath, new EC.SchemaContext())).
     to.be.rejectedWith(`Schema SchemaD.01.00.02 and SchemaB.01.00.01 form cyclic dependency`);
 
@@ -272,7 +272,7 @@ describe("SchemaDeserializer", () => {
     //       ^   |
     //       |___|
     deserializer = new SchemaDeserializer();
-    schemaPath = path.join(assetDeserializationDir, "cyclic-references", "round2", "SchemaB.ecschema.xml");
+    schemaPath = path.join(assetsDir, "cyclic-references", "round2", "SchemaB.ecschema.xml");
     await expect(deserializer.deserializeXmlFile(schemaPath, new EC.SchemaContext()))
     .to.be.rejectedWith(`Schema SchemaC.01.00.00 and SchemaC.01.00.00 form cyclic dependency`);
 
@@ -285,8 +285,8 @@ describe("SchemaDeserializer", () => {
     //      D-----------> PartialComprehensiveSchema (references BisCore and so on with no cyclic dependencies here)
     deserializer = new SchemaDeserializer();
     const schemaContext = new EC.SchemaContext();
-    schemaPath = path.join(assetDeserializationDir, "cyclic-references", "round3", "SchemaB.ecschema.xml");
-    const schemaB = await deserializer.deserializeXmlFile(schemaPath, schemaContext, [assetDeserializationDir]);
+    schemaPath = path.join(assetsDir, "cyclic-references", "round3", "SchemaB.ecschema.xml");
+    const schemaB = await deserializer.deserializeXmlFile(schemaPath, schemaContext, [assetsDir]);
     expect(schemaB).not.to.be.undefined;
 
     const schemaC = schemaB.getReferenceSync("SchemaC");
@@ -306,12 +306,11 @@ describe("SchemaDeserializer", () => {
 });
 
 describe("SchemaJsonFileDeserializer", () => {
-  const assetDeserializationDir = path.join(utils.getAssetsDir(), "json-deserialization");
-  const refDir = path.join(assetDeserializationDir, "references");
+  const refDir = path.join(assetsDir, "references");
 
   it("With references in separate folder, should successfully deserialize schema.", async () => {
     const deserializer = new SchemaDeserializer();
-    const schemaPath = path.join(assetDeserializationDir, "SchemaA.ecschema.json");
+    const schemaPath = path.join(assetsDir, "SchemaA.ecschema.json");
 
     const context = new EC.SchemaContext();
     const result = await deserializer.deserializeJsonFile(schemaPath, context, [refDir]);
@@ -342,7 +341,7 @@ describe("SchemaJsonFileDeserializer", () => {
 
   it("Non-existent schema, throws.", async () => {
     const deserializer = new SchemaDeserializer();
-    const schemaPath = path.join(assetDeserializationDir, "DoesNotExist.ecschema.json");
+    const schemaPath = path.join(assetsDir, "DoesNotExist.ecschema.json");
     const context = new EC.SchemaContext();
 
     await expect(deserializer.deserializeJsonFile(schemaPath, context, [refDir])).to.be.rejectedWith(EC.ECObjectsError, `Unable to locate schema JSON file at ${schemaPath}`);
@@ -350,7 +349,7 @@ describe("SchemaJsonFileDeserializer", () => {
 
   it("Non-existent reference schema, throws.", async () => {
     const deserializer = new SchemaDeserializer();
-    const schemaPath = path.join(assetDeserializationDir, "BadRefSchema.ecschema.json");
+    const schemaPath = path.join(assetsDir, "BadRefSchema.ecschema.json");
     const context = new EC.SchemaContext();
 
     await expect(deserializer.deserializeJsonFile(schemaPath, context, [refDir])).to.be.rejectedWith(EC.ECObjectsError, "Could not locate the referenced schema, DoesNotExist.01.00.00, of BadRefSchema");
@@ -358,7 +357,7 @@ describe("SchemaJsonFileDeserializer", () => {
 
   it("Schema contains bad JSON, throws.", async () => {
     const deserializer = new SchemaDeserializer();
-    const schemaPath = path.join(assetDeserializationDir, "BadJson.ecschema.json");
+    const schemaPath = path.join(assetsDir, "BadJson.ecschema.json");
     const context = new EC.SchemaContext();
 
     await expect(deserializer.deserializeJsonFile(schemaPath, context, [refDir])).to.be.rejectedWith(EC.ECObjectsError);

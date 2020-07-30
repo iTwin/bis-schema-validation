@@ -7,6 +7,12 @@
   "ensureConsistentVersions": true,
   "projects": [
     {
+      "packageName": "@bentley/native-schema-locater",
+      "projectFolder": "native-schema-locater",
+      "shouldPublish": true,
+      "versionPolicyName": "bsv-versions"
+    },
+    {
       "packageName": "@bentley/schema-roundtrip",
       "projectFolder": "schema-roundtrip",
       "shouldPublish": true,

@@ -1,13 +1,10 @@
 {
-  "name": "@bentley/schema-validator",
-  "description": "Command line tools validates an ECJson or ECXml schema.",
+  "name": "@bentley/native-schema-locater",
+  "description": "Contains an XML schema file locater which uses the native addon to deserialize EC 3.1 schemas",
   "license": "MIT",
-  "version": "0.2.70",
-  "bin": {
-    "schema-validator": "./bin/index.js"
-  },
-  "main": "./lib/SchemaValidator.js",
-  "typings": "./lib/SchemaValidator",
+  "version": "0.2.66",
+  "main": "./lib/native-schema-locater.js",
+  "typings": "./lib/native-schema-locater",
   "repository": {
     "type": "git",
     "url": "https://github.com/iTwin/bis-schema-validation"
@@ -19,8 +16,7 @@
     "build": "npm run beforeBuild && tsc",
     "test": "betools test-tsnode --testDir=./test/",
     "test:watch": "betools test-tsnode --testDir=./test/ --watch",
-    "cover": "nyc node ./node_modules/@bentley/build-tools/scripts/test-tsnode.js --testDir=./test/ --tscPaths",
-    "cli-dev": "cd .. & rush publish --publish --pack --include-all & npm install -g ./common/temp/artifacts/packages/bentley-schema-validator-0.2.8.tgz"
+    "cover": "nyc node ./node_modules/@bentley/build-tools/scripts/test-tsnode.js --testDir=./test/ --tscPaths"
   },
   "keywords": [
     "Bentley",
@@ -57,7 +53,6 @@
   },
   "dependencies": {
     "@bentley/bentleyjs-core": "2.3.0-dev.8",
-    "@bentley/bis-rules": "0.2.70",
     "@bentley/ecschema-metadata": "2.3.0-dev.8",
     "@bentley/ecschema-locaters": "2.3.0-dev.8",
     "@bentley/geometry-core": "2.3.0-dev.8",
@@ -66,7 +61,6 @@
     "@bentley/backend-itwin-client": "2.3.0-dev.8",
     "@bentley/imodeljs-common": "2.3.0-dev.8",
     "@bentley/imodelhub-client": "2.3.0-dev.8",
-    "@bentley/native-schema-locater": "0.2.66",
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
     "fs-extra": "^7.0.1",
