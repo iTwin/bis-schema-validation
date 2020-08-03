@@ -23,23 +23,6 @@ stages:
           versionSpec: 12.16.0
           checkLatest: true
 
-      - template: seed-npmrc.yaml
-        parameters: { artifactsRegistryToken: $(artifactsRegistryToken) }
-
-      - task: NuGetCommand@2
-        displayName: 'Download Nuget of Signoff Tool'
-        inputs:
-          command: custom
-          arguments: 'install SchemaSignoffNuGet_x64 -OutputDirectory $(System.DefaultWorkingDirectory) -Source https://www.nuget.org/n'
-
-      - powershell: |
-          $dir = Get-ChildItem $(System.DefaultWorkingDirectory) | Where-Object {$_.name -like "SchemaSignoffNuGet_x64*"}
-
-          Write-Host "SignoffToolPath=$(System.DefaultWorkingDirectory)\$dir\lib\native\SchemaSignoffTool.exe"
-          Write-Host "##vso[task.setvariable variable=SignoffToolPath]$(System.DefaultWorkingDirectory)\$dir\lib\native\SchemaSignoffTool.exe"
-        failOnStderr: true
-        displayName: 'Set Env for Signoff Tool Path'
-
       #Your build pipeline references a secret variable named ‘artifactsRegistryToken’. This variable is pulled from the 'arzure-artifacts-npm-token' variable group.  You must authorize this build to use that group: https://docs.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=yaml#use-a-variable-group
       - template: seed-npmrc.yaml
         parameters: { artifactsRegistryToken: $(artifactsRegistryToken) }
