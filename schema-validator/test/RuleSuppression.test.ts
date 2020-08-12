@@ -1317,4 +1317,50 @@ describe("Rule Suppression Tests", () => {
       expect(result).to.be.false;
     });
   });
+
+  describe("EC-502(class not found) Tests", async () => {
+    it("RoadRailAlignment.1.00.00 schema with ECDbMap.DbIndexList applied, rule suppressed", async () => {
+      createSchema("RoadRailAlignment", 1, 0, 0);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "ECDbMap.DbIndexList" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new ECDiagnostics.CustomAttributeClassNotFound(testClass, [testClass.fullName, ca.className]);
+
+      const result = await ruleSuppressionSet.customAttributeClassNotFound(diag, testClass);
+      expect(result).to.be.true;
+    });
+
+    it("RoadRailAlignment.2.00.01 schema with ECDbMap.DbIndexList applied, rule suppressed", async () => {
+      createSchema("RoadRailAlignment", 2, 0, 1);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "ECDbMap.DbIndexList" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new ECDiagnostics.CustomAttributeClassNotFound(testClass, [testClass.fullName, ca.className]);
+
+      const result = await ruleSuppressionSet.customAttributeClassNotFound(diag, testClass);
+      expect(result).to.be.true;
+    });
+
+    it("RoadRailAlignment.2.00.01 schema with ECDbMap.DbIndexList not applied, rule not suppressed", async () => {
+      createSchema("RoadRailAlignment", 2, 0, 1);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "ECDbMap.NotDbIndexList" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new ECDiagnostics.CustomAttributeClassNotFound(testClass, [testClass.fullName, ca.className]);
+
+      const result = await ruleSuppressionSet.customAttributeClassNotFound(diag, testClass);
+      expect(result).to.be.false;
+    });
+
+    it("RoadRailAlignment.2.00.02 schema with ECDbMap.DbIndexList applied, rule not suppressed", async () => {
+      createSchema("RoadRailAlignment", 2, 0, 2);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "ECDbMap.DbIndexList" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new ECDiagnostics.CustomAttributeClassNotFound(testClass, [testClass.fullName, ca.className]);
+
+      const result = await ruleSuppressionSet.customAttributeClassNotFound(diag, testClass);
+      expect(result).to.be.false;
+    });
+  });
 });

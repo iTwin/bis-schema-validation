@@ -48,7 +48,7 @@
   },
   "dependencies": {
     "@bentley/bentleyjs-core": "2.3.0-dev.8",
-    "@bentley/ecschema-metadata": "2.3.0-dev.8",
+    "@bentley/ecschema-metadata": "2.5.0-dev.9",
     "@bentley/imodeljs-backend": "2.3.0-dev.8"
   },
   "nyc": {
