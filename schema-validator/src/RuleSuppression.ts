@@ -31,6 +31,8 @@ export const ruleSuppressionSet: EC.IRuleSuppressionSet = {
     { ruleCode: BisDiagnosticCodes.EntityClassesCannotDeriveFromModelClasses, rule: entityClassesCannotDeriveFromModelClasses },
     // BIS-609
     { ruleCode: BisDiagnosticCodes.BisModelSubClassesCannotDefineProperties, rule: bisModelSubClassesCannotDefineProperties },
+    // BIS-610
+    { ruleCode: BisDiagnosticCodes.EntityClassesMayNotSubclassDeprecatedClasses, rule: entityClassesMayNotSubclassDeprecatedClasses },
   ],
   koqRuleSuppressions: [
     // BIS-1001
@@ -261,6 +263,19 @@ export async function bisModelSubClassesCannotDefineProperties(_diagnostic: EC.A
   }
 
   return false;
+}
+
+/** Rule BIS-610 rule suppression. */
+export async function entityClassesMayNotSubclassDeprecatedClasses(_diagnostic: EC.AnyDiagnostic, entity: EC.EntityClass): Promise<boolean> {
+  const schemaList = [
+    { name: "SpatialComposition", version: new EC.ECVersion(1, 99, 99) },
+  ];
+
+  const schemaInfo = findSchemaInfo(schemaList, entity.schema);
+  if (!schemaInfo)
+    return false;
+
+  return "SpatialStructureElement" === entity.name;
 }
 
 /** Rule BIS-1300 rule suppression. */
