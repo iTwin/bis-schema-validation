@@ -1121,6 +1121,44 @@ describe("Rule Suppression Tests", () => {
     });
   });
 
+  describe("BIS-610(Entity classes may not subclass deprecated classes) Tests", async () => {
+    it("Random schema name, rule not suppressed.", async () => {
+      createSchema("TestSchema", 1);
+      const testClass = await mutableSchema.createEntityClass("SpatialStructureElement");
+      const diag = new BisRules.Diagnostics.EntityClassesMayNotSubclassDeprecatedClasses(testClass, [testClass.fullName, "SpatialComposition.CompositeElement"]);
+
+      const result = await ruleSuppressionSet.entityClassesMayNotSubclassDeprecatedClasses(diag, testClass);
+      expect(result).to.be.false;
+    });
+
+    it("Schema 'SpatialComposition.01.00.00' with unknown class, rule not suppressed.", async () => {
+      createSchema("SpatialComposition", 1);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const diag = new BisRules.Diagnostics.EntityClassesMayNotSubclassDeprecatedClasses(testClass, [testClass.fullName, "SpatialComposition.CompositeElement"]);
+
+      const result = await ruleSuppressionSet.entityClassesMayNotSubclassDeprecatedClasses(diag, testClass);
+      expect(result).to.be.false;
+    });
+
+    it("Schema 'SpatialComposition.01.00.00' with class SpatialStructureElement, rule suppressed.", async () => {
+      createSchema("SpatialComposition", 1);
+      const testClass = await mutableSchema.createEntityClass("SpatialStructureElement");
+      const diag = new BisRules.Diagnostics.EntityClassesMayNotSubclassDeprecatedClasses(testClass, [testClass.fullName, "SpatialComposition.CompositeElement"]);
+
+      const result = await ruleSuppressionSet.entityClassesMayNotSubclassDeprecatedClasses(diag, testClass);
+      expect(result).to.be.true;
+    });
+
+    it("Schema SpatialComposition.02.00.00' with suppressed class, rule not suppressed.", async () => {
+      createSchema("SpatialComposition", 2);
+      const testClass = await mutableSchema.createEntityClass("SpatialStructureElement");
+      const diag = new BisRules.Diagnostics.EntityClassesMayNotSubclassDeprecatedClasses(testClass, [testClass.fullName, "SpatialComposition.CompositeElement"]);
+
+      const result = await ruleSuppressionSet.entityClassesMayNotSubclassDeprecatedClasses(diag, testClass);
+      expect(result).to.be.false;
+    });
+  });
+
   describe("BIS-1300(long properties not allowed) Tests", async () => {
     it("Random schema name, rule not suppressed.", async () => {
       createSchema("TestSchema", 1);
