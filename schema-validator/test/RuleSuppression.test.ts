@@ -1490,5 +1490,94 @@ describe("Rule Suppression Tests", () => {
       const result = await ruleSuppressionSet.customAttributeClassNotFound(diag, testClass);
       expect(result).to.be.false;
     });
+
+    it("Construction.1.00.00 schema with ECDbMap.DbIndexList applied, rule suppressed", async () => {
+      createSchema("Construction", 1, 0, 0);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "ECDbMap.DbIndexList" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new ECDiagnostics.CustomAttributeClassNotFound(testClass, [testClass.fullName, ca.className]);
+
+      const result = await ruleSuppressionSet.customAttributeClassNotFound(diag, testClass);
+      expect(result).to.be.true;
+    });
+
+    it("Construction.1.00.01 schema with ECDbMap.DbIndexList applied, rule suppressed", async () => {
+      createSchema("Construction", 1, 0, 1);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "ECDbMap.DbIndexList" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new ECDiagnostics.CustomAttributeClassNotFound(testClass, [testClass.fullName, ca.className]);
+
+      const result = await ruleSuppressionSet.customAttributeClassNotFound(diag, testClass);
+      expect(result).to.be.true;
+    });
+
+    it("Construction.2.00.01 schema with ECDbMap.DbIndexList applied, rule not suppressed", async () => {
+      createSchema("Construction", 2, 0, 1);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "ECDbMap.DbIndexList" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new ECDiagnostics.CustomAttributeClassNotFound(testClass, [testClass.fullName, ca.className]);
+
+      const result = await ruleSuppressionSet.customAttributeClassNotFound(diag, testClass);
+      expect(result).to.be.false;
+    });
+
+    it("Construction.1.00.01 schema with ECDbMap.DbIndexList not applied, rule not suppressed", async () => {
+      createSchema("Construction", 1, 0, 1);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "ECDbMap.NotDbIndexList" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new ECDiagnostics.CustomAttributeClassNotFound(testClass, [testClass.fullName, ca.className]);
+
+      const result = await ruleSuppressionSet.customAttributeClassNotFound(diag, testClass);
+      expect(result).to.be.false;
+    });
+
+    it("Construction.01.00.00 schema with CoreCustomAttributes.HiddenProperty applied, rule suppressed", async () => {
+      createSchema("Construction", 1, 0, 0);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "CoreCustomAttributes.HiddenProperty" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new ECDiagnostics.CustomAttributeClassNotFound(testClass, [testClass.fullName, ca.className]);
+
+      const result = await ruleSuppressionSet.customAttributeSchemaMustBeReferenced(diag, testClass);
+      expect(result).to.be.true;
+    });
+
+    it("Construction.01.00.01 schema with CoreCustomAttributes.HiddenProperty applied, rule suppressed", async () => {
+      createSchema("Construction", 1, 0, 1);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "CoreCustomAttributes.HiddenProperty" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new ECDiagnostics.CustomAttributeClassNotFound(testClass, [testClass.fullName, ca.className]);
+
+      const result = await ruleSuppressionSet.customAttributeSchemaMustBeReferenced(diag, testClass);
+      expect(result).to.be.true;
+    });
+
+    it("Construction.01.00.02 schema with CoreCustomAttributes.HiddenProperty applied, rule not suppressed", async () => {
+      createSchema("Construction", 1, 0, 2);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "CoreCustomAttributes.HiddenProperty" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new ECDiagnostics.CustomAttributeClassNotFound(testClass, [testClass.fullName, ca.className]);
+
+      const result = await ruleSuppressionSet.customAttributeSchemaMustBeReferenced(diag, testClass);
+      expect(result).to.be.false;
+    });
+
+    it("Construction.01.00.01 schema with CoreCustomAttributes.HiddenProperty not applied, rule not suppressed", async () => {
+      createSchema("Construction", 1, 0, 1);
+      const testClass = await mutableSchema.createEntityClass("TestClass");
+      const ca = { className: "CoreCustomAttributes.NotHiddenProperty" };
+      (testClass as ECClass as MutableClass).addCustomAttribute(ca);
+      const diag = new ECDiagnostics.CustomAttributeClassNotFound(testClass, [testClass.fullName, ca.className]);
+
+      const result = await ruleSuppressionSet.customAttributeSchemaMustBeReferenced(diag, testClass);
+      expect(result).to.be.false;
+    });
+
   });
 });
