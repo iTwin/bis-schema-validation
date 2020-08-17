@@ -333,6 +333,7 @@ export async function customAttributeSchemaMustBeReferenced(diagnostic: EC.AnyDi
 export async function customAttributeClassNotFound(diagnostic: EC.AnyDiagnostic, container: CustomAttributeContainerProps): Promise<boolean> {
   const schemaList = [
     { name: "RoadRailAlignment", version: new EC.ECVersion(2, 0, 1) },
+    { name: "Construction", version: new EC.ECVersion(1, 0, 1) },
   ];
 
   const schemaInfo = findSchemaInfo(schemaList, container.schema);
@@ -340,6 +341,9 @@ export async function customAttributeClassNotFound(diagnostic: EC.AnyDiagnostic,
     return false;
 
   if (diagnostic.messageArgs && diagnostic.messageArgs[1] === "ECDbMap.DbIndexList")
+    return true;
+
+  if (schemaInfo.name === "Construction" && diagnostic.messageArgs && diagnostic.messageArgs[1] === "CoreCustomAttributes.HiddenProperty")
     return true;
 
   return false;
