@@ -269,13 +269,22 @@ export async function bisModelSubClassesCannotDefineProperties(_diagnostic: EC.A
 export async function entityClassesMayNotSubclassDeprecatedClasses(_diagnostic: EC.AnyDiagnostic, entity: EC.EntityClass): Promise<boolean> {
   const schemaList = [
     { name: "SpatialComposition", version: new EC.ECVersion(1, 99, 99) },
+    { name: "BuildingSpatial", version: new EC.ECVersion(1, 99, 99) },
   ];
 
   const schemaInfo = findSchemaInfo(schemaList, entity.schema);
   if (!schemaInfo)
     return false;
 
-  return "SpatialStructureElement" === entity.name;
+  if (schemaInfo.name === "SpatialComposition") {
+    return "SpatialStructureElement" === entity.name;
+  }
+
+  if (schemaInfo.name === "BuildingSpatial") {
+    return "Building" === entity.name || "Story" === entity.name || "Space" === entity.name;
+  }
+
+  return false;
 }
 
 /** Rule BIS-1300 rule suppression. */
