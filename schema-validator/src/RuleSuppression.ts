@@ -270,6 +270,7 @@ export async function entityClassesMayNotSubclassDeprecatedClasses(_diagnostic: 
   const schemaList = [
     { name: "SpatialComposition", version: new EC.ECVersion(1, 99, 99) },
     { name: "BuildingSpatial", version: new EC.ECVersion(1, 99, 99) },
+    { name: "BuildingTemplate_US", version: new EC.ECVersion(1, 99, 99) },
   ];
 
   const schemaInfo = findSchemaInfo(schemaList, entity.schema);
@@ -277,11 +278,15 @@ export async function entityClassesMayNotSubclassDeprecatedClasses(_diagnostic: 
     return false;
 
   if (schemaInfo.name === "SpatialComposition") {
-    return "SpatialStructureElement" === entity.name;
+    return "SpatialStructureElement" === entity.name || "CompositeElement" === entity.name;
   }
 
   if (schemaInfo.name === "BuildingSpatial") {
     return "Building" === entity.name || "Story" === entity.name || "Space" === entity.name;
+  }
+
+  if (schemaInfo.name === "BuildingTemplate_US") {
+    return "Site" === entity.name;
   }
 
   return false;
