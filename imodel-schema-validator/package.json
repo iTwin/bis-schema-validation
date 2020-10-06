@@ -26,15 +26,15 @@
     "copy:assets": "cpx ./src/index.js ./lib"
   },
   "dependencies": {
-    "@bentley/bentleyjs-core": "2.5.0-dev.9",
-    "@bentley/ecschema-metadata": "2.5.0-dev.9",
-    "@bentley/geometry-core": "2.5.0-dev.9",
-    "@bentley/imodeljs-backend": "2.5.0-dev.9",
-    "@bentley/itwin-client": "2.5.0-dev.9",
-    "@bentley/backend-itwin-client": "2.5.0-dev.9",
-    "@bentley/imodeljs-common": "2.5.0-dev.9",
-    "@bentley/imodelhub-client": "2.5.0-dev.9",
-    "@bentley/rbac-client": "2.5.0-dev.9",
+    "@bentley/bentleyjs-core": "2.8.0-dev.6",
+    "@bentley/ecschema-metadata": "2.8.0-dev.6",
+    "@bentley/geometry-core": "2.8.0-dev.6",
+    "@bentley/imodeljs-backend": "2.8.0-dev.6",
+    "@bentley/itwin-client": "2.8.0-dev.6",
+    "@bentley/backend-itwin-client": "2.8.0-dev.6",
+    "@bentley/imodeljs-common": "2.8.0-dev.6",
+    "@bentley/imodelhub-client": "2.8.0-dev.6",
+    "@bentley/rbac-client": "2.8.0-dev.6",
     "@bentley/schema-comparer": "0.2.78",
     "@bentley/schema-validator": "0.2.78",
     "@bentley/oidc-signin-tool": "2.3.0-dev.8",
@@ -46,7 +46,7 @@
     "readdirp": "^3.0.0"
   },
   "devDependencies": {
-    "@bentley/ecschema-locaters": "2.5.0-dev.9",
+    "@bentley/ecschema-locaters": "2.8.0-dev.6",
     "@bentley/build-tools": "^1.1",
     "@types/node": "10.12.18",
     "@types/chai": "^4.1.7",
