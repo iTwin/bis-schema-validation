@@ -722,7 +722,7 @@ export async function* entityClassesMayNotSubclassDeprecatedClasses(entity: EC.E
 
   const baseClass = await entity.baseClass;
   if (undefined !== baseClass.customAttributes && baseClass.customAttributes.has(deprecatedFullName))
-    yield new Diagnostics.EntityClassesMayNotSubclassDeprecatedClasses(entity, [entity.fullName, baseClass.fullName]);
+    yield new Diagnostics.EntityClassesMayNotSubclassDeprecatedClasses(entity, [entity.fullName, baseClass.fullName], EC.DiagnosticCategory.Warning);
 }
 
 /**
