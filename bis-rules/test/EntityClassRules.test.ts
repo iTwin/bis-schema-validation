@@ -1172,7 +1172,7 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic).to.not.be.undefined;
         expect(diagnostic!.ecDefinition).to.equal(testEntity);
         expect(diagnostic!.messageArgs).to.eql([testEntity.fullName, testEntity.baseClass!.fullName]);
-        expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
+        expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.EntityClassesMayNotSubclassDeprecatedClasses);
         expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
