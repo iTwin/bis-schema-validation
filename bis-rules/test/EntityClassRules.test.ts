@@ -42,6 +42,7 @@ describe("EntityClass Rule Tests", () => {
       $schema: "https://dev.bentley.com/json_schemas/ec/32/ecschema",
       name,
       version: "1.2.3",
+      alias: "test",
       items: {
         ...itemsJson,
       },

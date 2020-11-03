@@ -141,18 +141,22 @@ describe("Class Rule Tests", () => {
 
   describe("ClassHasHandlerCACannotAppliedOutsideBisCoreGenericFunctional", () => {
     async function ClassHasHandlerRuleTest(schemaName: string, schemaAlias: string, schemaContext: SchemaContext, testValidation: (result: any, testEntity: AnyClass) => Promise<void>) {
-      const schemaJson = {
-        $schema: "https://dev.bentley.com/json_schemas/ec/32/ecschema",
-        name: schemaName,
-        alias: schemaAlias,
-        version: "01.00.01",
-        description: "This is a test schema",
+      const refJson = schemaName === "BisCore" ? {} : {
         references: [
           {
             name: "BisCore",
             version: "01.00.01",
           },
         ],
+      };
+
+      const schemaJson = {
+        $schema: "https://dev.bentley.com/json_schemas/ec/32/ecschema",
+        name: schemaName,
+        alias: schemaAlias,
+        version: "01.00.01",
+        description: "This is a test schema",
+        ...refJson,
         items: {
           ClassHasHandler: {
             appliesTo: "Any",
@@ -226,18 +230,23 @@ describe("Class Rule Tests", () => {
 
   describe("NoNewClassHasHandlerCAInCoreSchemas", () => {
     async function ClassHasHandlerRuleTest(schemaName: string, schemaAlias: string, className: string, schemaContext: SchemaContext, testValidation: (result: any, testEntity: AnyClass) => Promise<void>) {
-      let schemaJson = {
-        $schema: "https://dev.bentley.com/json_schemas/ec/32/ecschema",
-        name: schemaName,
-        alias: schemaAlias,
-        version: "01.00.01",
-        description: "This is a test schema",
+
+      const refJson = schemaName === "BisCore" ? {} : {
         references: [
           {
             name: "BisCore",
             version: "01.00.01",
           },
         ],
+      };
+
+      let schemaJson = {
+        $schema: "https://dev.bentley.com/json_schemas/ec/32/ecschema",
+        name: schemaName,
+        alias: schemaAlias,
+        version: "01.00.01",
+        description: "This is a test schema",
+        ...refJson,
         items: {
           ClassHasHandler: {
             appliesTo: "Any",

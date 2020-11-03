@@ -22,12 +22,6 @@ export class SchemaDeserializer {
    * @param referencePaths Optional paths to search when locating schema references.
    */
   public async deserializeXmlFile(schemaFilePath: string, schemaContext: EC.SchemaContext, referencePaths?: string[]): Promise<EC.Schema> {
-    // If the schema file doesn't exist, throw an error
-    const schemaText = await this.readUtf8FileToString(schemaFilePath);
-
-    // Get the SchemaKey and EC version from xml text.
-    const schemaKey = this.getSchemaKey(schemaText);
-
     if (!referencePaths)
       referencePaths = [];
     referencePaths.push(path.dirname(schemaFilePath));
@@ -39,9 +33,9 @@ export class SchemaDeserializer {
     const locater = this.configureFileLocater(schemaContext, referencePaths);
 
     try {
-      const schema = locater.loadSchema(schemaKey, EC.SchemaMatchType.Exact, schemaContext);
+      const schema = locater.loadSchemaFromFile(schemaFilePath, schemaContext);
       if (!schema)
-        throw new EC.ECObjectsError(EC.ECObjectsStatus.UnableToLocateSchema, `Unable to locate schema '${schemaKey.name}'`);
+        throw new EC.ECObjectsError(EC.ECObjectsStatus.UnableToLocateSchema, `Unable to locate schema XML file at ${schemaFilePath}`);
 
       return schema;
     } finally {
@@ -86,40 +80,5 @@ export class SchemaDeserializer {
     schemaContext.addLocater(xmlSchemaLocater);
     xmlSchemaLocater.addSchemaSearchPaths(referencePaths);
     return xmlSchemaLocater;
-  }
-
-  private async readUtf8FileToString(filePath: string): Promise<string> {
-    return new Promise<string>((resolve, reject) => {
-      fs.readFile(filePath, "utf-8", (err, data) => {
-        if (err)
-          reject(new EC.ECObjectsError(EC.ECObjectsStatus.UnableToLocateSchema, "Unable to locate schema XML file at " + filePath));
-        else
-          resolve(data);
-      });
-    });
-  }
-
-  /**
-   * Constructs a SchemaKey based on the information in the Schema XML.
-   * @param data The Schema XML as a string.
-   */
-  private getSchemaKey(schemaXml: string): EC.SchemaKey {
-    const match = schemaXml.match(/<ECSchema.*schemaName="(?<name>\w+)".*version="(?<version>[\d|\.]+)"/) as any;
-    if (!match || !match.groups.name || !match.groups.version) {
-      throw new EC.ECObjectsError(EC.ECObjectsStatus.InvalidSchemaXML, `Could not find the ECSchema 'schemaName' or 'version' tag in the given file.`);
-    }
-
-    let ecVersion: EC.ECVersion;
-    if (this.isECv2Schema(schemaXml))
-      ecVersion = SchemaXmlFileLocater.fromECv2String(match.groups.version);
-    else
-      ecVersion = EC.ECVersion.fromString(match.groups.version);
-
-    const key = new EC.SchemaKey(match.groups.name, ecVersion);
-    return key;
-  }
-
-  private isECv2Schema(schemaText: string): boolean {
-    return /<ECSchema[^>]*xmlns=".*ECXML.2.0"/.test(schemaText);
   }
 }

@@ -2,7 +2,7 @@
 "$schema": "https://dev.bentley.com/json_schemas/ec/32/ecschema",
   "name": "SchemaB",
   "version": "02.02.02",
-  "alias": "ts",
+  "alias": "b",
   "label": "Schema B",
   "description": "Test Schema B",
   "references" : [

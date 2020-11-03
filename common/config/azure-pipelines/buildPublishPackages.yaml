@@ -42,7 +42,7 @@ stages:
       - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js build
         displayName: Rush build
         workingDirectory: $(Build.SourcesDirectory)/bis-schema-validation
-      - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js cover
+      - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js cover --verbose
         displayName: Rush cover
         workingDirectory: $(Build.SourcesDirectory)/bis-schema-validation
         env:
