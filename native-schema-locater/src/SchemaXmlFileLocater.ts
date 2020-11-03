@@ -60,6 +60,15 @@ export class SchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLo
     const maxCandidate = candidates.sort(this.compareSchemaKeyByVersion)[candidates.length - 1];
     const schemaPath = maxCandidate.fileName;
 
+    return this.loadSchemaFromFile(schemaPath, context, key);
+  }
+
+  /**
+   * Attempts to load a Schema from an XML file from the given file path.
+   * @param schemaPath The path to a valid ECXml schema file.
+   * @param context The SchemaContext that will control the lifetime of the schema.
+   */
+  public loadSchemaFromFile<T extends Schema>(schemaPath: string, context: SchemaContext, key?: SchemaKey): T | undefined {
     // Load the file
     if (!this.fileExistsSync(schemaPath))
       return undefined;
@@ -67,6 +76,9 @@ export class SchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLo
     const schemaText = this.readUtf8FileToStringSync(schemaPath);
     if (!schemaText)
       return undefined;
+
+    if (undefined === key)
+      key = this.getSchemaKey(schemaText);
 
     this.addSchemaSearchPaths([path.dirname(schemaPath)]);
 

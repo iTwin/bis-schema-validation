@@ -34,6 +34,7 @@ const testUnitsSchema = {
   $schema: "https://dev.bentley.com/json_schemas/ec/32/ecschema",
   name: "Units",
   version: "1.0.0",
+  alias: "u",
   items: {
     Length: {
       schemaItemType: "Phenomenon",
@@ -159,6 +160,7 @@ const testFormatSchema = {
   $schema: "https://dev.bentley.com/json_schemas/ec/32/ecschema",
   name: "Formats",
   version: "1.0.0",
+  alias: "f",
   references: [
     {
       name: "Units",

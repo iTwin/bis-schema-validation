@@ -9,11 +9,15 @@ import * as path from "path";
 declare const __dirname: string;
 
 export function getAssetsDir(): string {
-  return path.normalize(__dirname + "/../assets/");
+  return path.normalize(__dirname + "/../assets");
 }
 
 export function getReferencesDir(): string {
-  return path.normalize(__dirname + "/../assets/references/");
+  return path.normalize(__dirname + "/../assets/references");
+}
+
+export function getReleasedDir(): string {
+  return path.normalize(__dirname + "/../assets/released");
 }
 
 export function getXmlDeserializationDir(): string {

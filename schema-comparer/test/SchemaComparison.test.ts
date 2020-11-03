@@ -20,6 +20,7 @@ describe("SchemaValidater Tests", () => {
   const outDir = utils.getOutDir();
   const assetsDir = utils.getAssetsDir();
   const referencesDir = utils.getReferencesDir();
+  const releasedDir = utils.getReleasedDir();
   const deserializationDir = utils.getXmlDeserializationDir();
 
   beforeEach(async () => {
@@ -75,9 +76,38 @@ describe("SchemaValidater Tests", () => {
     expect(results[4].resultText).to.equal(" -\tLabel: SchemaA -> SchemaB");
     expect(results[5].resultText).to.equal(" -\tSchemaReferences");
     expect(results[6].resultText).to.equal(" -\t\tSchema(SchemaB)");
-    expect(results[7].resultText).to.equal(" +Schema(SchemaB)");
-    expect(results[8].resultText).to.equal(" +\tSchemaReferences");
-    expect(results[9].resultText).to.equal(" +\t\tSchema(SchemaD)");
+    expect(results[7].resultText).to.equal(" -\tClasses");
+    expect(results[8].resultText).to.equal(" -\t\tClass(TestClassB)");
+    expect(results[9].resultText).to.equal(" -\t\t\tDescription: undefined -> undefined");
+    expect(results[10].resultText).to.equal(" -\t\t\tLabel: undefined -> undefined");
+    expect(results[11].resultText).to.equal(" -\t\t\tSchemaItemType: EntityClass -> undefined");
+    expect(results[12].resultText).to.equal(" -\t\t\tModifier: None -> undefined");
+    expect(results[13].resultText).to.equal(" +Schema(SchemaB)");
+    expect(results[14].resultText).to.equal(" +\tSchemaReferences");
+    expect(results[15].resultText).to.equal(" +\t\tSchema(SchemaD)");
+  });
+
+  it("Compare, same schema with differences, results reported correctly", async () => {
+    const schemaAFile = path.resolve(releasedDir, "SchemaA.ecschema.xml");
+    const schemaBFile = path.resolve(assetsDir, "SchemaA.ecschema.xml");
+
+    const options = new CompareOptions(schemaAFile, schemaBFile, [releasedDir, referencesDir, assetsDir], [releasedDir, referencesDir, assetsDir], outDir);
+
+    const results = await SchemaComparison.compare(options);
+
+    expect(results[0].resultText).to.equal("Schema Comparison Results");
+    expect(results[1].resultText).to.equal(" !Schema(SchemaA)");
+    expect(results[2].resultText).to.equal(" !\tClasses");
+    expect(results[3].resultText).to.equal(" -\t\tClass(TestClassA)");
+    expect(results[4].resultText).to.equal(" -\t\t\tDescription: undefined -> undefined");
+    expect(results[5].resultText).to.equal(" -\t\t\tLabel: undefined -> undefined");
+    expect(results[6].resultText).to.equal(" -\t\t\tSchemaItemType: EntityClass -> undefined");
+    expect(results[7].resultText).to.equal(" -\t\t\tModifier: None -> undefined");
+    expect(results[8].resultText).to.equal(" +\t\tClass(TestClassB)");
+    expect(results[9].resultText).to.equal(" +\t\t\tDescription: undefined -> undefined");
+    expect(results[10].resultText).to.equal(" +\t\t\tLabel: undefined -> undefined");
+    expect(results[11].resultText).to.equal(" +\t\t\tSchemaItemType: EntityClass -> undefined");
+    expect(results[12].resultText).to.equal(" +\t\t\tModifier: None -> undefined");
   });
 
   it("Compare, schema A reference exact version not found, results returned successfully", async () => {
