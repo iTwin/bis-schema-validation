@@ -21,7 +21,11 @@ function createSchemaJson(koq: any) {
       {
         name: "Units",
         version: "1.0.0",
-      }
+      },
+      {
+        name: "Formats",
+        version: "1.0.0",
+      },
     ],
   });
 }
@@ -58,7 +62,7 @@ describe("KindOfQuantity Rule Tests", () => {
         relativeError: 1.234,
         persistenceUnit: "Units.IN",
         presentationUnits: [
-          "Units.IN",
+          "Formats.DefaultReal",
         ],
       };
       schema = await Schema.fromJson(createSchemaJson(koqProps), context);
@@ -109,7 +113,7 @@ describe("KindOfQuantity Rule Tests", () => {
         relativeError: 1.234,
         persistenceUnit: "Units.DECIMAL_PERCENT",
         presentationUnits: [
-          "Units.PERCENT",
+          "Formats.DefaultReal",
         ],
       };
       schema = await Schema.fromJson(createSchemaJson(koqProps), context);
@@ -125,7 +129,7 @@ describe("KindOfQuantity Rule Tests", () => {
         relativeError: 1.234,
         persistenceUnit: "Units.PERCENT",
         presentationUnits: [
-          "Units.PERCENT",
+          "Formats.DefaultReal",
         ],
       };
       schema = await Schema.fromJson(createSchemaJson(koqProps), context);
@@ -182,7 +186,7 @@ describe("KindOfQuantity Rule Tests", () => {
         relativeError: 1.234,
         persistenceUnit: "Units.M",
         presentationUnits: [
-          "Units.IN",
+          "Formats.DefaultReal",
         ],
       };
       schema = await Schema.fromJson(createSchemaJson(koqProps), context);
@@ -200,11 +204,11 @@ describe("KindOfQuantity Rule Tests", () => {
         relativeError: 1.234,
         persistenceUnit: "Units.IN",
         presentationUnits: [
-          "Units.IN",
-          "Units.IN",
-          "Units.FT",
-          "Units.FT",
-          "Units.M",
+          "Formats.DefaultReal",
+          "Formats.SingleUnitFormat",
+          "Formats.SingleUnitFormat",
+          "Formats.DoubleUnitFormat",
+          "Formats.DoubleUnitFormat",
         ],
       };
       schema = await Schema.fromJson(createSchemaJson(koqProps), context);
@@ -214,12 +218,12 @@ describe("KindOfQuantity Rule Tests", () => {
 
       expect(result.length).to.equal(2);
       expect(result[0].ecDefinition).to.equal(testKoq);
-      expect(result[0].messageArgs).to.eql([testKoq.fullName, "Units.IN"]);
+      expect(result[0].messageArgs).to.eql([testKoq.fullName, "Formats.SingleUnitFormat"]);
       expect(result[0].category).to.equal(DiagnosticCategory.Error);
       expect(result[0].code).to.equal(Rules.DiagnosticCodes.KOQDuplicatePresentationFormat);
       expect(result[0].diagnosticType).to.equal(DiagnosticType.SchemaItem);
       expect(result[1].ecDefinition).to.equal(testKoq);
-      expect(result[1].messageArgs).to.eql([testKoq.fullName, "Units.FT"]);
+      expect(result[1].messageArgs).to.eql([testKoq.fullName, "Formats.DoubleUnitFormat"]);
       expect(result[1].category).to.equal(DiagnosticCategory.Error);
       expect(result[1].code).to.equal(Rules.DiagnosticCodes.KOQDuplicatePresentationFormat);
       expect(result[1].diagnosticType).to.equal(DiagnosticType.SchemaItem);
@@ -231,9 +235,9 @@ describe("KindOfQuantity Rule Tests", () => {
         relativeError: 1.234,
         persistenceUnit: "Units.IN",
         presentationUnits: [
-          "Units.IN",
-          "Units.FT",
-          "Units.M",
+          "Formats.SingleUnitFormat",
+          "Formats.DoubleUnitFormat",
+          "Formats.DefaultReal",
         ],
       };
       schema = await Schema.fromJson(createSchemaJson(koqProps), context);
@@ -251,9 +255,9 @@ describe("KindOfQuantity Rule Tests", () => {
         relativeError: 0.01,
         persistenceUnit: "Units.IN",
         presentationUnits: [
-          "Units.IN",
-          "Units.FT",
-          "Units.IN",
+          "Formats.DefaultReal",
+          "Formats.SingleUnitFormat",
+          "Formats.SingleUnitFormat",
         ],
       };
 
@@ -267,6 +271,10 @@ describe("KindOfQuantity Rule Tests", () => {
           references: [
             {
               name: "Units",
+              version: "1.0.0",
+            },
+            {
+              name: "Formats",
               version: "1.0.0",
             },
           ],
