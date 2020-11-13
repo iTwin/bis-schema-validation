@@ -47,9 +47,9 @@
     "typescript": "^3.3.1"
   },
   "dependencies": {
-    "@bentley/bentleyjs-core": "2.9.0-dev.6",
-    "@bentley/ecschema-metadata": "2.9.0-dev.6",
-    "@bentley/imodeljs-backend": "2.9.0-dev.6"
+    "@bentley/bentleyjs-core": "^2.10.0-dev.1",
+    "@bentley/ecschema-metadata": "^2.10.0-dev.1",
+    "@bentley/imodeljs-backend": "^2.10.0-dev.1"
   },
   "nyc": {
     "include": [
