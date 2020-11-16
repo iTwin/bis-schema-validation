@@ -26,6 +26,7 @@
     "copy:assets": "cpx ./src/index.js ./lib"
   },
   "dependencies": {
+    "@bentley/ecschema-locaters": "^2.10.0-dev.1",
     "@bentley/ecschema-metadata": "^2.10.0-dev.1",
     "@bentley/bentleyjs-core": "^2.10.0-dev.1",
     "@bentley/geometry-core": "^2.10.0-dev.1",
@@ -46,7 +47,6 @@
     "readdirp": "^3.0.0"
   },
   "devDependencies": {
-    "@bentley/ecschema-locaters": "^2.10.0-dev.1",
     "@bentley/build-tools": "^1.1",
     "@types/node": "10.12.18",
     "@types/chai": "^4.1.7",
