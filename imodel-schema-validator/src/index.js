@@ -78,8 +78,14 @@ async function validateInput() {
     checkReleaseDynamicSchema = true;
   }
 
-  const iModelSchemaDir = await IModelProvider.exportSchemasFromIModel(program.projectId, program.iModelName, briefcaseDir, program.userName, program.password, program.environment);
-  await verifyIModelSchemas(iModelSchemaDir, checkReleaseDynamicSchema, program.baseSchemaRefDir, program.output);
+  try {
+    const iModelSchemaDir = await IModelProvider.exportSchemasFromIModel(program.projectId, program.iModelName, briefcaseDir, program.userName, program.password, program.environment);
+    await verifyIModelSchemas(iModelSchemaDir, checkReleaseDynamicSchema, program.baseSchemaRefDir, program.output);
+    process.exit(0); // exit forcefully
+  } catch (err) {
+    console.log(err);
+    process.exit(1);
+  }
 }
 
 if (program.verifyIModelSchemas === true) {
