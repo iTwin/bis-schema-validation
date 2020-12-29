@@ -52,19 +52,19 @@
     "typescript": "^3.3.1"
   },
   "peerDependencies": {
-    "@bentley/ecschema-metadata": "^2.10.0-dev.1",
-    "@bentley/ecschema-locaters": "^2.10.0-dev.1"
+    "@bentley/ecschema-metadata": "^2.11.0-dev.21",
+    "@bentley/ecschema-locaters": "^2.11.0-dev.21"
   },
   "dependencies": {
-    "@bentley/bentleyjs-core": "^2.10.0-dev.1",
-    "@bentley/geometry-core": "^2.10.0-dev.1",
-    "@bentley/imodeljs-backend": "^2.10.0-dev.1",
-    "@bentley/itwin-client": "^2.10.0-dev.1",
-    "@bentley/backend-itwin-client": "^2.10.0-dev.1",
-    "@bentley/imodeljs-common": "^2.10.0-dev.1",
-    "@bentley/imodelhub-client": "^2.10.0-dev.1",
-    "@bentley/rbac-client": "^2.10.0-dev.1",
-    "@bentley/telemetry-client": "^2.10.0-dev.1",
+    "@bentley/bentleyjs-core": "^2.11.0-dev.21",
+    "@bentley/geometry-core": "^2.11.0-dev.21",
+    "@bentley/imodeljs-backend": "^2.11.0-dev.21",
+    "@bentley/itwin-client": "^2.11.0-dev.21",
+    "@bentley/backend-itwin-client": "^2.11.0-dev.21",
+    "@bentley/imodeljs-common": "^2.11.0-dev.21",
+    "@bentley/imodelhub-client": "^2.11.0-dev.21",
+    "@bentley/rbac-client": "^2.11.0-dev.21",
+    "@bentley/telemetry-client": "^2.11.0-dev.21",
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
     "fs-extra": "^7.0.1",
