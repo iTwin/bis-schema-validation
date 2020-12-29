@@ -3,12 +3,12 @@
 * Licensed under the MIT License. See LICENSE.md in the project root for license terms.
 *--------------------------------------------------------------------------------------------*/
 
-import { BriefcaseDb, BriefcaseManager, IModelHost, IModelHostConfiguration, OpenParams, AuthorizedBackendRequestContext } from "@bentley/imodeljs-backend";
+import { BriefcaseDb, BriefcaseManager, IModelHost, IModelHostConfiguration, AuthorizedBackendRequestContext } from "@bentley/imodeljs-backend";
 import { AccessToken } from "@bentley/itwin-client";
 import { Config } from "@bentley/bentleyjs-core";
 import { IModelHubClient } from "@bentley/imodelhub-client";
 import { TestBrowserAuthorizationClientConfiguration, TestUserCredentials, TestBrowserAuthorizationClient } from "@bentley/oidc-signin-tool";
-import { BriefcaseProps, IModelVersion, SyncMode } from "@bentley/imodeljs-common";
+import { BriefcaseProps, IModelVersion, SyncMode, RequestNewBriefcaseProps, IModelVersionProps } from "@bentley/imodeljs-common";
 import * as rimraf from "rimraf";
 import * as fs from "fs";
 import * as path from "path";
@@ -64,7 +64,7 @@ export class IModelProvider {
     let token;
     try {
       const client = new TestBrowserAuthorizationClient(oidcConfig, userCredentials);
-      client.deploymentRegion =  regionCode;
+      client.deploymentRegion = regionCode;
       token = await client.getAccessToken();
     } catch (err) {
       const error = "oidc-signin-tool failed to generate token and failed with error: " + err;
@@ -119,10 +119,24 @@ export class IModelProvider {
       throw new Error("iModel either does not exist or cannot be found!");
     }
 
-    const briefcaseProps: BriefcaseProps = await BriefcaseManager.download(requestContext, projectId, iModelId, { syncMode: SyncMode.FixedVersion }, IModelVersion.latest());
+    const iModelVersionProps: IModelVersionProps = {
+      latest: true,
+    };
+
+    const briefcaseProps: RequestNewBriefcaseProps = {
+      contextId: projectId,
+      iModelId: iModelId,
+      asOf: iModelVersionProps,
+    };
+
+    const downloadedBriefcaseProps: BriefcaseProps = await BriefcaseManager.downloadBriefcase(requestContext, briefcaseProps);
+    console.log("Briefcase Downloaded...");
     requestContext.enter();
 
-    const iModel = await BriefcaseDb.open(requestContext, briefcaseProps.key);
+    const iModelFilePath = BriefcaseManager.getFileName(downloadedBriefcaseProps);
+    console.log("iModelFilePath: " + iModelFilePath);
+
+    const iModel = await BriefcaseDb.open(requestContext, { fileName: iModelFilePath });
     requestContext.enter();
 
     try {
@@ -137,10 +151,10 @@ export class IModelProvider {
       }
 
       fs.mkdirSync(schemaDir, { recursive: true });
-      iModel.briefcase.nativeDb.exportSchemas(schemaDir);
+      iModel.nativeDb.exportSchemas(schemaDir);
     } finally {
       iModel.close();
-      await BriefcaseManager.delete(requestContext, iModel.briefcaseKey);
+      await BriefcaseManager.deleteBriefcaseFiles(iModelFilePath, requestContext);
     }
   }
 
