@@ -77,7 +77,7 @@ describe("Property Rule Tests", () => {
       // tslint:disable-next-line:no-string-literal
       property!["_extendedTypeName"] = "BeGuid";
 
-      const result = await Rules.propertyShouldNotBeOfTypeLong(property);
+      const result = await Rules.propertyHasInvalidExtendedType(property);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -89,7 +89,7 @@ describe("Property Rule Tests", () => {
       // tslint:disable-next-line:no-string-literal
       property!["_extendedTypeName"] = "GeometryStream";
 
-      const result = await Rules.propertyShouldNotBeOfTypeLong(property);
+      const result = await Rules.propertyHasInvalidExtendedType(property);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -101,7 +101,19 @@ describe("Property Rule Tests", () => {
       // tslint:disable-next-line:no-string-literal
       property!["_extendedTypeName"] = "Json";
 
-      const result = await Rules.propertyShouldNotBeOfTypeLong(property);
+      const result = await Rules.propertyHasInvalidExtendedType(property);
+
+      for await (const _diagnostic of result!) {
+        expect(false, "Rule should have passed").to.be.true;
+      }
+    });
+
+    it("Property has URI extendedType, rule passes.", async () => {
+      const property = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty", PrimitiveType.String);
+      // tslint:disable-next-line:no-string-literal
+      property!["_extendedTypeName"] = "URI";
+
+      const result = await Rules.propertyHasInvalidExtendedType(property);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
