@@ -25,7 +25,7 @@ const linkModelModelName = "LinkModel";
 const physicalModelName = "PhysicalModel";
 const siUnitSystemName = "SI";
 const spatialLocationModelName = "SpatialLocationModel";
-const validExtendedTypes = ["BeGuid", "GeometryStream", "Json"];
+const validExtendedTypes = ["BeGuid", "GeometryStream", "Json", "URI"];
 const decimalPercent = "Units.DECIMAL_PERCENT";
 const coefficient = "Units.COEFFICIENT";
 
@@ -972,7 +972,7 @@ export async function* noAdditionalLinkTableRelationships(relationshipClass: EC.
     yield new Diagnostics.NoAdditionalLinkTableRelationships(relationshipClass, [relationshipClass.fullName]);
 
   if ((relationshipClass.source.multiplicity === EC.RelationshipMultiplicity.zeroMany || relationshipClass.source.multiplicity === EC.RelationshipMultiplicity.oneMany) &&
-      (relationshipClass.target.multiplicity === EC.RelationshipMultiplicity.zeroMany || relationshipClass.target.multiplicity === EC.RelationshipMultiplicity.oneMany))
+    (relationshipClass.target.multiplicity === EC.RelationshipMultiplicity.zeroMany || relationshipClass.target.multiplicity === EC.RelationshipMultiplicity.oneMany))
     yield new Diagnostics.NoAdditionalLinkTableRelationships(relationshipClass, [relationshipClass.fullName]);
 
   return;
