@@ -2,13 +2,9 @@
   "extends": "./node_modules/@bentley/build-tools/tsconfig-base.json",
   "compilerOptions": {
     "noImplicitAny": false,
-    "baseUrl": "./src",
-    "outDir": "./lib"
+    "outDir": "./lib",
   },
   "include": [
     "src/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
   ]
 }

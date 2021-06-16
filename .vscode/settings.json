@@ -32,5 +32,65 @@
     "text",
     "typescript",
     "xml",
-  ]
+  ],
+  "markdownlint.config": {
+    "MD024": {
+      "allow_different_nesting": true
+    },
+  },
+  "markdownlint.ignore": [
+    "**/CHANGELOG.md"
+  ],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+  ],
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto"
+    }
+  ],
+  "eslint.options": {
+    "configFile": "./package.json",
+    "useEslintrc": false,
+    "resolvePluginsRelativeTo": "./node_modules/@bentley/eslint-plugin"
+  },
+  "importSorter.importStringConfiguration.quoteMark": "double",
+  "importSorter.generalConfiguration.sortImportsInDirectory": false,
+  "importSorter.generalConfiguration.sortOnBeforeSave": false,
+  "importSorter.importStringConfiguration.trailingComma": "multiLine",
+  "importSorter.importStringConfiguration.maximumNumberOfImportExpressionsPerLine.count": 150,
+  "importSorter.importStringConfiguration.tabSize": 2,
+  "importSorter.sortConfiguration.removeUnusedImports": true,
+  "importSorter.sortConfiguration.customOrderingRules.rules": [
+    {
+      "type": "importMember",
+      "regex": "^$",
+      "orderLevel": 5,
+      "disableSort": true
+    },
+    {
+      "regex": "^[^.@]",
+      "orderLevel": 10
+    },
+    {
+      "regex": "^[@]",
+      "orderLevel": 15
+    },
+    {
+      "regex": "^[.]",
+      "orderLevel": 30
+    }
+  ],
+  "importSorter.sortConfiguration.customOrderingRules.defaultNumberOfEmptyLinesAfterGroup": 0,
+  "debug.internalConsoleOptions": "openOnSessionStart",
+  "eslint.format.enable": true,
+  "eslint.lintTask.enable": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.markdownlint": true, // first run the markdown linter
+    "editor.action.fixAll": true, // Run the default formatter before eslint, it handles whitespace better
+    "source.fixAll.eslint": true // then run ESLint auto-fix
+  }
 }

@@ -11,12 +11,13 @@
   },
   "scripts": {
     "clean": "rimraf lib",
-    "lint": "tslint --project . 1>&2",
+    "lint": "eslint -f visualstudio \"./src/**/*.ts\" 1>&2",
     "beforeBuild": "npm run clean && npm run lint",
-    "build": "npm run beforeBuild && tsc",
-    "test": "betools test-tsnode --testDir=./test/",
-    "test:watch": "betools test-tsnode --testDir=./test/ --watch",
-    "cover": "nyc node ./node_modules/@bentley/build-tools/scripts/test-tsnode.js --testDir=./test/ --tscPaths"
+    "build": "npm run beforeBuild && tsc && npm run copy:test-assets",
+    "test": "betools test",
+    "test:watch": "betools test --watch",
+    "cover": "nyc npm test",
+    "copy:test-assets": "cpx \"./src/test/assets/**/*\" ./lib/test/assets"
   },
   "keywords": [
     "Bentley",
@@ -29,11 +30,12 @@
     "url": "http://www.bentley.com"
   },
   "devDependencies": {
-    "@bentley/build-tools": "^1.1",
+    "@bentley/eslint-plugin": "2.16.2",
+    "@bentley/build-tools": "2.16.2",
     "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "^7",
     "@types/fs-extra": "^5.0.4",
-    "@types/mocha": "^5.2.5",
+    "@types/mocha": "^8.2.2",
     "@types/node": "10.12.18",
     "@types/rimraf": "^2.0.2",
     "@types/sinon": "^7.0.5",
@@ -42,58 +44,41 @@
     "chai": "^4.2.0",
     "chai-as-promised": "^7",
     "cpx": "^1.5.0",
-    "mocha": "^5.2.0",
-    "nyc": "^13.0.1",
+    "mocha": "^8.3.2",
+    "nyc": "^15.1.0",
     "rimraf": "^2.6.2",
     "sinon": "^7.1.1",
-    "ts-node": "^7.0.1",
     "tsconfig-paths": "^3.3.2",
-    "tslint": "^5.11.0",
-    "typescript": "^3.3.1"
+    "typescript": "~4.1.0",
+    "eslint": "^6.8.0"
   },
   "peerDependencies": {
-    "@bentley/ecschema-metadata": "^2.11.0-dev.21",
-    "@bentley/ecschema-locaters": "^2.11.0-dev.21"
+    "@bentley/ecschema-metadata": "^2.16.2",
+    "@bentley/ecschema-locaters": "^2.16.2"
   },
   "dependencies": {
-    "@bentley/bentleyjs-core": "^2.11.0-dev.21",
-    "@bentley/geometry-core": "^2.11.0-dev.21",
-    "@bentley/imodeljs-backend": "^2.11.0-dev.21",
-    "@bentley/itwin-client": "^2.11.0-dev.21",
-    "@bentley/backend-itwin-client": "^2.11.0-dev.21",
-    "@bentley/imodeljs-common": "^2.11.0-dev.21",
-    "@bentley/imodelhub-client": "^2.11.0-dev.21",
-    "@bentley/rbac-client": "^2.11.0-dev.21",
-    "@bentley/telemetry-client": "^2.11.0-dev.21",
+    "@bentley/backend-itwin-client": "^2.16.2",
+    "@bentley/bentleyjs-core": "^2.16.2",
+    "@bentley/geometry-core": "^2.16.2",
+    "@bentley/imodelhub-client": "^2.16.2",
+    "@bentley/imodeljs-backend": "^2.16.2",
+    "@bentley/imodeljs-common": "^2.16.2",
+    "@bentley/itwin-client": "^2.16.2",
+    "@bentley/rbac-client": "^2.16.2",
+    "@bentley/telemetry-client": "^2.16.2",
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
     "fs-extra": "^7.0.1",
     "xmldom": "^0.1.27"
   },
-  "nyc": {
-    "include": [
-      "src/**/*.ts"
+  "eslintConfig": {
+    "plugins": [
+      "@bentley"
     ],
-    "extension": [
-      ".ts"
-    ],
-    "require": [
-      "ts-node/register"
-    ],
-    "exclude": [
-      "**/*.d.ts",
-      "test/**/*.ts"
-    ],
-    "reporter": [
-      "text-summary",
-      "lcov",
-      "html",
-      "cobertura"
-    ],
-    "check-coverage": true,
-    "per-file": true,
-    "lines": 90,
-    "functions": 90,
-    "report-dir": "./lib/test/coverage"
+    "extends": "plugin:@bentley/imodeljs-recommended",
+    "rules": {
+      "prefer-template": "off",
+      "@typescript-eslint/no-unnecessary-type-assertion": "off"
+    }
   }
 }

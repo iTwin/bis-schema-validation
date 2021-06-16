@@ -7,3 +7,4 @@ lib/test
 !public/**
 !package.json
 !*.md
+test

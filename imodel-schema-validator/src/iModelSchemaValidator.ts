@@ -11,11 +11,12 @@ import { Reporter } from "./Reporter";
 import { getSha1Hash } from "./Sha1HashHelper";
 import { SchemaCompareCodes } from "@bentley/ecschema-metadata";
 import { SchemaValidator, ValidationOptions, ValidationResultType } from "@bentley/schema-validator";
-import { SchemaComparison, CompareOptions, ComparisonResultType, IComparisonResult } from "@bentley/schema-comparer";
+import { CompareOptions, ComparisonResultType, IComparisonResult, SchemaComparison } from "@bentley/schema-comparer";
 
 /**
  * Defines the possible result types for all validations
  */
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export enum iModelValidationResultTypes {
   Passed,
   Failed,

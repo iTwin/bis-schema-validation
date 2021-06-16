@@ -2,6 +2,13 @@
   "$schema": "https://dev.office.com/json-schemas/rush/command-line.schema.json",
   "commands": [
     {
+      "name": "build",
+      "commandKind": "bulk",
+      "summary": "Runs code build on each package",
+      "description": "Iterates through each package in the monorepo and runs the 'build' script",
+      "allowWarningsInSuccessfulBuild": true
+    },
+    {
       "name": "clean",
       "commandKind": "bulk",
       "summary": "Cleans build output within each package",
@@ -21,7 +28,16 @@
       "commandKind": "bulk",
       "summary": "Run lint rules on each package",
       "description": "Iterates through each package in the monorepo and runs the 'lint' script",
-      "enableParallelism": true
+      "enableParallelism": true,
+      "allowWarningsInSuccessfulBuild": true
+    },
+    {
+      "name": "audit",
+      "commandKind": "global",
+      "summary": "Runs npm audit for the entire monorepo",
+      "description": "Scans the entire monorepo for security vulnerabilities via npm audit",
+      "shellCommand": "node common/tools/rush/audit.js",
+      "allowWarningsInSuccessfulBuild": true
     }
   ]
 }

@@ -5,87 +5,85 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "node",
-      "request": "launch",
       "name": "Run bis-rule Tests",
-      "program": "${workspaceFolder}/bis-rules/node_modules/@bentley/build-tools/scripts/test-tsnode.js",
       "cwd": "${workspaceFolder}/bis-rules",
-      "args": [
-        "--testDir=${workspaceFolder}/bis-rules/test",
-        "--debug"
+      "type": "pwa-node",
+      "request": "launch",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "test"
       ],
-      "port": 9229,
-      "protocol": "inspector",
-      "outputCapture": "std"
+      "outFiles": [
+        "${workspaceFolder}/bis-rules/lib/**/*.js"
+      ]
     },
     {
-      "type": "node",
-      "request": "launch",
       "name": "Run schema-validator Tests",
-      "program": "${workspaceFolder}/schema-validator/node_modules/@bentley/build-tools/scripts/test-tsnode.js",
       "cwd": "${workspaceFolder}/schema-validator",
-      "args": [
-        "--testDir=${workspaceFolder}/schema-validator/test",
-        "--debug"
+      "type": "pwa-node",
+      "request": "launch",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "test"
       ],
-      "port": 9229,
-      "protocol": "inspector",
-      "outputCapture": "std"
+      "outFiles": [
+        "${workspaceFolder}/schema-validator/lib/**/*.js"
+      ]
     },
     {
-      "type": "node",
-      "request": "launch",
       "name": "Run schema-comparer Tests",
-      "program": "${workspaceFolder}/schema-comparer/node_modules/@bentley/build-tools/scripts/test-tsnode.js",
       "cwd": "${workspaceFolder}/schema-comparer",
-      "args": [
-        "--testDir=${workspaceFolder}/schema-comparer/test",
-        "--debug"
+      "type": "pwa-node",
+      "request": "launch",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "test"
       ],
-      "port": 9229,
-      "protocol": "inspector",
+      "outFiles": [
+        "${workspaceFolder}/schema-comparer/lib/**/*.js"
+      ],
       "outputCapture": "std"
     },
     {
-      "type": "node",
-      "request": "launch",
       "name": "Run schema-roundtrip Tests",
-      "program": "${workspaceFolder}/schema-roundtrip/node_modules/@bentley/build-tools/scripts/test-tsnode.js",
       "cwd": "${workspaceFolder}/schema-roundtrip",
-      "args": [
-        "--testDir=${workspaceFolder}/schema-roundtrip/test",
-        "--debug"
+      "type": "pwa-node",
+      "request": "launch",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "test"
       ],
-      "port": 9229,
-      "protocol": "inspector",
+      "outFiles": [
+        "${workspaceFolder}/schema-roundtrip/lib/**/*.js"
+      ],
       "outputCapture": "std"
     },
     {
-      "type": "node",
-      "request": "launch",
       "name": "Run imodel-schema-validator Tests",
-      "program": "${workspaceFolder}/imodel-schema-validator/node_modules/@bentley/build-tools/scripts/test-tsnode.js",
       "cwd": "${workspaceFolder}/imodel-schema-validator",
-      "args": [
-        "--testDir=${workspaceFolder}/imodel-schema-validator/test",
-        "--debug"
+      "type": "pwa-node",
+      "request": "launch",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "test"
       ],
-      "port": 9229,
-      "protocol": "inspector",
+      "outFiles": [
+        "${workspaceFolder}/imodel-schema-validator/lib/**/*.js"
+      ],
       "outputCapture": "std"
     },
     {
-      "type": "node",
-      "request": "launch",
       "name": "Run imodel-quality-checker Tests",
-      "program": "${workspaceFolder}/imodel-quality-checker/node_modules/@bentley/build-tools/scripts/test-tsnode.js",
       "cwd": "${workspaceFolder}/imodel-quality-checker",
-      "args": [
-        "--testDir=${workspaceFolder}/imodel-quality-checker/test",
-        "--debug"
+      "type": "pwa-node",
+      "request": "launch",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "test"
       ],
-      "port": 9229,
-      "protocol": "inspector",
+      "outFiles": [
+        "${workspaceFolder}/imodel-quality-checker/lib/**/*.js"
+      ],
       "outputCapture": "std"
     },
     {
@@ -95,17 +93,17 @@
       "program": "${workspaceFolder}/common/scripts/SchemaValidationRunner.js",
     },
     {
-      "type": "node",
-      "request": "launch",
       "name": "Run native-schema-locater Tests",
-      "program": "${workspaceFolder}/native-schema-locater/node_modules/@bentley/build-tools/scripts/test-tsnode.js",
       "cwd": "${workspaceFolder}/native-schema-locater",
-      "args": [
-        "--testDir=${workspaceFolder}/native-schema-locater/test",
-        "--debug"
+      "type": "pwa-node",
+      "request": "launch",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "test"
       ],
-      "port": 9229,
-      "protocol": "inspector",
+      "outFiles": [
+        "${workspaceFolder}/native-schema-locater/lib/**/*.js"
+      ],
       "outputCapture": "std"
     }
   ]

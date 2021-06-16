@@ -3,12 +3,12 @@
 * Licensed under the MIT License. See LICENSE.md in the project root for license terms.
 *--------------------------------------------------------------------------------------------*/
 
-import { BriefcaseDb, BriefcaseManager, IModelHost, IModelHostConfiguration, AuthorizedBackendRequestContext } from "@bentley/imodeljs-backend";
+import { AuthorizedBackendRequestContext, BriefcaseDb, BriefcaseManager, IModelHost, IModelHostConfiguration } from "@bentley/imodeljs-backend";
 import { AccessToken } from "@bentley/itwin-client";
 import { Config } from "@bentley/bentleyjs-core";
 import { IModelHubClient } from "@bentley/imodelhub-client";
-import { TestBrowserAuthorizationClientConfiguration, TestUserCredentials, TestBrowserAuthorizationClient } from "@bentley/oidc-signin-tool";
-import { BriefcaseProps, IModelVersion, SyncMode, RequestNewBriefcaseProps, IModelVersionProps } from "@bentley/imodeljs-common";
+import { TestBrowserAuthorizationClient, TestBrowserAuthorizationClientConfiguration, TestUserCredentials } from "@bentley/oidc-signin-tool";
+import { BriefcaseProps, IModelVersionProps, RequestNewBriefcaseProps } from "@bentley/imodeljs-common";
 import * as rimraf from "rimraf";
 import * as fs from "fs";
 import * as path from "path";
@@ -26,7 +26,7 @@ export class IModelProvider {
    */
   public static async setupHost(env: string, briefcaseDir: string) {
     const iModelHostConfiguration = new IModelHostConfiguration();
-    iModelHostConfiguration.briefcaseCacheDir = briefcaseDir;
+    iModelHostConfiguration.cacheDir = briefcaseDir;
     if (env === "DEV") {
       this._regionCode = 103;
       Config.App.set("imjs_buddi_resolve_url_using_region", this._regionCode);
@@ -43,10 +43,10 @@ export class IModelProvider {
   /**
    * Get accessToken using the oidc-signin-tool.
    * @param userName: It's OIDC login username.
-   * @param password: It's OIDC login password.
+   * @param secret: It's OIDC login password.
    * @param regionCode: The code according to the environment
    */
-  private static async getTokenFromSigninTool(username: string, password: string, regionCode: number): Promise<AccessToken> {
+  private static async getTokenFromSigninTool(username: string, secret: string, regionCode: number): Promise<AccessToken> {
     let postfix = "";
     if (regionCode === 0) { postfix = "-prod"; }
 
@@ -58,7 +58,7 @@ export class IModelProvider {
 
     const userCredentials: TestUserCredentials = {
       email: username,
-      password: password,
+      password: secret,
     };
 
     let token;
@@ -96,6 +96,7 @@ export class IModelProvider {
   public static async getIModelId(requestContext: AuthorizedBackendRequestContext, projectId: string, iModelName: string): Promise<string | undefined> {
     const client = new IModelHubClient();
     const iModels = await client.iModels.get(requestContext, projectId);
+    // eslint-disable-next-line @typescript-eslint/prefer-for-of
     for (let num = 0; num < iModels.length; num++) {
       if (iModels[num].name === iModelName) {
         return iModels[num].wsgId.toString();
@@ -113,9 +114,9 @@ export class IModelProvider {
    */
   public static async exportIModelSchemas(projectId: string, iModelName: string, schemaDir: string, userName: string, password: string) {
     const requestContext = await this.oidcConnect(userName, password, this._regionCode);
-    const iModelId = await this.getIModelId(requestContext, projectId, iModelName); // iModel Id based upon iModel name and Project Id
+    const imodelId = await this.getIModelId(requestContext, projectId, iModelName); // iModel Id based upon iModel name and Project Id
 
-    if (!iModelId) {
+    if (!imodelId) {
       throw new Error("iModel either does not exist or cannot be found!");
     }
 
@@ -125,7 +126,7 @@ export class IModelProvider {
 
     const briefcaseProps: RequestNewBriefcaseProps = {
       contextId: projectId,
-      iModelId: iModelId,
+      iModelId: imodelId,
       asOf: iModelVersionProps,
     };
 

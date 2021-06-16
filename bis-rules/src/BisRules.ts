@@ -49,7 +49,7 @@ function getClassDefinedCustomAttribute(ecClass: EC.ECClass, customAttributeFull
 }
 
 function getCode(code: string): string {
-  return ruleSetName + "-" + code;
+  return `${ruleSetName}-${code}`;
 }
 
 /**
@@ -600,6 +600,7 @@ export async function* elementMultiAspectMustHaveCorrespondingRelationship(entit
     if (!await relationship.is(elementOwnsMultiAspectsName, bisCoreName))
       continue;
 
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     if ((relationship as EC.RelationshipClass).target.supportsClass(entity))
       return;
   }
@@ -633,6 +634,7 @@ export async function* elementUniqueAspectMustHaveCorrespondingRelationship(enti
     if (!await relationship.is(elementOwnsUniqueAspectName, bisCoreName))
       continue;
 
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     if ((relationship as EC.RelationshipClass).target.supportsClass(entity))
       return;
   }
@@ -705,8 +707,13 @@ export async function* bisModelSubClassesCannotDefineProperties(entity: EC.Entit
   if (!isModel)
     return;
 
-  if (undefined !== entity.properties && 0 < entity.properties.length)
+  if (undefined === entity.properties)
+    return;
+
+  for (const _ of entity.properties) {
     yield new Diagnostics.BisModelSubClassesCannotDefineProperties(entity, [entity.fullName]);
+    break;
+  }
 }
 
 /**
@@ -968,8 +975,12 @@ export async function* noAdditionalLinkTableRelationships(relationshipClass: EC.
   if (await relationshipClass.is("ElementRefersToElements", "BisCore") || await relationshipClass.is("ElementDrivesElement", "BisCore"))
     return;
 
-  if (relationshipClass.properties && relationshipClass.properties.length > 0)
-    yield new Diagnostics.NoAdditionalLinkTableRelationships(relationshipClass, [relationshipClass.fullName]);
+  if (relationshipClass.properties) {
+    for (const _ of relationshipClass.properties) {
+      yield new Diagnostics.NoAdditionalLinkTableRelationships(relationshipClass, [relationshipClass.fullName]);
+      break;
+    }
+  }
 
   if ((relationshipClass.source.multiplicity === EC.RelationshipMultiplicity.zeroMany || relationshipClass.source.multiplicity === EC.RelationshipMultiplicity.oneMany) &&
     (relationshipClass.target.multiplicity === EC.RelationshipMultiplicity.zeroMany || relationshipClass.target.multiplicity === EC.RelationshipMultiplicity.oneMany))

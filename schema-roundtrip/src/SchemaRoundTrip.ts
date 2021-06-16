@@ -7,8 +7,8 @@ import * as fs from "fs-extra";
 import * as path from "path";
 import { DOMParser, XMLSerializer } from "xmldom";
 import { SchemaXmlFileLocater } from "@bentley/ecschema-locaters";
-import { SchemaComparison, ComparisonResultType, IComparisonResult } from "@bentley/schema-comparer";
-import { Schema, SchemaContext, SchemaMatchType, SchemaKey, ECVersion } from "@bentley/ecschema-metadata";
+import { ComparisonResultType, IComparisonResult, SchemaComparison } from "@bentley/schema-comparer";
+import { ECVersion, Schema, SchemaContext, SchemaKey, SchemaMatchType } from "@bentley/ecschema-metadata";
 
 /**
  * Defines the possible message types associated with
@@ -104,7 +104,7 @@ export class SchemaRoundTrip {
       doc = await schema.toXml(doc);
     } catch (err) {
       const msg = `An error occurred serializing schema '${schema.fullName}': ${err.message}`;
-      results.push({resultType: RoundTripResultType.Error, resultText: msg});
+      results.push({ resultType: RoundTripResultType.Error, resultText: msg });
     }
 
     // Write the serialized schema to the out dir specified in the options.
@@ -112,7 +112,7 @@ export class SchemaRoundTrip {
       await this.writeSchemaXmlFile(schema, doc, options, results);
     } catch (err) {
       const msg = `An error occurred writing xml file for schema '${schema.fullName}': ${err.message}`;
-      results.push({resultType: RoundTripResultType.Error, resultText: msg});
+      results.push({ resultType: RoundTripResultType.Error, resultText: msg });
     }
 
     const resultMsg = `Schema re-serialized successfully to ${path.resolve(options.outputDir, schema.name + ".ecschema.xml")}`;
@@ -151,7 +151,7 @@ export class SchemaRoundTrip {
       await fs.writeFile(baseFile, xml);
     } catch (err) {
       const msg = `An error occurred writing to file '${baseFile}': ${err.message}`;
-      results.push({resultType: RoundTripResultType.Error, resultText: msg});
+      results.push({ resultType: RoundTripResultType.Error, resultText: msg });
     }
   }
 
@@ -160,7 +160,7 @@ export class SchemaRoundTrip {
     const test = fs.pathExistsSync(realDir);
     if (!test) {
       const msg = `The out directory '${realDir}' does not exist.`;
-      results.push({resultType: RoundTripResultType.Error, resultText: msg});
+      results.push({ resultType: RoundTripResultType.Error, resultText: msg });
       return;
     }
 
@@ -228,7 +228,7 @@ export class SchemaRoundTrip {
     }
 
     const name = matches[0].match(/schemaName="(.+?)"/);
-    if (!name || name.length !== 2 ) {
+    if (!name || name.length !== 2) {
       const msg = ` Could not find the ECSchema 'schemaName' tag in the file '${schemaPath}'`;
       results.push({ resultType: RoundTripResultType.Error, resultText: msg });
       return;
