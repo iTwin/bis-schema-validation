@@ -1,6 +1,13 @@
 {
   "extends": "@bentley/build-tools/tslint.json",
   "rules": {
-    "no-unused-variable": false
+    "no-unused-variable": false,
+    "ordered-imports": [
+      true,
+      {
+        "import-sources-order": "any",
+        "named-imports-order": "case-insensitive"
+      }
+    ]
   }
 }

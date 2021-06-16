@@ -16,26 +16,27 @@
     "imodel-schema-validator": "./lib/index.js"
   },
   "scripts": {
-    "build": "tsc 1>&2 && npm run copy:assets",
-    "lint": "tslint --project . 1>&2",
-    "test": "mocha -r ts-node/register test/**.test.ts --timeout 180000",
-    "tests:ValidateReleasedBisSchemas": "mocha -r ts-node/register test/**.test.ts --grep \"Import latest released version of all schemas in bis-schemas repository into an iModel and perform all validations.\" --timeout 180000",
-    "tests:ValidateWIPBisSchemas": "mocha -r ts-node/register test/**.test.ts --grep \"Import WIP version of all schemas from bis-schemas repository into an iModel and perform BIS-rules validation.\" --timeout 180000",
-    "cover": "nyc node ./node_modules/@bentley/build-tools/scripts/test-tsnode.js --testDir=./test/ --tscPaths",
+    "build": "tsc 1>&2 && npm run copy:assets && npm run copy:test-assets",
+    "lint": "eslint -f visualstudio \"./src/**/*.ts\" 1>&2",
+    "test": "betools test --timeout=999999999",
+    "tests:ValidateReleasedBisSchemas": "betools test --grep \"Import latest released version of all schemas in bis-schemas repository into an iModel and perform all validations.\" --timeout=999999999",
+    "tests:ValidateWIPBisSchemas": "betools test --grep \"Import WIP version of all schemas from bis-schemas repository into an iModel and perform BIS-rules validation.\" --timeout=999999999",
+    "cover": "nyc npm test",
     "clean": "rimraf lib",
-    "copy:assets": "cpx ./src/index.js ./lib"
+    "copy:assets": "cpx ./src/index.js ./lib",
+    "copy:test-assets": "cpx \"./src/test/assets/**/*\" ./lib/test/assets"
   },
   "dependencies": {
-    "@bentley/ecschema-locaters": "^2.11.0-dev.21",
-    "@bentley/ecschema-metadata": "^2.11.0-dev.21",
-    "@bentley/bentleyjs-core": "^2.11.0-dev.21",
-    "@bentley/geometry-core": "^2.11.0-dev.21",
-    "@bentley/imodeljs-backend": "^2.11.0-dev.21",
-    "@bentley/itwin-client": "^2.11.0-dev.21",
-    "@bentley/backend-itwin-client": "^2.11.0-dev.21",
-    "@bentley/imodeljs-common": "^2.11.0-dev.21",
-    "@bentley/imodelhub-client": "^2.11.0-dev.21",
-    "@bentley/rbac-client": "^2.11.0-dev.21",
+    "@bentley/ecschema-locaters": "^2.16.2",
+    "@bentley/ecschema-metadata": "^2.16.2",
+    "@bentley/bentleyjs-core": "^2.16.2",
+    "@bentley/geometry-core": "^2.16.2",
+    "@bentley/imodeljs-backend": "^2.16.2",
+    "@bentley/itwin-client": "^2.16.2",
+    "@bentley/backend-itwin-client": "^2.16.2",
+    "@bentley/imodeljs-common": "^2.16.2",
+    "@bentley/imodelhub-client": "^2.16.2",
+    "@bentley/rbac-client": "^2.16.2",
     "@bentley/schema-comparer": "0.2.90",
     "@bentley/schema-validator": "0.2.90",
     "@bentley/oidc-signin-tool": "2.3.0-dev.8",
@@ -47,22 +48,28 @@
     "readdirp": "^3.0.0"
   },
   "devDependencies": {
-    "@bentley/build-tools": "^1.1",
+    "@bentley/eslint-plugin": "2.16.2",
+    "@bentley/build-tools": "2.16.2",
     "@types/node": "10.12.18",
     "@types/chai": "^4.1.7",
-    "@types/mocha": "^5.2.5",
+    "@types/mocha": "^8.2.2",
     "cpx": "^1.5.0",
     "rimraf": "^2.6.2",
-    "typescript": "^3.3.1",
+    "typescript": "~4.1.0",
     "chai": "^4.2.0",
-    "mocha": "^5.2.0",
-    "nyc": "^13.0.1",
-    "ts-node": "^7.0.1"
+    "mocha": "^8.3.2",
+    "nyc": "^15.1.0",
+    "eslint": "^6.8.0"
   },
-  "nyc": {
-    "nycrc-path": "./node_modules/@bentley/build-tools/.nycrc",
-    "lines": 80,
-    "functions": 80,
-    "report-dir": "./lib/test/coverage"
+  "eslintConfig": {
+    "plugins": [
+      "@bentley"
+    ],
+    "extends": "plugin:@bentley/imodeljs-recommended",
+    "rules": {
+      "prefer-template": "off",
+      "dot-notation": "off",
+      "no-console": "off"
+    }
   }
 }

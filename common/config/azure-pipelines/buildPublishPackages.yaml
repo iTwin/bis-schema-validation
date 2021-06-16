@@ -18,9 +18,9 @@ stages:
         clean: all
       - checkout: bis-schemas
       - task: NodeTool@0
-        displayName: 'Install Node 12.16.0'
+        displayName: 'Install Node 12.18.2'
         inputs:
-          versionSpec: 12.16.0
+          versionSpec: 12.18.2
           checkLatest: true
 
       #Your build pipeline references a secret variable named ‘artifactsRegistryToken’. This variable is pulled from the 'arzure-artifacts-npm-token' variable group.  You must authorize this build to use that group: https://docs.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=yaml#use-a-variable-group
@@ -33,6 +33,9 @@ stages:
       - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js install
         displayName: Rush install
         workingDirectory: $(Build.SourcesDirectory)/bis-schema-validation
+      - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js audit
+        displayName: Rush audit
+        workingDirectory: $(Build.SourcesDirectory)/bis-schema-validation
       - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js clean
         displayName: Rush clean
         workingDirectory: $(Build.SourcesDirectory)/bis-schema-validation
@@ -42,7 +45,7 @@ stages:
       - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js build
         displayName: Rush build
         workingDirectory: $(Build.SourcesDirectory)/bis-schema-validation
-      - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js cover --verbose
+      - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js cover -v
         displayName: Rush cover
         workingDirectory: $(Build.SourcesDirectory)/bis-schema-validation
         env:

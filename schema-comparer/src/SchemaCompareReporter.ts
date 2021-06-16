@@ -4,10 +4,9 @@
 *--------------------------------------------------------------------------------------------*/
 
 import {
-  ISchemaCompareReporter, PropertyChanges, RelationshipConstraintChanges, SchemaItemType, SchemaChanges,
-  ISchemaChange, ClassChanges, Schema, ChangeType, CustomAttributeContainerChanges, EnumerationChanges,
-  EnumeratorChanges, EntityMixinChanges, SchemaItemChanges, KindOfQuantityChanges, PresentationUnitChanges,
-  FormatUnitChanges, FormatChanges,
+  ChangeType, ClassChanges, CustomAttributeContainerChanges, EntityMixinChanges, EnumerationChanges, EnumeratorChanges,
+  FormatChanges, FormatUnitChanges, ISchemaChange, ISchemaCompareReporter, KindOfQuantityChanges, PresentationUnitChanges,
+  PropertyChanges, RelationshipConstraintChanges, Schema, SchemaChanges, SchemaItemChanges, SchemaItemType,
 } from "@bentley/ecschema-metadata";
 
 const SCHEMA_DEPTH = 0;

@@ -7,8 +7,10 @@ import * as path from "path";
 import { DOMParser } from "xmldom";
 import { ECSchemaXmlContext } from "@bentley/imodeljs-backend";
 import { FileSchemaKey, SchemaFileLocater } from "@bentley/ecschema-locaters";
-import { ISchemaLocater, SchemaMatchType, Schema, SchemaKey, SchemaContext, SchemaReadHelper,
-  ECObjectsError, ECObjectsStatus, XmlParser, ECVersion, SchemaGraphUtil } from "@bentley/ecschema-metadata";
+import {
+  ECObjectsError, ECObjectsStatus, ECVersion, ISchemaLocater, Schema, SchemaContext,
+  SchemaGraphUtil, SchemaKey, SchemaMatchType, SchemaReadHelper, XmlParser,
+} from "@bentley/ecschema-metadata";
 
 function isECv2Schema(schemaText: string): boolean {
   return /<ECSchema[^>]*xmlns=".*ECXML.2.0"/.test(schemaText);
@@ -166,7 +168,7 @@ export class SchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLo
     // required, errors will occur later on in the process
     const schemaStub = locater.getSchemaSync(formatsKey, SchemaMatchType.LatestWriteCompatible, stubContext);
     if (!schemaStub) {
-      // tslint:disable-next-line: no-console
+      // eslint-disable-next-line no-console
       console.log("The Formats schema could not be found. This may result in errors if the EC 3.1 schema requires it.");
       return;
     }

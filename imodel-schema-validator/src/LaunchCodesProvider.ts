@@ -50,6 +50,7 @@ export class LaunchCodesProvider {
     let schemaIndex: number | undefined;
     let inventorySchema: string = "";
 
+    // eslint-disable-next-line guard-for-in
     for (inventorySchema in launchCodes) {
       for (let index = 0; index < launchCodes[inventorySchema].length; index++) {
         if (launchCodes[inventorySchema][index]["released"] && launchCodes[inventorySchema][index]["name"].toLowerCase() === schemaName.toLowerCase()) {
@@ -74,6 +75,7 @@ export class LaunchCodesProvider {
     let schemaIndex: number | undefined;
     let inventorySchema: string = "";
 
+    // eslint-disable-next-line guard-for-in
     for (inventorySchema in launchCodes) {
       for (let index = 0; index < launchCodes[inventorySchema].length; index++) {
         if (launchCodes[inventorySchema][index]["released"] && launchCodes[inventorySchema][index]["name"].toLowerCase() === schemaName.toLowerCase() && launchCodes[inventorySchema][index]["version"].toLowerCase() === version) {

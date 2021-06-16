@@ -8,8 +8,8 @@ import * as path from "path";
 import { DOMParser } from "xmldom";
 
 import {
-  ECRuleSet, Schema, SchemaContext, IDiagnosticReporter, SchemaDiagnostic,
-  IRuleSet, SchemaValidationVisitor, SchemaWalker, ISchemaPartVisitor, createSchemaDiagnosticClass,
+  createSchemaDiagnosticClass, ECRuleSet, IDiagnosticReporter, IRuleSet, ISchemaPartVisitor, Schema, SchemaContext,
+  SchemaDiagnostic, SchemaValidationVisitor, SchemaWalker,
 } from "@bentley/ecschema-metadata";
 import { ruleSuppressionSet } from "./RuleSuppression";
 import { BisRuleSet } from "@bentley/bis-rules";

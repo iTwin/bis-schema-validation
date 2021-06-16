@@ -6,7 +6,7 @@
 import * as commander from "commander";
 import * as chalk from "chalk";
 
-import { SchemaRoundTrip, RoundTripResultType, RoundTripOptions } from "./SchemaRoundTrip";
+import { RoundTripOptions, RoundTripResultType, SchemaRoundTrip } from "./SchemaRoundTrip";
 
 function ref(value: string, refs: string[]) {
   refs.push(value);
@@ -58,6 +58,7 @@ async function roundTrip() {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
 roundTrip().then(() => {
   // tslint:disable-next-line:no-console
   console.log("End of schema round trip.");

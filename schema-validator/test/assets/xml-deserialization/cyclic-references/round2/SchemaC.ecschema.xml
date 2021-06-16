@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ECSchema schemaName="SchemaC" alias="c" nameSpacePrefix="c" version="01.00.00" description="SchemaC" displayLabel="Schema" xmlns="http://www.bentley.com/schemas/Bentley.ECXML.3.2">
-  <ECSchemaReference name="SchemaB" alias="b" version="1.0.1"/>
-</ECSchema>

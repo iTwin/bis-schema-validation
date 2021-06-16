@@ -6,7 +6,7 @@
 import * as fs from "fs-extra";
 import * as path from "path";
 
-import { Schema, SchemaContext, SchemaComparer, ISchemaCompareReporter } from "@bentley/ecschema-metadata";
+import { ISchemaCompareReporter, Schema, SchemaComparer, SchemaContext } from "@bentley/ecschema-metadata";
 import { FileSchemaCompareReporter } from "./FileSchemaCompareReporter";
 import { CollectionSchemaCompareReporter, IFormattedSchemaChange } from "./CollectionSchemaCompareReporter";
 import { SchemaDeserializer } from "@bentley/native-schema-locater";
@@ -57,11 +57,13 @@ export class CompareOptions {
   }
 
   /** Gets the path to the first schema. */
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   public get SchemaAPath(): string {
     return this._schemaAPath;
   }
 
   /** Gets the path to the second schema. */
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   public get SchemaBPath(): string {
     return this._schemaBPath;
   }
