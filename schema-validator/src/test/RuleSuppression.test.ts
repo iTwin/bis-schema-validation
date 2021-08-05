@@ -7,7 +7,8 @@ import * as path from "path";
 import * as utils from "./utilities/utils";
 import { SchemaDeserializer } from "@bentley/native-schema-locater";
 // eslint-disable-next-line sort-imports
-import { AnyClass, Diagnostics as ECDiagnostics, ECClass, ECVersion, KindOfQuantity, PrimitiveType, RelationshipClass, Schema, SchemaContext, SchemaKey } from "@bentley/ecschema-metadata";
+import { AnyClass, ECClass, ECVersion, KindOfQuantity, PrimitiveType, RelationshipClass, Schema, SchemaContext, SchemaKey } from "@bentley/ecschema-metadata";
+import { Diagnostics as ECDiagnostics } from "@bentley/ecschema-editing";
 import { MutableClass } from "@bentley/ecschema-metadata/lib/Metadata/Class";
 import { MutableSchema } from "@bentley/ecschema-metadata/lib/Metadata/Schema";
 import * as ruleSuppressionSet from "../RuleSuppression";

@@ -5,13 +5,13 @@
 
 import { expect } from "chai";
 import * as sinon from "sinon";
-
 import { SchemaCompareReporter } from "../SchemaCompareReporter";
 import {
-  AnyEnumerator, Constant, EntityClass, Enumeration, Format, InvertedUnit, ISchemaChange, KindOfQuantity, Mixin,
+  AnyEnumerator, Constant, EntityClass, Enumeration, Format, InvertedUnit, KindOfQuantity, Mixin,
   Phenomenon, PrimitiveProperty, PropertyCategory, RelationshipClass, RelationshipConstraint, RelationshipEnd, Schema,
-  SchemaChanges, SchemaCompareDiagnostics, SchemaContext, Unit, UnitSystem,
+  SchemaContext, Unit, UnitSystem,
 } from "@bentley/ecschema-metadata/lib/ecschema-metadata";
+import { ISchemaChange, SchemaChanges, SchemaCompareDiagnostics} from "@bentley/ecschema-editing";
 
 class TestSchemaCompareReporter extends SchemaCompareReporter {
   public reportFormattedChange(_message: string, _change?: ISchemaChange): void {

@@ -8,7 +8,7 @@ import * as Rules from "../BisRules";
 import { KindOfQuantity, Schema, SchemaContext } from "@bentley/ecschema-metadata";
 import { createSchemaJsonWithItems } from "./utils/DeserializationHelpers";
 import { TestSchemaLocater } from "./utils/TestSchemaLocater";
-import { DiagnosticCategory, DiagnosticType, IDiagnostic } from "@bentley/ecschema-metadata/lib/Validation/Diagnostic";
+import { DiagnosticCategory, DiagnosticType, IDiagnostic } from "@bentley/ecschema-editing";
 
 function createSchemaJson(koq: any) {
   return createSchemaJsonWithItems({

@@ -6,7 +6,7 @@
 import { expect } from "chai";
 import * as Rules from "../BisRules";
 import { CustomAttributeClass, DelayedPromiseWithProps, LazyLoadedSchemaItem, Schema, SchemaContext } from "@bentley/ecschema-metadata";
-import { DiagnosticCategory, DiagnosticType } from "@bentley/ecschema-metadata/lib/Validation/Diagnostic";
+import { DiagnosticCategory, DiagnosticType } from "@bentley/ecschema-editing";
 
 describe("CustomAttributeClass Rule Tests", () => {
   let schema: Schema;

@@ -9,7 +9,7 @@ import * as chalk from "chalk";
 import * as readdirp from "readdirp";
 import { Reporter } from "./Reporter";
 import { getSha1Hash } from "./Sha1HashHelper";
-import { SchemaCompareCodes } from "@bentley/ecschema-metadata";
+import { SchemaCompareCodes } from "@bentley/ecschema-editing";
 import { SchemaValidator, ValidationOptions, ValidationResultType } from "@bentley/schema-validator";
 import { CompareOptions, ComparisonResultType, IComparisonResult, SchemaComparison } from "@bentley/schema-comparer";
 

@@ -11,7 +11,8 @@ import * as sinon from "sinon";
 
 import * as utils from "./utilities/utils";
 import { CompareOptions, ComparisonResultType, SchemaComparison } from "../SchemaComparison";
-import { Schema, SchemaComparer } from "@bentley/ecschema-metadata";
+import { Schema } from "@bentley/ecschema-metadata";
+import { SchemaComparer } from "@bentley/ecschema-editing";
 import { SchemaDeserializer } from "@bentley/native-schema-locater";
 
 use(chaiAsPromised);

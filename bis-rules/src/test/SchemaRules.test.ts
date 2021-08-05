@@ -7,7 +7,7 @@ import { expect } from "chai";
 import * as Rules from "../BisRules";
 import { EntityClass, Schema, SchemaContext } from "@bentley/ecschema-metadata";
 import { MutableSchema } from "@bentley/ecschema-metadata/lib/Metadata/Schema";
-import { DiagnosticCategory, DiagnosticType } from "@bentley/ecschema-metadata/lib/Validation/Diagnostic";
+import { DiagnosticCategory, DiagnosticType } from "@bentley/ecschema-editing";
 
 /** The names of all pre-EC3 standard schemas */
 const oldStandardSchemaNames = [

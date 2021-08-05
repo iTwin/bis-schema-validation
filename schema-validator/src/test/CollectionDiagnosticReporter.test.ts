@@ -5,11 +5,11 @@
 
 import { expect } from "chai";
 import * as sinon from "sinon";
-import * as ECRules from "@bentley/ecschema-metadata/lib/Validation/ECRules";
+import * as ECRules from "@bentley/ecschema-editing/lib/Validation/ECRules";
 import * as EC from "@bentley/ecschema-metadata/lib/ecschema-metadata";
 import { CollectionDiagnosticReporter } from "../CollectionDiagnosticReporter";
 import { ValidationDiagnosticReporter } from "../ValidationDiagnosticReporter";
-import { diagnosticCategoryToString } from "@bentley/ecschema-metadata/lib/Validation/Diagnostic";
+import { diagnosticCategoryToString } from "@bentley/ecschema-editing/lib/Validation/Diagnostic";
 
 describe("CollectionDiagnosticReporter Tests", () => {
 

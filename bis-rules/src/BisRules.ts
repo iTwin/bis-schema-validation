@@ -4,6 +4,9 @@
 *--------------------------------------------------------------------------------------------*/
 
 import * as EC from "@bentley/ecschema-metadata";
+import { ClassDiagnostic, createClassDiagnosticClass, createPropertyDiagnosticClass, createSchemaDiagnosticClass,
+  createSchemaItemDiagnosticClass, DiagnosticCategory, IRuleSet, PropertyDiagnostic,
+  SchemaDiagnostic, SchemaItemDiagnostic } from "@bentley/ecschema-editing";
 
 const bisCoreName = "BisCore";
 const bisModelName = "Model";
@@ -171,158 +174,158 @@ export const DiagnosticCodes = {
 // tslint:disable-next-line:variable-name
 export const Diagnostics = {
   /** Required message parameters: latest ECXML version. */
-  SchemaXmlVersionMustBeTheLatest: EC.createSchemaDiagnosticClass<[string]>(DiagnosticCodes.SchemaXmlVersionMustBeTheLatest,
+  SchemaXmlVersionMustBeTheLatest: createSchemaDiagnosticClass<[string]>(DiagnosticCodes.SchemaXmlVersionMustBeTheLatest,
     "Schema ECXML Version is not the latest ECVersion, {0}."),
 
   /** Required message parameters: Schema full name, standard schema name. */
-  SchemaMustNotReferenceOldStandardSchemas: EC.createSchemaDiagnosticClass<[string, string]>(DiagnosticCodes.SchemaMustNotReferenceOldStandardSchemas,
+  SchemaMustNotReferenceOldStandardSchemas: createSchemaDiagnosticClass<[string, string]>(DiagnosticCodes.SchemaMustNotReferenceOldStandardSchemas,
     "Schema '{0}' references the old standard schema '{1}'. Only new standard schemas should be used."),
 
   /** Required message parameters: Schema full name. */
-  SchemaWithDynamicInNameMustHaveDynamicSchemaCA: EC.createSchemaDiagnosticClass<[string]>(DiagnosticCodes.SchemaWithDynamicInNameMustHaveDynamicSchemaCA,
+  SchemaWithDynamicInNameMustHaveDynamicSchemaCA: createSchemaDiagnosticClass<[string]>(DiagnosticCodes.SchemaWithDynamicInNameMustHaveDynamicSchemaCA,
     "Schema '{0}' contains 'dynamic' in the name but does not apply the 'CoreCA:DynamicSchema' ECCustomAttribute."),
 
   /** Required message parameters: 1st class full name, 2nd class full name, and display label */
-  SchemaClassDisplayLabelMustBeUnique: EC.createSchemaDiagnosticClass<[string, string, string]>(DiagnosticCodes.SchemaClassDisplayLabelMustBeUnique,
+  SchemaClassDisplayLabelMustBeUnique: createSchemaDiagnosticClass<[string, string, string]>(DiagnosticCodes.SchemaClassDisplayLabelMustBeUnique,
     "Classes {0} and {1} have the same display label, '{2}'. Classes in the same schema cannot have have the same label."),
 
   /** Required message parameters: 1st current schema full name, 2nd reference schema full name */
-  SchemaShouldNotUseDeprecatedSchema: EC.createSchemaDiagnosticClass<[string, string]>(DiagnosticCodes.SchemaShouldNotUseDeprecatedSchema,
+  SchemaShouldNotUseDeprecatedSchema: createSchemaDiagnosticClass<[string, string]>(DiagnosticCodes.SchemaShouldNotUseDeprecatedSchema,
     "Schema '{0}' references a deprecated schema, '{1}'"),
 
   /** Required message parameters: mixin class fullName, class fullName, applies to constraint class fullName */
-  MixinsCannotOverrideInheritedProperties: EC.createSchemaItemDiagnosticClass<EC.Mixin, [string, string]>(DiagnosticCodes.MixinsCannotOverrideInheritedProperties,
+  MixinsCannotOverrideInheritedProperties: createSchemaItemDiagnosticClass<EC.Mixin, [string, string]>(DiagnosticCodes.MixinsCannotOverrideInheritedProperties,
     "Mixin '{0}' overrides inherited property '{1}'. A mixin class must not override an inherited property."),
 
   /** Required message parameters: EntityClass fullName */
-  EntityClassMustDeriveFromBisHierarchy: EC.createSchemaItemDiagnosticClass<EC.EntityClass, [string]>(DiagnosticCodes.EntityClassMustDeriveFromBisHierarchy,
+  EntityClassMustDeriveFromBisHierarchy: createSchemaItemDiagnosticClass<EC.EntityClass, [string]>(DiagnosticCodes.EntityClassMustDeriveFromBisHierarchy,
     "Entity class '{0}' must derive from the BIS hierarchy."),
 
   /** Required message parameters: EntityClass fullName, property name, first class fullName, and second class fullName */
-  EntityClassMayNotInheritSameProperty: EC.createSchemaItemDiagnosticClass<EC.EntityClass, [string, string, string, string]>(DiagnosticCodes.EntityClassMayNotInheritSameProperty,
+  EntityClassMayNotInheritSameProperty: createSchemaItemDiagnosticClass<EC.EntityClass, [string, string, string, string]>(DiagnosticCodes.EntityClassMayNotInheritSameProperty,
     "Entity class '{0}' inherits the property '{1}' from more than one source: '{2}', '{3}'. Entity classes may not inherit the same property from more than one class (base class or mixins)."),
 
   /** Required message parameters: EntityClass fullName */
-  ElementMultiAspectMustHaveCorrespondingRelationship: EC.createSchemaItemDiagnosticClass<EC.EntityClass, [string]>(DiagnosticCodes.ElementMultiAspectMustHaveCorrespondingRelationship,
+  ElementMultiAspectMustHaveCorrespondingRelationship: createSchemaItemDiagnosticClass<EC.EntityClass, [string]>(DiagnosticCodes.ElementMultiAspectMustHaveCorrespondingRelationship,
     "The ElementMultiAspect Entity class '{0}' requires an ElementOwnsMultiAspects relationship with this class supported as a target constraint."),
 
   /** Required message parameters: EntityClass fullName */
-  ElementUniqueAspectMustHaveCorrespondingRelationship: EC.createSchemaItemDiagnosticClass<EC.EntityClass, [string]>(DiagnosticCodes.ElementUniqueAspectMustHaveCorrespondingRelationship,
+  ElementUniqueAspectMustHaveCorrespondingRelationship: createSchemaItemDiagnosticClass<EC.EntityClass, [string]>(DiagnosticCodes.ElementUniqueAspectMustHaveCorrespondingRelationship,
     "The ElementUniqueAspect Entity class '{0}' requires an ElementOwnsUniqueAspect relationship with this class supported as a target constraint."),
 
   /** Required message parameters: EntityClass fullName */
-  EntityClassesCannotDeriveFromIParentElementAndISubModeledElement: EC.createSchemaItemDiagnosticClass<EC.EntityClass, [string]>(DiagnosticCodes.EntityClassesCannotDeriveFromIParentElementAndISubModeledElement,
+  EntityClassesCannotDeriveFromIParentElementAndISubModeledElement: createSchemaItemDiagnosticClass<EC.EntityClass, [string]>(DiagnosticCodes.EntityClassesCannotDeriveFromIParentElementAndISubModeledElement,
     "Entity class '{0}' implements both IParentElement and ISubModeledElement which is not allowed."),
 
   /** Required message parameters: EntityClass fullName, model class fullName */
-  EntityClassesCannotDeriveFromModelClasses: EC.createSchemaItemDiagnosticClass<EC.EntityClass, [string, string]>(DiagnosticCodes.EntityClassesCannotDeriveFromModelClasses,
+  EntityClassesCannotDeriveFromModelClasses: createSchemaItemDiagnosticClass<EC.EntityClass, [string, string]>(DiagnosticCodes.EntityClassesCannotDeriveFromModelClasses,
     "Entity class '{0}' may not subclass '{1}'."),
 
   /** Required message parameters: EntityClass fullName */
-  BisModelSubClassesCannotDefineProperties: EC.createSchemaItemDiagnosticClass<EC.EntityClass, [string]>(DiagnosticCodes.BisModelSubClassesCannotDefineProperties,
+  BisModelSubClassesCannotDefineProperties: createSchemaItemDiagnosticClass<EC.EntityClass, [string]>(DiagnosticCodes.BisModelSubClassesCannotDefineProperties,
     "Entity class '{0}' may not define properties because it derives from 'BisCore.Model'. Model subclasses should not add new properties."),
 
   /** Required message parameters: EntityClass fullName, base class fullName */
-  EntityClassesMayNotSubclassDeprecatedClasses: EC.createSchemaItemDiagnosticClass<EC.EntityClass, [string, string]>(DiagnosticCodes.EntityClassesMayNotSubclassDeprecatedClasses,
+  EntityClassesMayNotSubclassDeprecatedClasses: createSchemaItemDiagnosticClass<EC.EntityClass, [string, string]>(DiagnosticCodes.EntityClassesMayNotSubclassDeprecatedClasses,
     "Entity class '{0}' derives from '{1}' which has been deprecated."),
 
   /** Required message parameters: EntityClass fullName, base mixin class fullName */
-  EntityClassesShouldNotDerivedFromDeprecatedMixinClasses: EC.createSchemaItemDiagnosticClass<EC.EntityClass, [string, string, string]>(DiagnosticCodes.EntityClassesShouldNotDerivedFromDeprecatedMixinClasses,
+  EntityClassesShouldNotDerivedFromDeprecatedMixinClasses: createSchemaItemDiagnosticClass<EC.EntityClass, [string, string, string]>(DiagnosticCodes.EntityClassesShouldNotDerivedFromDeprecatedMixinClasses,
     "Entity class '{0}' derives from a mixin, '{1}', which itself is or derives from a deprecated mixin, '{2}'."),
 
   /** Required message parameters: RelationshipClass fullName */
-  RelationshipClassMustNotUseHoldingStrength: EC.createSchemaItemDiagnosticClass<EC.RelationshipClass, [string]>(DiagnosticCodes.RelationshipClassMustNotUseHoldingStrength,
+  RelationshipClassMustNotUseHoldingStrength: createSchemaItemDiagnosticClass<EC.RelationshipClass, [string]>(DiagnosticCodes.RelationshipClassMustNotUseHoldingStrength,
     "Relationship class '{0}' has a strength value of 'holding' which is not allowed."),
 
   /** Required message parameters: RelationshipClass fullName */
-  RelationshipSourceMultiplicityUpperBoundRestriction: EC.createSchemaItemDiagnosticClass<EC.RelationshipClass, [string]>(DiagnosticCodes.RelationshipSourceMultiplicityUpperBoundRestriction,
+  RelationshipSourceMultiplicityUpperBoundRestriction: createSchemaItemDiagnosticClass<EC.RelationshipClass, [string]>(DiagnosticCodes.RelationshipSourceMultiplicityUpperBoundRestriction,
     "Relationship class '{0}' has an 'embedding' strength with a forward direction so the source constraint may not have a multiplicity upper bound greater than 1."),
 
   /** Required message parameters: RelationshipClass fullName */
-  RelationshipTargetMultiplicityUpperBoundRestriction: EC.createSchemaItemDiagnosticClass<EC.RelationshipClass, [string]>(DiagnosticCodes.RelationshipTargetMultiplicityUpperBoundRestriction,
+  RelationshipTargetMultiplicityUpperBoundRestriction: createSchemaItemDiagnosticClass<EC.RelationshipClass, [string]>(DiagnosticCodes.RelationshipTargetMultiplicityUpperBoundRestriction,
     "Relationship class '{0}' has an 'embedding' strength with a backward direction so the target constraint may not have a multiplicity upper bound greater than 1."),
 
   /** Required message parameters: RelationshipClass fullName, relationship end (source/target) */
-  RelationshipElementAspectContraintRestriction: EC.createSchemaItemDiagnosticClass<EC.RelationshipClass, [string, string]>(DiagnosticCodes.RelationshipElementAspectContraintRestriction,
+  RelationshipElementAspectContraintRestriction: createSchemaItemDiagnosticClass<EC.RelationshipClass, [string, string]>(DiagnosticCodes.RelationshipElementAspectContraintRestriction,
     "Relationship class '{0}' may not have an ElementAspect {1} constraint, unless subclassed from ElementOwnsUniqueAspect or ElementOwnsMultiAspect."),
 
   /** Required message parameters: RelationshipClass fullName */
-  EmbeddingRelationshipsMustNotHaveHasInName: EC.createSchemaItemDiagnosticClass<EC.RelationshipClass, [string]>(DiagnosticCodes.EmbeddingRelationshipsMustNotHaveHasInName,
+  EmbeddingRelationshipsMustNotHaveHasInName: createSchemaItemDiagnosticClass<EC.RelationshipClass, [string]>(DiagnosticCodes.EmbeddingRelationshipsMustNotHaveHasInName,
     "Relationship class '{0}' has an 'embedding' strength and contains 'Has' in its name. Consider renaming this class."),
 
   /** Required message parameters: Source or Target name, RelationshipClass fullName, constraint class fullName */
-  RelationshipConstraintShouldNotUseDeprecatedConstraintClass: EC.createSchemaItemDiagnosticClass<EC.RelationshipClass, [string, string, string]>(DiagnosticCodes.RelationshipConstraintShouldNotUseDeprecatedConstraintClass,
+  RelationshipConstraintShouldNotUseDeprecatedConstraintClass: createSchemaItemDiagnosticClass<EC.RelationshipClass, [string, string, string]>(DiagnosticCodes.RelationshipConstraintShouldNotUseDeprecatedConstraintClass,
     "{0} Relationship Constraint of Relationship class '{1}' has deprecated constraint class '{2}'."),
 
   /** Required message parameters: Source or Target name, RelationshipClass fullName, constraint class fullName */
-  RelationshipConstraintShouldNotUseDeprecatedAbstractConstraint: EC.createSchemaItemDiagnosticClass<EC.RelationshipClass, [string, string, string]>(DiagnosticCodes.RelationshipConstraintShouldNotUseDeperecatedAbstractConstraint,
+  RelationshipConstraintShouldNotUseDeprecatedAbstractConstraint: createSchemaItemDiagnosticClass<EC.RelationshipClass, [string, string, string]>(DiagnosticCodes.RelationshipConstraintShouldNotUseDeperecatedAbstractConstraint,
     "{0} Relationship Constraint of Relationship class '{1}' has deprecated abstract constraint '{2}'."),
 
   /** Required message parameters: Source or Target name, RelationshipClass fullName, constraint class fullName, constraint base fullname */
-  RelationshipConstraintShouldNotUseConstraintClassWithDeprecatedBase: EC.createSchemaItemDiagnosticClass<EC.RelationshipClass, [string, string, string, string, string]>(DiagnosticCodes.RelationshipConstraintShouldNotUseConstraintClassWithDeprecatedBase,
+  RelationshipConstraintShouldNotUseConstraintClassWithDeprecatedBase: createSchemaItemDiagnosticClass<EC.RelationshipClass, [string, string, string, string, string]>(DiagnosticCodes.RelationshipConstraintShouldNotUseConstraintClassWithDeprecatedBase,
     "{0} Relationship Constraint of Relationship class '{1}' has constraint class '{2}' derived from base, '{3}', which itself is or derives from a deprecated class, {4}."),
 
   /** Required message parameters: Source or Target name, RelationshipClass fullName, constraint class fullName, constraint base fullname */
-  RelationshipConstraintShouldNotUseAbstractConstraintWithDeprecatedBase: EC.createSchemaItemDiagnosticClass<EC.RelationshipClass, [string, string, string, string, string]>(DiagnosticCodes.RelationshipConstraintShouldNotUseAbstractConstraintWithDeprecatedBase,
+  RelationshipConstraintShouldNotUseAbstractConstraintWithDeprecatedBase: createSchemaItemDiagnosticClass<EC.RelationshipClass, [string, string, string, string, string]>(DiagnosticCodes.RelationshipConstraintShouldNotUseAbstractConstraintWithDeprecatedBase,
     "{0} Relationship Constraint of Relationship class '{1}' has abstract constraint '{2}' derived from base, '{3}', which itself is or derives from a deprecated class, {4}."),
 
-  NoAdditionalLinkTableRelationships: EC.createSchemaItemDiagnosticClass<EC.RelationshipClass, [string]>(DiagnosticCodes.NoAdditionalLinkTableRelationships,
+  NoAdditionalLinkTableRelationships: createSchemaItemDiagnosticClass<EC.RelationshipClass, [string]>(DiagnosticCodes.NoAdditionalLinkTableRelationships,
     "Relationship class '{0}' must derive from a BisCore schema relationship as it requires an iModel link table."),
 
   /** Required message parameters: StructClass fullName */
-  StructsCannotHaveBaseClasses: EC.createSchemaItemDiagnosticClass<EC.StructClass, [string]>(DiagnosticCodes.StructsCannotHaveBaseClasses,
+  StructsCannotHaveBaseClasses: createSchemaItemDiagnosticClass<EC.StructClass, [string]>(DiagnosticCodes.StructsCannotHaveBaseClasses,
     "Struct class '{0}' has a base class, but structs should not have base classes."),
 
   /** Required message parameters: CustomAttributeClass fullName */
-  CustomAttributeClassCannotHaveBaseClasses: EC.createSchemaItemDiagnosticClass<EC.CustomAttributeClass, [string]>(DiagnosticCodes.CustomAttributeClassCannotHaveBaseClasses,
+  CustomAttributeClassCannotHaveBaseClasses: createSchemaItemDiagnosticClass<EC.CustomAttributeClass, [string]>(DiagnosticCodes.CustomAttributeClassCannotHaveBaseClasses,
     "CustomAttribute class '{0}' has a base class, but CustomAttribute classes should not have base classes."),
 
   /** Required message parameters: KindOfQuantity fullName, UnitSystem fullName */
-  KOQMustUseSIUnitForPersistenceUnit: EC.createSchemaItemDiagnosticClass<EC.KindOfQuantity, [string, string]>(DiagnosticCodes.KOQMustUseSIUnitForPersistenceUnit,
+  KOQMustUseSIUnitForPersistenceUnit: createSchemaItemDiagnosticClass<EC.KindOfQuantity, [string, string]>(DiagnosticCodes.KOQMustUseSIUnitForPersistenceUnit,
     "KindOfQuantity '{0}' has persistence unit of unit system '{1}' but must have an SI unit system"),
 
   /** Required message parameters: KindOfQuantity fullName, UnitSystem fullName */
-  KOQDuplicatePresentationFormat: EC.createSchemaItemDiagnosticClass<EC.KindOfQuantity, [string, string]>(DiagnosticCodes.KOQDuplicatePresentationFormat,
+  KOQDuplicatePresentationFormat: createSchemaItemDiagnosticClass<EC.KindOfQuantity, [string, string]>(DiagnosticCodes.KOQDuplicatePresentationFormat,
     "KindOfQuantity '{0}' has a duplicate presentation format '{1}' which is not allowed."),
 
   /** Required message parameters: ECClass FullName, property name */
-  PropertyShouldNotBeOfTypeLong: EC.createPropertyDiagnosticClass<[string, string]>(DiagnosticCodes.PropertyShouldNotBeOfTypeLong,
+  PropertyShouldNotBeOfTypeLong: createPropertyDiagnosticClass<[string, string]>(DiagnosticCodes.PropertyShouldNotBeOfTypeLong,
     "Property '{0}:{1}' is of type 'long' and long properties are not allowed. Use int, double or if this represents a FK use a navigation property."),
 
   /** Required message parameters: ECClass FullName, property name, extendedType name */
-  PropertyHasInvalidExtendedType: EC.createPropertyDiagnosticClass<[string, string, string]>(DiagnosticCodes.PropertyHasInvalidExtendedType,
+  PropertyHasInvalidExtendedType: createPropertyDiagnosticClass<[string, string, string]>(DiagnosticCodes.PropertyHasInvalidExtendedType,
     "Property '{0}:{1}' has extended type '{2}', which is not on the list of valid extended types (currently 'BeGuid', 'GeometryStream', and 'Json')."),
 
   /** Required message parameters: ECClass FullName, property name, extendedType name */
-  PropertyMustNotUseCustomHandledPropertyRestriction: EC.createPropertyDiagnosticClass<[string, string]>(DiagnosticCodes.PropertyMustNotUseCustomHandledPropertyRestriction,
+  PropertyMustNotUseCustomHandledPropertyRestriction: createPropertyDiagnosticClass<[string, string]>(DiagnosticCodes.PropertyMustNotUseCustomHandledPropertyRestriction,
     "Property '{0}:{1}' has CustomAttribute 'bis:CustomHandledProperty, which requires the parent class to have the CustomAttribute 'bis:ClassHasHandler'."),
 
   /** Required message parameters: ECClass FullName, first property name, second property name, display label */
-  MultiplePropertiesInClassWithSameLabel: EC.createClassDiagnosticClass<[string, string, string, string]>(DiagnosticCodes.MultiplePropertiesInClassWithSameLabel,
+  MultiplePropertiesInClassWithSameLabel: createClassDiagnosticClass<[string, string, string, string]>(DiagnosticCodes.MultiplePropertiesInClassWithSameLabel,
     "Class '{0}' has properties '{1}' and '{2}' with the same display label '{3}'."),
 
   /** Required message parameters: ECClass FullName,  Schema Name */
-  ClassHasHandlerCACannotAppliedOutsideCoreSchemas: EC.createClassDiagnosticClass<[string, string]>(DiagnosticCodes.ClassHasHandlerCACannotAppliedOutsideCoreSchemas,
+  ClassHasHandlerCACannotAppliedOutsideCoreSchemas: createClassDiagnosticClass<[string, string]>(DiagnosticCodes.ClassHasHandlerCACannotAppliedOutsideCoreSchemas,
     "Class '{0}' in schema '{1}' has 'ClassHasHandler' Custom Attribute applied. 'ClassHasHandler' Custom Attribute not allowed outside of the BisCore, Functional, and Generic schemas. Consider using the SchemaHasBehavior Custom Attribute."),
 
   /** Required message parameters: ECClass FullName,  Schema Name */
-  NoNewClassHasHandlerCAInCoreSchemas: EC.createClassDiagnosticClass<[string, string]>(DiagnosticCodes.NoNewClassHasHandlerCAInCoreSchemas,
+  NoNewClassHasHandlerCAInCoreSchemas: createClassDiagnosticClass<[string, string]>(DiagnosticCodes.NoNewClassHasHandlerCAInCoreSchemas,
     "Class '{0}' in schema '{1}' has 'ClassHasHandler' Custom Attribute applied. 'ClassHasHandler' Custom Attribute not allowed on new classes within BisCore, Functional, and Generic schemas. Consider using the SchemaHasBehavior Custom Attribute."),
 
   /** Required message parameters: Current Schema FullName, Derived ECClass FullName, Base ECClass FullName */
-  ClassShouldNotDerivedFromDeprecatedClass: EC.createClassDiagnosticClass<[string, string, string]>(DiagnosticCodes.ClassShouldNotDerivedFromDeprecatedClass,
+  ClassShouldNotDerivedFromDeprecatedClass: createClassDiagnosticClass<[string, string, string]>(DiagnosticCodes.ClassShouldNotDerivedFromDeprecatedClass,
     "Class '{0}' derived from a class, '{1}', which itself is or derives from a deprecated class, '{2}'."),
 
   /** Required message parameters: Current Class FullName, Property Name */
-  ClassShouldNotHaveDeprecatedProperty: EC.createClassDiagnosticClass<[string, string]>(DiagnosticCodes.ClassShouldNotHaveDeprecatedProperty,
+  ClassShouldNotHaveDeprecatedProperty: createClassDiagnosticClass<[string, string]>(DiagnosticCodes.ClassShouldNotHaveDeprecatedProperty,
     "Class '{0} has property '{1}' which is deprecated"),
 
   /** Required message parameters: Current Class FullName, Property Name, Struct FullName */
-  ClassShouldNotHavePropertyOfDeprecatedStructClass: EC.createClassDiagnosticClass<[string, string, string]>(DiagnosticCodes.ClassShouldNotHavePropertyOfDeprecatedStructClass,
+  ClassShouldNotHavePropertyOfDeprecatedStructClass: createClassDiagnosticClass<[string, string, string]>(DiagnosticCodes.ClassShouldNotHavePropertyOfDeprecatedStructClass,
     "Class '{0}' has property '{1}' which is of a deprecated struct class, '{2}'"),
 
   /** Required message parameters: Current Class FullName, Custom Attribute Class Name */
-  ClassShouldNotUseDeprecatedCustomAttributes: EC.createClassDiagnosticClass<[string, string]>(DiagnosticCodes.ClassShouldNotUseDeprecatedCustomAttributes,
+  ClassShouldNotUseDeprecatedCustomAttributes: createClassDiagnosticClass<[string, string]>(DiagnosticCodes.ClassShouldNotUseDeprecatedCustomAttributes,
     "Class '{0}' uses a deprecated custom attribute '{1}'"),
 };
 
@@ -330,7 +333,7 @@ export const Diagnostics = {
  * Comprehensive set of BIS validation rules.
  */
 // tslint:disable-next-line:variable-name
-export const BisRuleSet: EC.IRuleSet = {
+export const BisRuleSet: IRuleSet = {
   name: ruleSetName,
   schemaExclusionSet: ["ECDbFileInfo", "ECDbMap", "ECDbMeta", "ECDbSchemaPolicies", "ECDbSystem"],
 
@@ -425,7 +428,7 @@ const oldStandardSchemaNames = [
 /**
  * BIS Rule: Schema ECXML version must be the latest.
  */
-export async function* schemaXmlVersionMustBeTheLatest(schema: EC.Schema): AsyncIterable<EC.SchemaDiagnostic<any[]>> {
+export async function* schemaXmlVersionMustBeTheLatest(schema: EC.Schema): AsyncIterable<SchemaDiagnostic<any[]>> {
   // TODO:  Implement rule once EC version management is complete...
   if (schema)
     return true;
@@ -436,7 +439,7 @@ export async function* schemaXmlVersionMustBeTheLatest(schema: EC.Schema): Async
 /**
  * BIS Rule: Schema must not reference old standard schemas.
  */
-export async function* schemaMustNotReferenceOldStandardSchemas(schema: EC.Schema): AsyncIterable<EC.SchemaDiagnostic<any[]>> {
+export async function* schemaMustNotReferenceOldStandardSchemas(schema: EC.Schema): AsyncIterable<SchemaDiagnostic<any[]>> {
   for (const ref of schema.references) {
     // can reference ECDbMap as long as its 2.0 or above.
     if ("ECDbMap" === ref.name && 1 < ref.readVersion)
@@ -450,7 +453,7 @@ export async function* schemaMustNotReferenceOldStandardSchemas(schema: EC.Schem
 /**
  * BIS Rule: Schema with 'dynamic' in the name (case-insensitive) requires the "CoreCA:Dynamic" custom attribute.
  */
-export async function* schemaWithDynamicInNameMustHaveDynamicSchemaCA(schema: EC.Schema): AsyncIterable<EC.SchemaDiagnostic<any[]>> {
+export async function* schemaWithDynamicInNameMustHaveDynamicSchemaCA(schema: EC.Schema): AsyncIterable<SchemaDiagnostic<any[]>> {
   if (!schema.name.toLowerCase().includes("dynamic"))
     return;
 
@@ -461,7 +464,7 @@ export async function* schemaWithDynamicInNameMustHaveDynamicSchemaCA(schema: EC
 /**
  * BIS Rule: Classes within the same schema cannot have the same display label.
  */
-export async function* schemaClassDisplayLabelMustBeUnique(schema: EC.Schema): AsyncIterable<EC.SchemaDiagnostic<any[]>> {
+export async function* schemaClassDisplayLabelMustBeUnique(schema: EC.Schema): AsyncIterable<SchemaDiagnostic<any[]>> {
   // Dynamic schema can have matching display labels
   if (schema.customAttributes && schema.customAttributes.has("CoreCustomAttributes.DynamicSchema"))
     return;
@@ -484,13 +487,13 @@ export async function* schemaClassDisplayLabelMustBeUnique(schema: EC.Schema): A
 /**
  * BIS Rule: Schema should not use a deprecated schema (warn)
  */
-export async function* schemaShouldNotUseDeprecatedSchema(schema: EC.Schema): AsyncIterable<EC.SchemaDiagnostic<any[]>> {
+export async function* schemaShouldNotUseDeprecatedSchema(schema: EC.Schema): AsyncIterable<SchemaDiagnostic<any[]>> {
   if (undefined !== schema.customAttributes && schema.customAttributes.has(deprecatedFullName))
     return;
 
   for (const refSchema of schema.references) {
     if (undefined !== refSchema.customAttributes && refSchema.customAttributes.has(deprecatedFullName)) {
-      yield new Diagnostics.SchemaShouldNotUseDeprecatedSchema(schema, [schema.fullName, refSchema.fullName], EC.DiagnosticCategory.Warning);
+      yield new Diagnostics.SchemaShouldNotUseDeprecatedSchema(schema, [schema.fullName, refSchema.fullName], DiagnosticCategory.Warning);
       continue;
     }
   }
@@ -503,7 +506,7 @@ export async function* schemaShouldNotUseDeprecatedSchema(schema: EC.Schema): As
 /**
  * BIS Rule: A Mixin class cannot override inherited properties.
  */
-export async function* mixinsCannotOverrideInheritedProperties(mixin: EC.Mixin): AsyncIterable<EC.SchemaItemDiagnostic<EC.Mixin, any[]>> {
+export async function* mixinsCannotOverrideInheritedProperties(mixin: EC.Mixin): AsyncIterable<SchemaItemDiagnostic<EC.Mixin, any[]>> {
   if (undefined === mixin.properties || undefined === mixin.baseClass)
     return;
 
@@ -525,7 +528,7 @@ export async function* mixinsCannotOverrideInheritedProperties(mixin: EC.Mixin):
 /**
  * BIS Rule: Entity classes must derive from the BIS hierarchy.
  */
-export async function* entityClassMustDeriveFromBisHierarchy(entity: EC.EntityClass): AsyncIterable<EC.SchemaItemDiagnostic<EC.EntityClass, any[]>> {
+export async function* entityClassMustDeriveFromBisHierarchy(entity: EC.EntityClass): AsyncIterable<SchemaItemDiagnostic<EC.EntityClass, any[]>> {
   if (entity.schema.name === bisCoreName)
     return;
 
@@ -540,7 +543,7 @@ export async function* entityClassMustDeriveFromBisHierarchy(entity: EC.EntityCl
 /**
  * BIS Rule: Entity classes may not inherit a property from more than one base class or mixin.
  */
-export async function* entityClassMayNotInheritSameProperty(entity: EC.EntityClass): AsyncIterable<EC.SchemaItemDiagnostic<EC.EntityClass, any[]>> {
+export async function* entityClassMayNotInheritSameProperty(entity: EC.EntityClass): AsyncIterable<SchemaItemDiagnostic<EC.EntityClass, any[]>> {
   const baseClass = await entity.baseClass;
   if (entity.mixins.length === 0 || entity.mixins.length === 1 && !baseClass)
     return;
@@ -578,7 +581,7 @@ export async function* entityClassMayNotInheritSameProperty(entity: EC.EntityCla
  * BIS Rule: If an ElementMultiAspect exists, there must be a relationship that derives from the ElementOwnsMultiAspects
  * relationship with this class supported as a target constraint.
  */
-export async function* elementMultiAspectMustHaveCorrespondingRelationship(entity: EC.EntityClass): AsyncIterable<EC.SchemaItemDiagnostic<EC.EntityClass, any[]>> {
+export async function* elementMultiAspectMustHaveCorrespondingRelationship(entity: EC.EntityClass): AsyncIterable<SchemaItemDiagnostic<EC.EntityClass, any[]>> {
   const context = entity.schema.context;
   if (!context)
     throw new EC.ECObjectsError(EC.ECObjectsStatus.SchemaContextUndefined, `Schema context is undefined for schema ${entity.schema.fullName}.`);
@@ -612,7 +615,7 @@ export async function* elementMultiAspectMustHaveCorrespondingRelationship(entit
  * BIS Rule: If an ElementUniqueAspect exists, there must be a relationship that derives from the ElementOwnsUniqueAspect
  * relationship with this class supported as a target constraint.
  */
-export async function* elementUniqueAspectMustHaveCorrespondingRelationship(entity: EC.EntityClass): AsyncIterable<EC.SchemaItemDiagnostic<EC.EntityClass, any[]>> {
+export async function* elementUniqueAspectMustHaveCorrespondingRelationship(entity: EC.EntityClass): AsyncIterable<SchemaItemDiagnostic<EC.EntityClass, any[]>> {
   const context = entity.schema.context;
   if (!context)
     throw new EC.ECObjectsError(EC.ECObjectsStatus.SchemaContextUndefined, `Schema context is undefined for schema ${entity.schema.fullName}.`);
@@ -645,7 +648,7 @@ export async function* elementUniqueAspectMustHaveCorrespondingRelationship(enti
 /**
  * BIS Rule: Entity classes cannot implement both bis:IParentElement and bis:ISubModeledElement.
  */
-export async function* entityClassesCannotDeriveFromIParentElementAndISubModeledElement(entity: EC.EntityClass): AsyncIterable<EC.SchemaItemDiagnostic<EC.EntityClass, any[]>> {
+export async function* entityClassesCannotDeriveFromIParentElementAndISubModeledElement(entity: EC.EntityClass): AsyncIterable<SchemaItemDiagnostic<EC.EntityClass, any[]>> {
   const context = entity.schema.context;
   if (!context)
     throw new EC.ECObjectsError(EC.ECObjectsStatus.SchemaContextUndefined, `Schema context is undefined for schema ${entity.schema.fullName}.`);
@@ -658,7 +661,7 @@ export async function* entityClassesCannotDeriveFromIParentElementAndISubModeled
  * BIS Rule: Entity classes cannot drive from bis:PhysicalModel, bis:SpatialLocationModel, bis:GroupInformationModel, bis:InformationRecordModel,
  * bis:DefinitionModel, bis:DocumentListModel, or bis:LinkModel.
  */
-export async function* entityClassesCannotDeriveFromModelClasses(entity: EC.EntityClass): AsyncIterable<EC.SchemaItemDiagnostic<EC.EntityClass, any[]>> {
+export async function* entityClassesCannotDeriveFromModelClasses(entity: EC.EntityClass): AsyncIterable<SchemaItemDiagnostic<EC.EntityClass, any[]>> {
   if (entity.schema.name === bisCoreName)
     return;
 
@@ -687,7 +690,7 @@ export async function* entityClassesCannotDeriveFromModelClasses(entity: EC.Enti
 /**
  * BIS Rule: Subclasses of bis:Model cannot have additional properties defined outside of BisCore.
  */
-export async function* bisModelSubClassesCannotDefineProperties(entity: EC.EntityClass): AsyncIterable<EC.SchemaItemDiagnostic<EC.EntityClass, any[]>> {
+export async function* bisModelSubClassesCannotDefineProperties(entity: EC.EntityClass): AsyncIterable<SchemaItemDiagnostic<EC.EntityClass, any[]>> {
   if (entity.schema.name === bisCoreName)
     return;
 
@@ -719,7 +722,7 @@ export async function* bisModelSubClassesCannotDefineProperties(entity: EC.Entit
 /**
  * BIS Rule: Entity classes may not subclass deprecated classes.
  */
-export async function* entityClassesMayNotSubclassDeprecatedClasses(entity: EC.EntityClass): AsyncIterable<EC.SchemaItemDiagnostic<EC.EntityClass, any[]>> {
+export async function* entityClassesMayNotSubclassDeprecatedClasses(entity: EC.EntityClass): AsyncIterable<SchemaItemDiagnostic<EC.EntityClass, any[]>> {
   if (undefined === entity.baseClass)
     return;
 
@@ -729,13 +732,13 @@ export async function* entityClassesMayNotSubclassDeprecatedClasses(entity: EC.E
 
   const baseClass = await entity.baseClass;
   if (undefined !== baseClass.customAttributes && baseClass.customAttributes.has(deprecatedFullName))
-    yield new Diagnostics.EntityClassesMayNotSubclassDeprecatedClasses(entity, [entity.fullName, baseClass.fullName], EC.DiagnosticCategory.Warning);
+    yield new Diagnostics.EntityClassesMayNotSubclassDeprecatedClasses(entity, [entity.fullName, baseClass.fullName], DiagnosticCategory.Warning);
 }
 
 /**
  * BIS Rule: Entity classes should not derived from deprecated mixin classes (warn)
  */
-export async function* entityClassesShouldNotDerivedFromDeprecatedMixinClasses(entity: EC.EntityClass): AsyncIterable<EC.SchemaItemDiagnostic<EC.EntityClass, any[]>> {
+export async function* entityClassesShouldNotDerivedFromDeprecatedMixinClasses(entity: EC.EntityClass): AsyncIterable<SchemaItemDiagnostic<EC.EntityClass, any[]>> {
   if (undefined !== entity.customAttributes && entity.customAttributes.has(deprecatedFullName))
     return;
 
@@ -743,7 +746,7 @@ export async function* entityClassesShouldNotDerivedFromDeprecatedMixinClasses(e
   for (const mixin of baseMixins) {
     const deprecatedClass = getClassDefinedCustomAttribute(mixin, deprecatedFullName);
     if (deprecatedClass)
-      yield new Diagnostics.EntityClassesShouldNotDerivedFromDeprecatedMixinClasses(entity, [entity.fullName, mixin.fullName, deprecatedClass.fullName], EC.DiagnosticCategory.Warning);
+      yield new Diagnostics.EntityClassesShouldNotDerivedFromDeprecatedMixinClasses(entity, [entity.fullName, mixin.fullName, deprecatedClass.fullName], DiagnosticCategory.Warning);
   }
 }
 
@@ -752,13 +755,13 @@ export async function* entityClassesShouldNotDerivedFromDeprecatedMixinClasses(e
  */
 
 /** BIS Rule: Relationship classes must not use the holding strength. */
-export async function* relationshipClassMustNotUseHoldingStrength(relationshipClass: EC.RelationshipClass): AsyncIterable<EC.SchemaItemDiagnostic<EC.RelationshipClass, any[]>> {
+export async function* relationshipClassMustNotUseHoldingStrength(relationshipClass: EC.RelationshipClass): AsyncIterable<SchemaItemDiagnostic<EC.RelationshipClass, any[]>> {
   if (relationshipClass.strength === EC.StrengthType.Holding)
     yield new Diagnostics.RelationshipClassMustNotUseHoldingStrength(relationshipClass, [relationshipClass.fullName]);
 }
 
 /** BIS Rule: Relationship classes must not have a source constraint multiplicity upper bound greater than 1 if the strength is embedding and the direction is forward. */
-export async function* relationshipSourceMultiplicityUpperBoundRestriction(relationshipClass: EC.RelationshipClass): AsyncIterable<EC.SchemaItemDiagnostic<EC.RelationshipClass, any[]>> {
+export async function* relationshipSourceMultiplicityUpperBoundRestriction(relationshipClass: EC.RelationshipClass): AsyncIterable<SchemaItemDiagnostic<EC.RelationshipClass, any[]>> {
   if (relationshipClass.strength !== EC.StrengthType.Embedding || relationshipClass.strengthDirection !== EC.StrengthDirection.Forward)
     return;
 
@@ -768,7 +771,7 @@ export async function* relationshipSourceMultiplicityUpperBoundRestriction(relat
 }
 
 /** BIS Rule: Relationship classes must not have a target constraint multiplicity upper bound greater than 1 if the strength is embedding and the direction is backward. */
-export async function* relationshipTargetMultiplicityUpperBoundRestriction(relationshipClass: EC.RelationshipClass): AsyncIterable<EC.SchemaItemDiagnostic<EC.RelationshipClass, any[]>> {
+export async function* relationshipTargetMultiplicityUpperBoundRestriction(relationshipClass: EC.RelationshipClass): AsyncIterable<SchemaItemDiagnostic<EC.RelationshipClass, any[]>> {
   if (relationshipClass.strength !== EC.StrengthType.Embedding || relationshipClass.strengthDirection !== EC.StrengthDirection.Backward)
     return;
 
@@ -778,7 +781,7 @@ export async function* relationshipTargetMultiplicityUpperBoundRestriction(relat
 }
 
 /** BIS Rule: Relationship classes must not have an ElementAspect target constraint (or source constraint if direction is backwards), unless they derive from ElementOwnsUniqueAspect or ElementOwnsMultiAspect */
-export async function* relationshipElementAspectContraintRestriction(relationshipClass: EC.RelationshipClass): AsyncIterable<EC.SchemaItemDiagnostic<EC.RelationshipClass, any[]>> {
+export async function* relationshipElementAspectContraintRestriction(relationshipClass: EC.RelationshipClass): AsyncIterable<SchemaItemDiagnostic<EC.RelationshipClass, any[]>> {
   const context = relationshipClass.schema.context;
   if (!context)
     throw new EC.ECObjectsError(EC.ECObjectsStatus.SchemaContextUndefined, `Schema context is undefined for schema ${relationshipClass.schema.fullName}.`);
@@ -800,7 +803,7 @@ export async function* relationshipElementAspectContraintRestriction(relationshi
 }
 
 /** BIS Rule: Embedding relationships should not have 'Has' in the class name. */
-export async function* embeddingRelationshipsMustNotHaveHasInName(relationshipClass: EC.RelationshipClass): AsyncIterable<EC.SchemaItemDiagnostic<EC.RelationshipClass, any[]>> {
+export async function* embeddingRelationshipsMustNotHaveHasInName(relationshipClass: EC.RelationshipClass): AsyncIterable<SchemaItemDiagnostic<EC.RelationshipClass, any[]>> {
   if (relationshipClass.strength !== EC.StrengthType.Embedding)
     return;
 
@@ -818,7 +821,7 @@ export async function* embeddingRelationshipsMustNotHaveHasInName(relationshipCl
 }
 
 /** BIS Rule: Relationship constraint should not use the deprecated constraint class (warn) */
-export async function* relationshipConstraintShouldNotUseDeprecatedConstraintClass(relationshipClass: EC.RelationshipClass): AsyncIterable<EC.SchemaItemDiagnostic<EC.RelationshipClass, any[]>> {
+export async function* relationshipConstraintShouldNotUseDeprecatedConstraintClass(relationshipClass: EC.RelationshipClass): AsyncIterable<SchemaItemDiagnostic<EC.RelationshipClass, any[]>> {
   if (relationshipClass.customAttributes && relationshipClass.customAttributes.has(deprecatedFullName))
     return;
 
@@ -834,7 +837,7 @@ export async function* relationshipConstraintShouldNotUseDeprecatedConstraintCla
       // check if constraint class has CoreCustomAttributes.Deprecated applied to itself
       if (constraint.customAttributes && constraint.customAttributes.has(deprecatedFullName)) {
         diagnosticsList.push(new Diagnostics.RelationshipConstraintShouldNotUseDeprecatedConstraintClass(
-          relationshipClass, [constraintName, relationshipClass.fullName, constraint.fullName], EC.DiagnosticCategory.Warning));
+          relationshipClass, [constraintName, relationshipClass.fullName, constraint.fullName], DiagnosticCategory.Warning));
       }
     }
 
@@ -851,7 +854,7 @@ export async function* relationshipConstraintShouldNotUseDeprecatedConstraintCla
 }
 
 /** BIS Rule: Relationship constraint should not use the deprecated abstract constraint (warn) */
-export async function* relationshipConstraintShouldNotUseDeprecatedAbstractConstraint(relationshipClass: EC.RelationshipClass): AsyncIterable<EC.SchemaItemDiagnostic<EC.RelationshipClass, any[]>> {
+export async function* relationshipConstraintShouldNotUseDeprecatedAbstractConstraint(relationshipClass: EC.RelationshipClass): AsyncIterable<SchemaItemDiagnostic<EC.RelationshipClass, any[]>> {
   if (relationshipClass.customAttributes && relationshipClass.customAttributes.has(deprecatedFullName))
     return;
 
@@ -860,7 +863,7 @@ export async function* relationshipConstraintShouldNotUseDeprecatedAbstractConst
     const abstractConstraint = await relationshipConstraint.abstractConstraint;
     if (abstractConstraint && abstractConstraint.customAttributes && abstractConstraint.customAttributes.has(deprecatedFullName)) {
       return new Diagnostics.RelationshipConstraintShouldNotUseDeprecatedAbstractConstraint(
-        relationshipClass, [constraintName, relationshipClass.fullName, abstractConstraint.fullName], EC.DiagnosticCategory.Warning);
+        relationshipClass, [constraintName, relationshipClass.fullName, abstractConstraint.fullName], DiagnosticCategory.Warning);
     }
 
     return undefined;
@@ -876,7 +879,7 @@ export async function* relationshipConstraintShouldNotUseDeprecatedAbstractConst
 }
 
 /** BIS Rule: Relationship constraint should not use the constraint class derived from deprecated base (warn) */
-export async function* relationshipConstraintShouldNotUseConstraintClassWithDeprecatedBase(relationshipClass: EC.RelationshipClass): AsyncIterable<EC.SchemaItemDiagnostic<EC.RelationshipClass, any[]>> {
+export async function* relationshipConstraintShouldNotUseConstraintClassWithDeprecatedBase(relationshipClass: EC.RelationshipClass): AsyncIterable<SchemaItemDiagnostic<EC.RelationshipClass, any[]>> {
   if (relationshipClass.customAttributes && relationshipClass.customAttributes.has(deprecatedFullName))
     return;
 
@@ -905,7 +908,7 @@ export async function* relationshipConstraintShouldNotUseConstraintClassWithDepr
         const deprecatedClass = getClassDefinedCustomAttribute(eachBase, deprecatedFullName);
         if (deprecatedClass) {
           diagnosticsList.push(new Diagnostics.RelationshipConstraintShouldNotUseConstraintClassWithDeprecatedBase(
-            relationshipClass, [constraintName, relationshipClass.fullName, constraint.fullName, eachBase.fullName, deprecatedClass.fullName], EC.DiagnosticCategory.Warning));
+            relationshipClass, [constraintName, relationshipClass.fullName, constraint.fullName, eachBase.fullName, deprecatedClass.fullName], DiagnosticCategory.Warning));
         }
       }
     }
@@ -923,7 +926,7 @@ export async function* relationshipConstraintShouldNotUseConstraintClassWithDepr
 }
 
 /** BIS Rule: Relationship constraint should not use the abstract constraint derived from deprecated base (warn) */
-export async function* relationshipConstraintShouldNotUseAbstractConstraintWithDeprecatedBase(relationshipClass: EC.RelationshipClass): AsyncIterable<EC.SchemaItemDiagnostic<EC.RelationshipClass, any[]>> {
+export async function* relationshipConstraintShouldNotUseAbstractConstraintWithDeprecatedBase(relationshipClass: EC.RelationshipClass): AsyncIterable<SchemaItemDiagnostic<EC.RelationshipClass, any[]>> {
   if (relationshipClass.customAttributes && relationshipClass.customAttributes.has(deprecatedFullName))
     return;
 
@@ -951,7 +954,7 @@ export async function* relationshipConstraintShouldNotUseAbstractConstraintWithD
       const deprecatedClass = getClassDefinedCustomAttribute(eachBase, deprecatedFullName);
       if (deprecatedClass) {
         diagnosticsList.push(new Diagnostics.RelationshipConstraintShouldNotUseAbstractConstraintWithDeprecatedBase(
-          relationshipClass, [constraintName, relationshipClass.fullName, abstractConstraint.fullName, eachBase.fullName, deprecatedClass.fullName], EC.DiagnosticCategory.Warning));
+          relationshipClass, [constraintName, relationshipClass.fullName, abstractConstraint.fullName, eachBase.fullName, deprecatedClass.fullName], DiagnosticCategory.Warning));
       }
     }
 
@@ -968,7 +971,7 @@ export async function* relationshipConstraintShouldNotUseAbstractConstraintWithD
 }
 
 /** BIS Rule: No additional link table relationships allowed. */
-export async function* noAdditionalLinkTableRelationships(relationshipClass: EC.RelationshipClass): AsyncIterable<EC.SchemaItemDiagnostic<EC.RelationshipClass, any[]>> {
+export async function* noAdditionalLinkTableRelationships(relationshipClass: EC.RelationshipClass): AsyncIterable<SchemaItemDiagnostic<EC.RelationshipClass, any[]>> {
   if (relationshipClass.schema.name === bisCoreName)
     return;
 
@@ -994,7 +997,7 @@ export async function* noAdditionalLinkTableRelationships(relationshipClass: EC.
  */
 
 /** BIS Rule: Struct classes must not have base classes. */
-export async function* structsCannotHaveBaseClasses(structClass: EC.StructClass): AsyncIterable<EC.SchemaItemDiagnostic<EC.StructClass, any[]>> {
+export async function* structsCannotHaveBaseClasses(structClass: EC.StructClass): AsyncIterable<SchemaItemDiagnostic<EC.StructClass, any[]>> {
   if (structClass.baseClass)
     yield new Diagnostics.StructsCannotHaveBaseClasses(structClass, [structClass.fullName]);
 }
@@ -1004,7 +1007,7 @@ export async function* structsCannotHaveBaseClasses(structClass: EC.StructClass)
  */
 
 /** BIS Rule: CustomAttributes classes must not have base classes. */
-export async function* customAttributeClassCannotHaveBaseClasses(customAttribute: EC.CustomAttributeClass): AsyncIterable<EC.SchemaItemDiagnostic<EC.CustomAttributeClass, any[]>> {
+export async function* customAttributeClassCannotHaveBaseClasses(customAttribute: EC.CustomAttributeClass): AsyncIterable<SchemaItemDiagnostic<EC.CustomAttributeClass, any[]>> {
   if (customAttribute.baseClass)
     yield new Diagnostics.CustomAttributeClassCannotHaveBaseClasses(customAttribute, [customAttribute.fullName]);
 }
@@ -1014,7 +1017,7 @@ export async function* customAttributeClassCannotHaveBaseClasses(customAttribute
  */
 
 /** BIS Rule: Kind Of Quantities must use an SI Unit for their persistence unit. */
-export async function* koqMustUseSIUnitForPersistenceUnit(koq: EC.KindOfQuantity): AsyncIterable<EC.SchemaItemDiagnostic<EC.KindOfQuantity, any[]>> {
+export async function* koqMustUseSIUnitForPersistenceUnit(koq: EC.KindOfQuantity): AsyncIterable<SchemaItemDiagnostic<EC.KindOfQuantity, any[]>> {
   const unit = await koq.persistenceUnit;
   if (!unit || !(unit instanceof EC.Unit))
     return;
@@ -1031,7 +1034,7 @@ export async function* koqMustUseSIUnitForPersistenceUnit(koq: EC.KindOfQuantity
 }
 
 /** BIS Rule: Kind Of Quantities must not have duplicate presentation formats. */
-export async function* koqDuplicatePresentationFormat(koq: EC.KindOfQuantity): AsyncIterable<EC.SchemaItemDiagnostic<EC.KindOfQuantity, any[]>> {
+export async function* koqDuplicatePresentationFormat(koq: EC.KindOfQuantity): AsyncIterable<SchemaItemDiagnostic<EC.KindOfQuantity, any[]>> {
   const koqSchema = koq.schema.schemaKey;
   const maxAllowedAecUnits: EC.SchemaKey = new EC.SchemaKey("AecUnits", 1, 0, 2);
   const isExceptionAecUnits = koqSchema.compareByName(maxAllowedAecUnits) && koqSchema.compareByVersion(maxAllowedAecUnits) < 0;
@@ -1057,7 +1060,7 @@ export async function* koqDuplicatePresentationFormat(koq: EC.KindOfQuantity): A
  */
 
 /** BIS Rule: Properties should not be of type long. These properties should be navigation properties if they represent a FK or be of type int or double if they represent a number. */
-export async function* propertyShouldNotBeOfTypeLong(property: EC.AnyProperty): AsyncIterable<EC.PropertyDiagnostic<any[]>> {
+export async function* propertyShouldNotBeOfTypeLong(property: EC.AnyProperty): AsyncIterable<PropertyDiagnostic<any[]>> {
   const primitiveType = getPrimitiveType(property);
   if (!primitiveType)
     return;
@@ -1068,7 +1071,7 @@ export async function* propertyShouldNotBeOfTypeLong(property: EC.AnyProperty): 
 }
 
 /** BIS Rule: Properties must use the following supported ExtendedTypes: BeGuid, GeometrySystem, and Json */
-export async function* propertyHasInvalidExtendedType(property: EC.AnyProperty): AsyncIterable<EC.PropertyDiagnostic<any[]>> {
+export async function* propertyHasInvalidExtendedType(property: EC.AnyProperty): AsyncIterable<PropertyDiagnostic<any[]>> {
   if (!(property instanceof EC.PrimitiveOrEnumPropertyBase))
     return;
 
@@ -1080,7 +1083,7 @@ export async function* propertyHasInvalidExtendedType(property: EC.AnyProperty):
 }
 
 /** BIS Rule: Properties must not use CustomAttribute bis:CustomHandledProperty unless CustomAttribute bis:ClassHasHandler is defined on their parent class (not derived from a base class). */
-export async function* propertyMustNotUseCustomHandledPropertyRestriction(property: EC.AnyProperty): AsyncIterable<EC.PropertyDiagnostic<any[]>> {
+export async function* propertyMustNotUseCustomHandledPropertyRestriction(property: EC.AnyProperty): AsyncIterable<PropertyDiagnostic<any[]>> {
   if (!property.customAttributes)
     return;
 
@@ -1095,7 +1098,7 @@ export async function* propertyMustNotUseCustomHandledPropertyRestriction(proper
 /** ECClass RULES */
 
 /** BIS Rule: Properties within the same class and category cannot have the same display label. */
-export async function* multiplePropertiesInClassWithSameLabel(ecClass: EC.AnyClass): AsyncIterable<EC.ClassDiagnostic<any[]>> {
+export async function* multiplePropertiesInClassWithSameLabel(ecClass: EC.AnyClass): AsyncIterable<ClassDiagnostic<any[]>> {
   if (!ecClass.properties)
     return;
 
@@ -1130,39 +1133,39 @@ export async function* multiplePropertiesInClassWithSameLabel(ecClass: EC.AnyCla
 }
 
 /** BIS Rule: ClassHasHandler cannot be applied outside of BisCore, Functional, and Generic Schemas */
-export async function* classHasHandlerCACannotAppliedOutsideCoreSchemas(ecClass: EC.AnyClass): AsyncIterable<EC.ClassDiagnostic<any[]>> {
+export async function* classHasHandlerCACannotAppliedOutsideCoreSchemas(ecClass: EC.AnyClass): AsyncIterable<ClassDiagnostic<any[]>> {
   if (ecClass.customAttributes === undefined)
     return;
 
   const schemaName: string = ecClass.schema.name;
   const isExceptionSchema = (schemaName === "BisCore") || (schemaName === "Functional") || (schemaName === "Generic");
   if (!isExceptionSchema && ecClass.customAttributes.has(classHasHandlerCAFullName)) {
-    yield new Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(ecClass, [ecClass.fullName, ecClass.schema.name], EC.DiagnosticCategory.Error);
+    yield new Diagnostics.ClassHasHandlerCACannotAppliedOutsideCoreSchemas(ecClass, [ecClass.fullName, ecClass.schema.name], DiagnosticCategory.Error);
   }
 }
 
 /** BIS Rule: ClassHasHandler cannot be applied on new classes within BisCore, Functional, and Generic Schemas */
-export async function* noNewClassHasHandlerCAInCoreSchemas(ecClass: EC.AnyClass): AsyncIterable<EC.ClassDiagnostic<any[]>> {
+export async function* noNewClassHasHandlerCAInCoreSchemas(ecClass: EC.AnyClass): AsyncIterable<ClassDiagnostic<any[]>> {
   if (ecClass.customAttributes === undefined)
     return;
 
   const schemaName: string = ecClass.schema.name;
 
   if (schemaName === "BisCore" && ecClass.customAttributes.has(classHasHandlerCAFullName) && !bisCoreClassHasHandlerClasses.includes(ecClass.name)) {
-    yield new Diagnostics.NoNewClassHasHandlerCAInCoreSchemas(ecClass, [ecClass.fullName, ecClass.schema.name], EC.DiagnosticCategory.Error);
+    yield new Diagnostics.NoNewClassHasHandlerCAInCoreSchemas(ecClass, [ecClass.fullName, ecClass.schema.name], DiagnosticCategory.Error);
   }
 
   if (schemaName === "Functional" && ecClass.customAttributes.has(classHasHandlerCAFullName) && !functionalClassHasHandlerClasses.includes(ecClass.name)) {
-    yield new Diagnostics.NoNewClassHasHandlerCAInCoreSchemas(ecClass, [ecClass.fullName, ecClass.schema.name], EC.DiagnosticCategory.Error);
+    yield new Diagnostics.NoNewClassHasHandlerCAInCoreSchemas(ecClass, [ecClass.fullName, ecClass.schema.name], DiagnosticCategory.Error);
   }
 
   if (schemaName === "Generic" && ecClass.customAttributes.has(classHasHandlerCAFullName) && !genericClassHasHandlerClasses.includes(ecClass.name)) {
-    yield new Diagnostics.NoNewClassHasHandlerCAInCoreSchemas(ecClass, [ecClass.fullName, ecClass.schema.name], EC.DiagnosticCategory.Error);
+    yield new Diagnostics.NoNewClassHasHandlerCAInCoreSchemas(ecClass, [ecClass.fullName, ecClass.schema.name], DiagnosticCategory.Error);
   }
 }
 
 /** BIS Rule: Class should not derived from deprecated class (warn) */
-export async function* classShouldNotDerivedFromDeprecatedClass(ecClass: EC.AnyClass): AsyncIterable<EC.ClassDiagnostic<any[]>> {
+export async function* classShouldNotDerivedFromDeprecatedClass(ecClass: EC.AnyClass): AsyncIterable<ClassDiagnostic<any[]>> {
   if (ecClass.customAttributes && ecClass.customAttributes.has(deprecatedFullName))
     return;
 
@@ -1172,11 +1175,11 @@ export async function* classShouldNotDerivedFromDeprecatedClass(ecClass: EC.AnyC
 
   const deprecatedBase = getClassDefinedCustomAttribute(base, deprecatedFullName);
   if (deprecatedBase)
-    yield new Diagnostics.ClassShouldNotDerivedFromDeprecatedClass(ecClass, [ecClass.fullName, base.fullName, deprecatedBase.fullName], EC.DiagnosticCategory.Warning);
+    yield new Diagnostics.ClassShouldNotDerivedFromDeprecatedClass(ecClass, [ecClass.fullName, base.fullName, deprecatedBase.fullName], DiagnosticCategory.Warning);
 }
 
 /** BIS Rule: Class should not have deprecated property (warn) */
-export async function* classShouldNotHaveDeprecatedProperty(ecClass: EC.AnyClass): AsyncIterable<EC.ClassDiagnostic<any[]>> {
+export async function* classShouldNotHaveDeprecatedProperty(ecClass: EC.AnyClass): AsyncIterable<ClassDiagnostic<any[]>> {
   if (ecClass.customAttributes && ecClass.customAttributes.has(deprecatedFullName))
     return;
 
@@ -1185,12 +1188,12 @@ export async function* classShouldNotHaveDeprecatedProperty(ecClass: EC.AnyClass
 
   for (const property of ecClass.properties) {
     if (property.customAttributes && property.customAttributes.has(deprecatedFullName))
-      yield new Diagnostics.ClassShouldNotHaveDeprecatedProperty(ecClass, [ecClass.fullName, property.name], EC.DiagnosticCategory.Warning);
+      yield new Diagnostics.ClassShouldNotHaveDeprecatedProperty(ecClass, [ecClass.fullName, property.name], DiagnosticCategory.Warning);
   }
 }
 
 /** BIS Rule: Class should not have property which is of deprecated struct class (warn). No warning issued if class or property itself is deprecated */
-export async function* classShouldNotHavePropertyOfDeprecatedStructClass(ecClass: EC.AnyClass): AsyncIterable<EC.ClassDiagnostic<any[]>> {
+export async function* classShouldNotHavePropertyOfDeprecatedStructClass(ecClass: EC.AnyClass): AsyncIterable<ClassDiagnostic<any[]>> {
   if (ecClass.customAttributes && ecClass.customAttributes.has(deprecatedFullName))
     return;
 
@@ -1205,13 +1208,13 @@ export async function* classShouldNotHavePropertyOfDeprecatedStructClass(ecClass
       // since struct is banned from extending another struct in bis rule, we won't recursively check deprecated base here. Only check if it is deprecated
       const struct = (property as EC.AnyStructProperty).structClass;
       if (struct.customAttributes && struct.customAttributes.has(deprecatedFullName))
-        yield new Diagnostics.ClassShouldNotHavePropertyOfDeprecatedStructClass(ecClass, [ecClass.fullName, property.name, struct.fullName], EC.DiagnosticCategory.Warning);
+        yield new Diagnostics.ClassShouldNotHavePropertyOfDeprecatedStructClass(ecClass, [ecClass.fullName, property.name, struct.fullName], DiagnosticCategory.Warning);
     }
   }
 }
 
 /** BIS Rule: Class should not use deprecated custom attributes (warn) */
-export async function* classShouldNotUseDeprecatedCustomAttributes(ecClass: EC.AnyClass): AsyncIterable<EC.ClassDiagnostic<any[]>> {
+export async function* classShouldNotUseDeprecatedCustomAttributes(ecClass: EC.AnyClass): AsyncIterable<ClassDiagnostic<any[]>> {
   if (!ecClass.customAttributes || ecClass.customAttributes.has(deprecatedFullName))
     return;
 
@@ -1223,7 +1226,7 @@ export async function* classShouldNotUseDeprecatedCustomAttributes(ecClass: EC.A
 
     // since CA class is banned from extending another CA class in bis rule, we won't recursively check deprecated base here. Only check if it is deprecated
     if (customAttributeClass.customAttributes && customAttributeClass.customAttributes.has(deprecatedFullName))
-      yield new Diagnostics.ClassShouldNotUseDeprecatedCustomAttributes(ecClass, [ecClass.fullName, customAttributeClass.fullName], EC.DiagnosticCategory.Warning);
+      yield new Diagnostics.ClassShouldNotUseDeprecatedCustomAttributes(ecClass, [ecClass.fullName, customAttributeClass.fullName], DiagnosticCategory.Warning);
   }
 }
 

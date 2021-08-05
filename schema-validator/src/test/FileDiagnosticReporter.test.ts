@@ -7,7 +7,7 @@ import { expect } from "chai";
 import * as path from "path";
 import * as fs from "fs-extra";
 import * as utils from "./utilities/utils";
-import * as ECRules from "@bentley/ecschema-metadata/lib/Validation/ECRules";
+import * as ECRules from "@bentley/ecschema-editing/lib/Validation/ECRules";
 import * as EC from "@bentley/ecschema-metadata/lib/ecschema-metadata";
 import { FileDiagnosticReporter } from "../FileDiagnosticReporter";
 

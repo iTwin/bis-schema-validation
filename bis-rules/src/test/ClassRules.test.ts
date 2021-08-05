@@ -10,7 +10,7 @@ import { MutableProperty } from "@bentley/ecschema-metadata/lib/Metadata/Propert
 import { MutableSchema } from "@bentley/ecschema-metadata/lib/Metadata/Schema";
 import { MutableEntityClass } from "@bentley/ecschema-metadata/lib/Metadata/EntityClass";
 import { AnyClass, DelayedPromiseWithProps, ECClass, EntityClass, LazyLoadedSchemaItem, Mixin, PrimitiveType, Property, PropertyCategory, RelationshipClass, Schema, SchemaContext } from "@bentley/ecschema-metadata";
-import { DiagnosticCategory, DiagnosticType } from "@bentley/ecschema-metadata/lib/Validation/Diagnostic";
+import { DiagnosticCategory, DiagnosticType } from "@bentley/ecschema-editing";
 import { BisTestHelper } from "./utils/BisTestHelper";
 
 describe("Class Rule Tests", () => {

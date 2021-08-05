@@ -4,6 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import * as EC from "@bentley/ecschema-metadata";
+import { AnyDiagnostic, DiagnosticCodes, IRuleSuppressionSet } from "@bentley/ecschema-editing";
 import { DiagnosticCodes as BisDiagnosticCodes } from "@bentley/bis-rules";
 import { CustomAttributeContainerProps } from "@bentley/ecschema-metadata/lib/Metadata/CustomAttribute";
 
@@ -12,7 +13,7 @@ interface ISchemaInfo {
   version: EC.ECVersion;
 }
 
-export const ruleSuppressionSet: EC.IRuleSuppressionSet = {
+export const ruleSuppressionSet: IRuleSuppressionSet = {
   name: "SuppressionSet",
   schemaRuleSuppressions: [
     // BIS-007
@@ -49,13 +50,13 @@ export const ruleSuppressionSet: EC.IRuleSuppressionSet = {
     { ruleCode: BisDiagnosticCodes.EmbeddingRelationshipsMustNotHaveHasInName, rule: embeddingRelationshipsMustNotHaveHasInName },
   ],
   customAttributeInstanceSuppressions: [
-    { ruleCode: EC.DiagnosticCodes.CustomAttributeSchemaMustBeReferenced, rule: customAttributeSchemaMustBeReferenced },
-    { ruleCode: EC.DiagnosticCodes.CustomAttributeClassNotFound, rule: customAttributeClassNotFound },
+    { ruleCode: DiagnosticCodes.CustomAttributeSchemaMustBeReferenced, rule: customAttributeSchemaMustBeReferenced },
+    { ruleCode: DiagnosticCodes.CustomAttributeClassNotFound, rule: customAttributeClassNotFound },
   ],
 };
 
 /** Rule BIS-1001 rule suppression. */
-export async function koqMustUseSIUnitForPersistenceUnit(_diagnostic: EC.AnyDiagnostic, koq: EC.KindOfQuantity): Promise<boolean> {
+export async function koqMustUseSIUnitForPersistenceUnit(_diagnostic: AnyDiagnostic, koq: EC.KindOfQuantity): Promise<boolean> {
   if (koq.schema.name === "CifUnits") {
     const persistenceUnit = await koq.persistenceUnit;
     if (persistenceUnit?.fullName === "Units.MONETARY_UNIT" || persistenceUnit?.fullName === "CifUnits.MONETARY_UNIT_PER_J" ||
@@ -67,7 +68,7 @@ export async function koqMustUseSIUnitForPersistenceUnit(_diagnostic: EC.AnyDiag
 }
 
 /** Rule BIS-1002 rule suppression. */
-export async function koqDuplicatePresentationFormat(_diagnostic: EC.AnyDiagnostic, koq: EC.KindOfQuantity): Promise<boolean> {
+export async function koqDuplicatePresentationFormat(_diagnostic: AnyDiagnostic, koq: EC.KindOfQuantity): Promise<boolean> {
   if (koq.schema.name === "ProcessPhysical" || koq.schema.name === "ProcessFunctional") {
     if (koq.name === "ONE")
       return true;
@@ -76,7 +77,7 @@ export async function koqDuplicatePresentationFormat(_diagnostic: EC.AnyDiagnost
 }
 
 /** Rule BIS-1505 rule suppression. */
-export async function embeddingRelationshipsMustNotHaveHasInName(_diagnostic: EC.AnyDiagnostic, relationshipClass: EC.RelationshipClass): Promise<boolean> {
+export async function embeddingRelationshipsMustNotHaveHasInName(_diagnostic: AnyDiagnostic, relationshipClass: EC.RelationshipClass): Promise<boolean> {
   if (relationshipClass.schema.name === "ProcessFunctional" || relationshipClass.schema.name === "ProcessPhysical" || relationshipClass.schema.name.startsWith("SP3D")) {
     return true;
   }
@@ -84,7 +85,7 @@ export async function embeddingRelationshipsMustNotHaveHasInName(_diagnostic: EC
 }
 
 /** Rule BIS-007 rule suppression. */
-export async function schemaClassDisplayLabelMustBeUnique(diagnostic: EC.AnyDiagnostic, schema: EC.Schema): Promise<boolean> {
+export async function schemaClassDisplayLabelMustBeUnique(diagnostic: AnyDiagnostic, schema: EC.Schema): Promise<boolean> {
   const schemaList = [
     { name: "ProcessPidGraphical", version: new EC.ECVersion(1, 99, 99) },
     { name: "RoadRailPhysical", version: new EC.ECVersion(1, 99, 99) },
@@ -146,7 +147,7 @@ export async function schemaClassDisplayLabelMustBeUnique(diagnostic: EC.AnyDiag
 }
 
 /** Rule BIS-100 rule suppression. */
-export async function multiplePropertiesInClassWithSameLabel(diagnostic: EC.AnyDiagnostic, ecClass: EC.AnyClass): Promise<boolean> {
+export async function multiplePropertiesInClassWithSameLabel(diagnostic: AnyDiagnostic, ecClass: EC.AnyClass): Promise<boolean> {
   const schemaList = [
     { name: "ProcessPhysical", version: new EC.ECVersion(1, 0, 1) },
   ];
@@ -165,7 +166,7 @@ export async function multiplePropertiesInClassWithSameLabel(diagnostic: EC.AnyD
 }
 
 /** Rule BIS-101 rule suppression. */
-export async function classHasHandlerCACannotAppliedOutsideCoreSchemas(_diagnostic: EC.AnyDiagnostic, ecClass: EC.AnyClass): Promise<boolean> {
+export async function classHasHandlerCACannotAppliedOutsideCoreSchemas(_diagnostic: AnyDiagnostic, ecClass: EC.AnyClass): Promise<boolean> {
   const schemaList = [
     { name: "Grids", version: new EC.ECVersion(1, 0, 0) },
     { name: "Markup", version: new EC.ECVersion(1, 0, 0) },
@@ -198,7 +199,7 @@ export async function classHasHandlerCACannotAppliedOutsideCoreSchemas(_diagnost
 }
 
 /** Rule BIS-605 rule suppression. */
-export async function elementUniqueAspectMustHaveCorrespondingRelationship(_diagnostic: EC.AnyDiagnostic, entity: EC.EntityClass): Promise<boolean> {
+export async function elementUniqueAspectMustHaveCorrespondingRelationship(_diagnostic: AnyDiagnostic, entity: EC.EntityClass): Promise<boolean> {
   const schemaList = [
     { name: "BuildingCommon", version: new EC.ECVersion(1, 99, 99) },
   ];
@@ -212,7 +213,7 @@ export async function elementUniqueAspectMustHaveCorrespondingRelationship(_diag
 }
 
 /** Rule BIS-607 rule suppression. */
-export async function entityClassesCannotDeriveFromModelClasses(_diagnostic: EC.AnyDiagnostic, entity: EC.EntityClass): Promise<boolean> {
+export async function entityClassesCannotDeriveFromModelClasses(_diagnostic: AnyDiagnostic, entity: EC.EntityClass): Promise<boolean> {
   const schemaList = [
     { name: "StructuralPhysical", version: new EC.ECVersion(1, 99, 99) },
     { name: "BuildingPhysical", version: new EC.ECVersion(1, 99, 99) },
@@ -244,7 +245,7 @@ export async function entityClassesCannotDeriveFromModelClasses(_diagnostic: EC.
 }
 
 /** Rule BIS-609 rule suppression. */
-export async function bisModelSubClassesCannotDefineProperties(_diagnostic: EC.AnyDiagnostic, entity: EC.EntityClass): Promise<boolean> {
+export async function bisModelSubClassesCannotDefineProperties(_diagnostic: AnyDiagnostic, entity: EC.EntityClass): Promise<boolean> {
   const schemaList = [
     { name: "ScalableMesh", version: new EC.ECVersion(1, 99, 99) },
     { name: "Raster", version: new EC.ECVersion(1, 99, 99) },
@@ -266,7 +267,7 @@ export async function bisModelSubClassesCannotDefineProperties(_diagnostic: EC.A
 }
 
 /** Rule BIS-610 rule suppression. */
-export async function entityClassesMayNotSubclassDeprecatedClasses(_diagnostic: EC.AnyDiagnostic, entity: EC.EntityClass): Promise<boolean> {
+export async function entityClassesMayNotSubclassDeprecatedClasses(_diagnostic: AnyDiagnostic, entity: EC.EntityClass): Promise<boolean> {
   const schemaList = [
     { name: "SpatialComposition", version: new EC.ECVersion(1, 99, 99) },
     { name: "BuildingSpatial", version: new EC.ECVersion(1, 99, 99) },
@@ -293,7 +294,7 @@ export async function entityClassesMayNotSubclassDeprecatedClasses(_diagnostic: 
 }
 
 /** Rule BIS-1300 rule suppression. */
-export async function propertyShouldNotBeOfTypeLong(_diagnostic: EC.AnyDiagnostic, property: EC.AnyProperty): Promise<boolean> {
+export async function propertyShouldNotBeOfTypeLong(_diagnostic: AnyDiagnostic, property: EC.AnyProperty): Promise<boolean> {
   const schemaList = [
     { name: "Markup", version: new EC.ECVersion(1, 99, 99) },
     { name: "BuildingCommon", version: new EC.ECVersion(1, 99, 99) },
@@ -315,7 +316,7 @@ export async function propertyShouldNotBeOfTypeLong(_diagnostic: EC.AnyDiagnosti
 }
 
 /** EC Rule EC-501 rule suppression. */
-export async function customAttributeSchemaMustBeReferenced(diagnostic: EC.AnyDiagnostic, container: CustomAttributeContainerProps): Promise<boolean> {
+export async function customAttributeSchemaMustBeReferenced(diagnostic: AnyDiagnostic, container: CustomAttributeContainerProps): Promise<boolean> {
   const schemaList = [
     { name: "RoadRailAlignment", version: new EC.ECVersion(2, 0, 1) },
     { name: "Construction", version: new EC.ECVersion(1, 0, 1) },
@@ -335,7 +336,7 @@ export async function customAttributeSchemaMustBeReferenced(diagnostic: EC.AnyDi
 }
 
 /** EC Rule EC-502 rule suppression. */
-export async function customAttributeClassNotFound(diagnostic: EC.AnyDiagnostic, container: CustomAttributeContainerProps): Promise<boolean> {
+export async function customAttributeClassNotFound(diagnostic: AnyDiagnostic, container: CustomAttributeContainerProps): Promise<boolean> {
   const schemaList = [
     { name: "RoadRailAlignment", version: new EC.ECVersion(2, 0, 1) },
     { name: "Construction", version: new EC.ECVersion(1, 0, 1) },
