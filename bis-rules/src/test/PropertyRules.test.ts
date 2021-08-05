@@ -8,7 +8,7 @@ import * as Rules from "../BisRules";
 import { ECClass, EntityClass, PrimitiveType, Schema, SchemaContext } from "@bentley/ecschema-metadata";
 import { MutableClass } from "@bentley/ecschema-metadata/lib/Metadata/Class";
 import { MutableSchema } from "@bentley/ecschema-metadata/lib/Metadata/Schema";
-import { DiagnosticCategory, DiagnosticType } from "@bentley/ecschema-metadata/lib/Validation/Diagnostic";
+import { DiagnosticCategory, DiagnosticType } from "@bentley/ecschema-editing";
 import { CustomAttribute } from "@bentley/ecschema-metadata/lib/Metadata/CustomAttribute";
 
 describe("Property Rule Tests", () => {

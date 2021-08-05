@@ -3,7 +3,7 @@
 * Licensed under the MIT License. See LICENSE.md in the project root for license terms.
 *--------------------------------------------------------------------------------------------*/
 
-import { ISchemaChange } from "@bentley/ecschema-metadata";
+import { ISchemaChange } from "@bentley/ecschema-editing";
 import { SchemaCompareReporter } from "./SchemaCompareReporter";
 
 export interface IFormattedSchemaChange {
