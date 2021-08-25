@@ -19,7 +19,6 @@ specifiers:
   '@bentley/rbac-client': 3.0.0-dev.5
   '@bentley/telemetry-client': 3.0.0-dev.16
   '@rush-temp/bis-rules': file:./projects/bis-rules.tgz
-  '@rush-temp/imodel-quality-checker': file:./projects/imodel-quality-checker.tgz
   '@rush-temp/imodel-schema-validator': file:./projects/imodel-schema-validator.tgz
   '@rush-temp/native-schema-locater': file:./projects/native-schema-locater.tgz
   '@rush-temp/schema-comparer': file:./projects/schema-comparer.tgz
@@ -72,7 +71,6 @@ dependencies:
   '@bentley/rbac-client': 3.0.0-dev.5_ddbf32d11ea3d5a6c4b5024970e7d739
   '@bentley/telemetry-client': 3.0.0-dev.16_ddbf32d11ea3d5a6c4b5024970e7d739
   '@rush-temp/bis-rules': file:projects/bis-rules.tgz_049724796084d7a737517c0e6f3067e4
-  '@rush-temp/imodel-quality-checker': file:projects/imodel-quality-checker.tgz_bb2ca7ea9c3a48932c2e7d7094747a90
   '@rush-temp/imodel-schema-validator': file:projects/imodel-schema-validator.tgz_088605aa802aab54bc7db00dd0ba9fb4
   '@rush-temp/native-schema-locater': file:projects/native-schema-locater.tgz_bb2ca7ea9c3a48932c2e7d7094747a90
   '@rush-temp/schema-comparer': file:projects/schema-comparer.tgz_43b4f214f3d647e991935cf446e3b7f8
@@ -7226,52 +7224,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  file:projects/imodel-quality-checker.tgz_bb2ca7ea9c3a48932c2e7d7094747a90:
-    resolution: {integrity: sha512-MENc/SZ/fdsWg91Xl9ds5vA2QnZWT8ux8kwAZtNbgdJW0Bk567invrMDhXZip8QSEppQsHGmTdOIBbX+xYBygA==, tarball: file:projects/imodel-quality-checker.tgz}
-    id: file:projects/imodel-quality-checker.tgz
-    name: '@rush-temp/imodel-quality-checker'
-    version: 0.0.0
-    dependencies:
-      '@bentley/backend-itwin-client': 3.0.0-dev.16_8c016cc0e5e2c3054732bedd01961c1b
-      '@bentley/bentleyjs-core': 3.0.0-dev.16
-      '@bentley/build-tools': 2.19.1
-      '@bentley/ecschema-locaters': 3.0.0-dev.16_7acda18ce045b25d104772aea7d86eef
-      '@bentley/ecschema-metadata': 3.0.0-dev.16_85ceb27778e818d0474c9626582ca77d
-      '@bentley/eslint-plugin': 2.19.1_eslint@6.8.0+typescript@4.3.5
-      '@bentley/geometry-core': 3.0.0-dev.16_30b0741cffeb29dbbab3010d4b962da8
-      '@bentley/imodelhub-client': 3.0.0-dev.16_34b38919d5d6f9c298ae6554d52bee2e
-      '@bentley/imodeljs-backend': 3.0.0-dev.16_1f00789affc0075670daf67eae0b4e80
-      '@bentley/imodeljs-common': 3.0.0-dev.16_dc354c825927d958777bc8640fb61639
-      '@bentley/itwin-client': 3.0.0-dev.16_30b0741cffeb29dbbab3010d4b962da8
-      '@bentley/oidc-signin-tool': 2.3.0-dev.8
-      '@bentley/rbac-client': 3.0.0-dev.5_ddbf32d11ea3d5a6c4b5024970e7d739
-      '@bentley/telemetry-client': 3.0.0-dev.16_ddbf32d11ea3d5a6c4b5024970e7d739
-      '@types/chai': 4.2.21
-      '@types/mocha': 8.2.3
-      '@types/node': 10.12.18
-      chai: 4.3.4
-      chalk: 2.4.2
-      commander: 2.20.3
-      cpx: 1.5.0
-      eslint: 6.8.0
-      fs-extra: 7.0.1
-      httpntlm: 1.7.7
-      js-sha1: 0.6.0
-      mocha: 8.4.0
-      nyc: 15.1.0
-      readdirp: 3.6.0
-      rimraf: 2.7.1
-      typescript: 4.3.5
-    transitivePeerDependencies:
-      - '@bentley/frontend-authorization-client'
-      - '@bentley/imodeljs-i18n'
-      - bufferutil
-      - supports-color
-      - utf-8-validate
-    dev: false
-
   file:projects/imodel-schema-validator.tgz_088605aa802aab54bc7db00dd0ba9fb4:
-    resolution: {integrity: sha512-y0rRBplGwI2XmtZxftwyrArLweLpkgbvdA2ayqB+46MVyYoPlU26Fdl5VVEz5oC6xTn9IrR/zLaoIZjzgM1o3w==, tarball: file:projects/imodel-schema-validator.tgz}
+    resolution: {integrity: sha512-waC0QQbA7sRqlkCSqIIqHiReq5YPp8M4N/CKvFMTJpaAo0gyxjJ63X7NCY0z1DThDF6sbJVGPnURKT02Ohj5TQ==, tarball: file:projects/imodel-schema-validator.tgz}
     id: file:projects/imodel-schema-validator.tgz
     name: '@rush-temp/imodel-schema-validator'
     version: 0.0.0
@@ -7366,7 +7320,7 @@ packages:
     dev: false
 
   file:projects/schema-comparer.tgz_43b4f214f3d647e991935cf446e3b7f8:
-    resolution: {integrity: sha512-OKfumDaFh0O4Uli0UTu5JC4tAo+iVagSesVbcaOn3QdwfP4MiVS7SYxzkzdKEdY/6zaEFnA1PqQYpg+AzKWIPg==, tarball: file:projects/schema-comparer.tgz}
+    resolution: {integrity: sha512-tzbCFDLhMVifujSFFTjJ+kJkTp87SVPD0xu8lrsWYPzjYHxnQOce4I7vM/jEZOhHYz6RKywJgEnm3XtO+5LPfw==, tarball: file:projects/schema-comparer.tgz}
     id: file:projects/schema-comparer.tgz
     name: '@rush-temp/schema-comparer'
     version: 0.0.0
@@ -7417,7 +7371,7 @@ packages:
     dev: false
 
   file:projects/schema-roundtrip.tgz_b081feb224ebc45e69e9e59b99775d6f:
-    resolution: {integrity: sha512-mxVX8fGXT98LbIuMxFODqx7bfmQ4DYL6ulacQRqEkkEAkTVunCyTWWXCAgEJdKSO3OKPuVn9nlsHXYCBB9mkiQ==, tarball: file:projects/schema-roundtrip.tgz}
+    resolution: {integrity: sha512-qpyRVDeP+ngBJk35XaYvClntEV6vSYYPHKexZ2wyIx2P5BX6cxEh9gk50tvl0C8EP+p2mkXVjvmM1s4nmhvxKA==, tarball: file:projects/schema-roundtrip.tgz}
     id: file:projects/schema-roundtrip.tgz
     name: '@rush-temp/schema-roundtrip'
     version: 0.0.0
@@ -7466,7 +7420,7 @@ packages:
     dev: false
 
   file:projects/schema-validator.tgz_088605aa802aab54bc7db00dd0ba9fb4:
-    resolution: {integrity: sha512-S3gDUb/RkWsmj8hoGmD9x1hKlljsSKFV5NErFiqUaq8iN4NAadsWDVHAjnyB7jlZblfc4T07Zm1eAlYeUkJnCg==, tarball: file:projects/schema-validator.tgz}
+    resolution: {integrity: sha512-Yj/vi2VpoAXusbeLJge2oWGSiBHIyTfWEhqk6AW8Qg0XJSFJc7fHWWx509PGwdjePBqDLw49Yfejs47la0dX2A==, tarball: file:projects/schema-validator.tgz}
     id: file:projects/schema-validator.tgz
     name: '@rush-temp/schema-validator'
     version: 0.0.0
