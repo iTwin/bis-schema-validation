@@ -41,12 +41,6 @@
       "projectFolder": "imodel-schema-validator",
       "shouldPublish": true,
       "versionPolicyName": "bsv-versions"
-    },
-    {
-      "packageName": "@bentley/imodel-quality-checker",
-      "projectFolder": "imodel-quality-checker",
-      "shouldPublish": true,
-      "versionPolicyName": "bsv-versions"
     }
   ]
 }

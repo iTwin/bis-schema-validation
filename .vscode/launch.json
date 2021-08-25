@@ -73,20 +73,6 @@
       "outputCapture": "std"
     },
     {
-      "name": "Run imodel-quality-checker Tests",
-      "cwd": "${workspaceFolder}/imodel-quality-checker",
-      "type": "pwa-node",
-      "request": "launch",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": [
-        "test"
-      ],
-      "outFiles": [
-        "${workspaceFolder}/imodel-quality-checker/lib/**/*.js"
-      ],
-      "outputCapture": "std"
-    },
-    {
       "type": "node",
       "request": "launch",
       "name": "Run SchemaValidationRunner",
