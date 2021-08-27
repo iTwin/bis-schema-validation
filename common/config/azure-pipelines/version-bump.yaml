@@ -48,7 +48,7 @@ steps:
 
     displayName: 'Get version and committing'
 
-  - script: 'git -c http.extraheader="AUTHORIZATION: bearer $(System.AccessToken)" push origin master --follow-tags'
+  - script: 'git push --follow-tags https://$(GITHUBTOKEN)@github.com/iTwin/bis-schema-validation HEAD:master'
     displayName: 'Push version bump'
     condition: succeeded()
 

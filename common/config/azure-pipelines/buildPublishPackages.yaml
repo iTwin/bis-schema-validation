@@ -1,5 +1,12 @@
 trigger: none
 
+resources:
+  repositories:
+    - repository: bis-schemas
+      type: github
+      endpoint: BisSchemasGitHub
+      name: iTwin/bis-schemas
+
 stages:
 - stage: build
   displayName: Build
