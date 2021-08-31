@@ -255,7 +255,7 @@ describe("SchemaDeserializer", () => {
 
   /**
    * Test is skipped because cyclic reference check will now be done in imodeljs:
-   * _workitems/edit/214993
+   * Workitem 214993
    */
   it.skip("Test for cyclic references", async () => {
     // Round 1
