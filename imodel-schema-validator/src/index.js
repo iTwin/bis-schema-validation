@@ -22,6 +22,7 @@ program.option("-e, --environment <required>", "DEV, QA and PROD are available e
 program.option("-b, --baseSchemaRefDir <required>", "Root directory of all released schemas (root of BisSchemas repo).");
 program.option("-o, --output <required>", "The path where output files will be generated.");
 program.option("-c, --checkReleaseDynamicSchema", "Check all dynamic schemas within iModel. Default is false.");
+program.option("-d, --imjs_uri", "The default imjs url.");
 
 program.parse(process.argv);
 
@@ -29,21 +30,22 @@ program.parse(process.argv);
  * Validates the command line inputs for verifyIModelSchemas function
  */
 async function validateInput() {
-  if (process.argv.length < 17) {
+  if (process.argv.length < 18) {
     console.log("usage : index.js --verifyIModelSchemas");
-    console.log("   -u, --userName                     :Username for connecting with HUB");
-    console.log("   -p, --password                     :Password for connecting with HUB.");
-    console.log("   -r, --projectId                    :Id of project on HUB.");
-    console.log("   -i, --iModelName                   :Name of iModel (case sensitive) within project on HUB.");
-    console.log("   -e, --environment                  :DEV or QA environments.");
-    console.log("   -b, --baseSchemaRefDir             :Root directory of all released schemas (root of BisSchemas repo).");
-    console.log("   -o, --output                       :The path where output files will be generated.");
-    console.log("   -c, --checkReleaseDynamicSchema    :Check all dynamic schemas within iModel. Default is false.");
+    console.log("   -u, --userName                          :Username for connecting with HUB");
+    console.log("   -p, --password                          :Password for connecting with HUB.");
+    console.log("   -r, --projectId                         :Id of project on HUB.");
+    console.log("   -i, --iModelName                        :Name of iModel (case sensitive) within project on HUB.");
+    console.log("   -e, --environment                       :DEV or QA environments.");
+    console.log("   -b, --baseSchemaRefDir                  :Root directory of all released schemas (root of BisSchemas repo).");
+    console.log("   -o, --output                            :The path where output files will be generated.");
+    console.log("   -c, --checkReleaseDynamicSchema         :Check all dynamic schemas within iModel. Default is false.");
+    console.log("   -d, --imjs_uri                          :The default imjs url.");
     throw new Error("Missing from required arguments and their values.");
   }
 
   if (!program.userName || !program.password || !program.projectId || !program.iModelName ||
-    !program.baseSchemaRefDir || !program.environment || !program.output) {
+    !program.baseSchemaRefDir || !program.environment || !program.output || !program.imjs_uri) {
     console.log(chalk.default.red("Invalid input. For help use the '-h' option."));
     process.exit(1);
   }
@@ -79,7 +81,7 @@ async function validateInput() {
   }
 
   try {
-    const iModelSchemaDir = await IModelProvider.exportSchemasFromIModel(program.projectId, program.iModelName, briefcaseDir, program.userName, program.password, program.environment);
+    const iModelSchemaDir = await IModelProvider.exportSchemasFromIModel(program.projectId, program.iModelName, briefcaseDir, program.userName, program.password, program.environment, program.imjs_uri);
     await verifyIModelSchemas(iModelSchemaDir, checkReleaseDynamicSchema, program.baseSchemaRefDir, program.output);
     process.exit(0); // exit forcefully
   } catch (err) {
