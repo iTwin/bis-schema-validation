@@ -14,6 +14,7 @@ describe("IModelProvider Tests", async () => {
   const oidcPassword: any = process.env.oidcPassword;
   const tempDir: any = process.env.TMP;
   const briefcaseDir: string = path.join(tempDir, "SchemaValidation", "Briefcases", "validation");
+  const url: any = process.env.imjs_default_relying_party_uri;
 
   beforeEach(async () => {
     if (fs.existsSync(briefcaseDir)) {
@@ -26,7 +27,7 @@ describe("IModelProvider Tests", async () => {
   });
 
   it.skip("Get IModel Id Env QA, Get an iModel id by its name", async () => {
-    await IModelProvider.setupHost("QA", briefcaseDir);
+    await IModelProvider.setupHost("QA", briefcaseDir, url);
     const requestContext = await IModelProvider.oidcConnect(oidcUserName, oidcPassword, 102);
     const iModelId: any = await IModelProvider.getIModelId(requestContext, "9cf0d519-0436-446b-83b4-182752c9a4eb", "validation");
 
@@ -34,7 +35,7 @@ describe("IModelProvider Tests", async () => {
   });
 
   it.skip("Wrong IModel Name, When user insert wrong iModel name.", async () => {
-    await IModelProvider.setupHost("QA", briefcaseDir);
+    await IModelProvider.setupHost("QA", briefcaseDir, url);
     const requestContext = await IModelProvider.oidcConnect(oidcUserName, oidcPassword, 102);
     const iModelId: any = await IModelProvider.getIModelId(requestContext, "9cf0d519-0436-446b-83b4-182752c9a4eb", "val");
 
@@ -42,7 +43,7 @@ describe("IModelProvider Tests", async () => {
   });
 
   it.skip("Export XML Schemas, Get local iModel connection and export the schemas present in it.", async () => {
-    const iModelSchemaDir = await IModelProvider.exportSchemasFromIModel("9cf0d519-0436-446b-83b4-182752c9a4eb", "validation", briefcaseDir, oidcUserName, oidcPassword, "QA");
+    const iModelSchemaDir = await IModelProvider.exportSchemasFromIModel("9cf0d519-0436-446b-83b4-182752c9a4eb", "validation", briefcaseDir, oidcUserName, oidcPassword, "QA", url);
     let result = false;
     if (iModelSchemaDir) {
       fs.readdirSync(iModelSchemaDir).forEach((file) => {
@@ -55,7 +56,7 @@ describe("IModelProvider Tests", async () => {
   });
 
   it.skip("Get IModel Id Env DEV, Get an iModel id by its name", async () => {
-    await IModelProvider.setupHost("DEV", briefcaseDir);
+    await IModelProvider.setupHost("DEV", briefcaseDir, url);
     const requestContext = await IModelProvider.oidcConnect(oidcUserName, oidcPassword, 103);
     const iModelId: any = await IModelProvider.getIModelId(requestContext, "28e761f7-2692-44bd-be31-5cbac5115a98", "validationtest");
 
@@ -63,7 +64,7 @@ describe("IModelProvider Tests", async () => {
   });
 
   it.skip("Get IModel Id Env PROD, Get an iModel id by its name", async () => {
-    await IModelProvider.setupHost("PROD", briefcaseDir);
+    await IModelProvider.setupHost("PROD", briefcaseDir, url);
     const requestContext = await IModelProvider.oidcConnect(oidcUserName, oidcPassword, 0);
     const iModelId: any = await IModelProvider.getIModelId(requestContext, "c5a41e90-669b-47a6-8a3f-8b7287234a58", "test");
 

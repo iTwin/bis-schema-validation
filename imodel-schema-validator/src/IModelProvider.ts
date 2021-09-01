@@ -24,7 +24,7 @@ export class IModelProvider {
    * @param env: The environment for which you want to setup the host.
    * @param briefcaseDir: The directory where .bim file will be downloaded.
    */
-  public static async setupHost(env: string, briefcaseDir: string) {
+  public static async setupHost(env: string, briefcaseDir: string, url: string) {
     const iModelHostConfiguration = new IModelHostConfiguration();
     iModelHostConfiguration.cacheDir = briefcaseDir;
     if (env === "DEV") {
@@ -36,7 +36,7 @@ export class IModelProvider {
     } else {
       Config.App.set("imjs_buddi_resolve_url_using_region", this._regionCode);
     }
-    Config.App.set("imjs_default_relying_party_uri", "''");
+    Config.App.set("imjs_default_relying_party_uri", url);
     await IModelHost.startup(iModelHostConfiguration);
   }
 
@@ -167,8 +167,8 @@ export class IModelProvider {
    * @param userName: Username for OIDC Auth.
    * @param password: Password for OIDC Auth.
    */
-  public static async exportSchemasFromIModel(projectId: string, iModelName: string, workingDir: string, userName: string, password: string, env: string): Promise<string> {
-    await IModelProvider.setupHost(env.toUpperCase(), workingDir);
+  public static async exportSchemasFromIModel(projectId: string, iModelName: string, workingDir: string, userName: string, password: string, env: string, url: string): Promise<string> {
+    await IModelProvider.setupHost(env.toUpperCase(), workingDir, url);
     const iModelSchemaDir: string = path.join(workingDir, "exported");
     await IModelProvider.exportIModelSchemas(projectId, iModelName, iModelSchemaDir, userName, password);
     await IModelHost.shutdown();
