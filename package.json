@@ -35,8 +35,7 @@
     "url": "http://www.bentley.com"
   },
   "//dependencies": "NOTE: dependencies will be empty here and instead specified in each package.",
-  "dependencies": {
-  },
+  "dependencies": {},
   "//devDependencies": "NOTE: devDependencies will be empty here and instead specified in each package.",
   "devDependencies": {
     "readdirp": "^3.3.0"
