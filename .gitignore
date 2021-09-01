@@ -1,4 +1,4 @@
-# dependencies
+# dependencies check
 node_modules
 package-lock.json
 
