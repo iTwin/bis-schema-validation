@@ -149,13 +149,14 @@ stages:
           targetPath: '$(Build.ArtifactStagingDirectory)/bis-schema-tools/packages'
           artifact: packages
         condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual', 'BuildCompletion'))
-- stage: publish
+
+- stage: Publish_Packages_Internal
   dependsOn: build
-  displayName: Publish
+  displayName: Publish Packages Internal
   condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual', 'BuildCompletion'))
   jobs:
-  - job: publish_artifacts
-    displayName: Publish packages to Artifacts
+  - job: PublishInternal
+    displayName: Publish Packages to Azure Artifacts
     strategy:
       maxParallel: 2
       matrix:
@@ -180,6 +181,59 @@ stages:
 
     - template: ./seed-npmrc.yaml
       parameters: { artifactsRegistryToken: $(artifactsRegistryToken) }
+
+    - powershell: |
+        $artifactPaths = Get-ChildItem "$(packsDir)\*.tgz"
+
+        Push-Location $(System.ArtifactsDirectory)/packages/
+
+        npm config list
+
+        foreach ($artifactPath in $artifactPaths) {
+          Write-Output ""
+          Write-Output ("Processing Artifact: '" + $artifactPath.Name + "'...")
+
+          $cmd = "npm publish $artifactPath 2> `$null"
+
+          Write-Output ("Running '" + $cmd + "'...")
+
+          npm publish $artifactPath
+          Write-Output ("Done processing Artifact: '" + $artifactPath.Name + "'...")
+        }
+
+        Pop-Location
+
+- stage: Publish_Packages_External
+  dependsOn: build
+  displayName: Publish Packages External
+  condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual', 'BuildCompletion'))
+  jobs:
+  - job: PublishExternal
+    displayName: Publish Packages to NPMJS
+    strategy:
+      maxParallel: 2
+      matrix:
+        'Windows':
+          os: vs2017-win2016
+    pool:
+      vmImage: $(os)
+    variables:
+    - group: "Caleb - npmjs publish token"
+    - name: packsDir
+      value: $(System.ArtifactsDirectory)/packages/
+
+    steps:
+    - checkout: none
+      clean: true
+    - task: DownloadPipelineArtifact@1
+      displayName: Download packages to publish
+      inputs:
+        buildType: current
+        artifactName: packages
+        targetPath: $(packsDir)
+
+    - template: ./seed-npmjs-npmrc.yaml
+      parameters: { npmToken: $(npmToken) }
 
     - powershell: |
         $artifactPaths = Get-ChildItem "$(packsDir)\*.tgz"
