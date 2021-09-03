@@ -246,7 +246,7 @@ stages:
           Write-Output ""
           Write-Output ("Processing Artifact: '" + $artifactPath.Name + "'...")
 
-          $cmd = "npm publish $artifactPath 2> `$null"
+          $cmd = "npm publish $artifactPath --access public 2> `$null"
 
           Write-Output ("Running '" + $cmd + "'...")
 
