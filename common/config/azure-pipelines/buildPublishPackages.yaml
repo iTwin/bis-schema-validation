@@ -149,13 +149,14 @@ stages:
           targetPath: '$(Build.ArtifactStagingDirectory)/bis-schema-tools/packages'
           artifact: packages
         condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual', 'BuildCompletion'))
-- stage: publish
+
+- stage: Publish_Packages
   dependsOn: build
-  displayName: Publish
+  displayName: Publish Packages
   condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual', 'BuildCompletion'))
   jobs:
-  - job: publish_artifacts
-    displayName: Publish packages to Artifacts
+  - job: Publish
+    displayName: Publish Packages
     strategy:
       maxParallel: 2
       matrix:
@@ -167,6 +168,61 @@ stages:
   
     - name: packsDir
       value: $(System.ArtifactsDirectory)/packages/
+
+    steps:
+    - checkout: none
+      clean: true
+    - task: DownloadPipelineArtifact@1
+      displayName: Download packages to publish
+      inputs:
+        buildType: current
+        artifactName: packages
+        targetPath: $(packsDir)
+
+
+
+
+    - powershell: |
+
+
+
+
+        npm config list
+
+
+          Write-Output ""
+
+
+
+
+
+
+
+
+        }
+
+
+
+- stage: Publish_Packages
+  dependsOn: build
+  displayName: Publish Packages
+  condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual', 'BuildCompletion'))
+  jobs:
+  - job: Publish
+    displayName: Publish Packages
+    strategy:
+      maxParallel: 2
+      matrix:
+        'Windows':
+          os: vs2017-win2016
+    pool:
+      vmImage: $(os)
+    variables:
+  ""
+    - name: packsDir
+      value: $(System.ArtifactsDirectory)/packages/
+    - name: releaseTag
+      value: latest
 
     steps:
     - checkout: none
