@@ -1,6 +1,6 @@
 ﻿# schema-validator
 
-The BIS Schema Validator is a command-line tool that takes an EC3.x ECSchema and performs the BIS validation rules and outputs the results to a file.
+The BIS Schema Validator is a command-line tool that takes an EC3.x ECSchema and performs the BIS validation rules and outputs the results to a file..
 
 ## Quick Overview
 
