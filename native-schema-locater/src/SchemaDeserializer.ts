@@ -8,7 +8,6 @@ import * as fs from "fs";
 import * as EC from "@bentley/ecschema-metadata";
 import { SchemaJsonFileLocater } from "@bentley/ecschema-locaters";
 import { IModelHost } from "@bentley/imodeljs-backend";
-import { Config } from "@bentley/bentleyjs-core";
 import { SchemaXmlFileLocater } from "./SchemaXmlFileLocater";
 
 /**
@@ -26,8 +25,7 @@ export class SchemaDeserializer {
       referencePaths = [];
     referencePaths.push(path.dirname(schemaFilePath));
 
-    // The following two lines can be removed (and shutdown below) when/if the SchemaXmlFileLocater (native deserialization) is removed
-    (Config as any)._appConfig = new (Config as any)(); // Needed to avoid crash in backend when calling IModelHost.startup.
+    // The following line can be removed (and shutdown below) when/if the SchemaXmlFileLocater (native deserialization) is removed
     await IModelHost.startup();
 
     const locater = this.configureFileLocater(schemaContext, referencePaths);
