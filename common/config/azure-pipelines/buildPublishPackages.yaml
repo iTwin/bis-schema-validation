@@ -23,7 +23,7 @@ stages:
     steps:
       - checkout: self
         clean: all
-      - checkout: bis-schemas
+      - checkout: git://iModelTechnologies/bis-schemas
       - task: NodeTool@0
         displayName: 'Install Node 12.18.2'
         inputs:
