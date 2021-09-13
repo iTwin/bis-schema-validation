@@ -47,12 +47,12 @@
     "eslint": "^6.8.0"
   },
   "peerDependencies": {
-    "@bentley/ecschema-metadata": "3.0.0-dev.16",
-    "@bentley/ecschema-editing": "3.0.0-dev.16"
+    "@bentley/ecschema-metadata": "3.0.0-dev.52",
+    "@bentley/ecschema-editing": "3.0.0-dev.52"
   },
   "dependencies": {
-    "@bentley/bentleyjs-core": "3.0.0-dev.16",
-    "@bentley/imodeljs-backend": "3.0.0-dev.16"
+    "@bentley/bentleyjs-core": "3.0.0-dev.52",
+    "@bentley/imodeljs-backend": "3.0.0-dev.52"
   },
   "nyc": {
     "extends": "./node_modules/@bentley/build-tools/.nycrc"

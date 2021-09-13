@@ -53,19 +53,19 @@
     "eslint": "^6.8.0"
   },
   "peerDependencies": {
-    "@bentley/ecschema-metadata": "3.0.0-dev.16",
-    "@bentley/ecschema-locaters": "3.0.0-dev.16"
+    "@bentley/ecschema-metadata": "3.0.0-dev.52",
+    "@bentley/ecschema-locaters": "3.0.0-dev.52"
   },
   "dependencies": {
-    "@bentley/backend-itwin-client": "3.0.0-dev.16",
-    "@bentley/bentleyjs-core": "3.0.0-dev.16",
-    "@bentley/geometry-core": "3.0.0-dev.16",
-    "@bentley/imodelhub-client": "3.0.0-dev.16",
-    "@bentley/imodeljs-backend": "3.0.0-dev.16",
-    "@bentley/imodeljs-common": "3.0.0-dev.16",
-    "@bentley/itwin-client": "3.0.0-dev.16",
+    "@bentley/backend-itwin-client": "3.0.0-dev.52",
+    "@bentley/bentleyjs-core": "3.0.0-dev.52",
+    "@bentley/geometry-core": "3.0.0-dev.52",
+    "@bentley/imodelhub-client": "3.0.0-dev.52",
+    "@bentley/imodeljs-backend": "3.0.0-dev.52",
+    "@bentley/imodeljs-common": "3.0.0-dev.52",
+    "@bentley/itwin-client": "3.0.0-dev.52",
     "@bentley/rbac-client": "3.0.0-dev.5",
-    "@bentley/telemetry-client": "3.0.0-dev.16",
+    "@bentley/telemetry-client": "3.0.0-dev.52",
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
     "fs-extra": "^7.0.1",
