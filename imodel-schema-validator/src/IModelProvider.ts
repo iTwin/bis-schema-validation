@@ -5,7 +5,6 @@
 
 import { AuthorizedBackendRequestContext, BriefcaseDb, BriefcaseManager, IModelHost, IModelHostConfiguration } from "@bentley/imodeljs-backend";
 import { AccessToken } from "@bentley/itwin-client";
-import { Config } from "@bentley/bentleyjs-core";
 import { IModelHubClient } from "@bentley/imodelhub-client";
 import { TestBrowserAuthorizationClient, TestBrowserAuthorizationClientConfiguration, TestUserCredentials } from "@bentley/oidc-signin-tool";
 import { BriefcaseProps, IModelVersionProps, RequestNewBriefcaseProps } from "@bentley/imodeljs-common";
@@ -29,14 +28,14 @@ export class IModelProvider {
     iModelHostConfiguration.cacheDir = briefcaseDir;
     if (env === "DEV") {
       this._regionCode = 103;
-      Config.App.set("imjs_buddi_resolve_url_using_region", this._regionCode);
+      process.env["imjs_buddi_resolve_url_using_region"] = this._regionCode.toString();
     } else if (env === "PROD") {
       this._regionCode = 0;
-      Config.App.set("imjs_buddi_resolve_url_using_region", this._regionCode);
+      process.env["imjs_buddi_resolve_url_using_region"] = this._regionCode.toString();
     } else {
-      Config.App.set("imjs_buddi_resolve_url_using_region", this._regionCode);
+      process.env["imjs_buddi_resolve_url_using_region"] = this._regionCode.toString();
     }
-    Config.App.set("imjs_default_relying_party_uri", url);
+    process.env["imjs_default_relying_party_uri"] = url;
     await IModelHost.startup(iModelHostConfiguration);
   }
 
