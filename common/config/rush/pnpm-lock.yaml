@@ -1,23 +1,23 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@bentley/backend-itwin-client': 3.0.0-dev.16
-  '@bentley/bentleyjs-core': 3.0.0-dev.16
+  '@bentley/backend-itwin-client': 3.0.0-dev.52
+  '@bentley/bentleyjs-core': 3.0.0-dev.52
   '@bentley/build-tools': 2.19.1
-  '@bentley/ecschema-editing': 3.0.0-dev.16
-  '@bentley/ecschema-locaters': 3.0.0-dev.16
-  '@bentley/ecschema-metadata': 3.0.0-dev.16
+  '@bentley/ecschema-editing': 3.0.0-dev.52
+  '@bentley/ecschema-locaters': 3.0.0-dev.52
+  '@bentley/ecschema-metadata': 3.0.0-dev.52
   '@bentley/ecschema-ops': 0.1.17
   '@bentley/eslint-plugin': 2.19.1
-  '@bentley/geometry-core': 3.0.0-dev.16
-  '@bentley/imodelhub-client': 3.0.0-dev.16
-  '@bentley/imodeljs-backend': 3.0.0-dev.16
-  '@bentley/imodeljs-common': 3.0.0-dev.16
-  '@bentley/imodeljs-i18n': 3.0.0-dev.16
-  '@bentley/itwin-client': 3.0.0-dev.16
+  '@bentley/geometry-core': 3.0.0-dev.52
+  '@bentley/imodelhub-client': 3.0.0-dev.52
+  '@bentley/imodeljs-backend': 3.0.0-dev.52
+  '@bentley/imodeljs-common': 3.0.0-dev.52
+  '@bentley/imodeljs-i18n': 3.0.0-dev.52
+  '@bentley/itwin-client': 3.0.0-dev.52
   '@bentley/oidc-signin-tool': 2.3.0-dev.8
   '@bentley/rbac-client': 3.0.0-dev.5
-  '@bentley/telemetry-client': 3.0.0-dev.16
+  '@bentley/telemetry-client': 3.0.0-dev.52
   '@rush-temp/bis-rules': file:./projects/bis-rules.tgz
   '@rush-temp/imodel-schema-validator': file:./projects/imodel-schema-validator.tgz
   '@rush-temp/native-schema-locater': file:./projects/native-schema-locater.tgz
@@ -53,29 +53,29 @@ specifiers:
   xmldom: ^0.1.27
 
 dependencies:
-  '@bentley/backend-itwin-client': 3.0.0-dev.16_8c016cc0e5e2c3054732bedd01961c1b
-  '@bentley/bentleyjs-core': 3.0.0-dev.16
+  '@bentley/backend-itwin-client': 3.0.0-dev.52_f38eb5f816c5d388f3f2f7f2fe605860
+  '@bentley/bentleyjs-core': 3.0.0-dev.52
   '@bentley/build-tools': 2.19.1
-  '@bentley/ecschema-editing': 3.0.0-dev.16_c31ad4b1dcf4c5ca8328525bd643b499
-  '@bentley/ecschema-locaters': 3.0.0-dev.16_7acda18ce045b25d104772aea7d86eef
-  '@bentley/ecschema-metadata': 3.0.0-dev.16_85ceb27778e818d0474c9626582ca77d
+  '@bentley/ecschema-editing': 3.0.0-dev.52_28e7398409be6e6809e2121c7d3bc1de
+  '@bentley/ecschema-locaters': 3.0.0-dev.52_03d524973da7e72e47a751cb5bbafdc3
+  '@bentley/ecschema-metadata': 3.0.0-dev.52_245d3c9207f2949c45c743d473ecca45
   '@bentley/ecschema-ops': 0.1.17
   '@bentley/eslint-plugin': 2.19.1_eslint@6.8.0+typescript@4.3.5
-  '@bentley/geometry-core': 3.0.0-dev.16_30b0741cffeb29dbbab3010d4b962da8
-  '@bentley/imodelhub-client': 3.0.0-dev.16_34b38919d5d6f9c298ae6554d52bee2e
-  '@bentley/imodeljs-backend': 3.0.0-dev.16_1f00789affc0075670daf67eae0b4e80
-  '@bentley/imodeljs-common': 3.0.0-dev.16_dc354c825927d958777bc8640fb61639
-  '@bentley/imodeljs-i18n': 3.0.0-dev.16_30b0741cffeb29dbbab3010d4b962da8
-  '@bentley/itwin-client': 3.0.0-dev.16_30b0741cffeb29dbbab3010d4b962da8
+  '@bentley/geometry-core': 3.0.0-dev.52_bb4a105a8d657020b0049676830f7e67
+  '@bentley/imodelhub-client': 3.0.0-dev.52_eca7979d5b6672371c63508dec111f0c
+  '@bentley/imodeljs-backend': 3.0.0-dev.52_08eb2962d68ee675d268454b4798a3ab
+  '@bentley/imodeljs-common': 3.0.0-dev.52_9e158d6a057132ffa989d9fc2bb167e1
+  '@bentley/imodeljs-i18n': 3.0.0-dev.52_bb4a105a8d657020b0049676830f7e67
+  '@bentley/itwin-client': 3.0.0-dev.52_bb4a105a8d657020b0049676830f7e67
   '@bentley/oidc-signin-tool': 2.3.0-dev.8
-  '@bentley/rbac-client': 3.0.0-dev.5_ddbf32d11ea3d5a6c4b5024970e7d739
-  '@bentley/telemetry-client': 3.0.0-dev.16_ddbf32d11ea3d5a6c4b5024970e7d739
-  '@rush-temp/bis-rules': file:projects/bis-rules.tgz_049724796084d7a737517c0e6f3067e4
-  '@rush-temp/imodel-schema-validator': file:projects/imodel-schema-validator.tgz_088605aa802aab54bc7db00dd0ba9fb4
-  '@rush-temp/native-schema-locater': file:projects/native-schema-locater.tgz_bb2ca7ea9c3a48932c2e7d7094747a90
-  '@rush-temp/schema-comparer': file:projects/schema-comparer.tgz_43b4f214f3d647e991935cf446e3b7f8
-  '@rush-temp/schema-roundtrip': file:projects/schema-roundtrip.tgz_b081feb224ebc45e69e9e59b99775d6f
-  '@rush-temp/schema-validator': file:projects/schema-validator.tgz_088605aa802aab54bc7db00dd0ba9fb4
+  '@bentley/rbac-client': 3.0.0-dev.5_b95a58f3102e0d5bae810dc489d7f2ad
+  '@bentley/telemetry-client': 3.0.0-dev.52_b95a58f3102e0d5bae810dc489d7f2ad
+  '@rush-temp/bis-rules': file:projects/bis-rules.tgz_41886ed66760c3d602634d2bd8554951
+  '@rush-temp/imodel-schema-validator': file:projects/imodel-schema-validator.tgz_aecde7e1982ac14d2b5f04006ef1870d
+  '@rush-temp/native-schema-locater': file:projects/native-schema-locater.tgz_6f2fd282e57ca3d07944b7e166c36b94
+  '@rush-temp/schema-comparer': file:projects/schema-comparer.tgz_5cdf5fcdae34ec54708218f15311a0d9
+  '@rush-temp/schema-roundtrip': file:projects/schema-roundtrip.tgz_25dbe665e30000af7899db6b03380e51
+  '@rush-temp/schema-validator': file:projects/schema-validator.tgz_aecde7e1982ac14d2b5f04006ef1870d
   '@types/chai': 4.2.21
   '@types/chai-as-promised': 7.1.4
   '@types/fs-extra': 5.1.0
@@ -371,25 +371,24 @@ packages:
       to-fast-properties: 2.0.0
     dev: false
 
-  /@bentley/backend-itwin-client/3.0.0-dev.16_8c016cc0e5e2c3054732bedd01961c1b:
-    resolution: {integrity: sha1-pGUvoRfvS0D88JEFIYRFOtZ9XRo=}
+  /@bentley/backend-itwin-client/3.0.0-dev.52_f38eb5f816c5d388f3f2f7f2fe605860:
+    resolution: {integrity: sha1-rIHh5Awlw6pTbNryl+jviS4TqnQ=}
     engines: {node: '>=10.17.0 <15.0'}
     peerDependencies:
-      '@bentley/bentleyjs-core': ^3.0.0-dev.16
-      '@bentley/frontend-authorization-client': ^3.0.0-dev.16
-      '@bentley/geometry-core': ^3.0.0-dev.16
-      '@bentley/imodelhub-client': ^3.0.0-dev.16
-      '@bentley/imodeljs-common': ^3.0.0-dev.16
-      '@bentley/itwin-client': ^3.0.0-dev.16
-      '@bentley/telemetry-client': ^3.0.0-dev.16
+      '@bentley/bentleyjs-core': ^3.0.0-dev.52
+      '@bentley/frontend-authorization-client': ^3.0.0-dev.52
+      '@bentley/geometry-core': ^3.0.0-dev.52
+      '@bentley/imodelhub-client': ^3.0.0-dev.52
+      '@bentley/imodeljs-common': ^3.0.0-dev.52
+      '@bentley/itwin-client': ^3.0.0-dev.52
+      '@bentley/telemetry-client': ^3.0.0-dev.52
     dependencies:
-      '@bentley/bentleyjs-core': 3.0.0-dev.16
-      '@bentley/geometry-core': 3.0.0-dev.16_30b0741cffeb29dbbab3010d4b962da8
-      '@bentley/imodelhub-client': 3.0.0-dev.16_34b38919d5d6f9c298ae6554d52bee2e
-      '@bentley/imodeljs-common': 3.0.0-dev.16_dc354c825927d958777bc8640fb61639
-      '@bentley/itwin-client': 3.0.0-dev.16_30b0741cffeb29dbbab3010d4b962da8
-      '@bentley/telemetry-client': 3.0.0-dev.16_ddbf32d11ea3d5a6c4b5024970e7d739
-      '@bentley/usage-logging-client': 3.0.0-dev.16_589ce19e3421f4081dfcf6b1ba493e75
+      '@bentley/bentleyjs-core': 3.0.0-dev.52
+      '@bentley/geometry-core': 3.0.0-dev.52_bb4a105a8d657020b0049676830f7e67
+      '@bentley/imodelhub-client': 3.0.0-dev.52_eca7979d5b6672371c63508dec111f0c
+      '@bentley/imodeljs-common': 3.0.0-dev.52_9e158d6a057132ffa989d9fc2bb167e1
+      '@bentley/itwin-client': 3.0.0-dev.52_bb4a105a8d657020b0049676830f7e67
+      '@bentley/telemetry-client': 3.0.0-dev.52_b95a58f3102e0d5bae810dc489d7f2ad
       agentkeepalive: 4.1.4
       applicationinsights: 1.8.10
       deep-assign: 2.0.0
@@ -410,12 +409,12 @@ packages:
     resolution: {integrity: sha1-U6lDjLWfXswthM1JKAI4hq3giPw=}
     dev: false
 
-  /@bentley/bentleyjs-core/3.0.0-dev.16:
-    resolution: {integrity: sha1-kai8qtuMhSI1Nyp2DBeaT20jj5g=}
-    dev: false
-
   /@bentley/bentleyjs-core/3.0.0-dev.5:
     resolution: {integrity: sha1-NVfU4AIw0kEldfQP5bq9GR71Erg=}
+    dev: false
+
+  /@bentley/bentleyjs-core/3.0.0-dev.52:
+    resolution: {integrity: sha1-WHMsoLh2SNqDWT4JpHn+1w4xuiI=}
     dev: false
 
   /@bentley/build-tools/2.19.1:
@@ -477,47 +476,47 @@ packages:
       json5: 2.2.0
     dev: false
 
-  /@bentley/context-registry-client/3.0.0-dev.16_34b38919d5d6f9c298ae6554d52bee2e:
-    resolution: {integrity: sha1-x/j2LYzhw3xN31Md3ccobmCk7EQ=}
+  /@bentley/context-registry-client/3.0.0-dev.52_eca7979d5b6672371c63508dec111f0c:
+    resolution: {integrity: sha1-OgH1azxNuGuIE7Tu7KGMA77dhwc=}
     peerDependencies:
-      '@bentley/bentleyjs-core': ^3.0.0-dev.16
-      '@bentley/itwin-client': ^3.0.0-dev.16
+      '@bentley/bentleyjs-core': ^3.0.0-dev.52
+      '@bentley/itwin-client': ^3.0.0-dev.52
     dependencies:
-      '@bentley/bentleyjs-core': 3.0.0-dev.16
-      '@bentley/itwin-client': 3.0.0-dev.16_30b0741cffeb29dbbab3010d4b962da8
+      '@bentley/bentleyjs-core': 3.0.0-dev.52
+      '@bentley/itwin-client': 3.0.0-dev.52_bb4a105a8d657020b0049676830f7e67
       deep-assign: 2.0.0
     dev: false
 
-  /@bentley/ecschema-editing/3.0.0-dev.16_c31ad4b1dcf4c5ca8328525bd643b499:
-    resolution: {integrity: sha1-NkiHnyqdkoKOnZa9TeX8UTmSrf8=}
+  /@bentley/ecschema-editing/3.0.0-dev.52_28e7398409be6e6809e2121c7d3bc1de:
+    resolution: {integrity: sha1-h9qDb3T3xY7kI3wkAo9CTc8FHM4=}
     peerDependencies:
-      '@bentley/bentleyjs-core': ^3.0.0-dev.16
-      '@bentley/ecschema-metadata': ^3.0.0-dev.16
-      '@bentley/imodeljs-i18n': ^3.0.0-dev.16
+      '@bentley/bentleyjs-core': ^3.0.0-dev.52
+      '@bentley/ecschema-metadata': ^3.0.0-dev.52
+      '@bentley/imodeljs-i18n': ^3.0.0-dev.52
     dependencies:
-      '@bentley/bentleyjs-core': 3.0.0-dev.16
-      '@bentley/ecschema-metadata': 3.0.0-dev.16_85ceb27778e818d0474c9626582ca77d
-      '@bentley/imodeljs-i18n': 3.0.0-dev.16_30b0741cffeb29dbbab3010d4b962da8
+      '@bentley/bentleyjs-core': 3.0.0-dev.52
+      '@bentley/ecschema-metadata': 3.0.0-dev.52_245d3c9207f2949c45c743d473ecca45
+      '@bentley/imodeljs-i18n': 3.0.0-dev.52_bb4a105a8d657020b0049676830f7e67
       almost-equal: 1.1.0
     dev: false
 
-  /@bentley/ecschema-locaters/3.0.0-dev.16_7acda18ce045b25d104772aea7d86eef:
-    resolution: {integrity: sha1-GQhyVHyBsBMOzj7XZbuW4z0PhPg=}
+  /@bentley/ecschema-locaters/3.0.0-dev.52_03d524973da7e72e47a751cb5bbafdc3:
+    resolution: {integrity: sha1-H/wsdiXIf7f5tuwRoo1osGzwNFw=}
     peerDependencies:
-      '@bentley/ecschema-metadata': ^3.0.0-dev.16
+      '@bentley/ecschema-metadata': ^3.0.0-dev.52
     dependencies:
-      '@bentley/ecschema-metadata': 3.0.0-dev.16_85ceb27778e818d0474c9626582ca77d
+      '@bentley/ecschema-metadata': 3.0.0-dev.52_245d3c9207f2949c45c743d473ecca45
       glob: 7.1.7
     dev: false
 
-  /@bentley/ecschema-metadata/3.0.0-dev.16_85ceb27778e818d0474c9626582ca77d:
-    resolution: {integrity: sha1-tUyXSqPQXY+t0tomWkxcG3N566s=}
+  /@bentley/ecschema-metadata/3.0.0-dev.52_245d3c9207f2949c45c743d473ecca45:
+    resolution: {integrity: sha1-QMH3TWPKsHnypL8wMFGm4mhahYc=}
     peerDependencies:
-      '@bentley/bentleyjs-core': ^3.0.0-dev.16
-      '@bentley/imodeljs-i18n': ^3.0.0-dev.16
+      '@bentley/bentleyjs-core': ^3.0.0-dev.52
+      '@bentley/imodeljs-i18n': ^3.0.0-dev.52
     dependencies:
-      '@bentley/bentleyjs-core': 3.0.0-dev.16
-      '@bentley/imodeljs-i18n': 3.0.0-dev.16_30b0741cffeb29dbbab3010d4b962da8
+      '@bentley/bentleyjs-core': 3.0.0-dev.52
+      '@bentley/imodeljs-i18n': 3.0.0-dev.52_bb4a105a8d657020b0049676830f7e67
       almost-equal: 1.1.0
     dev: false
 
@@ -563,54 +562,53 @@ packages:
       oidc-client: 1.11.5
     dev: false
 
-  /@bentley/geometry-core/3.0.0-dev.16_30b0741cffeb29dbbab3010d4b962da8:
-    resolution: {integrity: sha1-fw4DvTTGKEBzKzom1rq51UQKgX4=}
+  /@bentley/geometry-core/3.0.0-dev.52_bb4a105a8d657020b0049676830f7e67:
+    resolution: {integrity: sha1-zuipH8+zLZ8spmMOA6dS7iVZwdE=}
     peerDependencies:
-      '@bentley/bentleyjs-core': ^3.0.0-dev.16
+      '@bentley/bentleyjs-core': ^3.0.0-dev.52
     dependencies:
-      '@bentley/bentleyjs-core': 3.0.0-dev.16
+      '@bentley/bentleyjs-core': 3.0.0-dev.52
       flatbuffers: 1.12.0
     dev: false
 
-  /@bentley/imodelhub-client/3.0.0-dev.16_34b38919d5d6f9c298ae6554d52bee2e:
-    resolution: {integrity: sha1-0MFwUU55cxLhYck8bJ5cbHzirkw=}
+  /@bentley/imodelhub-client/3.0.0-dev.52_eca7979d5b6672371c63508dec111f0c:
+    resolution: {integrity: sha1-30myXdmFz8/NtfSak5tIY0Ry4IU=}
     peerDependencies:
-      '@bentley/bentleyjs-core': ^3.0.0-dev.16
-      '@bentley/frontend-authorization-client': ^3.0.0-dev.16
-      '@bentley/itwin-client': ^3.0.0-dev.16
+      '@bentley/bentleyjs-core': ^3.0.0-dev.52
+      '@bentley/frontend-authorization-client': ^3.0.0-dev.52
+      '@bentley/itwin-client': ^3.0.0-dev.52
     dependencies:
-      '@bentley/bentleyjs-core': 3.0.0-dev.16
-      '@bentley/context-registry-client': 3.0.0-dev.16_34b38919d5d6f9c298ae6554d52bee2e
-      '@bentley/itwin-client': 3.0.0-dev.16_30b0741cffeb29dbbab3010d4b962da8
+      '@bentley/bentleyjs-core': 3.0.0-dev.52
+      '@bentley/context-registry-client': 3.0.0-dev.52_eca7979d5b6672371c63508dec111f0c
+      '@bentley/itwin-client': 3.0.0-dev.52_bb4a105a8d657020b0049676830f7e67
       deep-assign: 2.0.0
       js-base64: 3.6.1
     dev: false
 
-  /@bentley/imodeljs-backend/3.0.0-dev.16_1f00789affc0075670daf67eae0b4e80:
-    resolution: {integrity: sha1-HcbihvxSm7BbnwE+jTPw6gpYta0=}
+  /@bentley/imodeljs-backend/3.0.0-dev.52_08eb2962d68ee675d268454b4798a3ab:
+    resolution: {integrity: sha1-i/ZSMMwU8L+xyjkHbv053aAI9CU=}
     engines: {node: '>=10.17.0 <15.0'}
     peerDependencies:
-      '@bentley/backend-itwin-client': ^3.0.0-dev.16
-      '@bentley/bentleyjs-core': ^3.0.0-dev.16
-      '@bentley/ecschema-metadata': ^3.0.0-dev.16
-      '@bentley/geometry-core': ^3.0.0-dev.16
-      '@bentley/imodelhub-client': ^3.0.0-dev.16
-      '@bentley/imodeljs-common': ^3.0.0-dev.16
-      '@bentley/itwin-client': ^3.0.0-dev.16
-      '@bentley/telemetry-client': ^3.0.0-dev.16
+      '@bentley/backend-itwin-client': ^3.0.0-dev.52
+      '@bentley/bentleyjs-core': ^3.0.0-dev.52
+      '@bentley/ecschema-metadata': ^3.0.0-dev.52
+      '@bentley/geometry-core': ^3.0.0-dev.52
+      '@bentley/imodelhub-client': ^3.0.0-dev.52
+      '@bentley/imodeljs-common': ^3.0.0-dev.52
+      '@bentley/itwin-client': ^3.0.0-dev.52
+      '@bentley/telemetry-client': ^3.0.0-dev.52
     dependencies:
       '@azure/storage-blob': 10.4.0
-      '@bentley/backend-itwin-client': 3.0.0-dev.16_8c016cc0e5e2c3054732bedd01961c1b
-      '@bentley/bentleyjs-core': 3.0.0-dev.16
-      '@bentley/context-registry-client': 3.0.0-dev.16_34b38919d5d6f9c298ae6554d52bee2e
-      '@bentley/ecschema-metadata': 3.0.0-dev.16_85ceb27778e818d0474c9626582ca77d
-      '@bentley/geometry-core': 3.0.0-dev.16_30b0741cffeb29dbbab3010d4b962da8
-      '@bentley/imodelhub-client': 3.0.0-dev.16_34b38919d5d6f9c298ae6554d52bee2e
-      '@bentley/imodeljs-common': 3.0.0-dev.16_dc354c825927d958777bc8640fb61639
-      '@bentley/imodeljs-native': 3.0.2
-      '@bentley/itwin-client': 3.0.0-dev.16_30b0741cffeb29dbbab3010d4b962da8
-      '@bentley/telemetry-client': 3.0.0-dev.16_ddbf32d11ea3d5a6c4b5024970e7d739
-      '@bentley/usage-logging-client': 3.0.0-dev.16_589ce19e3421f4081dfcf6b1ba493e75
+      '@bentley/backend-itwin-client': 3.0.0-dev.52_f38eb5f816c5d388f3f2f7f2fe605860
+      '@bentley/bentleyjs-core': 3.0.0-dev.52
+      '@bentley/context-registry-client': 3.0.0-dev.52_eca7979d5b6672371c63508dec111f0c
+      '@bentley/ecschema-metadata': 3.0.0-dev.52_245d3c9207f2949c45c743d473ecca45
+      '@bentley/geometry-core': 3.0.0-dev.52_bb4a105a8d657020b0049676830f7e67
+      '@bentley/imodelhub-client': 3.0.0-dev.52_eca7979d5b6672371c63508dec111f0c
+      '@bentley/imodeljs-common': 3.0.0-dev.52_9e158d6a057132ffa989d9fc2bb167e1
+      '@bentley/imodeljs-native': 3.0.7
+      '@bentley/itwin-client': 3.0.0-dev.52_bb4a105a8d657020b0049676830f7e67
+      '@bentley/telemetry-client': 3.0.0-dev.52_b95a58f3102e0d5bae810dc489d7f2ad
       deep-assign: 2.0.0
       form-data: 2.5.1
       fs-extra: 8.1.0
@@ -624,36 +622,36 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@bentley/imodeljs-common/3.0.0-dev.16_dc354c825927d958777bc8640fb61639:
-    resolution: {integrity: sha1-jkTcDu5gs6rtCwbTafs+kbSxnpg=}
+  /@bentley/imodeljs-common/3.0.0-dev.52_9e158d6a057132ffa989d9fc2bb167e1:
+    resolution: {integrity: sha1-/peIEhYY/aUuDPTSumapaSq4F8A=}
     peerDependencies:
-      '@bentley/bentleyjs-core': ^3.0.0-dev.16
-      '@bentley/geometry-core': ^3.0.0-dev.16
-      '@bentley/imodelhub-client': ^3.0.0-dev.16
-      '@bentley/itwin-client': ^3.0.0-dev.16
+      '@bentley/bentleyjs-core': ^3.0.0-dev.52
+      '@bentley/geometry-core': ^3.0.0-dev.52
+      '@bentley/imodelhub-client': ^3.0.0-dev.52
+      '@bentley/itwin-client': ^3.0.0-dev.52
     dependencies:
-      '@bentley/bentleyjs-core': 3.0.0-dev.16
-      '@bentley/geometry-core': 3.0.0-dev.16_30b0741cffeb29dbbab3010d4b962da8
-      '@bentley/imodelhub-client': 3.0.0-dev.16_34b38919d5d6f9c298ae6554d52bee2e
-      '@bentley/itwin-client': 3.0.0-dev.16_30b0741cffeb29dbbab3010d4b962da8
+      '@bentley/bentleyjs-core': 3.0.0-dev.52
+      '@bentley/geometry-core': 3.0.0-dev.52_bb4a105a8d657020b0049676830f7e67
+      '@bentley/imodelhub-client': 3.0.0-dev.52_eca7979d5b6672371c63508dec111f0c
+      '@bentley/itwin-client': 3.0.0-dev.52_bb4a105a8d657020b0049676830f7e67
       '@ungap/url-search-params': 0.1.4
       flatbuffers: 1.12.0
       semver: 5.7.1
     dev: false
 
-  /@bentley/imodeljs-i18n/3.0.0-dev.16_30b0741cffeb29dbbab3010d4b962da8:
-    resolution: {integrity: sha1-uiDGfF83SI3B+6mcPT3BPZoIlo4=}
+  /@bentley/imodeljs-i18n/3.0.0-dev.52_bb4a105a8d657020b0049676830f7e67:
+    resolution: {integrity: sha1-J8UMxqASZpQ/blNJ93nEcEYsGg8=}
     peerDependencies:
-      '@bentley/bentleyjs-core': ^3.0.0-dev.16
+      '@bentley/bentleyjs-core': ^3.0.0-dev.52
     dependencies:
-      '@bentley/bentleyjs-core': 3.0.0-dev.16
+      '@bentley/bentleyjs-core': 3.0.0-dev.52
       i18next: 10.6.0
       i18next-browser-languagedetector: 2.2.4
       i18next-xhr-backend: 2.0.1
     dev: false
 
-  /@bentley/imodeljs-native/3.0.2:
-    resolution: {integrity: sha1-iltldQCXeFvuc/Kw/iggslXNwQY=}
+  /@bentley/imodeljs-native/3.0.7:
+    resolution: {integrity: sha1-dLdCa4WRC3QuTzWRU3xofTmlgfk=}
     requiresBuild: true
     dev: false
 
@@ -673,12 +671,12 @@ packages:
       - supports-color
     dev: false
 
-  /@bentley/itwin-client/3.0.0-dev.16_30b0741cffeb29dbbab3010d4b962da8:
-    resolution: {integrity: sha1-5mwyZV5zAYuegaHieW4wWdNptwU=}
+  /@bentley/itwin-client/3.0.0-dev.52_bb4a105a8d657020b0049676830f7e67:
+    resolution: {integrity: sha1-wXm7DjbSHD6Rq0jY4aLc7xFkxws=}
     peerDependencies:
-      '@bentley/bentleyjs-core': ^3.0.0-dev.16
+      '@bentley/bentleyjs-core': ^3.0.0-dev.52
     dependencies:
-      '@bentley/bentleyjs-core': 3.0.0-dev.16
+      '@bentley/bentleyjs-core': 3.0.0-dev.52
       deep-assign: 2.0.0
       js-base64: 3.6.1
       lodash: 4.17.21
@@ -704,33 +702,22 @@ packages:
       - supports-color
     dev: false
 
-  /@bentley/rbac-client/3.0.0-dev.5_ddbf32d11ea3d5a6c4b5024970e7d739:
+  /@bentley/rbac-client/3.0.0-dev.5_b95a58f3102e0d5bae810dc489d7f2ad:
     resolution: {integrity: sha1-ldhdfERhWgDlowPZgOvbf49iBFg=}
     peerDependencies:
       '@bentley/itwin-client': ^3.0.0-dev.5
     dependencies:
       '@bentley/bentleyjs-core': 3.0.0-dev.5
-      '@bentley/itwin-client': 3.0.0-dev.16_30b0741cffeb29dbbab3010d4b962da8
+      '@bentley/itwin-client': 3.0.0-dev.52_bb4a105a8d657020b0049676830f7e67
     dev: false
 
-  /@bentley/telemetry-client/3.0.0-dev.16_ddbf32d11ea3d5a6c4b5024970e7d739:
-    resolution: {integrity: sha1-W1oUUEUDPcH+nXd8mSeH767C7zA=}
+  /@bentley/telemetry-client/3.0.0-dev.52_b95a58f3102e0d5bae810dc489d7f2ad:
+    resolution: {integrity: sha1-IwjhXmSB1DeWIjpe/wRfRPzovX8=}
     peerDependencies:
-      '@bentley/itwin-client': ^3.0.0-dev.16
+      '@bentley/itwin-client': ^3.0.0-dev.52
     dependencies:
-      '@bentley/bentleyjs-core': 3.0.0-dev.16
-      '@bentley/itwin-client': 3.0.0-dev.16_30b0741cffeb29dbbab3010d4b962da8
-    dev: false
-
-  /@bentley/usage-logging-client/3.0.0-dev.16_589ce19e3421f4081dfcf6b1ba493e75:
-    resolution: {integrity: sha1-Ke/g9cRmgMpQBNPA8jgJbjvkjuI=}
-    peerDependencies:
-      '@bentley/itwin-client': ^3.0.0-dev.16
-      '@bentley/telemetry-client': ^3.0.0-dev.16
-    dependencies:
-      '@bentley/bentleyjs-core': 3.0.0-dev.16
-      '@bentley/itwin-client': 3.0.0-dev.16_30b0741cffeb29dbbab3010d4b962da8
-      '@bentley/telemetry-client': 3.0.0-dev.16_ddbf32d11ea3d5a6c4b5024970e7d739
+      '@bentley/bentleyjs-core': 3.0.0-dev.52
+      '@bentley/itwin-client': 3.0.0-dev.52_bb4a105a8d657020b0049676830f7e67
     dev: false
 
   /@electron/get/1.12.4:
@@ -7185,18 +7172,18 @@ packages:
       commander: 2.20.3
     dev: false
 
-  file:projects/bis-rules.tgz_049724796084d7a737517c0e6f3067e4:
-    resolution: {integrity: sha512-I1Bpg6Ka+B0agnwilISGPgDsX4ZtG1SvBL0HRTJkb1XOXb6MWDIPX4F4d5f5fFt7zeKpGZD2eFWi8OjE967Pjw==, tarball: file:projects/bis-rules.tgz}
+  file:projects/bis-rules.tgz_41886ed66760c3d602634d2bd8554951:
+    resolution: {integrity: sha512-0/EYky+PgXPQxXQEz4Wj8uUh2sQuzKGrNNY9jKZAOaP+buT9Vuu5srcumh8JzBDqSsxU9LjS39slhY9v7E5J8A==, tarball: file:projects/bis-rules.tgz}
     id: file:projects/bis-rules.tgz
     name: '@rush-temp/bis-rules'
     version: 0.0.0
     dependencies:
-      '@bentley/bentleyjs-core': 3.0.0-dev.16
+      '@bentley/bentleyjs-core': 3.0.0-dev.52
       '@bentley/build-tools': 2.19.1
-      '@bentley/ecschema-editing': 3.0.0-dev.16_c31ad4b1dcf4c5ca8328525bd643b499
-      '@bentley/ecschema-metadata': 3.0.0-dev.16_85ceb27778e818d0474c9626582ca77d
+      '@bentley/ecschema-editing': 3.0.0-dev.52_28e7398409be6e6809e2121c7d3bc1de
+      '@bentley/ecschema-metadata': 3.0.0-dev.52_245d3c9207f2949c45c743d473ecca45
       '@bentley/eslint-plugin': 2.19.1_eslint@6.8.0+typescript@4.3.5
-      '@bentley/imodeljs-backend': 3.0.0-dev.16_1f00789affc0075670daf67eae0b4e80
+      '@bentley/imodeljs-backend': 3.0.0-dev.52_08eb2962d68ee675d268454b4798a3ab
       '@types/chai': 4.2.21
       '@types/mocha': 8.2.3
       '@types/rimraf': 2.0.5
@@ -7224,27 +7211,27 @@ packages:
       - utf-8-validate
     dev: false
 
-  file:projects/imodel-schema-validator.tgz_088605aa802aab54bc7db00dd0ba9fb4:
-    resolution: {integrity: sha512-waC0QQbA7sRqlkCSqIIqHiReq5YPp8M4N/CKvFMTJpaAo0gyxjJ63X7NCY0z1DThDF6sbJVGPnURKT02Ohj5TQ==, tarball: file:projects/imodel-schema-validator.tgz}
+  file:projects/imodel-schema-validator.tgz_aecde7e1982ac14d2b5f04006ef1870d:
+    resolution: {integrity: sha512-r01kVlvZ89JK/qczOnYcixWa9p/nfM8q1DmzftEttnD+/b7wYFo312GDFK6ADz3SSmxilvWpam7NnelJ3v1vrg==, tarball: file:projects/imodel-schema-validator.tgz}
     id: file:projects/imodel-schema-validator.tgz
     name: '@rush-temp/imodel-schema-validator'
     version: 0.0.0
     dependencies:
-      '@bentley/backend-itwin-client': 3.0.0-dev.16_8c016cc0e5e2c3054732bedd01961c1b
-      '@bentley/bentleyjs-core': 3.0.0-dev.16
+      '@bentley/backend-itwin-client': 3.0.0-dev.52_f38eb5f816c5d388f3f2f7f2fe605860
+      '@bentley/bentleyjs-core': 3.0.0-dev.52
       '@bentley/build-tools': 2.19.1
-      '@bentley/ecschema-editing': 3.0.0-dev.16_c31ad4b1dcf4c5ca8328525bd643b499
-      '@bentley/ecschema-locaters': 3.0.0-dev.16_7acda18ce045b25d104772aea7d86eef
-      '@bentley/ecschema-metadata': 3.0.0-dev.16_85ceb27778e818d0474c9626582ca77d
+      '@bentley/ecschema-editing': 3.0.0-dev.52_28e7398409be6e6809e2121c7d3bc1de
+      '@bentley/ecschema-locaters': 3.0.0-dev.52_03d524973da7e72e47a751cb5bbafdc3
+      '@bentley/ecschema-metadata': 3.0.0-dev.52_245d3c9207f2949c45c743d473ecca45
       '@bentley/ecschema-ops': 0.1.17
       '@bentley/eslint-plugin': 2.19.1_eslint@6.8.0+typescript@4.3.5
-      '@bentley/geometry-core': 3.0.0-dev.16_30b0741cffeb29dbbab3010d4b962da8
-      '@bentley/imodelhub-client': 3.0.0-dev.16_34b38919d5d6f9c298ae6554d52bee2e
-      '@bentley/imodeljs-backend': 3.0.0-dev.16_1f00789affc0075670daf67eae0b4e80
-      '@bentley/imodeljs-common': 3.0.0-dev.16_dc354c825927d958777bc8640fb61639
-      '@bentley/itwin-client': 3.0.0-dev.16_30b0741cffeb29dbbab3010d4b962da8
+      '@bentley/geometry-core': 3.0.0-dev.52_bb4a105a8d657020b0049676830f7e67
+      '@bentley/imodelhub-client': 3.0.0-dev.52_eca7979d5b6672371c63508dec111f0c
+      '@bentley/imodeljs-backend': 3.0.0-dev.52_08eb2962d68ee675d268454b4798a3ab
+      '@bentley/imodeljs-common': 3.0.0-dev.52_9e158d6a057132ffa989d9fc2bb167e1
+      '@bentley/itwin-client': 3.0.0-dev.52_bb4a105a8d657020b0049676830f7e67
       '@bentley/oidc-signin-tool': 2.3.0-dev.8
-      '@bentley/rbac-client': 3.0.0-dev.5_ddbf32d11ea3d5a6c4b5024970e7d739
+      '@bentley/rbac-client': 3.0.0-dev.5_b95a58f3102e0d5bae810dc489d7f2ad
       '@types/chai': 4.2.21
       '@types/mocha': 8.2.3
       '@types/node': 10.12.18
@@ -7269,25 +7256,25 @@ packages:
       - utf-8-validate
     dev: false
 
-  file:projects/native-schema-locater.tgz_bb2ca7ea9c3a48932c2e7d7094747a90:
-    resolution: {integrity: sha512-H3Xs2ZuMyAG6nLCMflgyvElShkxbFv07cHykTnpeQZd/i9pXdC5yvqOQttRZofHJr0RBumKsgh+btVtaAgKQ0g==, tarball: file:projects/native-schema-locater.tgz}
+  file:projects/native-schema-locater.tgz_6f2fd282e57ca3d07944b7e166c36b94:
+    resolution: {integrity: sha512-eGr2YNGOTWSeI+uTiXDV51CWtHQMkGpGfFhzEy3E09mKSOr8jdEE/LLOQjzYKHrbuwR69Kn/JbMjsBt9n1EnWg==, tarball: file:projects/native-schema-locater.tgz}
     id: file:projects/native-schema-locater.tgz
     name: '@rush-temp/native-schema-locater'
     version: 0.0.0
     dependencies:
-      '@bentley/backend-itwin-client': 3.0.0-dev.16_8c016cc0e5e2c3054732bedd01961c1b
-      '@bentley/bentleyjs-core': 3.0.0-dev.16
+      '@bentley/backend-itwin-client': 3.0.0-dev.52_f38eb5f816c5d388f3f2f7f2fe605860
+      '@bentley/bentleyjs-core': 3.0.0-dev.52
       '@bentley/build-tools': 2.19.1
-      '@bentley/ecschema-locaters': 3.0.0-dev.16_7acda18ce045b25d104772aea7d86eef
-      '@bentley/ecschema-metadata': 3.0.0-dev.16_85ceb27778e818d0474c9626582ca77d
+      '@bentley/ecschema-locaters': 3.0.0-dev.52_03d524973da7e72e47a751cb5bbafdc3
+      '@bentley/ecschema-metadata': 3.0.0-dev.52_245d3c9207f2949c45c743d473ecca45
       '@bentley/eslint-plugin': 2.19.1_eslint@6.8.0+typescript@4.3.5
-      '@bentley/geometry-core': 3.0.0-dev.16_30b0741cffeb29dbbab3010d4b962da8
-      '@bentley/imodelhub-client': 3.0.0-dev.16_34b38919d5d6f9c298ae6554d52bee2e
-      '@bentley/imodeljs-backend': 3.0.0-dev.16_1f00789affc0075670daf67eae0b4e80
-      '@bentley/imodeljs-common': 3.0.0-dev.16_dc354c825927d958777bc8640fb61639
-      '@bentley/itwin-client': 3.0.0-dev.16_30b0741cffeb29dbbab3010d4b962da8
-      '@bentley/rbac-client': 3.0.0-dev.5_ddbf32d11ea3d5a6c4b5024970e7d739
-      '@bentley/telemetry-client': 3.0.0-dev.16_ddbf32d11ea3d5a6c4b5024970e7d739
+      '@bentley/geometry-core': 3.0.0-dev.52_bb4a105a8d657020b0049676830f7e67
+      '@bentley/imodelhub-client': 3.0.0-dev.52_eca7979d5b6672371c63508dec111f0c
+      '@bentley/imodeljs-backend': 3.0.0-dev.52_08eb2962d68ee675d268454b4798a3ab
+      '@bentley/imodeljs-common': 3.0.0-dev.52_9e158d6a057132ffa989d9fc2bb167e1
+      '@bentley/itwin-client': 3.0.0-dev.52_bb4a105a8d657020b0049676830f7e67
+      '@bentley/rbac-client': 3.0.0-dev.5_b95a58f3102e0d5bae810dc489d7f2ad
+      '@bentley/telemetry-client': 3.0.0-dev.52_b95a58f3102e0d5bae810dc489d7f2ad
       '@types/chai': 4.2.21
       '@types/chai-as-promised': 7.1.4
       '@types/fs-extra': 5.1.0
@@ -7319,26 +7306,26 @@ packages:
       - utf-8-validate
     dev: false
 
-  file:projects/schema-comparer.tgz_43b4f214f3d647e991935cf446e3b7f8:
-    resolution: {integrity: sha512-tzbCFDLhMVifujSFFTjJ+kJkTp87SVPD0xu8lrsWYPzjYHxnQOce4I7vM/jEZOhHYz6RKywJgEnm3XtO+5LPfw==, tarball: file:projects/schema-comparer.tgz}
+  file:projects/schema-comparer.tgz_5cdf5fcdae34ec54708218f15311a0d9:
+    resolution: {integrity: sha512-pI40v0+gGDutjHq9Ye1Mx3KeubwW5xPKaEh89Fv7Cac61lzS7wwmS+JvTl5WIbiEvu4oo+QJRB3TE0CYfOzbdg==, tarball: file:projects/schema-comparer.tgz}
     id: file:projects/schema-comparer.tgz
     name: '@rush-temp/schema-comparer'
     version: 0.0.0
     dependencies:
-      '@bentley/backend-itwin-client': 3.0.0-dev.16_8c016cc0e5e2c3054732bedd01961c1b
-      '@bentley/bentleyjs-core': 3.0.0-dev.16
+      '@bentley/backend-itwin-client': 3.0.0-dev.52_f38eb5f816c5d388f3f2f7f2fe605860
+      '@bentley/bentleyjs-core': 3.0.0-dev.52
       '@bentley/build-tools': 2.19.1
-      '@bentley/ecschema-editing': 3.0.0-dev.16_c31ad4b1dcf4c5ca8328525bd643b499
-      '@bentley/ecschema-locaters': 3.0.0-dev.16_7acda18ce045b25d104772aea7d86eef
-      '@bentley/ecschema-metadata': 3.0.0-dev.16_85ceb27778e818d0474c9626582ca77d
+      '@bentley/ecschema-editing': 3.0.0-dev.52_28e7398409be6e6809e2121c7d3bc1de
+      '@bentley/ecschema-locaters': 3.0.0-dev.52_03d524973da7e72e47a751cb5bbafdc3
+      '@bentley/ecschema-metadata': 3.0.0-dev.52_245d3c9207f2949c45c743d473ecca45
       '@bentley/eslint-plugin': 2.19.1_eslint@6.8.0+typescript@4.3.5
-      '@bentley/geometry-core': 3.0.0-dev.16_30b0741cffeb29dbbab3010d4b962da8
-      '@bentley/imodelhub-client': 3.0.0-dev.16_34b38919d5d6f9c298ae6554d52bee2e
-      '@bentley/imodeljs-backend': 3.0.0-dev.16_1f00789affc0075670daf67eae0b4e80
-      '@bentley/imodeljs-common': 3.0.0-dev.16_dc354c825927d958777bc8640fb61639
-      '@bentley/imodeljs-i18n': 3.0.0-dev.16_30b0741cffeb29dbbab3010d4b962da8
-      '@bentley/itwin-client': 3.0.0-dev.16_30b0741cffeb29dbbab3010d4b962da8
-      '@bentley/rbac-client': 3.0.0-dev.5_ddbf32d11ea3d5a6c4b5024970e7d739
+      '@bentley/geometry-core': 3.0.0-dev.52_bb4a105a8d657020b0049676830f7e67
+      '@bentley/imodelhub-client': 3.0.0-dev.52_eca7979d5b6672371c63508dec111f0c
+      '@bentley/imodeljs-backend': 3.0.0-dev.52_08eb2962d68ee675d268454b4798a3ab
+      '@bentley/imodeljs-common': 3.0.0-dev.52_9e158d6a057132ffa989d9fc2bb167e1
+      '@bentley/imodeljs-i18n': 3.0.0-dev.52_bb4a105a8d657020b0049676830f7e67
+      '@bentley/itwin-client': 3.0.0-dev.52_bb4a105a8d657020b0049676830f7e67
+      '@bentley/rbac-client': 3.0.0-dev.5_b95a58f3102e0d5bae810dc489d7f2ad
       '@types/chai': 4.2.21
       '@types/chai-as-promised': 7.1.4
       '@types/fs-extra': 5.1.0
@@ -7370,23 +7357,23 @@ packages:
       - utf-8-validate
     dev: false
 
-  file:projects/schema-roundtrip.tgz_b081feb224ebc45e69e9e59b99775d6f:
-    resolution: {integrity: sha512-qpyRVDeP+ngBJk35XaYvClntEV6vSYYPHKexZ2wyIx2P5BX6cxEh9gk50tvl0C8EP+p2mkXVjvmM1s4nmhvxKA==, tarball: file:projects/schema-roundtrip.tgz}
+  file:projects/schema-roundtrip.tgz_25dbe665e30000af7899db6b03380e51:
+    resolution: {integrity: sha512-pPSpyI4TOBthl75VW1JE/+Ks7gpquPiA5BHCka2DN/gcJW3JiKij5sM/pGe1gX85Lgy117Z44VfA8Sbl6CB3yg==, tarball: file:projects/schema-roundtrip.tgz}
     id: file:projects/schema-roundtrip.tgz
     name: '@rush-temp/schema-roundtrip'
     version: 0.0.0
     dependencies:
-      '@bentley/backend-itwin-client': 3.0.0-dev.16_8c016cc0e5e2c3054732bedd01961c1b
-      '@bentley/bentleyjs-core': 3.0.0-dev.16
+      '@bentley/backend-itwin-client': 3.0.0-dev.52_f38eb5f816c5d388f3f2f7f2fe605860
+      '@bentley/bentleyjs-core': 3.0.0-dev.52
       '@bentley/build-tools': 2.19.1
-      '@bentley/ecschema-locaters': 3.0.0-dev.16_7acda18ce045b25d104772aea7d86eef
-      '@bentley/ecschema-metadata': 3.0.0-dev.16_85ceb27778e818d0474c9626582ca77d
+      '@bentley/ecschema-locaters': 3.0.0-dev.52_03d524973da7e72e47a751cb5bbafdc3
+      '@bentley/ecschema-metadata': 3.0.0-dev.52_245d3c9207f2949c45c743d473ecca45
       '@bentley/eslint-plugin': 2.19.1_eslint@6.8.0+typescript@4.3.5
-      '@bentley/geometry-core': 3.0.0-dev.16_30b0741cffeb29dbbab3010d4b962da8
-      '@bentley/imodeljs-backend': 3.0.0-dev.16_1f00789affc0075670daf67eae0b4e80
-      '@bentley/imodeljs-common': 3.0.0-dev.16_dc354c825927d958777bc8640fb61639
-      '@bentley/imodeljs-i18n': 3.0.0-dev.16_30b0741cffeb29dbbab3010d4b962da8
-      '@bentley/itwin-client': 3.0.0-dev.16_30b0741cffeb29dbbab3010d4b962da8
+      '@bentley/geometry-core': 3.0.0-dev.52_bb4a105a8d657020b0049676830f7e67
+      '@bentley/imodeljs-backend': 3.0.0-dev.52_08eb2962d68ee675d268454b4798a3ab
+      '@bentley/imodeljs-common': 3.0.0-dev.52_9e158d6a057132ffa989d9fc2bb167e1
+      '@bentley/imodeljs-i18n': 3.0.0-dev.52_bb4a105a8d657020b0049676830f7e67
+      '@bentley/itwin-client': 3.0.0-dev.52_bb4a105a8d657020b0049676830f7e67
       '@types/chai': 4.2.21
       '@types/chai-as-promised': 7.1.4
       '@types/fs-extra': 5.1.0
@@ -7419,24 +7406,24 @@ packages:
       - utf-8-validate
     dev: false
 
-  file:projects/schema-validator.tgz_088605aa802aab54bc7db00dd0ba9fb4:
-    resolution: {integrity: sha512-Yj/vi2VpoAXusbeLJge2oWGSiBHIyTfWEhqk6AW8Qg0XJSFJc7fHWWx509PGwdjePBqDLw49Yfejs47la0dX2A==, tarball: file:projects/schema-validator.tgz}
+  file:projects/schema-validator.tgz_aecde7e1982ac14d2b5f04006ef1870d:
+    resolution: {integrity: sha512-VXWalk1Dz9vEZFQq9lCI0JGJJfpS+YobzkiPpc/He5lpeeut6hUj4Nds5w/1VadlHJYMgtTbGf2WzN2SOsTg2g==, tarball: file:projects/schema-validator.tgz}
     id: file:projects/schema-validator.tgz
     name: '@rush-temp/schema-validator'
     version: 0.0.0
     dependencies:
-      '@bentley/backend-itwin-client': 3.0.0-dev.16_8c016cc0e5e2c3054732bedd01961c1b
-      '@bentley/bentleyjs-core': 3.0.0-dev.16
+      '@bentley/backend-itwin-client': 3.0.0-dev.52_f38eb5f816c5d388f3f2f7f2fe605860
+      '@bentley/bentleyjs-core': 3.0.0-dev.52
       '@bentley/build-tools': 2.19.1
-      '@bentley/ecschema-editing': 3.0.0-dev.16_c31ad4b1dcf4c5ca8328525bd643b499
-      '@bentley/ecschema-locaters': 3.0.0-dev.16_7acda18ce045b25d104772aea7d86eef
-      '@bentley/ecschema-metadata': 3.0.0-dev.16_85ceb27778e818d0474c9626582ca77d
+      '@bentley/ecschema-editing': 3.0.0-dev.52_28e7398409be6e6809e2121c7d3bc1de
+      '@bentley/ecschema-locaters': 3.0.0-dev.52_03d524973da7e72e47a751cb5bbafdc3
+      '@bentley/ecschema-metadata': 3.0.0-dev.52_245d3c9207f2949c45c743d473ecca45
       '@bentley/eslint-plugin': 2.19.1_eslint@6.8.0+typescript@4.3.5
-      '@bentley/geometry-core': 3.0.0-dev.16_30b0741cffeb29dbbab3010d4b962da8
-      '@bentley/imodelhub-client': 3.0.0-dev.16_34b38919d5d6f9c298ae6554d52bee2e
-      '@bentley/imodeljs-backend': 3.0.0-dev.16_1f00789affc0075670daf67eae0b4e80
-      '@bentley/imodeljs-common': 3.0.0-dev.16_dc354c825927d958777bc8640fb61639
-      '@bentley/itwin-client': 3.0.0-dev.16_30b0741cffeb29dbbab3010d4b962da8
+      '@bentley/geometry-core': 3.0.0-dev.52_bb4a105a8d657020b0049676830f7e67
+      '@bentley/imodelhub-client': 3.0.0-dev.52_eca7979d5b6672371c63508dec111f0c
+      '@bentley/imodeljs-backend': 3.0.0-dev.52_08eb2962d68ee675d268454b4798a3ab
+      '@bentley/imodeljs-common': 3.0.0-dev.52_9e158d6a057132ffa989d9fc2bb167e1
+      '@bentley/itwin-client': 3.0.0-dev.52_bb4a105a8d657020b0049676830f7e67
       '@types/chai': 4.2.21
       '@types/chai-as-promised': 7.1.4
       '@types/fs-extra': 5.1.0
