@@ -10,7 +10,7 @@ const { logBuildError, logBuildWarning, failBuild, throwAfterTimeout, excludeMod
 
 const rushCommonDir = path.join(__dirname, "../../../common/");
 const ignoreFile = path.join(__dirname, "audit_ignoreList.json");
-let ignoreList = JSON.parse(fs.readFileSync(ignoreFile).toString());
+const ignoreList = JSON.parse(fs.readFileSync(ignoreFile).toString());
 
 (async () => {
   const commonTempDir = path.join(rushCommonDir, "config/rush");
