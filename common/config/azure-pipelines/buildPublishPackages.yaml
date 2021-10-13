@@ -252,7 +252,7 @@ stages:
 
           Write-Output ("Running '" + $cmd + "'...")
 
-          npm publish $artifactPath
+          npm publish $artifactPath --tag $(releaseTag) --access public
           Write-Output ("Done processing Artifact: '" + $artifactPath.Name + "'...")
         }
 
