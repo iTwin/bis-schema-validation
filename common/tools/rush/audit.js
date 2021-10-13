@@ -6,9 +6,11 @@
 const fs = require("fs");
 const path = require("path");
 const { spawn } = require("child_process");
-const { logBuildError, logBuildWarning, failBuild, throwAfterTimeout } = require("./utils");
+const { logBuildError, logBuildWarning, failBuild, throwAfterTimeout, excludeModule } = require("./utils");
 
 const rushCommonDir = path.join(__dirname, "../../../common/");
+const ignoreFile = path.join(__dirname, "audit_ignoreList.json");
+const ignoreList = JSON.parse(fs.readFileSync(ignoreFile).toString());
 
 (async () => {
   const commonTempDir = path.join(rushCommonDir, "config/rush");
@@ -54,8 +56,12 @@ const rushCommonDir = path.join(__dirname, "../../../common/");
 
       // For now, we'll only treat CRITICAL and HIGH vulnerabilities as errors in CI builds.
       if (!excludedAdvisories.includes(advisory.id) && (severity === "HIGH" || severity === "CRITICAL")) {
-        logBuildError(message);
-        failBuildVar = true;
+        if (excludeModule(advisory.module_name, severity, ignoreList)) {
+          logBuildWarning(message); // Ignoring the items
+        } else {
+          logBuildError(message);
+          failBuildVar = true;
+        }
       } else if (excludedAdvisories.includes(advisory.id) || severity === "MODERATE") // Only warn on MODERATE severity items
         logBuildWarning(message);
     }
