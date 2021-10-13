@@ -218,7 +218,7 @@ stages:
     pool:
       vmImage: $(os)
     variables:
-    # - group: "Caleb - npmjs publish token"
+    - group: "Caleb - npmjs publish token"
     - name: packsDir
       value: $(System.ArtifactsDirectory)/packages/
     - name: releaseTag
@@ -252,7 +252,7 @@ stages:
 
           Write-Output ("Running '" + $cmd + "'...")
 
-          npm publish $artifactPath --tag $(releaseTag) --access public --dry-run
+          npm publish $artifactPath --tag $(releaseTag) --access public
           Write-Output ("Done processing Artifact: '" + $artifactPath.Name + "'...")
         }
 
