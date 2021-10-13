@@ -31,9 +31,31 @@ function throwAfterTimeout(timeout, message) {
   });
 }
 
+/**
+ * Checks if the module is present in ignore list
+ * @param moduleName Name of module
+ * @param severity Severity of module
+ * @param excludeList List of modules present in audit_ignoreList.json
+ * @returns Boolean based upon the decision
+ */
+function excludeModule(moduleName, severity, excludeList) {
+  if (!excludeList)
+    return false;
+
+  const matches = excludeList.filter((s) => s.module_name === moduleName);
+  if (matches.length === 0)
+    return false;
+
+  if (matches.some((s) => s.severity === severity))
+    return true;
+
+  return false;
+}
+
 module.exports = {
   logBuildWarning,
   logBuildError,
   failBuild,
-  throwAfterTimeout
+  throwAfterTimeout,
+  excludeModule
 }
