@@ -2,7 +2,7 @@
   "name": "@bentley/schema-validator",
   "description": "Command line tools validates an ECJson or ECXml schema.",
   "license": "MIT",
-  "version": "0.2.112",
+  "version": "0.2.113",
   "bin": {
     "schema-validator": "./bin/index.js"
   },
@@ -63,13 +63,13 @@
   "dependencies": {
     "@bentley/backend-itwin-client": "3.0.0-dev.52",
     "@bentley/bentleyjs-core": "3.0.0-dev.52",
-    "@bentley/bis-rules": "0.2.112",
+    "@bentley/bis-rules": "0.2.113",
     "@bentley/geometry-core": "3.0.0-dev.52",
     "@bentley/imodelhub-client": "3.0.0-dev.52",
     "@bentley/imodeljs-backend": "3.0.0-dev.52",
     "@bentley/imodeljs-common": "3.0.0-dev.52",
     "@bentley/itwin-client": "3.0.0-dev.52",
-    "@bentley/native-schema-locater": "0.2.112",
+    "@bentley/native-schema-locater": "0.2.113",
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
     "fs-extra": "^7.0.1",
