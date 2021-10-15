@@ -6,13 +6,6 @@ resources:
       type: github
       
       name: iTwin/bis-schemas
-  pipelines:
-  - pipeline: BIS-Schema-Tools-Version-Bump
-    source: BIS-Schema-Tools-Version-Bump-(GitHub)
-    trigger:
-      branches:
-        include:
-        - master
 
 stages:
 - stage: build
