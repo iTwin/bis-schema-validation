@@ -6,6 +6,13 @@ resources:
       type: github
       
       name: iTwin/bis-schemas
+  pipelines:
+  - pipeline: BIS-Schema-Tools-Version-Bump
+    source: BIS-Schema-Tools-Version-Bump-(GitHub)
+    trigger:
+      branches:
+        include:
+        - master
 
 stages:
 - stage: build
@@ -29,10 +36,6 @@ stages:
         inputs:
           versionSpec: 12.18.2
           checkLatest: true
-
-      #Your build pipeline references a secret variable named ‘artifactsRegistryToken’. This variable is pulled from the 'arzure-artifacts-npm-token' variable group.  You must authorize this build to use that group: https://docs.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=yaml#use-a-variable-group
-      - template: seed-npmrc.yaml
-  
 
       - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js check
         displayName: Rush check
