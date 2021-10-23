@@ -41,7 +41,7 @@ Following are the arguments required by this tool:
     **-c, --checkReleaseDynamicSchema**: Check all dynamic schemas within provided iModel. Default value is false.
 
 ### Sample Command:
-imodel-schema-validator --verifyIModelSchemas -u "testuser" -p "password" -r rewqkjhg-pocd-abcd-5874-254136987412 -i sample -e QA -b D:\\\\dir1\\\\BisSchemas -o D:\\\\dir2
+imodel-schema-validator --verifyIModelSchemas -u "testuser@bentley.com" -p "password" -r rewqkjhg-pocd-abcd-5874-254136987412 -i sample -e QA -b D:\\\\dir1\\\\BisSchemas -o D:\\\\dir2
 
 ## Updating to newer version
 
