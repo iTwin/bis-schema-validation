@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
-* Copyright (c) 2019 Bentley Systems, Incorporated. All rights reserved.
+* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
 * Licensed under the MIT License. See LICENSE.md in the project root for license terms.
 *--------------------------------------------------------------------------------------------*/
 
@@ -11,7 +11,7 @@ import {
   Phenomenon, PrimitiveProperty, PropertyCategory, RelationshipClass, RelationshipConstraint, RelationshipEnd, Schema,
   SchemaContext, Unit, UnitSystem,
 } from "@bentley/ecschema-metadata/lib/ecschema-metadata";
-import { ISchemaChange, SchemaChanges, SchemaCompareDiagnostics} from "@bentley/ecschema-editing";
+import { ISchemaChange, SchemaChanges, SchemaCompareDiagnostics } from "@bentley/ecschema-editing";
 
 class TestSchemaCompareReporter extends SchemaCompareReporter {
   public reportFormattedChange(_message: string, _change?: ISchemaChange): void {

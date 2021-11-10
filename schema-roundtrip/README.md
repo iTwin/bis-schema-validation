@@ -1,5 +1,7 @@
 ﻿# schema-roundtrip
 
+Copyright © Bentley Systems, Incorporated. All rights reserved. See LICENSE.md for license terms and full copyright notice.
+
 The Schema Roundtrip tool is a command-line tool that deserializes an EC Schema XML file and then re-serializes the schema back to XML, optionally comparing the output schema file to the original schema
 using the @bentley/schema-comparer tool. Any differences discovered during the comparison are output to file.
 

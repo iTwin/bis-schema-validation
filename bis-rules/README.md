@@ -1,5 +1,7 @@
 ﻿# bis-rules
 
+Copyright © Bentley Systems, Incorporated. All rights reserved. See LICENSE.md for license terms and full copyright notice.
+
 bis-rules is a library that contains the BIS rule set which is an implementation of an IRuleSet defined in @bentley/ecschema-metadata.  This rule set
 can be consumed by the schema validation framework in @bentley/ecschema-metadata to assist EC Schema developers in finding BIS rule violations in their
 schema.

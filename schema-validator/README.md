@@ -1,5 +1,7 @@
 ﻿# schema-validator
 
+Copyright © Bentley Systems, Incorporated. All rights reserved. See LICENSE.md for license terms and full copyright notice.
+
 The BIS Schema Validator is a command-line tool that takes an EC3.x ECSchema and performs the BIS validation rules and outputs the results to a file.
 
 ## Quick Overview
@@ -24,7 +26,7 @@ npm install -g @bentley/schema-validator
 
 Required Parameters:
 
-**-i, --input {path}**: The path to an XML or JSON EC Schema file OR a directory holding the same (all *.ecschema.xml and *.ecschema.json files found will be validated).
+**-i, --input {path}**: The path to an XML or JSON EC Schema file OR a directory holding the same (all `*.ecschema.xml` and `*.ecschema.json` files found will be validated).
 
 **-o, --output {path}**: Directory to put the validation output file in the format 'MySchema.ecschema.xml.result.txt'.
 

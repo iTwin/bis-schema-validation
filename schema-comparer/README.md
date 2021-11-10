@@ -1,5 +1,7 @@
 ﻿# schema-comparer
 
+Copyright © Bentley Systems, Incorporated. All rights reserved. See LICENSE.md for license terms and full copyright notice.
+
 The Schema Comparer is a command-line tool, as well as a public API, that allows the comparison of two EC3.x ECSchema files and reports back all the differences discovered during the comparison.
 
 ## Quick Overview
