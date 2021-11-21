@@ -8,10 +8,10 @@ import * as sinon from "sinon";
 import * as chaiAsPromised from "chai-as-promised";
 import * as path from "path";
 import * as fs from "fs";
-import * as EC from "@bentley/ecschema-metadata";
-import { ECSchemaXmlContext, IModelHost } from "@bentley/imodeljs-backend";
+import * as EC from "@itwin/ecschema-metadata";
+import { ECSchemaXmlContext, IModelHost } from "@itwin/core-backend";
 import { SchemaXmlFileLocater } from "../SchemaXmlFileLocater";
-import { SchemaFileLocater } from "@bentley/ecschema-locaters";
+import { SchemaFileLocater } from "@itwin/ecschema-locaters";
 
 use(chaiAsPromised);
 

@@ -5,12 +5,12 @@
 
 import * as path from "path";
 import { DOMParser } from "xmldom";
-import { ECSchemaXmlContext } from "@bentley/imodeljs-backend";
-import { FileSchemaKey, SchemaFileLocater } from "@bentley/ecschema-locaters";
+import { ECSchemaXmlContext } from "@itwin/core-backend";
+import { FileSchemaKey, SchemaFileLocater } from "@itwin/ecschema-locaters";
 import {
   ECObjectsError, ECObjectsStatus, ECVersion, ISchemaLocater, Schema, SchemaContext,
   SchemaGraphUtil, SchemaKey, SchemaMatchType, SchemaReadHelper, XmlParser,
-} from "@bentley/ecschema-metadata";
+} from "@itwin/ecschema-metadata";
 
 function isECv2Schema(schemaText: string): boolean {
   return /<ECSchema[^>]*xmlns=".*ECXML.2.0"/.test(schemaText);
@@ -19,7 +19,7 @@ function isECv2Schema(schemaText: string): boolean {
 /**
  * A SchemaLocater implementation for locating XML Schema files
  * from the file system using configurable search paths. For EC v31 and v2 schemas, the
- * native context (ECSchemaXmlContext from imodeljs-backend) will used for deserialization.
+ * native context (ECSchemaXmlContext from core-backend) will used for deserialization.
  * @internal This is a workaround the current lack of a full xml parser.
  */
 export class SchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLocater {

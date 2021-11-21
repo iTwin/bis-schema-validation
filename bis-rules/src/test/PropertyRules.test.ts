@@ -5,11 +5,11 @@
 
 import { expect } from "chai";
 import * as Rules from "../BisRules";
-import { ECClass, EntityClass, PrimitiveType, Schema, SchemaContext } from "@bentley/ecschema-metadata";
-import { MutableClass } from "@bentley/ecschema-metadata/lib/Metadata/Class";
-import { MutableSchema } from "@bentley/ecschema-metadata/lib/Metadata/Schema";
-import { DiagnosticCategory, DiagnosticType } from "@bentley/ecschema-editing";
-import { CustomAttribute } from "@bentley/ecschema-metadata/lib/Metadata/CustomAttribute";
+import { ECClass, EntityClass, PrimitiveType, Schema, SchemaContext } from "@itwin/ecschema-metadata";
+import { MutableClass } from "@itwin/ecschema-metadata/lib/Metadata/Class";
+import { MutableSchema } from "@itwin/ecschema-metadata/lib/Metadata/Schema";
+import { DiagnosticCategory, DiagnosticType } from "@itwin/ecschema-editing";
+import { CustomAttribute } from "@itwin/ecschema-metadata/lib/Metadata/CustomAttribute";
 
 describe("Property Rule Tests", () => {
   let schema: Schema;

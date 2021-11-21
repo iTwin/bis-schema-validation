@@ -6,8 +6,8 @@
 import sinon = require("sinon");
 import { expect } from "chai";
 import * as Rules from "../BisRules";
-import { RelationshipClass, Schema, SchemaContext } from "@bentley/ecschema-metadata";
-import { DiagnosticCategory, DiagnosticType } from "@bentley/ecschema-editing";
+import { RelationshipClass, Schema, SchemaContext } from "@itwin/ecschema-metadata";
+import { DiagnosticCategory, DiagnosticType } from "@itwin/ecschema-editing";
 import { createSchemaJsonWithItems } from "./utils/DeserializationHelpers";
 import { BisTestHelper } from "./utils/BisTestHelper";
 

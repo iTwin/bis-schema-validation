@@ -3,10 +3,12 @@
 * Licensed under the MIT License. See LICENSE.md in the project root for license terms.
 *--------------------------------------------------------------------------------------------*/
 
-import * as EC from "@bentley/ecschema-metadata";
-import { ClassDiagnostic, createClassDiagnosticClass, createPropertyDiagnosticClass, createSchemaDiagnosticClass,
+import * as EC from "@itwin/ecschema-metadata";
+import {
+  ClassDiagnostic, createClassDiagnosticClass, createPropertyDiagnosticClass, createSchemaDiagnosticClass,
   createSchemaItemDiagnosticClass, DiagnosticCategory, IRuleSet, PropertyDiagnostic,
-  SchemaDiagnostic, SchemaItemDiagnostic } from "@bentley/ecschema-editing";
+  SchemaDiagnostic, SchemaItemDiagnostic,
+} from "@itwin/ecschema-editing";
 
 const bisCoreName = "BisCore";
 const bisModelName = "Model";

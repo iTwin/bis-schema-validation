@@ -5,10 +5,10 @@
 
 import { expect } from "chai";
 import * as Rules from "../BisRules";
-import { KindOfQuantity, Schema, SchemaContext } from "@bentley/ecschema-metadata";
+import { KindOfQuantity, Schema, SchemaContext } from "@itwin/ecschema-metadata";
 import { createSchemaJsonWithItems } from "./utils/DeserializationHelpers";
 import { TestSchemaLocater } from "./utils/TestSchemaLocater";
-import { DiagnosticCategory, DiagnosticType, IDiagnostic } from "@bentley/ecschema-editing";
+import { DiagnosticCategory, DiagnosticType, IDiagnostic } from "@itwin/ecschema-editing";
 
 function createSchemaJson(koq: any) {
   return createSchemaJsonWithItems({

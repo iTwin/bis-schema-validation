@@ -7,8 +7,8 @@ import * as fs from "fs";
 import * as path from "path";
 import * as rimraf from "rimraf";
 import * as readdirp from "readdirp";
-import { SchemaKey } from "@bentley/ecschema-metadata";
-import { StubSchemaXmlFileLocater } from "@bentley/ecschema-locaters/lib/StubSchemaXmlFileLocater";
+import { SchemaKey } from "@itwin/ecschema-metadata";
+import { StubSchemaXmlFileLocater } from "@itwin/ecschema-locaters/lib/StubSchemaXmlFileLocater";
 
 /**
  * Prepare output file where imodel will be created

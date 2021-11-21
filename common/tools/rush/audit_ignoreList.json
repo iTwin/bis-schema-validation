@@ -2,11 +2,11 @@
   {
     "module_name": "glob-parent",
     "severity": "HIGH",
-    "from": "@bentley/build-tools"
+    "from": "@itwin/build-tools"
   },
   {
     "module_name": "set-value",
     "severity": "HIGH",
-    "from": "@bentley/build-tools"
+    "from": "@itwin/build-tools"
   }
 ]

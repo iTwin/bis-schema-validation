@@ -3,11 +3,11 @@
 * Licensed under the MIT License. See LICENSE.md in the project root for license terms.
 *--------------------------------------------------------------------------------------------*/
 
-import { AuthorizedBackendRequestContext, BriefcaseDb, BriefcaseManager, IModelHost, IModelHostConfiguration } from "@bentley/imodeljs-backend";
-import { AccessToken } from "@bentley/itwin-client";
+import { BriefcaseDb, BriefcaseManager, IModelHost, IModelHostConfiguration } from "@itwin/core-backend";
+import { AccessToken } from "@itwin/core-bentley";
 import { IModelHubClient } from "@bentley/imodelhub-client";
 import { TestBrowserAuthorizationClient, TestBrowserAuthorizationClientConfiguration, TestUserCredentials } from "@bentley/oidc-signin-tool";
-import { BriefcaseProps, IModelVersionProps, RequestNewBriefcaseProps } from "@bentley/imodeljs-common";
+import { BriefcaseProps, IModelVersionProps, RequestNewBriefcaseProps } from "@itwin/core-common";
 import * as rimraf from "rimraf";
 import * as fs from "fs";
 import * as path from "path";
@@ -84,7 +84,7 @@ export class IModelProvider {
       const error = "jwt token value was empty string, returned from oidc-signin-tool";
       throw Error(error);
     }
-    return new AuthorizedBackendRequestContext(accessToken);
+    return accessToken;
   }
 
   /**
@@ -92,9 +92,9 @@ export class IModelProvider {
    * @param projectId: The Id of a project on iModelHub.
    * @param iModelName:  The name of an iModel within the project.
    */
-  public static async getIModelId(requestContext: AuthorizedBackendRequestContext, projectId: string, iModelName: string): Promise<string | undefined> {
+  public static async getIModelId(accessToken: AccessToken, projectId: string, iModelName: string): Promise<string | undefined> {
     const client = new IModelHubClient();
-    const iModels = await client.iModels.get(requestContext, projectId);
+    const iModels = await client.iModels.get(accessToken, projectId);
     // eslint-disable-next-line @typescript-eslint/prefer-for-of
     for (let num = 0; num < iModels.length; num++) {
       if (iModels[num].name === iModelName) {
@@ -112,8 +112,8 @@ export class IModelProvider {
    * @param password: Password for OIDC Auth.
    */
   public static async exportIModelSchemas(projectId: string, iModelName: string, schemaDir: string, userName: string, password: string) {
-    const requestContext = await this.oidcConnect(userName, password, this._regionCode);
-    const imodelId = await this.getIModelId(requestContext, projectId, iModelName); // iModel Id based upon iModel name and Project Id
+    const accessToken = await this.oidcConnect(userName, password, this._regionCode);
+    const imodelId = await this.getIModelId(accessToken, projectId, iModelName); // iModel Id based upon iModel name and Project Id
 
     if (!imodelId) {
       throw new Error("iModel either does not exist or cannot be found!");
@@ -124,20 +124,18 @@ export class IModelProvider {
     };
 
     const briefcaseProps: RequestNewBriefcaseProps = {
-      contextId: projectId,
+      iTwinId: projectId,
       iModelId: imodelId,
       asOf: iModelVersionProps,
     };
 
-    const downloadedBriefcaseProps: BriefcaseProps = await BriefcaseManager.downloadBriefcase(requestContext, briefcaseProps);
+    const downloadedBriefcaseProps: BriefcaseProps = await BriefcaseManager.downloadBriefcase(briefcaseProps);
     console.log("Briefcase Downloaded...");
-    requestContext.enter();
 
     const iModelFilePath = BriefcaseManager.getFileName(downloadedBriefcaseProps);
     console.log("iModelFilePath: " + iModelFilePath);
 
-    const iModel = await BriefcaseDb.open(requestContext, { fileName: iModelFilePath });
-    requestContext.enter();
+    const iModel = await BriefcaseDb.open({ fileName: iModelFilePath });
 
     try {
 
@@ -154,7 +152,7 @@ export class IModelProvider {
       iModel.nativeDb.exportSchemas(schemaDir);
     } finally {
       iModel.close();
-      await BriefcaseManager.deleteBriefcaseFiles(iModelFilePath, requestContext);
+      await BriefcaseManager.deleteBriefcaseFiles(iModelFilePath);
     }
   }
 

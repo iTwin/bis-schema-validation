@@ -3,10 +3,10 @@
 * Licensed under the MIT License. See LICENSE.md in the project root for license terms.
 *--------------------------------------------------------------------------------------------*/
 
-import * as EC from "@bentley/ecschema-metadata";
-import { AnyDiagnostic, DiagnosticCodes, IRuleSuppressionSet } from "@bentley/ecschema-editing";
+import * as EC from "@itwin/ecschema-metadata";
+import { AnyDiagnostic, DiagnosticCodes, IRuleSuppressionSet } from "@itwin/ecschema-editing";
 import { DiagnosticCodes as BisDiagnosticCodes } from "@bentley/bis-rules";
-import { CustomAttributeContainerProps } from "@bentley/ecschema-metadata/lib/Metadata/CustomAttribute";
+import { CustomAttributeContainerProps } from "@itwin/ecschema-metadata/lib/Metadata/CustomAttribute";
 
 interface ISchemaInfo {
   name: string;

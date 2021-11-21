@@ -5,8 +5,8 @@
 
 import { expect } from "chai";
 import * as Rules from "../BisRules";
-import { DelayedPromiseWithProps,ECClass,LazyLoadedSchemaItem,Schema,SchemaContext,StructClass } from "@bentley/ecschema-metadata";
-import { DiagnosticCategory, DiagnosticType } from "@bentley/ecschema-editing";
+import { DelayedPromiseWithProps, ECClass, LazyLoadedSchemaItem, Schema, SchemaContext, StructClass } from "@itwin/ecschema-metadata";
+import { DiagnosticCategory, DiagnosticType } from "@itwin/ecschema-editing";
 
 describe("StructClass Rule Tests", () => {
   let schema: Schema;

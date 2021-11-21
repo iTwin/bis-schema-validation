@@ -6,8 +6,8 @@
 import * as fs from "fs-extra";
 import * as path from "path";
 
-import { Schema, SchemaContext } from "@bentley/ecschema-metadata";
-import { ISchemaCompareReporter, SchemaComparer } from "@bentley/ecschema-editing";
+import { Schema, SchemaContext } from "@itwin/ecschema-metadata";
+import { ISchemaCompareReporter, SchemaComparer } from "@itwin/ecschema-editing";
 import { FileSchemaCompareReporter } from "./FileSchemaCompareReporter";
 import { CollectionSchemaCompareReporter, IFormattedSchemaChange } from "./CollectionSchemaCompareReporter";
 import { SchemaDeserializer } from "@bentley/native-schema-locater";

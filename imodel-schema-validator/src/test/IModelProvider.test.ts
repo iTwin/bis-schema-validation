@@ -7,7 +7,7 @@ import * as fs from "fs";
 import { IModelProvider } from "../IModelProvider";
 import * as path from "path";
 import * as rimraf from "rimraf";
-import { IModelHost } from "@bentley/imodeljs-backend";
+import { IModelHost } from "@itwin/core-backend";
 
 describe("IModelProvider Tests", async () => {
   const oidcUserName: any = process.env.oidcUserName;

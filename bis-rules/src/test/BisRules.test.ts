@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import * as Rules from "../BisRules";
-import { assert } from "@bentley/bentleyjs-core";
+import { assert } from "@itwin/core-bentley";
 
 describe("BisRules Tests", () => {
 

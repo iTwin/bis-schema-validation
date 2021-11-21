@@ -3,7 +3,7 @@
 * Licensed under the MIT License. See LICENSE.md in the project root for license terms.
 *--------------------------------------------------------------------------------------------*/
 
-import { ISchemaLocater,Schema,SchemaContext,SchemaKey,SchemaMatchType } from "@bentley/ecschema-metadata";
+import { ISchemaLocater, Schema, SchemaContext, SchemaKey, SchemaMatchType } from "@itwin/ecschema-metadata";
 
 const formatsKey = new SchemaKey("Formats", 1, 0, 0);
 const unitsKey = new SchemaKey("Units", 1, 0, 0);

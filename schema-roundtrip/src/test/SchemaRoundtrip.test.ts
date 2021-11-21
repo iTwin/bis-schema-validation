@@ -10,7 +10,7 @@ import * as utils from "./utilities/utils";
 import * as chaiAsPromised from "chai-as-promised";
 import { XMLSerializer } from "xmldom";
 import { RoundTripOptions, RoundTripResultType, SchemaRoundTrip } from "../SchemaRoundTrip";
-import { Schema } from "@bentley/ecschema-metadata";
+import { Schema } from "@itwin/ecschema-metadata";
 import { ComparisonResultType, SchemaComparison } from "@bentley/schema-comparer";
 
 use(chaiAsPromised);

@@ -5,8 +5,8 @@
 
 import { expect } from "chai";
 import { CollectionSchemaCompareReporter } from "../CollectionSchemaCompareReporter";
-import { Schema, SchemaContext } from "@bentley/ecschema-metadata/lib/ecschema-metadata";
-import { SchemaChanges, SchemaCompareCodes, SchemaCompareDiagnostics } from "@bentley/ecschema-editing";
+import { Schema, SchemaContext } from "@itwin/ecschema-metadata/lib/ecschema-metadata";
+import { SchemaChanges, SchemaCompareCodes, SchemaCompareDiagnostics } from "@itwin/ecschema-editing";
 
 describe("CollectionSchemaCompareReporter Tests", () => {
   it("report diagnostic, diagnostic added correctly.", async () => {
