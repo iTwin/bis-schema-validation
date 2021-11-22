@@ -432,7 +432,7 @@ packages:
     dev: false
 
   /@bentley/backend-itwin-client/3.0.0-dev.72_5bf24c380cb1283e7d0e37704f6cd3f9:
-    resolution: {integrity: sha1-qDuDnixvvhnhWK4DYganNAH+IzE=}
+    resolution: {integrity: sha512-WW/GKibXE1prKAgFQl2qfUNBbO8o07uvly3R/t6WRFyR8LQuFGJh/eNxRtBTPeE1ZNew2SmqPtsNfUrfScbdIw==}
     engines: {node: '>=10.17.0 <15.0'}
     peerDependencies:
       '@bentley/frontend-authorization-client': ^3.0.0-dev.72
@@ -466,15 +466,15 @@ packages:
     dev: false
 
   /@bentley/bentleyjs-core/2.3.0:
-    resolution: {integrity: sha1-Iq+7qLI3MpVCYzfkuAZG3g/uEeA=}
+    resolution: {integrity: sha512-BkwCOa4DODUHl2xiuX8M4gbOh9Ifax5bzkYs1ITsyO0bjiFF/ebY7+kis0DE+3Wn5VvdX+gczbzMnUiOx8vQqQ==}
     dev: false
 
   /@bentley/bentleyjs-core/3.0.0-dev.5:
-    resolution: {integrity: sha1-NVfU4AIw0kEldfQP5bq9GR71Erg=}
+    resolution: {integrity: sha512-8DzRaAZ2eAaFMOwGqY4ZUFW5BqMAQjqTvtDdwK82adgBj2k26O8uX01O6/XAzsBLi4ajYG6lcgYbD6fRo811aQ==}
     dev: false
 
   /@bentley/certa/2.3.0:
-    resolution: {integrity: sha1-ELkQun3fmp/wvl1Fsp9GuOV0FpA=}
+    resolution: {integrity: sha512-knmsYYdYX/ADaDLBXrnxnFJstg5/QVJTZXGq1KsNYeuJbJ6+WY4jPi5oB+MAwcNvWHpd2WaTecMFLfoXqsOX9w==}
     hasBin: true
     dependencies:
       detect-port: 1.3.0
@@ -493,7 +493,7 @@ packages:
     dev: false
 
   /@bentley/config-loader/2.3.0:
-    resolution: {integrity: sha1-VsBbNczGeUZPupDRyErmn17FMdo=}
+    resolution: {integrity: sha512-Mw/rZfMaH2LuBSOaH1ovF1UlK3GaX3C0mRaVIMIySfltmNA7yi5W81bLRgpvoy0zuvOtZp36A3gopBGrq0N4WQ==}
     dependencies:
       chalk: 3.0.0
       dotenv: 8.6.0
@@ -502,7 +502,7 @@ packages:
     dev: false
 
   /@bentley/context-registry-client/3.0.0-dev.72_2872392b0633213081dfd2d7f19f1032:
-    resolution: {integrity: sha1-eb2ogSZWQY2OrMuh9OaiogjQZlU=}
+    resolution: {integrity: sha512-UlxZsOwc31EZd2zFjbCMRGmtx1fnPR5JakfYH7IgaK2qk7kwOVC8uuu3j3ELNS2WwFWzSlvntG3MXXATEUkBMw==}
     peerDependencies:
       '@bentley/itwin-client': ^3.0.0-dev.72
       '@itwin/core-bentley': ^3.0.0-dev.72
@@ -514,12 +514,12 @@ packages:
     dev: false
 
   /@bentley/ecschema-ops/0.1.21:
-    resolution: {integrity: sha1-qpy4h5XtPU/gG/IC8YFg3gYqxgc=}
+    resolution: {integrity: sha512-0CbiTO8CM8cRunQsdnf8FXD91W+M0BWarstQGV9vbV65eBCEaA8PWWJKyiaGt428T4bDb32OZbzp0OLN6BAKOw==}
     requiresBuild: true
     dev: false
 
   /@bentley/frontend-authorization-client/2.3.0_d850bf600ca9062fb40dccda0eeb0650:
-    resolution: {integrity: sha1-xIA92wJz29Omeev540VwJGA6eho=}
+    resolution: {integrity: sha512-5j89gaFEELCKn8Cwz6XQ4Bd57nolQPnfoJq0/Vup56f7vJrWkpvbxWbaGpmfG1vOvVcY8r27HAaJSKdqOrEF1w==}
     peerDependencies:
       '@bentley/bentleyjs-core': ^2.3.0
       '@bentley/itwin-client': ^2.3.0
@@ -530,7 +530,7 @@ packages:
     dev: false
 
   /@bentley/imodelhub-client/3.0.0-dev.72_2872392b0633213081dfd2d7f19f1032:
-    resolution: {integrity: sha1-82yf0qHw27LAakuoxKrLqXOLbaw=}
+    resolution: {integrity: sha512-FVFWjhaRbsgc4vB7FB30RedWdqasZsHVPDD+o/2+83IXp6VQm2pvMyPXwKHMW8BncZKfcrBytk61EPUw/0pgOQ==}
     peerDependencies:
       '@bentley/frontend-authorization-client': ^3.0.0-dev.72
       '@bentley/itwin-client': ^3.0.0-dev.72
@@ -545,12 +545,12 @@ packages:
     dev: false
 
   /@bentley/imodeljs-native/3.0.11:
-    resolution: {integrity: sha1-eCffPAHgEcAVL7uIzDvctJroQh8=}
+    resolution: {integrity: sha512-y6+cMqpgFVBNFIlddu6Op29re2c8IDDiV4M3BHI7HRXyLDYFzLW9ZsfWm3B4s6/GX3ErRIcCWjUWqaWl3wWNnQ==}
     requiresBuild: true
     dev: false
 
   /@bentley/itwin-client/2.3.0_@bentley+bentleyjs-core@2.3.0:
-    resolution: {integrity: sha1-4MDlZ/1iHDlv2lcV9HieY3TCvBo=}
+    resolution: {integrity: sha512-FY5Aad8/vy1vYd0JbLtFdoqkm9rjqoPRx1iv55fCs3XBvCa5gw0VWMXuuDGrOcXuQnW2+zce+xXn4II0JwO3/g==}
     peerDependencies:
       '@bentley/bentleyjs-core': ^2.3.0
     dependencies:
@@ -566,7 +566,7 @@ packages:
     dev: false
 
   /@bentley/itwin-client/3.0.0-dev.72_@itwin+core-bentley@3.0.0-dev.72:
-    resolution: {integrity: sha1-YZlDJZ8C0HfNXMQEAKaHbl/KH6E=}
+    resolution: {integrity: sha512-xz/klrBTqJ7B/ORxEpG3OTF8HVu6tghw2kXjmu3DsSp8x6d/LKF3n3htPKGaHMF8VyerufhTnPD880NY/TGwJQ==}
     peerDependencies:
       '@itwin/core-bentley': ^3.0.0-dev.72
     dependencies:
@@ -582,7 +582,7 @@ packages:
     dev: false
 
   /@bentley/oidc-signin-tool/2.3.0:
-    resolution: {integrity: sha1-hzkPV/XG/gjVCYDu4E4IKGtV7JA=}
+    resolution: {integrity: sha512-oDp82Lel12C7Ngfbu5XQmPhN3TrA4TuWZ7W2ZijC14PNK6CSuod73iE21Xc+ISlylzn7A7Gb5DPr2gq0ZfEkEg==}
     dependencies:
       '@bentley/bentleyjs-core': 2.3.0
       '@bentley/certa': 2.3.0
@@ -596,7 +596,7 @@ packages:
     dev: false
 
   /@bentley/rbac-client/3.0.0-dev.5_1493c45d37c7b72379947417cc240612:
-    resolution: {integrity: sha1-ldhdfERhWgDlowPZgOvbf49iBFg=}
+    resolution: {integrity: sha512-yausokobbqTwSlTNTGnEqXkIBChK/o1n4OSPW0ftlGek3s3H2BIDabVexe8I/uEh3dkZLHi79SNwzDuDxRHaew==}
     peerDependencies:
       '@bentley/itwin-client': ^3.0.0-dev.5
     dependencies:
@@ -605,7 +605,7 @@ packages:
     dev: false
 
   /@bentley/telemetry-client/3.0.0-dev.72_70b023ddda5312a2cbc23ba4fa7af3dc:
-    resolution: {integrity: sha1-yLtS1VOrInmN26jLFAxYsQpPPdY=}
+    resolution: {integrity: sha512-Chjp2D97wgfEGxyhE6viM9BTLAN7qpttTCQNXN4CaCHkOlGqplT3l8z5jlUVOukdmAd1tAJ5GDD8YianLSQKig==}
     peerDependencies:
       '@bentley/itwin-client': ^3.0.0-dev.72
     dependencies:
