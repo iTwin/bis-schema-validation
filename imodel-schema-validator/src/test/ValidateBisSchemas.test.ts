@@ -6,11 +6,11 @@ import * as fs from "fs";
 import * as path from "path";
 import { expect } from "chai";
 import * as rimraf from "rimraf";
-import { Logger, LogLevel } from "@bentley/bentleyjs-core";
-import { FileSchemaKey } from "@bentley/ecschema-locaters";
-import { SchemaGraphUtil } from "@bentley/ecschema-metadata";
-import { BackendRequestContext, IModelHost, SnapshotDb } from "@bentley/imodeljs-backend";
-import { StubSchemaXmlFileLocater } from "@bentley/ecschema-locaters/lib/StubSchemaXmlFileLocater";
+import { Logger, LogLevel } from "@itwin/core-bentley";
+import { FileSchemaKey } from "@itwin/ecschema-locaters";
+import { SchemaGraphUtil } from "@itwin/ecschema-metadata";
+import { IModelHost, SnapshotDb } from "@itwin/core-backend";
+import { StubSchemaXmlFileLocater } from "@itwin/ecschema-locaters/lib/StubSchemaXmlFileLocater";
 import { getResults, IModelValidationResult, iModelValidationResultTypes, validateSchema, verifyIModelSchema } from "../iModelSchemaValidator";
 import {
   excludeSchema, fixSchemaValidatorIssue, generateReleasedSchemasList, generateSchemaDirectoryList, generateSchemaXMLName,
@@ -65,10 +65,9 @@ describe("Import and validate schemas in bis-schemas repository", async () => {
       const loadedSchema = locater.loadSchema(releasedSchema);
       const orderedSchemas = SchemaGraphUtil.buildDependencyOrderedSchemaList(loadedSchema);
       const schemaPaths = orderedSchemas.map((s) => (s.schemaKey as FileSchemaKey).fileName);
-      const requestContext = new BackendRequestContext();
       const iModelPath = prepareOutputFile(imodelDir, imodelName);
       const imodel = SnapshotDb.createEmpty(iModelPath, { rootSubject: { name: "test-imodel" } });
-      await imodel.importSchemas(requestContext, schemaPaths);
+      await imodel.importSchemas(schemaPaths);
       imodel.saveChanges();
       imodel.nativeDb.exportSchemas(exportDir);
       imodel.close();
@@ -108,11 +107,10 @@ describe("Import and validate schemas in bis-schemas repository", async () => {
       const loadedSchema = locater.loadSchema(wipSchema);
       const orderedSchemas = SchemaGraphUtil.buildDependencyOrderedSchemaList(loadedSchema);
       const schemaPaths = orderedSchemas.map((s) => (s.schemaKey as FileSchemaKey).fileName);
-      const requestContext = new BackendRequestContext();
       const iModelPath = prepareOutputFile(imodelDir, imodelName);
       const imodel = SnapshotDb.createEmpty(iModelPath, { rootSubject: { name: "test-imodel" } });
       try {
-        await imodel.importSchemas(requestContext, schemaPaths);
+        await imodel.importSchemas(schemaPaths);
       } catch (error) {
         throw new Error(`Failed to import schema ${wipSchema} because ${error.toString()}`);
       }

@@ -2,7 +2,7 @@
   "name": "@bentley/schema-comparer",
   "description": "Command line tool that compares ECXml schemas.",
   "license": "MIT",
-  "version": "0.2.129",
+  "version": "0.2.130",
   "bin": {
     "schema-comparer": "./bin/index.js"
   },
@@ -17,9 +17,9 @@
     "lint": "eslint -f visualstudio \"./src/**/*.ts\" 1>&2",
     "beforeBuild": "npm run clean && npm run lint",
     "build": "npm run beforeBuild && tsc  && npm run copy:test-assets",
-    "test": "betools test",
+    "test": "mocha",
     "test:watch": "betools test --watch",
-    "cover": "nyc npm test --tscPaths",
+    "cover": "nyc npm -s test",
     "cli-dev": "cd .. & rush publish --publish --pack --include-all & npm install -g ./common/temp/artifacts/packages/bentley-schema-comparer-0.2.24.tgz",
     "copy:test-assets": "cpx \"./src/test/assets/**/*\" ./lib/test/assets"
   },
@@ -34,8 +34,8 @@
     "url": "http://www.bentley.com"
   },
   "devDependencies": {
-    "@bentley/eslint-plugin": "2.19.1",
-    "@bentley/build-tools": "2.19.1",
+    "@itwin/eslint-plugin": "3.0.0-dev.72",
+    "@itwin/build-tools": "3.0.0-dev.72",
     "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "^7",
     "@types/fs-extra": "^5.0.4",
@@ -54,23 +54,22 @@
     "sinon": "^7.1.1",
     "tsconfig-paths": "^3.3.2",
     "typescript": "~4.3.0",
-    "eslint": "^6.8.0"
+    "eslint": "^7.11.0"
   },
   "peerDependencies": {
-    "@bentley/ecschema-metadata": "3.0.0-dev.52",
-    "@bentley/ecschema-editing": "3.0.0-dev.52",
-    "@bentley/ecschema-locaters": "3.0.0-dev.52"
+    "@itwin/ecschema-metadata": "3.0.0-dev.72",
+    "@itwin/ecschema-editing": "3.0.0-dev.72",
+    "@itwin/ecschema-locaters": "3.0.0-dev.72"
   },
   "dependencies": {
-    "@bentley/backend-itwin-client": "3.0.0-dev.52",
-    "@bentley/bentleyjs-core": "3.0.0-dev.52",
-    "@bentley/geometry-core": "3.0.0-dev.52",
-    "@bentley/imodelhub-client": "3.0.0-dev.52",
-    "@bentley/imodeljs-backend": "3.0.0-dev.52",
-    "@bentley/imodeljs-common": "3.0.0-dev.52",
-    "@bentley/imodeljs-i18n": "3.0.0-dev.52",
-    "@bentley/itwin-client": "3.0.0-dev.52",
-    "@bentley/native-schema-locater": "0.2.129",
+    "@itwin/core-bentley": "3.0.0-dev.72",
+    "@itwin/core-geometry": "3.0.0-dev.72",
+    "@bentley/imodelhub-client": "3.0.0-dev.72",
+    "@itwin/core-backend": "3.0.0-dev.72",
+    "@itwin/core-common": "3.0.0-dev.72",
+    "@itwin/core-i18n": "3.0.0-dev.72",
+    "@bentley/itwin-client": "3.0.0-dev.72",
+    "@bentley/native-schema-locater": "0.2.130",
     "@bentley/rbac-client": "3.0.0-dev.5",
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
@@ -79,9 +78,9 @@
   },
   "eslintConfig": {
     "plugins": [
-      "@bentley"
+      "@itwin"
     ],
-    "extends": "plugin:@bentley/imodeljs-recommended",
+    "extends": "plugin:@itwin/itwinjs-recommended",
     "rules": {
       "prefer-template": "off",
       "@typescript-eslint/no-unnecessary-type-assertion": "off"

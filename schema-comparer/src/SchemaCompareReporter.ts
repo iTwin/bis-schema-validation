@@ -3,12 +3,12 @@
 * Licensed under the MIT License. See LICENSE.md in the project root for license terms.
 *--------------------------------------------------------------------------------------------*/
 
-import { Schema, SchemaItemType } from "@bentley/ecschema-metadata";
+import { Schema, SchemaItemType } from "@itwin/ecschema-metadata";
 import {
   ChangeType, ClassChanges, CustomAttributeContainerChanges, EntityMixinChanges, EnumerationChanges, EnumeratorChanges,
   FormatChanges, FormatUnitChanges, ISchemaChange, ISchemaCompareReporter, KindOfQuantityChanges, PresentationUnitChanges,
   PropertyChanges, RelationshipConstraintChanges, SchemaChanges, SchemaItemChanges,
-} from "@bentley/ecschema-editing";
+} from "@itwin/ecschema-editing";
 
 const SCHEMA_DEPTH = 0;
 const SCHEMA_ITEM_GROUP_DEPTH = 1;

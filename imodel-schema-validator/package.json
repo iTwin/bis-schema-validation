@@ -11,35 +11,34 @@
     "name": "Bentley Systems, Inc.",
     "url": "http://www.bentley.com"
   },
-  "version": "0.2.129",
+  "version": "0.2.130",
   "bin": {
     "imodel-schema-validator": "./lib/index.js"
   },
   "scripts": {
     "build": "tsc 1>&2 && npm run copy:assets && npm run copy:test-assets",
     "lint": "eslint -f visualstudio \"./src/**/*.ts\" 1>&2",
-    "test": "betools test --timeout=999999999",
+    "test": "mocha --timeout=999999999",
     "tests:ValidateReleasedBisSchemas": "betools test --grep \"Import latest released version of all schemas in bis-schemas repository into an iModel and perform all validations.\" --timeout=999999999",
     "tests:ValidateWIPBisSchemas": "betools test --grep \"Import WIP version of all schemas from bis-schemas repository into an iModel and perform BIS-rules validation.\" --timeout=999999999",
-    "cover": "nyc npm test",
+    "cover": "nyc npm -s test",
     "clean": "rimraf lib",
     "copy:assets": "cpx ./src/index.js ./lib",
     "copy:test-assets": "cpx \"./src/test/assets/**/*\" ./lib/test/assets"
   },
   "dependencies": {
-    "@bentley/ecschema-locaters": "3.0.0-dev.52",
-    "@bentley/ecschema-metadata": "3.0.0-dev.52",
-    "@bentley/ecschema-editing": "3.0.0-dev.52",
-    "@bentley/bentleyjs-core": "3.0.0-dev.52",
-    "@bentley/geometry-core": "3.0.0-dev.52",
-    "@bentley/imodeljs-backend": "3.0.0-dev.52",
-    "@bentley/itwin-client": "3.0.0-dev.52",
-    "@bentley/backend-itwin-client": "3.0.0-dev.52",
-    "@bentley/imodeljs-common": "3.0.0-dev.52",
-    "@bentley/imodelhub-client": "3.0.0-dev.52",
+    "@itwin/ecschema-locaters": "3.0.0-dev.72",
+    "@itwin/ecschema-metadata": "3.0.0-dev.72",
+    "@itwin/ecschema-editing": "3.0.0-dev.72",
+    "@itwin/core-bentley": "3.0.0-dev.72",
+    "@itwin/core-geometry": "3.0.0-dev.72",
+    "@itwin/core-backend": "3.0.0-dev.72",
+    "@bentley/itwin-client": "3.0.0-dev.72",
+    "@itwin/core-common": "3.0.0-dev.72",
+    "@bentley/imodelhub-client": "3.0.0-dev.72",
     "@bentley/rbac-client": "3.0.0-dev.5",
-    "@bentley/schema-comparer": "0.2.129",
-    "@bentley/schema-validator": "0.2.129",
+    "@bentley/schema-comparer": "0.2.130",
+    "@bentley/schema-validator": "0.2.130",
     "@bentley/oidc-signin-tool": "2.3.0",
     "@bentley/ecschema-ops": "0.1.21",
     "chalk": "^2.4.1",
@@ -49,8 +48,8 @@
     "readdirp": "^3.0.0"
   },
   "devDependencies": {
-    "@bentley/eslint-plugin": "2.19.1",
-    "@bentley/build-tools": "2.19.1",
+    "@itwin/eslint-plugin": "3.0.0-dev.72",
+    "@itwin/build-tools": "3.0.0-dev.72",
     "@types/node": "10.12.18",
     "@types/chai": "^4.1.7",
     "@types/mocha": "^8.2.2",
@@ -60,13 +59,13 @@
     "chai": "^4.2.0",
     "mocha": "^8.3.2",
     "nyc": "^15.1.0",
-    "eslint": "^6.8.0"
+    "eslint": "^7.11.0"
   },
   "eslintConfig": {
     "plugins": [
-      "@bentley"
+      "@itwin"
     ],
-    "extends": "plugin:@bentley/imodeljs-recommended",
+    "extends": "plugin:@itwin/itwinjs-recommended",
     "rules": {
       "prefer-template": "off",
       "dot-notation": "off",

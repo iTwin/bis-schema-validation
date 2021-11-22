@@ -10,8 +10,8 @@ import {
   AnyEnumerator, Constant, EntityClass, Enumeration, Format, InvertedUnit, KindOfQuantity, Mixin,
   Phenomenon, PrimitiveProperty, PropertyCategory, RelationshipClass, RelationshipConstraint, RelationshipEnd, Schema,
   SchemaContext, Unit, UnitSystem,
-} from "@bentley/ecschema-metadata/lib/ecschema-metadata";
-import { ISchemaChange, SchemaChanges, SchemaCompareDiagnostics } from "@bentley/ecschema-editing";
+} from "@itwin/ecschema-metadata/lib/ecschema-metadata";
+import { ISchemaChange, SchemaChanges, SchemaCompareDiagnostics } from "@itwin/ecschema-editing";
 
 class TestSchemaCompareReporter extends SchemaCompareReporter {
   public reportFormattedChange(_message: string, _change?: ISchemaChange): void {

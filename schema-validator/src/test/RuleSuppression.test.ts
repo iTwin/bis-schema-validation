@@ -7,13 +7,13 @@ import * as path from "path";
 import * as utils from "./utilities/utils";
 import { SchemaDeserializer } from "@bentley/native-schema-locater";
 // eslint-disable-next-line sort-imports
-import { AnyClass, ECClass, ECVersion, KindOfQuantity, PrimitiveType, RelationshipClass, Schema, SchemaContext, SchemaKey } from "@bentley/ecschema-metadata";
-import { Diagnostics as ECDiagnostics } from "@bentley/ecschema-editing";
-import { MutableClass } from "@bentley/ecschema-metadata/lib/Metadata/Class";
-import { MutableSchema } from "@bentley/ecschema-metadata/lib/Metadata/Schema";
+import { AnyClass, ECClass, ECVersion, KindOfQuantity, PrimitiveType, RelationshipClass, Schema, SchemaContext, SchemaKey } from "@itwin/ecschema-metadata";
+import { Diagnostics as ECDiagnostics } from "@itwin/ecschema-editing";
+import { MutableClass } from "@itwin/ecschema-metadata/lib/Metadata/Class";
+import { MutableSchema } from "@itwin/ecschema-metadata/lib/Metadata/Schema";
 import * as ruleSuppressionSet from "../RuleSuppression";
 import { expect } from "chai";
-import { IModelHost } from "@bentley/imodeljs-backend";
+import { IModelHost } from "@itwin/core-backend";
 import * as BisRules from "@bentley/bis-rules/lib/BisRules";
 
 describe("Rule Suppression Tests", () => {

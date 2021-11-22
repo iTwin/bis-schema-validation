@@ -6,7 +6,7 @@
 import * as fs from "fs-extra";
 import * as path from "path";
 import { SchemaCompareReporter } from "./SchemaCompareReporter";
-import { Schema } from "@bentley/ecschema-metadata";
+import { Schema } from "@itwin/ecschema-metadata";
 
 /**
  * An SchemaChangeReporter implementation that writes schema change messages

@@ -3,7 +3,7 @@
 * Licensed under the MIT License. See LICENSE.md in the project root for license terms.
 *--------------------------------------------------------------------------------------------*/
 
-import { AnyDiagnostic, diagnosticCategoryToString, FormatDiagnosticReporter } from "@bentley/ecschema-editing";
+import { AnyDiagnostic, diagnosticCategoryToString, FormatDiagnosticReporter } from "@itwin/ecschema-editing";
 
 /**
  * An IDiagnosticReporter implementation that formats diagnostics into a readable string

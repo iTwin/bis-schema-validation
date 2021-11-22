@@ -5,9 +5,9 @@
 
 import * as path from "path";
 import * as fs from "fs";
-import * as EC from "@bentley/ecschema-metadata";
-import { SchemaJsonFileLocater } from "@bentley/ecschema-locaters";
-import { IModelHost } from "@bentley/imodeljs-backend";
+import * as EC from "@itwin/ecschema-metadata";
+import { SchemaJsonFileLocater } from "@itwin/ecschema-locaters";
+import { IModelHost } from "@itwin/core-backend";
 import { SchemaXmlFileLocater } from "./SchemaXmlFileLocater";
 
 /**

@@ -3,7 +3,7 @@
 * Licensed under the MIT License. See LICENSE.md in the project root for license terms.
 *--------------------------------------------------------------------------------------------*/
 
-import { Schema, SchemaContext } from "@bentley/ecschema-metadata";
+import { Schema, SchemaContext } from "@itwin/ecschema-metadata";
 
 export class BisTestHelper {
   public static async getNewContext(): Promise<SchemaContext> {

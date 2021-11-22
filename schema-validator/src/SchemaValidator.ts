@@ -7,8 +7,8 @@ import * as fs from "fs-extra";
 import * as path from "path";
 import { DOMParser } from "xmldom";
 
-import { ISchemaPartVisitor, Schema, SchemaContext, SchemaWalker } from "@bentley/ecschema-metadata";
-import { createSchemaDiagnosticClass, ECRuleSet, IDiagnosticReporter, IRuleSet, SchemaDiagnostic, SchemaValidationVisitor } from "@bentley/ecschema-editing";
+import { ISchemaPartVisitor, Schema, SchemaContext, SchemaWalker } from "@itwin/ecschema-metadata";
+import { createSchemaDiagnosticClass, ECRuleSet, IDiagnosticReporter, IRuleSet, SchemaDiagnostic, SchemaValidationVisitor } from "@itwin/ecschema-editing";
 import { ruleSuppressionSet } from "./RuleSuppression";
 import { BisRuleSet } from "@bentley/bis-rules";
 import { FileDiagnosticReporter } from "./FileDiagnosticReporter";

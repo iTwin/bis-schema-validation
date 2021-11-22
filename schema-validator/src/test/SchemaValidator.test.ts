@@ -10,8 +10,8 @@ import * as chaiAsPromised from "chai-as-promised";
 import * as sinon from "sinon";
 import * as utils from "./utilities/utils";
 import { SchemaValidator, standardSchemaNames, ValidationOptions } from "../SchemaValidator";
-import { SchemaWalker } from "@bentley/ecschema-metadata/lib/Validation/SchemaWalker";
-import { Schema } from "@bentley/ecschema-metadata";
+import { SchemaWalker } from "@itwin/ecschema-metadata/lib/Validation/SchemaWalker";
+import { Schema } from "@itwin/ecschema-metadata";
 
 use(chaiAsPromised);
 const assetDeserializationDir = path.join(utils.getAssetsDir(), "xml-deserialization");
