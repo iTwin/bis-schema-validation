@@ -36,7 +36,7 @@ describe("Reporter class tests.", () => {
     expect(result).to.equals(true);
   });
 
-  it("Log all validation results.", async () => {
+  it.only("Log all validation results.", async () => {
     const exportDir = path.resolve(path.normalize(__dirname + "/assets/"));
     const output = path.join(outputDir, "wip");
 
