@@ -16,10 +16,10 @@
 
 rush.json                                                     @naveedkhan8067 @christophermlawson @ColinKerr
 
-/bis-rules                                                    @christophermlawson @naveedkhan8067 @ColinKerr
+/bis-rules                                                    @iTwin/ec-reviewers
 /common                                                       @naveedkhan8067 @christophermlawson @ColinKerr
-/imodel-schema-validator                                      @naveedkhan8067 @christophermlawson @ColinKerr
-/native-schema-locater                                        @christophermlawson @naveedkhan8067 @ColinKerr
-/schema-comparer                                              @christophermlawson @naveedkhan8067 @ColinKerr
-/schema-roundtrip                                             @christophermlawson @naveedkhan8067 @ColinKerr
-/schema-validator                                             @christophermlawson @naveedkhan8067 @ColinKerr
+/imodel-schema-validator                                      @iTwin/ec-reviewers
+/native-schema-locater                                        @iTwin/ec-reviewers
+/schema-comparer                                              @iTwin/ec-reviewers
+/schema-roundtrip                                             @iTwin/ec-reviewers
+/schema-validator                                             @iTwin/ec-reviewers
