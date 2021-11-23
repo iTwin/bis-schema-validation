@@ -9,17 +9,4 @@
 # @global-owner1 and @global-owner2 will be requested for
 # review when someone opens a pull request.
 
-* @iTwin/bis-validation-admins
-
-.github                                                       @naveedkhan8067 @ColinKerr
-.gitignore                                                    @naveedkhan8067 @ColinKerr
-
-rush.json                                                     @naveedkhan8067 @christophermlawson
-
-/bis-rules                                                    @christophermlawson @naveedkhan8067
-/common                                                       @naveedkhan8067 @christophermlawson
-/imodel-schema-validator                                      @naveedkhan8067 @christophermlawson
-/native-schema-locater                                        @christophermlawson @naveedkhan8067
-/schema-comparer                                              @christophermlawson @naveedkhan8067
-/schema-roundtrip                                             @christophermlawson @naveedkhan8067
-/schema-validator                                             @christophermlawson @naveedkhan8067
+* @iTwin/ec-reviewers
