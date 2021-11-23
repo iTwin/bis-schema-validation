@@ -10,16 +10,3 @@
 # review when someone opens a pull request.
 
 * @iTwin/bis-validation-admins
-
-.github                                                       @naveedkhan8067 @ColinKerr
-.gitignore                                                    @naveedkhan8067 @ColinKerr
-
-rush.json                                                     @naveedkhan8067 @christophermlawson @ColinKerr
-
-/bis-rules                                                    @iTwin/ec-reviewers
-/common                                                       @naveedkhan8067 @christophermlawson @ColinKerr
-/imodel-schema-validator                                      @iTwin/ec-reviewers
-/native-schema-locater                                        @iTwin/ec-reviewers
-/schema-comparer                                              @iTwin/ec-reviewers
-/schema-roundtrip                                             @iTwin/ec-reviewers
-/schema-validator                                             @iTwin/ec-reviewers
