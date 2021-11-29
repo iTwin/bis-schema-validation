@@ -5,10 +5,10 @@
 
 import { expect } from "chai";
 import * as Rules from "../BisRules";
-import { MutableClass } from "@itwin/ecschema-metadata/lib/Metadata/Class";
-import { MutableProperty } from "@itwin/ecschema-metadata/lib/Metadata/Property";
-import { MutableSchema } from "@itwin/ecschema-metadata/lib/Metadata/Schema";
-import { MutableEntityClass } from "@itwin/ecschema-metadata/lib/Metadata/EntityClass";
+import { MutableClass } from "@itwin/ecschema-metadata/lib/cjs/Metadata/Class";
+import { MutableProperty } from "@itwin/ecschema-metadata/lib/cjs/Metadata/Property";
+import { MutableSchema } from "@itwin/ecschema-metadata/lib/cjs/Metadata/Schema";
+import { MutableEntityClass } from "@itwin/ecschema-metadata/lib/cjs/Metadata/EntityClass";
 import { AnyClass, DelayedPromiseWithProps, ECClass, EntityClass, LazyLoadedSchemaItem, Mixin, PrimitiveType, Property, PropertyCategory, RelationshipClass, Schema, SchemaContext } from "@itwin/ecschema-metadata";
 import { DiagnosticCategory, DiagnosticType } from "@itwin/ecschema-editing";
 import { BisTestHelper } from "./utils/BisTestHelper";

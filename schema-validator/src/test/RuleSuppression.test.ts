@@ -9,8 +9,8 @@ import { SchemaDeserializer } from "@bentley/native-schema-locater";
 // eslint-disable-next-line sort-imports
 import { AnyClass, ECClass, ECVersion, KindOfQuantity, PrimitiveType, RelationshipClass, Schema, SchemaContext, SchemaKey } from "@itwin/ecschema-metadata";
 import { Diagnostics as ECDiagnostics } from "@itwin/ecschema-editing";
-import { MutableClass } from "@itwin/ecschema-metadata/lib/Metadata/Class";
-import { MutableSchema } from "@itwin/ecschema-metadata/lib/Metadata/Schema";
+import { MutableClass } from "@itwin/ecschema-metadata/lib/cjs/Metadata/Class";
+import { MutableSchema } from "@itwin/ecschema-metadata/lib/cjs/Metadata/Schema";
 import * as ruleSuppressionSet from "../RuleSuppression";
 import { expect } from "chai";
 import { IModelHost } from "@itwin/core-backend";

@@ -6,7 +6,7 @@
 import * as EC from "@itwin/ecschema-metadata";
 import { AnyDiagnostic, DiagnosticCodes, IRuleSuppressionSet } from "@itwin/ecschema-editing";
 import { DiagnosticCodes as BisDiagnosticCodes } from "@bentley/bis-rules";
-import { CustomAttributeContainerProps } from "@itwin/ecschema-metadata/lib/Metadata/CustomAttribute";
+import { CustomAttributeContainerProps } from "@itwin/ecschema-metadata/lib/cjs/Metadata/CustomAttribute";
 
 interface ISchemaInfo {
   name: string;

@@ -6,10 +6,10 @@
 import { expect } from "chai";
 import * as Rules from "../BisRules";
 import { ECClass, EntityClass, PrimitiveType, Schema, SchemaContext } from "@itwin/ecschema-metadata";
-import { MutableClass } from "@itwin/ecschema-metadata/lib/Metadata/Class";
-import { MutableSchema } from "@itwin/ecschema-metadata/lib/Metadata/Schema";
+import { MutableClass } from "@itwin/ecschema-metadata/lib/cjs/Metadata/Class";
+import { MutableSchema } from "@itwin/ecschema-metadata/lib/cjs/Metadata/Schema";
 import { DiagnosticCategory, DiagnosticType } from "@itwin/ecschema-editing";
-import { CustomAttribute } from "@itwin/ecschema-metadata/lib/Metadata/CustomAttribute";
+import { CustomAttribute } from "@itwin/ecschema-metadata/lib/cjs/Metadata/CustomAttribute";
 
 describe("Property Rule Tests", () => {
   let schema: Schema;
