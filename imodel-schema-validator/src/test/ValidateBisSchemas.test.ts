@@ -7,10 +7,9 @@ import * as path from "path";
 import { expect } from "chai";
 import * as rimraf from "rimraf";
 import { Logger, LogLevel } from "@itwin/core-bentley";
-import { FileSchemaKey } from "@itwin/ecschema-locaters";
+import { FileSchemaKey, StubSchemaXmlFileLocater } from "@itwin/ecschema-locaters";
 import { SchemaGraphUtil } from "@itwin/ecschema-metadata";
 import { IModelHost, SnapshotDb } from "@itwin/core-backend";
-import { StubSchemaXmlFileLocater } from "@itwin/ecschema-locaters/lib/StubSchemaXmlFileLocater";
 import { getResults, IModelValidationResult, iModelValidationResultTypes, validateSchema, verifyIModelSchema } from "../iModelSchemaValidator";
 import {
   excludeSchema, fixSchemaValidatorIssue, generateReleasedSchemasList, generateSchemaDirectoryList, generateSchemaXMLName,

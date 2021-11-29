@@ -7,8 +7,8 @@ import { expect } from "chai";
 import * as path from "path";
 import * as fs from "fs-extra";
 import * as utils from "./utilities/utils";
-import * as ECRules from "@itwin/ecschema-editing/lib/Validation/ECRules";
-import * as EC from "@itwin/ecschema-metadata/lib/ecschema-metadata";
+import * as ECRules from "@itwin/ecschema-editing/lib/cjs/Validation/ECRules";
+import * as EC from "@itwin/ecschema-metadata/lib/cjs/ecschema-metadata";
 import { FileDiagnosticReporter } from "../FileDiagnosticReporter";
 
 describe("FileDiagnosticReporter Tests", () => {

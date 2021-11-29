@@ -34,8 +34,8 @@
     "url": "http://www.bentley.com"
   },
   "devDependencies": {
-    "@itwin/eslint-plugin": "3.0.0-dev.72",
-    "@itwin/build-tools": "3.0.0-dev.72",
+    "@itwin/eslint-plugin": "3.0.0-dev.134",
+    "@itwin/build-tools": "3.0.0-dev.134",
     "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "^7",
     "@types/fs-extra": "^5.0.4",
@@ -57,18 +57,18 @@
     "eslint": "^7.11.0"
   },
   "peerDependencies": {
-    "@itwin/ecschema-metadata": "3.0.0-dev.72",
-    "@itwin/ecschema-editing": "3.0.0-dev.72",
-    "@itwin/ecschema-locaters": "3.0.0-dev.72"
+    "@itwin/ecschema-metadata": "3.0.0-dev.134",
+    "@itwin/ecschema-editing": "3.0.0-dev.134",
+    "@itwin/ecschema-locaters": "3.0.0-dev.134"
   },
   "dependencies": {
-    "@itwin/core-bentley": "3.0.0-dev.72",
-    "@itwin/core-geometry": "3.0.0-dev.72",
-    "@bentley/imodelhub-client": "3.0.0-dev.72",
-    "@itwin/core-backend": "3.0.0-dev.72",
-    "@itwin/core-common": "3.0.0-dev.72",
-    "@itwin/core-i18n": "3.0.0-dev.72",
-    "@bentley/itwin-client": "3.0.0-dev.72",
+    "@itwin/core-bentley": "3.0.0-dev.134",
+    "@itwin/core-geometry": "3.0.0-dev.134",
+    "@bentley/imodelhub-client": "3.0.0-dev.127",
+    "@itwin/core-backend": "3.0.0-dev.134",
+    "@itwin/core-common": "3.0.0-dev.134",
+    "@itwin/core-i18n": "3.0.0-dev.134",
+    "@bentley/itwin-client": "3.0.0-dev.134",
     "@bentley/native-schema-locater": "0.2.137",
     "@bentley/rbac-client": "3.0.0-dev.5",
     "chalk": "^2.4.1",

@@ -9,7 +9,7 @@ import * as path from "path";
 import * as fs from "fs-extra";
 import * as utils from "./utilities/utils";
 import { FileSchemaCompareReporter } from "../FileSchemaCompareReporter";
-import { Schema, SchemaContext } from "@itwin/ecschema-metadata/lib/ecschema-metadata";
+import { Schema, SchemaContext } from "@itwin/ecschema-metadata";
 import { SchemaChanges, SchemaCompareDiagnostics } from "@itwin/ecschema-editing";
 
 describe("FileDiagnosticReporter Tests", () => {

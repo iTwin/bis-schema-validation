@@ -6,7 +6,7 @@
 import { expect } from "chai";
 import * as Rules from "../BisRules";
 import { DelayedPromiseWithProps, ECClass, LazyLoadedSchemaItem, Mixin, PrimitiveType, Schema, SchemaContext } from "@itwin/ecschema-metadata";
-import { MutableClass } from "@itwin/ecschema-metadata/lib/Metadata/Class";
+import { MutableClass } from "@itwin/ecschema-metadata/lib/cjs/Metadata/Class";
 import { DiagnosticCategory, DiagnosticType } from "@itwin/ecschema-editing";
 
 describe("Mixin Rule Tests", () => {

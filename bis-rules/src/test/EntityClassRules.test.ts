@@ -5,11 +5,11 @@
 
 import { expect } from "chai";
 import sinon = require("sinon");
-import { MutableSchema } from "@itwin/ecschema-metadata/lib/Metadata/Schema";
-import { ECClass, MutableClass } from "@itwin/ecschema-metadata/lib/Metadata/Class";
-import { MutableEntityClass } from "@itwin/ecschema-metadata/lib/Metadata/EntityClass";
+import { MutableSchema } from "@itwin/ecschema-metadata/lib/cjs/Metadata/Schema";
+import { MutableClass } from "@itwin/ecschema-metadata/lib/cjs/Metadata/Class";
+import { MutableEntityClass } from "@itwin/ecschema-metadata/lib/cjs/Metadata/EntityClass";
 import * as Rules from "../BisRules";
-import { DelayedPromiseWithProps, ECObjectsError, ECObjectsStatus, EntityClass, LazyLoadedSchemaItem, Mixin, PrimitiveType, Schema, SchemaContext } from "@itwin/ecschema-metadata";
+import { DelayedPromiseWithProps, ECClass, ECObjectsError, ECObjectsStatus, EntityClass, LazyLoadedSchemaItem, Mixin, PrimitiveType, Schema, SchemaContext } from "@itwin/ecschema-metadata";
 import { DiagnosticCategory, DiagnosticType } from "@itwin/ecschema-editing";
 import { BisTestHelper } from "./utils/BisTestHelper";
 

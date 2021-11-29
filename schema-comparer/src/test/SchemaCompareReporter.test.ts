@@ -10,7 +10,7 @@ import {
   AnyEnumerator, Constant, EntityClass, Enumeration, Format, InvertedUnit, KindOfQuantity, Mixin,
   Phenomenon, PrimitiveProperty, PropertyCategory, RelationshipClass, RelationshipConstraint, RelationshipEnd, Schema,
   SchemaContext, Unit, UnitSystem,
-} from "@itwin/ecschema-metadata/lib/ecschema-metadata";
+} from "@itwin/ecschema-metadata";
 import { ISchemaChange, SchemaChanges, SchemaCompareDiagnostics } from "@itwin/ecschema-editing";
 
 class TestSchemaCompareReporter extends SchemaCompareReporter {

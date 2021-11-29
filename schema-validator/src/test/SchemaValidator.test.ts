@@ -10,7 +10,7 @@ import * as chaiAsPromised from "chai-as-promised";
 import * as sinon from "sinon";
 import * as utils from "./utilities/utils";
 import { SchemaValidator, standardSchemaNames, ValidationOptions } from "../SchemaValidator";
-import { SchemaWalker } from "@itwin/ecschema-metadata/lib/Validation/SchemaWalker";
+import { SchemaWalker } from "@itwin/ecschema-metadata/lib/cjs/Validation/SchemaWalker";
 import { Schema } from "@itwin/ecschema-metadata";
 
 use(chaiAsPromised);
