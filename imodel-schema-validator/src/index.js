@@ -64,7 +64,7 @@ async function validateInput() {
 
   const tmpDir = process.env.TMP;
   const validationDir = path.join(tmpDir, "SchemaValidation");
-  const briefcaseDir = path.join(validationDir, "Briefcases", program.iModelName);
+  const briefcaseDir = path.join(validationDir, "Briefcases");
   let checkReleaseDynamicSchema = false;
 
   if (fs.existsSync(briefcaseDir)) {
