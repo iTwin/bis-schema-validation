@@ -22,7 +22,7 @@ program.option("-e, --environment <required>", "DEV, QA and PROD are available e
 program.option("-b, --baseSchemaRefDir <required>", "Root directory of all released schemas (root of BisSchemas repo).");
 program.option("-o, --output <required>", "The path where output files will be generated.");
 program.option("-c, --checkReleaseDynamicSchema", "Check all dynamic schemas within iModel. Default is false.");
-program.option("-d, --imjs_uri", "The default imjs url.");
+program.option("-m, --imjs_uri <required>", "The default imjs url.");
 
 program.parse(process.argv);
 
@@ -40,7 +40,7 @@ async function validateInput() {
     console.log("   -b, --baseSchemaRefDir                  :Root directory of all released schemas (root of BisSchemas repo).");
     console.log("   -o, --output                            :The path where output files will be generated.");
     console.log("   -c, --checkReleaseDynamicSchema         :Check all dynamic schemas within iModel. Default is false.");
-    console.log("   -d, --imjs_uri                          :The default imjs url.");
+    console.log("   -m, --imjs_uri                          :The default imjs url.");
     throw new Error("Missing from required arguments and their values.");
   }
 

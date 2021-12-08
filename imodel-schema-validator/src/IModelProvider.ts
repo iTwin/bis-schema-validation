@@ -18,13 +18,21 @@ import * as fs from "fs";
  */
 export class IModelProvider {
   private static _regionCode: number = 0;
+  private static _url: string = "";
+
+  /**
+   * Set url for the authority
+   */
+  public static set Url(url: string) {
+    this._url = url;
+  }
 
   /**
    * Setup host to connect with HUB
    * @param env: The environment for which you want to setup the host.
    * @param briefcaseDir: The directory where .bim file will be downloaded.
    */
-  public static async setupHost(env: string, briefcaseDir: string, url: string) {
+  public static async setupHost(env: string, briefcaseDir: string) {
     const iModelHostConfiguration = new IModelHostConfiguration();
     iModelHostConfiguration.cacheDir = briefcaseDir;
     iModelHostConfiguration.hubAccess = new IModelHubBackend();
@@ -37,7 +45,6 @@ export class IModelProvider {
       process.env["IMJS_URL_PREFIX"] = "qa-";
     }
 
-    process.env["imjs_default_relying_party_uri"] = url;
     await IModelHost.startup(iModelHostConfiguration);
   }
 
@@ -55,7 +62,7 @@ export class IModelProvider {
       clientId: "imodel-schema-validator-spa" + postfix,
       redirectUri: "http://localhost:3000/signin-callback",
       scope: "openid imodelhub",
-      authority: this._regionCode === 103 || this._regionCode === 102 ? "https://qa-imsoidc.bentley.com" : "https://imsoidc.bentley.com",
+      authority: this._regionCode === 103 || this._regionCode === 102 ? "https://qa-" + this._url : "https://" + this._url,
     };
 
     const userCredentials: TestUserCredentials = {
@@ -154,7 +161,8 @@ export class IModelProvider {
    * @param password: Password for OIDC Auth.
    */
   public static async exportSchemasFromIModel(projectId: string, iModelName: string, workingDir: string, userName: string, password: string, env: string, url: string): Promise<string> {
-    await IModelProvider.setupHost(env.toUpperCase(), workingDir, url);
+    await IModelProvider.setupHost(env.toUpperCase(), workingDir);
+    this.Url = url;
     const iModelSchemaDir: string = path.join(workingDir, iModelName, "exported");
     await IModelProvider.exportIModelSchemas(projectId, iModelName, workingDir, userName, password);
     await IModelHost.shutdown();

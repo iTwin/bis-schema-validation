@@ -14,7 +14,7 @@ describe("IModelProvider Tests", async () => {
   const oidcPassword: any = process.env.oidcPassword;
   const tempDir: any = process.env.TMP;
   const briefcaseDir: string = path.join(tempDir, "SchemaValidation", "Briefcases", "validation");
-  const url: any = process.env.imjs_default_relying_party_uri;
+  const url: any = process.env.authorityUrl;
 
   beforeEach(async () => {
     if (fs.existsSync(briefcaseDir)) {
@@ -27,22 +27,24 @@ describe("IModelProvider Tests", async () => {
   });
 
   it("Get IModel Id Env QA, Get an iModel id by its name", async () => {
-    await IModelProvider.setupHost("QA", briefcaseDir, url);
+    await IModelProvider.setupHost("QA", briefcaseDir);
+    IModelProvider.Url = url;
     const token = await IModelProvider.getTokenFromSigninTool(oidcUserName, oidcPassword, 102);
     const iModelId: any = await IModelProvider.getIModelId(token, "9cf0d519-0436-446b-83b4-182752c9a4eb", "testiModel");
 
     expect(iModelId).to.equal("da1ffed8-7b30-4ac0-9d32-0029036db477");
   });
 
-  it("Wrong IModel Name, When user insert wrong iModel name.", async () => {
-    await IModelProvider.setupHost("QA", briefcaseDir, url);
+  it("Wrong IModel Name Env QA, When user insert wrong iModel name.", async () => {
+    await IModelProvider.setupHost("QA", briefcaseDir);
+    IModelProvider.Url = url;
     const token = await IModelProvider.getTokenFromSigninTool(oidcUserName, oidcPassword, 102);
     const iModelId: any = await IModelProvider.getIModelId(token, "9cf0d519-0436-446b-83b4-182752c9a4eb", "val");
 
     expect(iModelId, "undefined");
   });
 
-  it("Export XML Schemas, Get local iModel connection and export the schemas present in it.", async () => {
+  it("Export XML Schemas Env QA, Get local iModel connection and export the schemas present in it.", async () => {
     const iModelSchemaDir = await IModelProvider.exportSchemasFromIModel("9cf0d519-0436-446b-83b4-182752c9a4eb", "testiModel", briefcaseDir, oidcUserName, oidcPassword, "QA", url);
     let result = false;
     if (iModelSchemaDir) {
@@ -56,18 +58,38 @@ describe("IModelProvider Tests", async () => {
   });
 
   it("Get IModel Id Env DEV, Get an iModel id by its name", async () => {
-    await IModelProvider.setupHost("DEV", briefcaseDir, url);
+    await IModelProvider.setupHost("DEV", briefcaseDir);
+    IModelProvider.Url = url;
     const token = await IModelProvider.getTokenFromSigninTool(oidcUserName, oidcPassword, 103);
     const iModelId: any = await IModelProvider.getIModelId(token, "28e761f7-2692-44bd-be31-5cbac5115a98", "testiModel");
 
     expect(iModelId).to.equal("61d33066-d20d-41a0-9245-f6fc66032d8a");
   });
 
-  it.skip("Get IModel Id Env PROD, Get an iModel id by its name", async () => {
-    await IModelProvider.setupHost("PROD", briefcaseDir, url);
+  it("Wrong IModel Name Env DEV, When user insert wrong iModel name", async () => {
+    await IModelProvider.setupHost("DEV", briefcaseDir);
+    IModelProvider.Url = url;
+    const token = await IModelProvider.getTokenFromSigninTool(oidcUserName, oidcPassword, 103);
+    const iModelId: any = await IModelProvider.getIModelId(token, "28e761f7-2692-44bd-be31-5cbac5115a98", "testiModel");
+
+    expect(iModelId, "undefined");
+  });
+
+  it("Get IModel Id Env PROD, Get an iModel id by its name", async () => {
+    await IModelProvider.setupHost("PROD", briefcaseDir);
+    IModelProvider.Url = url;
     const token = await IModelProvider.getTokenFromSigninTool(oidcUserName, oidcPassword, 0);
     const iModelId: any = await IModelProvider.getIModelId(token, "c5a41e90-669b-47a6-8a3f-8b7287234a58", "test");
 
     expect(iModelId).to.equal("c4d869e8-c14a-4abd-8e60-30ed5d2016ff");
+  });
+
+  it("Wrong IModel Name Env PROD, When user insert wrong iModel name", async () => {
+    await IModelProvider.setupHost("PROD", briefcaseDir);
+    IModelProvider.Url = url;
+    const token = await IModelProvider.getTokenFromSigninTool(oidcUserName, oidcPassword, 0);
+    const iModelId: any = await IModelProvider.getIModelId(token, "c5a41e90-669b-47a6-8a3f-8b7287234a58", "test");
+
+    expect(iModelId, "undefined");
   });
 });
