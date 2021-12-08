@@ -15,6 +15,9 @@ describe("IModelProvider Tests", async () => {
   const tempDir: any = process.env.TMP;
   const briefcaseDir: string = path.join(tempDir, "SchemaValidation", "Briefcases", "validation");
   const url: any = process.env.authorityUrl;
+  const projectId_QA: any = process.env.ProjectId_QA;
+  const projectId_DEV: any = process.env.ProjectId_DEV;
+  const projectId_PROD: any = process.env.ProjectId_PROD;
 
   beforeEach(async () => {
     if (fs.existsSync(briefcaseDir)) {
@@ -30,7 +33,7 @@ describe("IModelProvider Tests", async () => {
     await IModelProvider.setupHost("QA", briefcaseDir);
     IModelProvider.Url = url;
     const token = await IModelProvider.getTokenFromSigninTool(oidcUserName, oidcPassword, 102);
-    const iModelId: any = await IModelProvider.getIModelId(token, "9cf0d519-0436-446b-83b4-182752c9a4eb", "testiModel");
+    const iModelId: any = await IModelProvider.getIModelId(token, projectId_QA, "testiModel");
 
     expect(iModelId).to.equal("da1ffed8-7b30-4ac0-9d32-0029036db477");
   });
@@ -39,13 +42,13 @@ describe("IModelProvider Tests", async () => {
     await IModelProvider.setupHost("QA", briefcaseDir);
     IModelProvider.Url = url;
     const token = await IModelProvider.getTokenFromSigninTool(oidcUserName, oidcPassword, 102);
-    const iModelId: any = await IModelProvider.getIModelId(token, "9cf0d519-0436-446b-83b4-182752c9a4eb", "val");
+    const iModelId: any = await IModelProvider.getIModelId(token, projectId_QA, "val");
 
     expect(iModelId, "undefined");
   });
 
   it("Export XML Schemas Env QA, Get local iModel connection and export the schemas present in it.", async () => {
-    const iModelSchemaDir = await IModelProvider.exportSchemasFromIModel("9cf0d519-0436-446b-83b4-182752c9a4eb", "testiModel", briefcaseDir, oidcUserName, oidcPassword, "QA", url);
+    const iModelSchemaDir = await IModelProvider.exportSchemasFromIModel(projectId_QA, "testiModel", briefcaseDir, oidcUserName, oidcPassword, "QA", url);
     let result = false;
     if (iModelSchemaDir) {
       fs.readdirSync(iModelSchemaDir).forEach((file) => {
@@ -61,7 +64,7 @@ describe("IModelProvider Tests", async () => {
     await IModelProvider.setupHost("DEV", briefcaseDir);
     IModelProvider.Url = url;
     const token = await IModelProvider.getTokenFromSigninTool(oidcUserName, oidcPassword, 103);
-    const iModelId: any = await IModelProvider.getIModelId(token, "28e761f7-2692-44bd-be31-5cbac5115a98", "testiModel");
+    const iModelId: any = await IModelProvider.getIModelId(token, projectId_DEV, "testiModel");
 
     expect(iModelId).to.equal("61d33066-d20d-41a0-9245-f6fc66032d8a");
   });
@@ -70,7 +73,7 @@ describe("IModelProvider Tests", async () => {
     await IModelProvider.setupHost("DEV", briefcaseDir);
     IModelProvider.Url = url;
     const token = await IModelProvider.getTokenFromSigninTool(oidcUserName, oidcPassword, 103);
-    const iModelId: any = await IModelProvider.getIModelId(token, "28e761f7-2692-44bd-be31-5cbac5115a98", "testiModel");
+    const iModelId: any = await IModelProvider.getIModelId(token, projectId_DEV, "testiModel");
 
     expect(iModelId, "undefined");
   });
@@ -79,7 +82,7 @@ describe("IModelProvider Tests", async () => {
     await IModelProvider.setupHost("PROD", briefcaseDir);
     IModelProvider.Url = url;
     const token = await IModelProvider.getTokenFromSigninTool(oidcUserName, oidcPassword, 0);
-    const iModelId: any = await IModelProvider.getIModelId(token, "c5a41e90-669b-47a6-8a3f-8b7287234a58", "test");
+    const iModelId: any = await IModelProvider.getIModelId(token, projectId_PROD, "test");
 
     expect(iModelId).to.equal("c4d869e8-c14a-4abd-8e60-30ed5d2016ff");
   });
@@ -88,7 +91,7 @@ describe("IModelProvider Tests", async () => {
     await IModelProvider.setupHost("PROD", briefcaseDir);
     IModelProvider.Url = url;
     const token = await IModelProvider.getTokenFromSigninTool(oidcUserName, oidcPassword, 0);
-    const iModelId: any = await IModelProvider.getIModelId(token, "c5a41e90-669b-47a6-8a3f-8b7287234a58", "test");
+    const iModelId: any = await IModelProvider.getIModelId(token, projectId_PROD, "test");
 
     expect(iModelId, "undefined");
   });

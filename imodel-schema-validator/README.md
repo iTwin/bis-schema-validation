@@ -43,10 +43,12 @@ Following are the arguments required by this tool:
 
 - **-c, --checkReleaseDynamicSchema**: Check all dynamic schemas within provided iModel. Default value is false.
 
+- **-m, --imjs_uri**: The default imjs url.
+
 ### Sample Command
 
 ```sh
-imodel-schema-validator --verifyIModelSchemas -u "testuser@bentley.com" -p "password" -r rewqkjhg-pocd-abcd-5874-254136987412 -i sample -e QA -b D:\\\\dir1\\\\BisSchemas -o D:\\\\dir2
+imodel-schema-validator --verifyIModelSchemas -u "testuser@bentley.com" -p "password" -r rewqkjhg-pocd-abcd-5874-254136987412 -i sample -e QA -b D:\\\\dir1\\\\BisSchemas -o D:\\\\dir2 -m "***.com"
 ```
 
 ## Updating to newer version
@@ -86,6 +88,9 @@ npm update -g @bentley/imodel-schema-validator
         - oidcUserName: The username for connecting with HUB.
         - oidcPassword: The password for connecting with HUB.
         - BisSchemaRepo: Root path of the bis-schemas repository.
+        - ProjectId_QA: The project id for QA environment.
+        - ProjectId_DEV: The project id for DEV environment.
+        - ProjectId_PROD: The project id for PROD environment.
     - Run following command:
 
     ```sh
