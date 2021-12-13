@@ -23,7 +23,7 @@ export class IModelProvider {
   /**
    * Set url for the authority
    */
-  public static set Url(url: string) {
+  public static set url(url: string) {
     this._url = url;
   }
 
@@ -43,6 +43,9 @@ export class IModelProvider {
     } else if (env === "QA") {
       this._regionCode = 102;
       process.env["IMJS_URL_PREFIX"] = "qa-";
+    } else {
+      this._regionCode = 0;
+      process.env["IMJS_URL_PREFIX"] = "";
     }
 
     await IModelHost.startup(iModelHostConfiguration);
@@ -52,11 +55,10 @@ export class IModelProvider {
    * Get accessToken using the oidc-signin-tool.
    * @param userName: It's OIDC login username.
    * @param secret: It's OIDC login password.
-   * @param regionCode: The code according to the environment
    */
-  public static async getTokenFromSigninTool(username: string, secret: string, regionCode: number): Promise<AccessToken> {
+  public static async getTokenFromSigninTool(username: string, secret: string): Promise<AccessToken> {
     let postfix = "";
-    if (regionCode === 0) { postfix = "-prod"; }
+    if (this._regionCode === 0) { postfix = "-prod"; }
 
     const oidcConfig = {
       clientId: "imodel-schema-validator-spa" + postfix,
@@ -105,8 +107,8 @@ export class IModelProvider {
    * @param password: Password for OIDC Auth.
    */
   public static async exportIModelSchemas(projectId: string, iModelName: string, schemaDir: string, userName: string, password: string) {
-    const accessToken = await this.getTokenFromSigninTool(userName, password, this._regionCode);
-    const imodelId = await this.getIModelId(accessToken, projectId, iModelName); // iModel Id based upon iModel name and Project Id
+    const accessToken = await this.getTokenFromSigninTool(userName, password);
+    const imodelId = await this.getIModelId(accessToken, projectId, iModelName);
     const iModelFilePath = path.join(schemaDir, iModelName, iModelName + ".bim");
 
     if (!imodelId) {
@@ -118,7 +120,7 @@ export class IModelProvider {
     };
 
     const props: RequestNewBriefcaseArg = {
-      accessToken: accessToken,
+      accessToken,
       iTwinId: projectId,
       iModelId: imodelId,
       briefcaseId: 0,
@@ -162,7 +164,7 @@ export class IModelProvider {
    */
   public static async exportSchemasFromIModel(projectId: string, iModelName: string, workingDir: string, userName: string, password: string, env: string, url: string): Promise<string> {
     await IModelProvider.setupHost(env.toUpperCase(), workingDir);
-    this.Url = url;
+    this.url = url;
     const iModelSchemaDir: string = path.join(workingDir, iModelName, "exported");
     await IModelProvider.exportIModelSchemas(projectId, iModelName, workingDir, userName, password);
     await IModelHost.shutdown();

@@ -15,9 +15,9 @@ describe("IModelProvider Tests", async () => {
   const tempDir: any = process.env.TMP;
   const briefcaseDir: string = path.join(tempDir, "SchemaValidation", "Briefcases", "validation");
   const url: any = process.env.authorityUrl;
-  const projectId_QA: any = process.env.ProjectId_QA;
-  const projectId_DEV: any = process.env.ProjectId_DEV;
-  const projectId_PROD: any = process.env.ProjectId_PROD;
+  const projectIdQa: any = process.env.ProjectId_QA;
+  const projectIdDev: any = process.env.ProjectId_DEV;
+  const projectIdProd: any = process.env.ProjectId_PROD;
 
   beforeEach(async () => {
     if (fs.existsSync(briefcaseDir)) {
@@ -31,24 +31,24 @@ describe("IModelProvider Tests", async () => {
 
   it("Get IModel Id Env QA, Get an iModel id by its name", async () => {
     await IModelProvider.setupHost("QA", briefcaseDir);
-    IModelProvider.Url = url;
-    const token = await IModelProvider.getTokenFromSigninTool(oidcUserName, oidcPassword, 102);
-    const iModelId: any = await IModelProvider.getIModelId(token, projectId_QA, "testiModel");
+    IModelProvider.url = url;
+    const token = await IModelProvider.getTokenFromSigninTool(oidcUserName, oidcPassword);
+    const iModelId: any = await IModelProvider.getIModelId(token, projectIdQa, "testiModel");
 
     expect(iModelId).to.equal("da1ffed8-7b30-4ac0-9d32-0029036db477");
   });
 
   it("Wrong IModel Name Env QA, When user insert wrong iModel name.", async () => {
     await IModelProvider.setupHost("QA", briefcaseDir);
-    IModelProvider.Url = url;
-    const token = await IModelProvider.getTokenFromSigninTool(oidcUserName, oidcPassword, 102);
-    const iModelId: any = await IModelProvider.getIModelId(token, projectId_QA, "val");
+    IModelProvider.url = url;
+    const token = await IModelProvider.getTokenFromSigninTool(oidcUserName, oidcPassword);
+    const iModelId: any = await IModelProvider.getIModelId(token, projectIdQa, "val");
 
     expect(iModelId, "undefined");
   });
 
   it("Export XML Schemas Env QA, Get local iModel connection and export the schemas present in it.", async () => {
-    const iModelSchemaDir = await IModelProvider.exportSchemasFromIModel(projectId_QA, "testiModel", briefcaseDir, oidcUserName, oidcPassword, "QA", url);
+    const iModelSchemaDir = await IModelProvider.exportSchemasFromIModel(projectIdQa, "testiModel", briefcaseDir, oidcUserName, oidcPassword, "QA", url);
     let result = false;
     if (iModelSchemaDir) {
       fs.readdirSync(iModelSchemaDir).forEach((file) => {
@@ -62,36 +62,36 @@ describe("IModelProvider Tests", async () => {
 
   it("Get IModel Id Env DEV, Get an iModel id by its name", async () => {
     await IModelProvider.setupHost("DEV", briefcaseDir);
-    IModelProvider.Url = url;
-    const token = await IModelProvider.getTokenFromSigninTool(oidcUserName, oidcPassword, 103);
-    const iModelId: any = await IModelProvider.getIModelId(token, projectId_DEV, "testiModel");
+    IModelProvider.url = url;
+    const token = await IModelProvider.getTokenFromSigninTool(oidcUserName, oidcPassword);
+    const iModelId: any = await IModelProvider.getIModelId(token, projectIdDev, "testiModel");
 
     expect(iModelId).to.equal("61d33066-d20d-41a0-9245-f6fc66032d8a");
   });
 
   it("Wrong IModel Name Env DEV, When user insert wrong iModel name", async () => {
     await IModelProvider.setupHost("DEV", briefcaseDir);
-    IModelProvider.Url = url;
-    const token = await IModelProvider.getTokenFromSigninTool(oidcUserName, oidcPassword, 103);
-    const iModelId: any = await IModelProvider.getIModelId(token, projectId_DEV, "testiModel");
+    IModelProvider.url = url;
+    const token = await IModelProvider.getTokenFromSigninTool(oidcUserName, oidcPassword);
+    const iModelId: any = await IModelProvider.getIModelId(token, projectIdDev, "testiModel");
 
     expect(iModelId, "undefined");
   });
 
   it("Get IModel Id Env PROD, Get an iModel id by its name", async () => {
     await IModelProvider.setupHost("PROD", briefcaseDir);
-    IModelProvider.Url = url;
-    const token = await IModelProvider.getTokenFromSigninTool(oidcUserName, oidcPassword, 0);
-    const iModelId: any = await IModelProvider.getIModelId(token, projectId_PROD, "test");
+    IModelProvider.url = url;
+    const token = await IModelProvider.getTokenFromSigninTool(oidcUserName, oidcPassword);
+    const iModelId: any = await IModelProvider.getIModelId(token, projectIdProd, "test");
 
     expect(iModelId).to.equal("c4d869e8-c14a-4abd-8e60-30ed5d2016ff");
   });
 
   it("Wrong IModel Name Env PROD, When user insert wrong iModel name", async () => {
     await IModelProvider.setupHost("PROD", briefcaseDir);
-    IModelProvider.Url = url;
-    const token = await IModelProvider.getTokenFromSigninTool(oidcUserName, oidcPassword, 0);
-    const iModelId: any = await IModelProvider.getIModelId(token, projectId_PROD, "test");
+    IModelProvider.url = url;
+    const token = await IModelProvider.getTokenFromSigninTool(oidcUserName, oidcPassword);
+    const iModelId: any = await IModelProvider.getIModelId(token, projectIdProd, "test");
 
     expect(iModelId, "undefined");
   });
