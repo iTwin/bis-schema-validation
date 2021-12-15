@@ -3,39 +3,51 @@
 * Licensed under the MIT License. See LICENSE.md in the project root for license terms.
 *--------------------------------------------------------------------------------------------*/
 
-import { BriefcaseDb, BriefcaseManager, IModelHost, IModelHostConfiguration } from "@itwin/core-backend";
-import { AccessToken } from "@itwin/core-bentley";
+import { BriefcaseDb, BriefcaseManager, IModelHost, IModelHostConfiguration, RequestNewBriefcaseArg } from "@itwin/core-backend";
+import { IModelHubBackend } from "@bentley/imodelhub-client/lib/cjs/IModelHubBackend";
+import { getTestAccessToken, TestUserCredentials } from "@itwin/oidc-signin-tool";
 import { IModelHubClient } from "@bentley/imodelhub-client";
-import { TestBrowserAuthorizationClient, TestBrowserAuthorizationClientConfiguration, TestUserCredentials } from "@bentley/oidc-signin-tool";
-import { BriefcaseProps, IModelVersionProps, RequestNewBriefcaseProps } from "@itwin/core-common";
+import { IModelVersionProps } from "@itwin/core-common";
+import { AccessToken } from "@itwin/core-bentley";
 import * as rimraf from "rimraf";
-import * as fs from "fs";
 import * as path from "path";
+import * as fs from "fs";
 
 /**
  * The IModelProvider establish connection with HUB to get information about iModel's
  */
 export class IModelProvider {
-  private static _regionCode: number = 102;
+  private static _regionCode: number = 0;
+  private static _url: string = "";
+
+  /**
+   * Set url for the authority
+   */
+  public static set url(url: string) {
+    this._url = url;
+  }
 
   /**
    * Setup host to connect with HUB
    * @param env: The environment for which you want to setup the host.
    * @param briefcaseDir: The directory where .bim file will be downloaded.
    */
-  public static async setupHost(env: string, briefcaseDir: string, url: string) {
+  public static async setupHost(env: string, briefcaseDir: string) {
     const iModelHostConfiguration = new IModelHostConfiguration();
     iModelHostConfiguration.cacheDir = briefcaseDir;
+    iModelHostConfiguration.hubAccess = new IModelHubBackend();
+
     if (env === "DEV") {
       this._regionCode = 103;
-      process.env["imjs_buddi_resolve_url_using_region"] = this._regionCode.toString();
-    } else if (env === "PROD") {
-      this._regionCode = 0;
-      process.env["imjs_buddi_resolve_url_using_region"] = this._regionCode.toString();
+      process.env["IMJS_URL_PREFIX"] = "dev-";
+    } else if (env === "QA") {
+      this._regionCode = 102;
+      process.env["IMJS_URL_PREFIX"] = "qa-";
     } else {
-      process.env["imjs_buddi_resolve_url_using_region"] = this._regionCode.toString();
+      this._regionCode = 0;
+      process.env["IMJS_URL_PREFIX"] = "";
     }
-    process.env["imjs_default_relying_party_uri"] = url;
+
     await IModelHost.startup(iModelHostConfiguration);
   }
 
@@ -43,16 +55,16 @@ export class IModelProvider {
    * Get accessToken using the oidc-signin-tool.
    * @param userName: It's OIDC login username.
    * @param secret: It's OIDC login password.
-   * @param regionCode: The code according to the environment
    */
-  private static async getTokenFromSigninTool(username: string, secret: string, regionCode: number): Promise<AccessToken> {
+  public static async getTokenFromSigninTool(username: string, secret: string): Promise<AccessToken> {
     let postfix = "";
-    if (regionCode === 0) { postfix = "-prod"; }
+    if (this._regionCode === 0) { postfix = "-prod"; }
 
-    const oidcConfig: TestBrowserAuthorizationClientConfiguration = {
+    const oidcConfig = {
       clientId: "imodel-schema-validator-spa" + postfix,
       redirectUri: "http://localhost:3000/signin-callback",
       scope: "openid imodelhub",
+      authority: this._regionCode === 103 || this._regionCode === 102 ? "https://qa-" + this._url : "https://" + this._url,
     };
 
     const userCredentials: TestUserCredentials = {
@@ -62,29 +74,12 @@ export class IModelProvider {
 
     let token;
     try {
-      const client = new TestBrowserAuthorizationClient(oidcConfig, userCredentials);
-      client.deploymentRegion = regionCode;
-      token = await client.getAccessToken();
+      token = await getTestAccessToken(oidcConfig, userCredentials);
     } catch (err) {
       const error = "oidc-signin-tool failed to generate token and failed with error: " + err;
       throw Error(error);
     }
     return token;
-  }
-
-  /**
-   * Connects to iModelHub using accessToken provided by oidc-signin-tool.
-   * @param userName: The OIDC login username.
-   * @param password: The OIDC login user password.
-   * @param regionCode: The code according to the environment
-   */
-  public static async oidcConnect(username: string, password: string, regionCode: number) {
-    const accessToken = await this.getTokenFromSigninTool(username, password, regionCode);
-    if (!accessToken["_jwt"]) {
-      const error = "jwt token value was empty string, returned from oidc-signin-tool";
-      throw Error(error);
-    }
-    return accessToken;
   }
 
   /**
@@ -112,8 +107,9 @@ export class IModelProvider {
    * @param password: Password for OIDC Auth.
    */
   public static async exportIModelSchemas(projectId: string, iModelName: string, schemaDir: string, userName: string, password: string) {
-    const accessToken = await this.oidcConnect(userName, password, this._regionCode);
-    const imodelId = await this.getIModelId(accessToken, projectId, iModelName); // iModel Id based upon iModel name and Project Id
+    const accessToken = await this.getTokenFromSigninTool(userName, password);
+    const imodelId = await this.getIModelId(accessToken, projectId, iModelName);
+    const iModelFilePath = path.join(schemaDir, iModelName, iModelName + ".bim");
 
     if (!imodelId) {
       throw new Error("iModel either does not exist or cannot be found!");
@@ -123,19 +119,21 @@ export class IModelProvider {
       latest: true,
     };
 
-    const briefcaseProps: RequestNewBriefcaseProps = {
+    const props: RequestNewBriefcaseArg = {
+      accessToken,
       iTwinId: projectId,
       iModelId: imodelId,
+      briefcaseId: 0,
       asOf: iModelVersionProps,
+      fileName: iModelFilePath,
     };
 
-    const downloadedBriefcaseProps: BriefcaseProps = await BriefcaseManager.downloadBriefcase(briefcaseProps);
+    await BriefcaseManager.downloadBriefcase(props);
+
     console.log("Briefcase Downloaded...");
 
-    const iModelFilePath = BriefcaseManager.getFileName(downloadedBriefcaseProps);
-    console.log("iModelFilePath: " + iModelFilePath);
-
     const iModel = await BriefcaseDb.open({ fileName: iModelFilePath });
+    const exportDir: string = path.join(schemaDir, iModelName, "exported");
 
     try {
 
@@ -144,12 +142,12 @@ export class IModelProvider {
         throw new Error(error);
       }
 
-      if (fs.existsSync(schemaDir)) {
-        rimraf.sync(schemaDir);
+      if (fs.existsSync(exportDir)) {
+        rimraf.sync(exportDir);
       }
 
-      fs.mkdirSync(schemaDir, { recursive: true });
-      iModel.nativeDb.exportSchemas(schemaDir);
+      fs.mkdirSync(exportDir, { recursive: true });
+      iModel.nativeDb.exportSchemas(exportDir);
     } finally {
       iModel.close();
       await BriefcaseManager.deleteBriefcaseFiles(iModelFilePath);
@@ -165,9 +163,10 @@ export class IModelProvider {
    * @param password: Password for OIDC Auth.
    */
   public static async exportSchemasFromIModel(projectId: string, iModelName: string, workingDir: string, userName: string, password: string, env: string, url: string): Promise<string> {
-    await IModelProvider.setupHost(env.toUpperCase(), workingDir, url);
-    const iModelSchemaDir: string = path.join(workingDir, "exported");
-    await IModelProvider.exportIModelSchemas(projectId, iModelName, iModelSchemaDir, userName, password);
+    await IModelProvider.setupHost(env.toUpperCase(), workingDir);
+    this.url = url;
+    const iModelSchemaDir: string = path.join(workingDir, iModelName, "exported");
+    await IModelProvider.exportIModelSchemas(projectId, iModelName, workingDir, userName, password);
     await IModelHost.shutdown();
 
     return iModelSchemaDir;
