@@ -2,7 +2,7 @@
   "name": "@bentley/schema-comparer",
   "description": "Command line tool that compares ECXml schemas.",
   "license": "MIT",
-  "version": "0.2.142",
+  "version": "0.2.143",
   "bin": {
     "schema-comparer": "./bin/index.js"
   },
@@ -69,7 +69,7 @@
     "@itwin/core-common": "3.0.0-dev.134",
     "@itwin/core-i18n": "3.0.0-dev.134",
     "@bentley/itwin-client": "3.0.0-dev.134",
-    "@bentley/native-schema-locater": "0.2.142",
+    "@bentley/native-schema-locater": "0.2.143",
     "@bentley/rbac-client": "3.0.0-dev.5",
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
