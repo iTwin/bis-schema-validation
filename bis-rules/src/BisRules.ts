@@ -606,7 +606,7 @@ export async function* elementMultiAspectMustHaveCorrespondingRelationship(entit
       continue;
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    if ((relationship as EC.RelationshipClass).target.supportsClass(entity))
+    if (await (relationship as EC.RelationshipClass).target.supportsClass(entity))
       return;
   }
 
@@ -640,7 +640,7 @@ export async function* elementUniqueAspectMustHaveCorrespondingRelationship(enti
       continue;
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    if ((relationship as EC.RelationshipClass).target.supportsClass(entity))
+    if (await (relationship as EC.RelationshipClass).target.supportsClass(entity))
       return;
   }
 
