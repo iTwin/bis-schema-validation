@@ -3,12 +3,12 @@ lockfileVersion: 5.3
 specifiers:
   '@bentley/backend-itwin-client': 3.0.0-dev.90
   '@bentley/ecschema-ops': 0.1.21
-  '@bentley/imodelhub-client': 3.0.0-dev.127
+  '@bentley/imodelhub-client': 3.0.0-dev.177
   '@bentley/itwin-client': 3.0.0-dev.134
   '@bentley/rbac-client': 3.0.0-dev.5
   '@bentley/telemetry-client': 3.0.0-dev.127
   '@itwin/build-tools': 3.0.2
-  '@itwin/core-backend': 3.0.0-dev.134
+  '@itwin/core-backend': 3.0.2
   '@itwin/core-bentley': 3.0.2
   '@itwin/core-common': 3.0.2
   '@itwin/core-geometry': 3.0.2
@@ -55,14 +55,14 @@ specifiers:
   xmldom: ^0.1.27
 
 dependencies:
-  '@bentley/backend-itwin-client': 3.0.0-dev.90_291861af8dd5fa4ed89dc738b06d3a41
+  '@bentley/backend-itwin-client': 3.0.0-dev.90_4a45e23f4a3263321e29ce0b6463ce3e
   '@bentley/ecschema-ops': 0.1.21
-  '@bentley/imodelhub-client': 3.0.0-dev.127_bf2a785b4ce67ad2577896f06247d8b1
+  '@bentley/imodelhub-client': 3.0.0-dev.177_bf2a785b4ce67ad2577896f06247d8b1
   '@bentley/itwin-client': 3.0.0-dev.134_@itwin+core-bentley@3.0.2
   '@bentley/rbac-client': 3.0.0-dev.5_403b79d0c55ec3836a94e431b56e8fe6
   '@bentley/telemetry-client': 3.0.0-dev.127_02251beeceab581e96d0c7a20edd132d
   '@itwin/build-tools': 3.0.2
-  '@itwin/core-backend': 3.0.0-dev.134_cab95a087f1c75408217ca4c53a9a9ba
+  '@itwin/core-backend': 3.0.2_c4d9feb60c3d7a5aff7bf2fb30578741
   '@itwin/core-bentley': 3.0.2
   '@itwin/core-common': 3.0.2_a4d9e2bc7c622bd62cd4ef5597cdf004
   '@itwin/core-geometry': 3.0.2
@@ -72,7 +72,7 @@ dependencies:
   '@itwin/ecschema-metadata': 3.0.2_@itwin+core-bentley@3.0.2
   '@itwin/eslint-plugin': 3.0.2_eslint@7.32.0+typescript@4.3.5
   '@itwin/oidc-signin-tool': 3.2.2_@itwin+core-bentley@3.0.2
-  '@rush-temp/bis-rules': file:projects/bis-rules.tgz_6338f9a8f21954516676044959adf4b6
+  '@rush-temp/bis-rules': file:projects/bis-rules.tgz_c6d519871cd6ce33862a1036e7644da7
   '@rush-temp/imodel-schema-validator': file:projects/imodel-schema-validator.tgz
   '@rush-temp/native-schema-locater': file:projects/native-schema-locater.tgz
   '@rush-temp/schema-comparer': file:projects/schema-comparer.tgz
@@ -425,7 +425,7 @@ packages:
       to-fast-properties: 2.0.0
     dev: false
 
-  /@bentley/backend-itwin-client/3.0.0-dev.90_291861af8dd5fa4ed89dc738b06d3a41:
+  /@bentley/backend-itwin-client/3.0.0-dev.90_4a45e23f4a3263321e29ce0b6463ce3e:
     resolution: {integrity: sha512-bpw7HNZ3FEJSaPPdrqgv0bAtDsuaiA7jPxmJNtUWc200JUHwg8deWTyhUwRIB6Z3O6IKvl9ZXLkqLo5OAC0p5g==}
     engines: {node: '>=10.17.0 <15.0'}
     peerDependencies:
@@ -436,7 +436,7 @@ packages:
       '@itwin/core-common': ^3.0.0-dev.90
       '@itwin/core-geometry': ^3.0.0-dev.90
     dependencies:
-      '@bentley/imodelhub-client': 3.0.0-dev.127_bf2a785b4ce67ad2577896f06247d8b1
+      '@bentley/imodelhub-client': 3.0.0-dev.177_bf2a785b4ce67ad2577896f06247d8b1
       '@bentley/itwin-client': 3.0.0-dev.134_@itwin+core-bentley@3.0.2
       '@bentley/telemetry-client': 3.0.0-dev.127_02251beeceab581e96d0c7a20edd132d
       '@itwin/core-bentley': 3.0.2
@@ -467,11 +467,11 @@ packages:
     requiresBuild: true
     dev: false
 
-  /@bentley/imodelhub-client/3.0.0-dev.127_bf2a785b4ce67ad2577896f06247d8b1:
-    resolution: {integrity: sha512-yUGWqwXk5cHtCVI75vsDdcUydADUw/sMUVWj6CdQIN9MUq8omwfagP/2TyxoMY/eOLLMhBupRBCxhQm4BzxV6w==}
+  /@bentley/imodelhub-client/3.0.0-dev.177_bf2a785b4ce67ad2577896f06247d8b1:
+    resolution: {integrity: sha512-Ndwauu2QbGKB/BSkRbijJnR63GPA0qVpde0bzFeoKSgg0QxeOPwK9J7yEeELHossCfGjHgD9j7osCIKmLuoXbA==}
     peerDependencies:
-      '@bentley/itwin-client': ^3.0.0-dev.127
-      '@itwin/core-bentley': ^3.0.0-dev.127
+      '@bentley/itwin-client': ^3.0.0-dev.177
+      '@itwin/core-bentley': ^3.0.0-dev.177
     dependencies:
       '@bentley/itwin-client': 3.0.0-dev.134_@itwin+core-bentley@3.0.2
       '@itwin/core-bentley': 3.0.2
@@ -487,8 +487,8 @@ packages:
       - supports-color
     dev: false
 
-  /@bentley/imodeljs-native/3.0.20:
-    resolution: {integrity: sha512-XXAKVSFYQya3VNhfjVBub4uMqiZE4ZXkI5FyFvI07/vYgVrgEenChkr0Qv3b2VPjL1OouHpqdg3h1CYB2OepoQ==}
+  /@bentley/imodeljs-native/3.0.33:
+    resolution: {integrity: sha512-49Bjhr8oHcWD0drXS6q5R6m56FffVLfJrCgSilVFtbwTKXUZngJgx3G9CCRlrAggTHmIJFL1EmKaKrfC/B5Fzg==}
     requiresBuild: true
     dev: false
 
@@ -634,23 +634,21 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@itwin/core-backend/3.0.0-dev.134_cab95a087f1c75408217ca4c53a9a9ba:
-    resolution: {integrity: sha512-K68We4YHnxxWtcgKI/7IqUWi5uJpDkhkf2UTXmAaqGQ2InC2jLnm5XCnel/df+W+TGQgk+vpoVHq3sl70AVvKw==}
+  /@itwin/core-backend/3.0.2_c4d9feb60c3d7a5aff7bf2fb30578741:
+    resolution: {integrity: sha512-XPAVMQlqNa2fzkOIq+x/l4yNJmSJhMqGp91kUnWMyGmfL9+EseKoR8VNpigmoBDIVlopTLe39CAk8+JwuayStg==}
     engines: {node: '>=12.22.0 < 14.0 || >=14.17.0 <17.0'}
     peerDependencies:
-      '@bentley/itwin-client': ^3.0.0-dev.134
-      '@itwin/core-bentley': ^3.0.0-dev.134
-      '@itwin/core-common': ^3.0.0-dev.134
-      '@itwin/core-geometry': ^3.0.0-dev.134
-      '@itwin/ecschema-metadata': ^3.0.0-dev.134
+      '@itwin/core-bentley': ^3.0.2
+      '@itwin/core-common': ^3.0.2
+      '@itwin/core-geometry': ^3.0.2
+      '@itwin/ecschema-metadata': ^3.0.2
     dependencies:
       '@azure/storage-blob': 12.9.0
-      '@bentley/imodeljs-native': 3.0.20
-      '@bentley/itwin-client': 3.0.0-dev.134_@itwin+core-bentley@3.0.2
+      '@bentley/imodeljs-native': 3.0.33
       '@itwin/core-bentley': 3.0.2
       '@itwin/core-common': 3.0.2_a4d9e2bc7c622bd62cd4ef5597cdf004
       '@itwin/core-geometry': 3.0.2
-      '@itwin/core-telemetry': 3.0.0-dev.134_@itwin+core-geometry@3.0.2
+      '@itwin/core-telemetry': 3.0.2_@itwin+core-geometry@3.0.2
       '@itwin/ecschema-metadata': 3.0.2_@itwin+core-bentley@3.0.2
       form-data: 2.5.1
       fs-extra: 8.1.0
@@ -669,10 +667,6 @@ packages:
     resolution: {integrity: sha512-8C0GGQVQqCoHJxyyYF1tfo4CzgvRm3zeZCTlsOKh1czaPAFZW+yxh2HK/xJmUWuZTCs91c5lH0RYBT0vjPWGlQ==}
     dev: false
 
-  /@itwin/core-bentley/3.0.0-dev.134:
-    resolution: {integrity: sha512-lno+jPOSXaP7o1X0Mnj8HptnxiCTkp5ThaoiQ30+D3ynKCSW4iBclTL9rOFCdNND4bUElHokcmxXjkT+kkrFVw==}
-    dev: false
-
   /@itwin/core-bentley/3.0.2:
     resolution: {integrity: sha512-IhdpJByCoIx4vHzBt1mqznD6otkAeSFm7mriYqcZ1MxQici57eYTKKiU7QuRxUQ+nWHHBOMcArEjvFzOdpT4ew==}
     dev: false
@@ -686,20 +680,6 @@ packages:
     dependencies:
       '@bentley/itwin-client': 3.0.0-dev.134_@itwin+core-bentley@3.0.2
       '@itwin/core-bentley': 3.0.0-dev.127
-      '@itwin/core-geometry': 3.0.2
-      '@ungap/url-search-params': 0.1.4
-      flatbuffers: 1.12.0
-      js-base64: 3.7.2
-      semver: 5.7.1
-    dev: false
-
-  /@itwin/core-common/3.0.0-dev.134_8e81230347cd4b66bf25a156160bb4c5:
-    resolution: {integrity: sha512-sS4eLGbcXQkDLI+FzDkLw1iWb30l/Ke/F6le13RlTKGmkIGdelXyqQz8ATLnLw+utcze01adVmfJMw3ByWJKOQ==}
-    peerDependencies:
-      '@itwin/core-bentley': ^3.0.0-dev.134
-      '@itwin/core-geometry': ^3.0.0-dev.134
-    dependencies:
-      '@itwin/core-bentley': 3.0.0-dev.134
       '@itwin/core-geometry': 3.0.2
       '@ungap/url-search-params': 0.1.4
       flatbuffers: 1.12.0
@@ -742,11 +722,11 @@ packages:
       - encoding
     dev: false
 
-  /@itwin/core-telemetry/3.0.0-dev.134_@itwin+core-geometry@3.0.2:
-    resolution: {integrity: sha512-znhXF1Fz99hOM9Sz8duhKAzDOXV3EZk4ttQufg+JCUbro0jPqVTxV/4jgdgtwMi5WtvaBplO5Z2mdu1WQxpYeQ==}
+  /@itwin/core-telemetry/3.0.2_@itwin+core-geometry@3.0.2:
+    resolution: {integrity: sha512-BDM7+S0lXwi6PaN5o+BjVVuSJBf9783BrIwqVf6/Kh7HUMP6MyKwUoLW6lMpRYom5Y1RmalgyJq+WIyyVq0MVQ==}
     dependencies:
-      '@itwin/core-bentley': 3.0.0-dev.134
-      '@itwin/core-common': 3.0.0-dev.134_8e81230347cd4b66bf25a156160bb4c5
+      '@itwin/core-bentley': 3.0.2
+      '@itwin/core-common': 3.0.2_a4d9e2bc7c622bd62cd4ef5597cdf004
     transitivePeerDependencies:
       - '@itwin/core-geometry'
     dev: false
@@ -6302,14 +6282,14 @@ packages:
       commander: 2.20.3
     dev: false
 
-  file:projects/bis-rules.tgz_6338f9a8f21954516676044959adf4b6:
-    resolution: {integrity: sha512-DoeBsvzVNr1SUv6pMnCAIFPJLY6MEdy5NkWhfpu6qphyGIyLytLdGWtC8pTy0EQIfpLT+q3QfNT2DVEGqhkYzw==, tarball: file:projects/bis-rules.tgz}
+  file:projects/bis-rules.tgz_c6d519871cd6ce33862a1036e7644da7:
+    resolution: {integrity: sha512-fRDQxPX/GRKUPWczGyhnN/w7kqzIuA8ix09k9FXG/rzEm/j/N1J/9zYVq1eDSlawdy8PT9bIxDuYnUxItmavAw==, tarball: file:projects/bis-rules.tgz}
     id: file:projects/bis-rules.tgz
     name: '@rush-temp/bis-rules'
     version: 0.0.0
     dependencies:
       '@itwin/build-tools': 3.0.2
-      '@itwin/core-backend': 3.0.0-dev.134_cab95a087f1c75408217ca4c53a9a9ba
+      '@itwin/core-backend': 3.0.2_c4d9feb60c3d7a5aff7bf2fb30578741
       '@itwin/core-bentley': 3.0.2
       '@itwin/ecschema-editing': 3.0.2_cd7b23fd7383ad1c2e5f8f765a8bd6f1
       '@itwin/ecschema-metadata': 3.0.2_@itwin+core-bentley@3.0.2
@@ -6330,7 +6310,6 @@ packages:
       tsconfig-paths: 3.14.0
       typescript: 4.3.5
     transitivePeerDependencies:
-      - '@bentley/itwin-client'
       - '@itwin/core-common'
       - '@itwin/core-geometry'
       - bufferutil
@@ -6340,16 +6319,16 @@ packages:
     dev: false
 
   file:projects/imodel-schema-validator.tgz:
-    resolution: {integrity: sha512-wV88XJJifoeiCUbcq2Awy1caQF62NhrznIuheGurOLRgCLnYVTwMS7h7g7JEpOKnWe7G3pgvRE+0bYA/SMujQQ==, tarball: file:projects/imodel-schema-validator.tgz}
+    resolution: {integrity: sha512-UyPJCIDzDVy4uUp61Qxhik8yXYN7R1GPGefdRiYjcrUuLhEhULF7PqywHrLbDmdSO00Xm43p1MRGxFTFhnLFzQ==, tarball: file:projects/imodel-schema-validator.tgz}
     name: '@rush-temp/imodel-schema-validator'
     version: 0.0.0
     dependencies:
       '@bentley/ecschema-ops': 0.1.21
-      '@bentley/imodelhub-client': 3.0.0-dev.127_bf2a785b4ce67ad2577896f06247d8b1
+      '@bentley/imodelhub-client': 3.0.0-dev.177_bf2a785b4ce67ad2577896f06247d8b1
       '@bentley/itwin-client': 3.0.0-dev.134_@itwin+core-bentley@3.0.2
       '@bentley/rbac-client': 3.0.0-dev.5_403b79d0c55ec3836a94e431b56e8fe6
       '@itwin/build-tools': 3.0.2
-      '@itwin/core-backend': 3.0.0-dev.134_cab95a087f1c75408217ca4c53a9a9ba
+      '@itwin/core-backend': 3.0.2_c4d9feb60c3d7a5aff7bf2fb30578741
       '@itwin/core-bentley': 3.0.2
       '@itwin/core-common': 3.0.2_a4d9e2bc7c622bd62cd4ef5597cdf004
       '@itwin/core-geometry': 3.0.2
@@ -6382,17 +6361,17 @@ packages:
     dev: false
 
   file:projects/native-schema-locater.tgz:
-    resolution: {integrity: sha512-y+YBKzuxnWY8JHsmtiLwCdwNzvVOiVVKSo52KMOv/JSpEbQg8MkFvynTG1ON7Wf8/EI+5oNyUQ6adXXvqDghgw==, tarball: file:projects/native-schema-locater.tgz}
+    resolution: {integrity: sha512-sgrg82hzIo635t4qtWul/OZILQWbAQSJ5PYyu8lGvkiNbPT8t7MQ2nvo2JA/UjLzxencoN5M20v4x2AgXKYUNw==, tarball: file:projects/native-schema-locater.tgz}
     name: '@rush-temp/native-schema-locater'
     version: 0.0.0
     dependencies:
-      '@bentley/backend-itwin-client': 3.0.0-dev.90_291861af8dd5fa4ed89dc738b06d3a41
-      '@bentley/imodelhub-client': 3.0.0-dev.127_bf2a785b4ce67ad2577896f06247d8b1
+      '@bentley/backend-itwin-client': 3.0.0-dev.90_4a45e23f4a3263321e29ce0b6463ce3e
+      '@bentley/imodelhub-client': 3.0.0-dev.177_bf2a785b4ce67ad2577896f06247d8b1
       '@bentley/itwin-client': 3.0.0-dev.134_@itwin+core-bentley@3.0.2
       '@bentley/rbac-client': 3.0.0-dev.5_403b79d0c55ec3836a94e431b56e8fe6
       '@bentley/telemetry-client': 3.0.0-dev.127_02251beeceab581e96d0c7a20edd132d
       '@itwin/build-tools': 3.0.2
-      '@itwin/core-backend': 3.0.0-dev.134_cab95a087f1c75408217ca4c53a9a9ba
+      '@itwin/core-backend': 3.0.2_c4d9feb60c3d7a5aff7bf2fb30578741
       '@itwin/core-bentley': 3.0.2
       '@itwin/core-common': 3.0.2_a4d9e2bc7c622bd62cd4ef5597cdf004
       '@itwin/core-geometry': 3.0.2
@@ -6431,15 +6410,15 @@ packages:
     dev: false
 
   file:projects/schema-comparer.tgz:
-    resolution: {integrity: sha512-HcT0ZkLwKDCzl3klAIjzk/HmajeJ6rtTYj7RFqFCA/5pVc/YmxbAdYYNX8OAiu8ux5ryC38y204zOuYLu9qp3w==, tarball: file:projects/schema-comparer.tgz}
+    resolution: {integrity: sha512-JgZP4MwAJZw/FMKBNbDA0xLm1qtEVgYExAoUb1/eoAPJ3tejy1t1qltYNQLVZ2oBDZD6d1f81BKgqWuikpDyEw==, tarball: file:projects/schema-comparer.tgz}
     name: '@rush-temp/schema-comparer'
     version: 0.0.0
     dependencies:
-      '@bentley/imodelhub-client': 3.0.0-dev.127_bf2a785b4ce67ad2577896f06247d8b1
+      '@bentley/imodelhub-client': 3.0.0-dev.177_bf2a785b4ce67ad2577896f06247d8b1
       '@bentley/itwin-client': 3.0.0-dev.134_@itwin+core-bentley@3.0.2
       '@bentley/rbac-client': 3.0.0-dev.5_403b79d0c55ec3836a94e431b56e8fe6
       '@itwin/build-tools': 3.0.2
-      '@itwin/core-backend': 3.0.0-dev.134_cab95a087f1c75408217ca4c53a9a9ba
+      '@itwin/core-backend': 3.0.2_c4d9feb60c3d7a5aff7bf2fb30578741
       '@itwin/core-bentley': 3.0.2
       '@itwin/core-common': 3.0.2_a4d9e2bc7c622bd62cd4ef5597cdf004
       '@itwin/core-geometry': 3.0.2
@@ -6479,13 +6458,13 @@ packages:
     dev: false
 
   file:projects/schema-roundtrip.tgz:
-    resolution: {integrity: sha512-nJmHDDyURb7eMcWXR/nkYe4YIkdrHxTg8HxOrta+6hsrd3B7nsBKD1MuSPpYCg/MhprliAbKVWF30PXQcz3jmA==, tarball: file:projects/schema-roundtrip.tgz}
+    resolution: {integrity: sha512-bCkYT514hBZ1bQUQQSJp1v25QaC9U8u/LI5CPZTUG4ODpCTi0xNpIH5UKXRrn/z613ZhruWA1zmbc6/YUGGZOw==, tarball: file:projects/schema-roundtrip.tgz}
     name: '@rush-temp/schema-roundtrip'
     version: 0.0.0
     dependencies:
       '@bentley/itwin-client': 3.0.0-dev.134_@itwin+core-bentley@3.0.2
       '@itwin/build-tools': 3.0.2
-      '@itwin/core-backend': 3.0.0-dev.134_cab95a087f1c75408217ca4c53a9a9ba
+      '@itwin/core-backend': 3.0.2_c4d9feb60c3d7a5aff7bf2fb30578741
       '@itwin/core-bentley': 3.0.2
       '@itwin/core-common': 3.0.2_a4d9e2bc7c622bd62cd4ef5597cdf004
       '@itwin/core-geometry': 3.0.2
@@ -6524,14 +6503,14 @@ packages:
     dev: false
 
   file:projects/schema-validator.tgz:
-    resolution: {integrity: sha512-Zu8hOkraQZE80vnDiXqdrQOOav0Tr3wVhm567Pj/zRcQmU0A6kElHVmUn9DJr2SgWAGa0Uck5X+tQItbx3xeOw==, tarball: file:projects/schema-validator.tgz}
+    resolution: {integrity: sha512-TVhWcQb3hEiA00R4ZYABBS/G6vzlABcsLe1SAm1xnjd5faR/ttOCiqRQmJ+6JBanfcRHeegQNwyCEkzqlv0LcA==, tarball: file:projects/schema-validator.tgz}
     name: '@rush-temp/schema-validator'
     version: 0.0.0
     dependencies:
-      '@bentley/imodelhub-client': 3.0.0-dev.127_bf2a785b4ce67ad2577896f06247d8b1
+      '@bentley/imodelhub-client': 3.0.0-dev.177_bf2a785b4ce67ad2577896f06247d8b1
       '@bentley/itwin-client': 3.0.0-dev.134_@itwin+core-bentley@3.0.2
       '@itwin/build-tools': 3.0.2
-      '@itwin/core-backend': 3.0.0-dev.134_cab95a087f1c75408217ca4c53a9a9ba
+      '@itwin/core-backend': 3.0.2_c4d9feb60c3d7a5aff7bf2fb30578741
       '@itwin/core-bentley': 3.0.2
       '@itwin/core-common': 3.0.2_a4d9e2bc7c622bd62cd4ef5597cdf004
       '@itwin/core-geometry': 3.0.2
