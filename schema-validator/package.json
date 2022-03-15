@@ -65,7 +65,7 @@
     "@bentley/bis-rules": "0.2.143",
     "@itwin/core-geometry": "3.0.2",
     "@bentley/imodelhub-client": "3.0.0-dev.127",
-    "@itwin/core-backend": "3.0.2",
+    "@itwin/core-backend": "3.0.0-dev.134",
     "@itwin/core-common": "3.0.2",
     "@bentley/itwin-client": "3.0.0-dev.134",
     "@bentley/native-schema-locater": "0.2.143",
