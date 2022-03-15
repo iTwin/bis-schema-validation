@@ -61,7 +61,7 @@
   "dependencies": {
     "@itwin/core-bentley": "3.0.2",
     "@itwin/core-geometry": "3.0.2",
-    "@itwin/core-backend": "3.0.0-dev.134",
+    "@itwin/core-backend": "3.0.2",
     "@itwin/core-common": "3.0.2",
     "@itwin/core-i18n": "3.0.2",
     "@bentley/itwin-client": "3.0.0-dev.134",

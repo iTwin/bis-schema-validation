@@ -59,8 +59,8 @@
   "dependencies": {
     "@itwin/core-bentley": "3.0.2",
     "@itwin/core-geometry": "3.0.2",
-    "@bentley/imodelhub-client": "3.0.0-dev.127",
-    "@itwin/core-backend": "3.0.0-dev.134",
+    "@bentley/imodelhub-client": "3.0.0-dev.177",
+    "@itwin/core-backend": "3.0.2",
     "@bentley/backend-itwin-client": "3.0.0-dev.90",
     "@itwin/core-common": "3.0.2",
     "@bentley/itwin-client": "3.0.0-dev.134",

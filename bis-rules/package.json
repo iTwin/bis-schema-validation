@@ -53,7 +53,7 @@
   },
   "dependencies": {
     "@itwin/core-bentley": "3.0.2",
-    "@itwin/core-backend": "3.0.0-dev.134"
+    "@itwin/core-backend": "3.0.2"
   },
   "nyc": {
     "extends": "./node_modules/@itwin/build-tools/.nycrc",
