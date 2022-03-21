@@ -30,8 +30,8 @@ describe("IModelProvider Tests", async () => {
   });
 
   it("Get IModel Id Env QA, Get an iModel id by its name", async () => {
-    await IModelProvider.setupHost("QA", briefcaseDir);
     IModelProvider.url = url;
+    await IModelProvider.setupHost("QA", briefcaseDir);
     const token = await IModelProvider.getTokenFromSigninTool(oidcUserName, oidcPassword);
     const iModelId: any = await IModelProvider.getIModelId(token, projectIdQa, "testiModel");
 
@@ -39,8 +39,8 @@ describe("IModelProvider Tests", async () => {
   });
 
   it("Wrong IModel Name Env QA, When user insert wrong iModel name.", async () => {
-    await IModelProvider.setupHost("QA", briefcaseDir);
     IModelProvider.url = url;
+    await IModelProvider.setupHost("QA", briefcaseDir);
     const token = await IModelProvider.getTokenFromSigninTool(oidcUserName, oidcPassword);
     const iModelId: any = await IModelProvider.getIModelId(token, projectIdQa, "val");
 
@@ -61,8 +61,8 @@ describe("IModelProvider Tests", async () => {
   });
 
   it("Get IModel Id Env DEV, Get an iModel id by its name", async () => {
-    await IModelProvider.setupHost("DEV", briefcaseDir);
     IModelProvider.url = url;
+    await IModelProvider.setupHost("DEV", briefcaseDir);
     const token = await IModelProvider.getTokenFromSigninTool(oidcUserName, oidcPassword);
     const iModelId: any = await IModelProvider.getIModelId(token, projectIdDev, "testiModel");
 
@@ -70,8 +70,8 @@ describe("IModelProvider Tests", async () => {
   });
 
   it("Wrong IModel Name Env DEV, When user insert wrong iModel name", async () => {
-    await IModelProvider.setupHost("DEV", briefcaseDir);
     IModelProvider.url = url;
+    await IModelProvider.setupHost("DEV", briefcaseDir);
     const token = await IModelProvider.getTokenFromSigninTool(oidcUserName, oidcPassword);
     const iModelId: any = await IModelProvider.getIModelId(token, projectIdDev, "testiModel");
 
@@ -79,8 +79,8 @@ describe("IModelProvider Tests", async () => {
   });
 
   it("Get IModel Id Env PROD, Get an iModel id by its name", async () => {
-    await IModelProvider.setupHost("PROD", briefcaseDir);
     IModelProvider.url = url;
+    await IModelProvider.setupHost("PROD", briefcaseDir);
     const token = await IModelProvider.getTokenFromSigninTool(oidcUserName, oidcPassword);
     const iModelId: any = await IModelProvider.getIModelId(token, projectIdProd, "test");
 
@@ -88,8 +88,8 @@ describe("IModelProvider Tests", async () => {
   });
 
   it("Wrong IModel Name Env PROD, When user insert wrong iModel name", async () => {
-    await IModelProvider.setupHost("PROD", briefcaseDir);
     IModelProvider.url = url;
+    await IModelProvider.setupHost("PROD", briefcaseDir);
     const token = await IModelProvider.getTokenFromSigninTool(oidcUserName, oidcPassword);
     const iModelId: any = await IModelProvider.getIModelId(token, projectIdProd, "test");
 

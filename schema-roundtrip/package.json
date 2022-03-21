@@ -64,7 +64,6 @@
     "@itwin/core-backend": "3.0.2",
     "@itwin/core-common": "3.0.2",
     "@itwin/core-i18n": "3.0.2",
-    "@bentley/itwin-client": "3.0.0-dev.134",
     "@bentley/schema-comparer": "0.2.143",
     "@types/xmldom": "^0.1.29",
     "chalk": "^2.4.1",
