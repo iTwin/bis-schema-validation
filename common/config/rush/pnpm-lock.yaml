@@ -1,9 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@bentley/backend-itwin-client': 3.0.0-dev.90
   '@bentley/ecschema-ops': 0.1.21
-  '@bentley/telemetry-client': 3.0.0-dev.127
   '@itwin/build-tools': 3.0.2
   '@itwin/core-backend': 3.0.2
   '@itwin/core-bentley': 3.0.2
@@ -54,9 +52,7 @@ specifiers:
   xmldom: ^0.1.27
 
 dependencies:
-  '@bentley/backend-itwin-client': 3.0.0-dev.90_5a9c83df50b9007c849c2e4a85d964b4
   '@bentley/ecschema-ops': 0.1.21
-  '@bentley/telemetry-client': 3.0.0-dev.127_@itwin+core-geometry@3.0.2
   '@itwin/build-tools': 3.0.2
   '@itwin/core-backend': 3.0.2_c4d9feb60c3d7a5aff7bf2fb30578741
   '@itwin/core-bentley': 3.0.2
@@ -6323,7 +6319,7 @@ packages:
     dev: false
 
   file:projects/native-schema-locater.tgz:
-    resolution: {integrity: sha512-ecJCmXD/KZfRN9rE3AjbLvJo5iS9Vdlvl8ezDrjW4pny6f/5E8hEXv6SAFfKekhroeeFLLluf+P2KYJ5uQe/lw==, tarball: file:projects/native-schema-locater.tgz}
+    resolution: {integrity: sha512-HQo76TfO19GhLk9TVwMqK3u0XjpcL7rG/933fEJ+JEi2ijGk5YIXq5UaTNXK4hCDqqGjPWHGUkcDZJqhwJ0PSQ==, tarball: file:projects/native-schema-locater.tgz}
     name: '@rush-temp/native-schema-locater'
     version: 0.0.0
     dependencies:
@@ -6359,12 +6355,11 @@ packages:
       nyc: 15.1.0
       rimraf: 2.7.1
       sinon: 7.5.0
+      source-map-support: 0.5.21
       tsconfig-paths: 3.14.0
       typescript: 4.3.5
       xmldom: 0.1.31
     transitivePeerDependencies:
-      - '@bentley/imodelhub-client'
-      - '@bentley/itwin-client'
       - bufferutil
       - debug
       - encoding
@@ -6373,7 +6368,7 @@ packages:
     dev: false
 
   file:projects/schema-comparer.tgz:
-    resolution: {integrity: sha512-yFMudgO/wItwtK9viwg3irQe+qt4cgzxaX2z5ks9S44lO+ZEeYFniqcMT1W7eCFmR+TqXnMsG3jAy7QY4ZpseQ==, tarball: file:projects/schema-comparer.tgz}
+    resolution: {integrity: sha512-CPER4UpbzP9phtR6BpmU755aZYBr7B8rJDv07jFAdEkNdPc7qJx4gGXVqAg/cDJlrXbLvnn97VzhC1M2ZPA7LQ==, tarball: file:projects/schema-comparer.tgz}
     name: '@rush-temp/schema-comparer'
     version: 0.0.0
     dependencies:
@@ -6388,6 +6383,55 @@ packages:
       '@itwin/ecschema-metadata': 3.0.2_@itwin+core-bentley@3.0.2
       '@itwin/eslint-plugin': 3.0.2_eslint@7.32.0+typescript@4.3.5
       '@itwin/imodels-access-backend': 1.0.1_3f925185e88822185fa0e18de253e322
+      '@itwin/imodels-client-authoring': 1.0.1
+      '@types/chai': 4.3.0
+      '@types/chai-as-promised': 7.1.5
+      '@types/fs-extra': 5.1.0
+      '@types/mocha': 8.2.3
+      '@types/node': 10.12.18
+      '@types/rimraf': 2.0.5
+      '@types/sinon': 7.5.2
+      '@types/xml2js': 0.4.9
+      '@types/xmldom': 0.1.31
+      chai: 4.3.6
+      chai-as-promised: 7.1.1_chai@4.3.6
+      chalk: 2.4.2
+      commander: 2.20.3
+      cpx: 1.5.0
+      eslint: 7.32.0
+      fs-extra: 7.0.1
+      mocha: 8.4.0
+      nyc: 15.1.0
+      rimraf: 2.7.1
+      sinon: 7.5.0
+      source-map-support: 0.5.21
+      tsconfig-paths: 3.14.0
+      typescript: 4.3.5
+      xmldom: 0.1.31
+    transitivePeerDependencies:
+      - bufferutil
+      - debug
+      - encoding
+      - supports-color
+      - utf-8-validate
+    dev: false
+
+  file:projects/schema-roundtrip.tgz:
+    resolution: {integrity: sha512-pNch2JTLu6F6M/8YEzF8bX6G5xIMVhcDLvD3Fj3A8Rh7P0qQVUdQmjFF9I/vgFzXuCHIs50hC1gnN55pYomX2Q==, tarball: file:projects/schema-roundtrip.tgz}
+    name: '@rush-temp/schema-roundtrip'
+    version: 0.0.0
+    dependencies:
+      '@itwin/build-tools': 3.0.2
+      '@itwin/core-backend': 3.0.2_c4d9feb60c3d7a5aff7bf2fb30578741
+      '@itwin/core-bentley': 3.0.2
+      '@itwin/core-common': 3.0.2_a4d9e2bc7c622bd62cd4ef5597cdf004
+      '@itwin/core-geometry': 3.0.2
+      '@itwin/core-i18n': 3.0.2_@itwin+core-bentley@3.0.2
+      '@itwin/ecschema-locaters': 3.0.2_@itwin+ecschema-metadata@3.0.2
+      '@itwin/ecschema-metadata': 3.0.2_@itwin+core-bentley@3.0.2
+      '@itwin/eslint-plugin': 3.0.2_eslint@7.32.0+typescript@4.3.5
+      '@itwin/imodels-access-backend': 1.0.1_3f925185e88822185fa0e18de253e322
+      '@itwin/imodels-client-authoring': 1.0.1
       '@types/chai': 4.3.0
       '@types/chai-as-promised': 7.1.5
       '@types/fs-extra': 5.1.0
@@ -6419,52 +6463,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  file:projects/schema-roundtrip.tgz:
-    resolution: {integrity: sha512-gq7BIAkx4rP/yN6FJyHaJsXNHqlLeuAxjblPqY9kWtIcGppBUV3i3IblE72LuQbYU+xRMVIPYx6JlmTu7GQxQw==, tarball: file:projects/schema-roundtrip.tgz}
-    name: '@rush-temp/schema-roundtrip'
-    version: 0.0.0
-    dependencies:
-      '@itwin/build-tools': 3.0.2
-      '@itwin/core-backend': 3.0.2_c4d9feb60c3d7a5aff7bf2fb30578741
-      '@itwin/core-bentley': 3.0.2
-      '@itwin/core-common': 3.0.2_a4d9e2bc7c622bd62cd4ef5597cdf004
-      '@itwin/core-geometry': 3.0.2
-      '@itwin/core-i18n': 3.0.2_@itwin+core-bentley@3.0.2
-      '@itwin/ecschema-locaters': 3.0.2_@itwin+ecschema-metadata@3.0.2
-      '@itwin/ecschema-metadata': 3.0.2_@itwin+core-bentley@3.0.2
-      '@itwin/eslint-plugin': 3.0.2_eslint@7.32.0+typescript@4.3.5
-      '@types/chai': 4.3.0
-      '@types/chai-as-promised': 7.1.5
-      '@types/fs-extra': 5.1.0
-      '@types/mocha': 8.2.3
-      '@types/node': 10.12.18
-      '@types/rimraf': 2.0.5
-      '@types/sinon': 7.5.2
-      '@types/xml2js': 0.4.9
-      '@types/xmldom': 0.1.31
-      chai: 4.3.6
-      chai-as-promised: 7.1.1_chai@4.3.6
-      chalk: 2.4.2
-      commander: 2.20.3
-      cpx: 1.5.0
-      eslint: 7.32.0
-      fs-extra: 7.0.1
-      mocha: 8.4.0
-      nyc: 15.1.0
-      rimraf: 2.7.1
-      sinon: 7.5.0
-      tsconfig-paths: 3.14.0
-      typescript: 4.3.5
-      xmldom: 0.1.31
-    transitivePeerDependencies:
-      - bufferutil
-      - encoding
-      - supports-color
-      - utf-8-validate
-    dev: false
-
   file:projects/schema-validator.tgz:
-    resolution: {integrity: sha512-1w19DqdgQ0V34sfqjHrfFM3fUXkoQEjT1Cjsm3NXjL7WNlWdjsCaX1gG3jt6OvtclFZ60i5THaCFsv3B4IURRA==, tarball: file:projects/schema-validator.tgz}
+    resolution: {integrity: sha512-59IvQZMVKsVUWeJ2EnXL6o7DRVeBUKeJb98BqeaYq1JuYQmbuEjTbXdgFke+o//OR/FLCaj1y4pJdc77RhVW/g==, tarball: file:projects/schema-validator.tgz}
     name: '@rush-temp/schema-validator'
     version: 0.0.0
     dependencies:
@@ -6478,6 +6478,7 @@ packages:
       '@itwin/ecschema-metadata': 3.0.2_@itwin+core-bentley@3.0.2
       '@itwin/eslint-plugin': 3.0.2_eslint@7.32.0+typescript@4.3.5
       '@itwin/imodels-access-backend': 1.0.1_3f925185e88822185fa0e18de253e322
+      '@itwin/imodels-client-authoring': 1.0.1
       '@types/chai': 4.3.0
       '@types/chai-as-promised': 7.1.5
       '@types/fs-extra': 5.1.0
@@ -6498,6 +6499,7 @@ packages:
       nyc: 15.1.0
       rimraf: 2.7.1
       sinon: 7.5.0
+      source-map-support: 0.5.21
       tsconfig-paths: 3.14.0
       typescript: 4.3.5
       xmldom: 0.1.31
