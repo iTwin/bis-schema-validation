@@ -64,6 +64,8 @@
     "@itwin/core-backend": "3.0.2",
     "@itwin/core-common": "3.0.2",
     "@itwin/core-i18n": "3.0.2",
+    "@itwin/imodels-access-backend": "1.0.1",
+    "@itwin/imodels-client-authoring": "1.0.1",
     "@bentley/schema-comparer": "0.2.143",
     "@types/xmldom": "^0.1.29",
     "chalk": "^2.4.1",
