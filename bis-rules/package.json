@@ -69,6 +69,7 @@
     "rules": {
       "prefer-template": "off",
       "@typescript-eslint/dot-notation": "off",
+      "@typescript-eslint/no-misused-promises": "off",
       "@typescript-eslint/await-thenable": "off",
       "@typescript-eslint/naming-convention": "off",
       "@typescript-eslint/no-unnecessary-type-assertion": "off"

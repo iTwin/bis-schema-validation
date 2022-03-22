@@ -605,7 +605,7 @@ export async function* elementMultiAspectMustHaveCorrespondingRelationship(entit
     if (!await relationship.is(elementOwnsMultiAspectsName, bisCoreName))
       continue;
 
-    if (await (relationship as EC.RelationshipClass).target.supportsClass(entity))
+    if ((relationship as EC.RelationshipClass).target.supportsClass(entity))
       return;
   }
 
@@ -638,7 +638,7 @@ export async function* elementUniqueAspectMustHaveCorrespondingRelationship(enti
     if (!await relationship.is(elementOwnsUniqueAspectName, bisCoreName))
       continue;
 
-    if (await (relationship as EC.RelationshipClass).target.supportsClass(entity))
+    if ((relationship as EC.RelationshipClass).target.supportsClass(entity))
       return;
   }
 
