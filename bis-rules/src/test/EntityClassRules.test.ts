@@ -687,6 +687,46 @@ describe("EntityClass Rule Tests", () => {
       }
     });
 
+    it.only("Base ElementUniqueAspect EntityClass has child in a corresponding relationship, rule fails.", async () => {
+      const schemaJson = {
+        TestRelationship: {
+          schemaItemType: "RelationshipClass",
+          strength: "embedding",
+          strengthDirection: "forward",
+          source: {
+            multiplicity: "(1..1)",
+            polymorphic: true,
+            roleLabel: "owns",
+            constraintClasses: [
+            ],
+          },
+          target: {
+            multiplicity: "(0..*)",
+            polymorphic: true,
+            roleLabel: "is owned by",
+            constraintClasses: [
+              "TestSchema.TestEntity",
+            ],
+          },
+        },
+        TestBaseEntity: {
+          baseClass: "BisCore.ElementUniqueAspect",
+          schemaItemType: "EntityClass",
+        },
+        TestEntity: {
+          baseClass: "TestSchema.TestBaseEntity",
+          schemaItemType: "EntityClass",
+        },
+      };
+      const schema = await getTestSchema(schemaJson);
+      const entity = (await schema.getItem("TestBaseEntity")) as EntityClass;
+      const result = await Rules.elementUniqueAspectMustHaveCorrespondingRelationship(entity);
+
+      for await (const _diagnostic of result!) {
+        expect(false, "Rule should have passed.").to.be.true;
+      }
+    });
+
     it("BisCore schema not referenced, rule passes.", async () => {
       const testEntity = new EntityClass(testSchema, "TestEntity");
 
