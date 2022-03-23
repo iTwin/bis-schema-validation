@@ -9,6 +9,7 @@ import {
   createSchemaItemDiagnosticClass, DiagnosticCategory, IRuleSet, PropertyDiagnostic,
   SchemaDiagnostic, SchemaItemDiagnostic,
 } from "@itwin/ecschema-editing";
+import { ECClassModifier } from "@itwin/ecschema-metadata";
 
 const bisCoreName = "BisCore";
 const bisModelName = "Model";
@@ -591,6 +592,9 @@ export async function* elementMultiAspectMustHaveCorrespondingRelationship(entit
   const attributes = entity.schema.customAttributes;
   if (attributes !== undefined && attributes.has("CoreCustomAttributes.DynamicSchema")) return;
 
+  if (entity.modifier === ECClassModifier.Abstract)
+    return;
+
   if (!await entity.is(elementMultiAspectName, bisCoreName))
     return;
 
@@ -620,6 +624,9 @@ export async function* elementUniqueAspectMustHaveCorrespondingRelationship(enti
   const context = entity.schema.context;
   if (!context)
     throw new EC.ECObjectsError(EC.ECObjectsStatus.SchemaContextUndefined, `Schema context is undefined for schema ${entity.schema.fullName}.`);
+
+  if (entity.modifier === ECClassModifier.Abstract)
+    return;
 
   const attributes = entity.schema.customAttributes;
   if (attributes !== undefined && attributes.has("CoreCustomAttributes.DynamicSchema")) return;

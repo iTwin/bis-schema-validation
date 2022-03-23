@@ -501,6 +501,48 @@ describe("EntityClass Rule Tests", () => {
         expect(false, "Rule should have passed").to.be.true;
       }
     });
+
+    it("Abstract base ElementMultiAspect EntityClass has child in a corresponding relationship, rule passes.", async () => {
+      const schemaJson = {
+        TestRelationship: {
+          baseClass: "BisCore.ElementOwnsMultiAspects",
+          schemaItemType: "RelationshipClass",
+          strength: "embedding",
+          strengthDirection: "forward",
+          source: {
+            multiplicity: "(1..1)",
+            polymorphic: true,
+            roleLabel: "owns",
+            constraintClasses: [
+            ],
+          },
+          target: {
+            multiplicity: "(0..*)",
+            polymorphic: true,
+            roleLabel: "is owned by",
+            constraintClasses: [
+              "TestSchema.TestEntity",
+            ],
+          },
+        },
+        TestBaseEntity: {
+          baseClass: "BisCore.ElementMultiAspect",
+          modifier: "Abstract",
+          schemaItemType: "EntityClass",
+        },
+        TestEntity: {
+          baseClass: "TestSchema.TestBaseEntity",
+          schemaItemType: "EntityClass",
+        },
+      };
+      const schema = await getTestSchema(schemaJson);
+      const entity = (await schema.getItem("TestBaseEntity")) as EntityClass;
+      const result = await Rules.elementUniqueAspectMustHaveCorrespondingRelationship(entity);
+
+      for await (const _diagnostic of result!) {
+        expect(false, "Rule should have passed.").to.be.true;
+      }
+    });
   });
 
   describe("ElementUniqueAspectMustHaveCorrespondingRelationship tests", () => {
@@ -687,10 +729,11 @@ describe("EntityClass Rule Tests", () => {
       }
     });
 
-    it.only("Base ElementUniqueAspect EntityClass has child in a corresponding relationship, rule fails.", async () => {
+    it("Abstract base ElementUniqueAspect EntityClass has child in a corresponding relationship, rule passes.", async () => {
       const schemaJson = {
         TestRelationship: {
           schemaItemType: "RelationshipClass",
+          baseClass: "BisCore.ElementOwnsUniqueAspect",
           strength: "embedding",
           strengthDirection: "forward",
           source: {
@@ -711,6 +754,7 @@ describe("EntityClass Rule Tests", () => {
         },
         TestBaseEntity: {
           baseClass: "BisCore.ElementUniqueAspect",
+          modifier: "Abstract",
           schemaItemType: "EntityClass",
         },
         TestEntity: {
