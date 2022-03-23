@@ -39,13 +39,13 @@ export class IModelProvider {
 
     if (env === "DEV") {
       this._regionCode = 103;
-      process.env["IMJS_URL_PREFIX"] = "dev-";
+      process.env.IMJS_URL_PREFIX = "dev-";
     } else if (env === "QA") {
       this._regionCode = 102;
-      process.env["IMJS_URL_PREFIX"] = "qa-";
+      process.env.IMJS_URL_PREFIX = "qa-";
     } else {
       this._regionCode = 0;
-      process.env["IMJS_URL_PREFIX"] = "";
+      process.env.IMJS_URL_PREFIX = "";
     }
 
     this._client = new IModelsClient({ api: { baseUrl: `https://${process.env.IMJS_URL_PREFIX}api.bentley.com/imodels` } });

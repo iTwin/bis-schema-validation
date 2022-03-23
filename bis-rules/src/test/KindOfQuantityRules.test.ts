@@ -74,7 +74,7 @@ describe("KindOfQuantity Rule Tests", () => {
       expect(result[0].messageArgs).to.eql([testKoq.fullName, "Units.USCustom"]);
       expect(result[0].category).to.equal(DiagnosticCategory.Error);
       expect(result[0].code).to.equal(Rules.DiagnosticCodes.KOQMustUseSIUnitForPersistenceUnit);
-      expect(result[0]["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+      expect(result[0].diagnosticType).to.equal(DiagnosticType.SchemaItem);
     });
 
     it("KindOfQuantity uses 'COEFFICIENT' as storage unit, rule passes.", async () => {
@@ -105,7 +105,7 @@ describe("KindOfQuantity Rule Tests", () => {
       expect(result[0].messageArgs).to.eql([testKoq.fullName, (await (await testKoq.persistenceUnit)?.unitSystem)?.fullName], "Message arguments not as expected");
       expect(result[0].category).to.equal(DiagnosticCategory.Error, "Category not correct");
       expect(result[0].code).to.equal(Rules.DiagnosticCodes.KOQMustUseSIUnitForPersistenceUnit, "Diagnostic code not correct");
-      expect(result[0]["diagnosticType"]).to.equal(DiagnosticType.SchemaItem, "Diagnostic type not correct");
+      expect(result[0].diagnosticType).to.equal(DiagnosticType.SchemaItem, "Diagnostic type not correct");
     });
     it("KindOfQuantity uses 'DECIMAL_PERCENT' as storage unit, rule passes.", async () => {
       const koqProps = {
@@ -141,7 +141,7 @@ describe("KindOfQuantity Rule Tests", () => {
       expect(result[0].messageArgs).to.eql([testKoq.fullName, (await (await testKoq.persistenceUnit)?.unitSystem)?.fullName], "Message arguments not as expected");
       expect(result[0].category).to.equal(DiagnosticCategory.Error, "Category not correct");
       expect(result[0].code).to.equal(Rules.DiagnosticCodes.KOQMustUseSIUnitForPersistenceUnit, "Diagnostic code not correct");
-      expect(result[0]["diagnosticType"]).to.equal(DiagnosticType.SchemaItem, "Diagnostic type not correct");
+      expect(result[0].diagnosticType).to.equal(DiagnosticType.SchemaItem, "Diagnostic type not correct");
     });
 
     it("KindOfQuantity uses 'MONETARY_UNIT' as storage unit, rule fails.", async () => {
@@ -159,7 +159,7 @@ describe("KindOfQuantity Rule Tests", () => {
       expect(result[0].messageArgs).to.eql([testKoq.fullName, (await (await testKoq.persistenceUnit)?.unitSystem)?.fullName], "Message argument not as expected");
       expect(result[0].category).to.equal(DiagnosticCategory.Error, "Category not correct");
       expect(result[0].code).to.equal(Rules.DiagnosticCodes.KOQMustUseSIUnitForPersistenceUnit, "Code not correct");
-      expect(result[0]["diagnosticType"]).to.equal(DiagnosticType.SchemaItem, "Type not correct");
+      expect(result[0].diagnosticType).to.equal(DiagnosticType.SchemaItem, "Type not correct");
     });
 
     it("KindOfQuantity uses 'US_DOLLAR' as storage unit, rule fails.", async () => {
@@ -177,7 +177,7 @@ describe("KindOfQuantity Rule Tests", () => {
       expect(result[0].messageArgs).to.eql([testKoq.fullName, (await (await testKoq.persistenceUnit)?.unitSystem)?.fullName], "Message argument not as expected");
       expect(result[0].category).to.equal(DiagnosticCategory.Error, "Category not correct");
       expect(result[0].code).to.equal(Rules.DiagnosticCodes.KOQMustUseSIUnitForPersistenceUnit, "Code not correct");
-      expect(result[0]["diagnosticType"]).to.equal(DiagnosticType.SchemaItem, "Type not correct");
+      expect(result[0].diagnosticType).to.equal(DiagnosticType.SchemaItem, "Type not correct");
     });
 
     it("KindOfQuantity does have an 'SI' persistence unit, rule passes.", async () => {
@@ -221,12 +221,12 @@ describe("KindOfQuantity Rule Tests", () => {
       expect(result[0].messageArgs).to.eql([testKoq.fullName, "Formats.SingleUnitFormat"]);
       expect(result[0].category).to.equal(DiagnosticCategory.Error);
       expect(result[0].code).to.equal(Rules.DiagnosticCodes.KOQDuplicatePresentationFormat);
-      expect(result[0]["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+      expect(result[0].diagnosticType).to.equal(DiagnosticType.SchemaItem);
       expect(result[1].ecDefinition).to.equal(testKoq);
       expect(result[1].messageArgs).to.eql([testKoq.fullName, "Formats.DoubleUnitFormat"]);
       expect(result[1].category).to.equal(DiagnosticCategory.Error);
       expect(result[1].code).to.equal(Rules.DiagnosticCodes.KOQDuplicatePresentationFormat);
-      expect(result[1]["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+      expect(result[1].diagnosticType).to.equal(DiagnosticType.SchemaItem);
     });
 
     it("KindOfQuantity has no duplicate presentation formats, rule passes.", async () => {

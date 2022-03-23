@@ -36,8 +36,8 @@ export class LaunchCodesProvider {
    * @param launchCodes: Json object containing the launchCodes.
    */
   public checkApprovalAndVerification(schemaName: string, index: number | undefined, inventorySchema: string, launchCodes: any): boolean {
-    if (index !== undefined && launchCodes[inventorySchema][index]["released"] && launchCodes[inventorySchema][index]["name"].toLowerCase() === schemaName.toLowerCase()) {
-      if (launchCodes[inventorySchema][index]["approved"].toLowerCase() === "yes") {
+    if (index !== undefined && launchCodes[inventorySchema][index].released && launchCodes[inventorySchema][index].name.toLowerCase() === schemaName.toLowerCase()) {
+      if (launchCodes[inventorySchema][index].approved.toLowerCase() === "yes") {
         return true;
       }
     }
@@ -58,8 +58,8 @@ export class LaunchCodesProvider {
     // eslint-disable-next-line guard-for-in
     for (inventorySchema in launchCodes) {
       for (let index = 0; index < launchCodes[inventorySchema].length; index++) {
-        if (launchCodes[inventorySchema][index]["released"] && launchCodes[inventorySchema][index]["name"].toLowerCase() === schemaName.toLowerCase()) {
-          if (launchCodes[inventorySchema][index]["sha1"] === sha1) {
+        if (launchCodes[inventorySchema][index].released && launchCodes[inventorySchema][index].name.toLowerCase() === schemaName.toLowerCase()) {
+          if (launchCodes[inventorySchema][index].sha1 === sha1) {
             result = true;
             schemaIndex = index;
             return { result, schemaIndex, inventorySchema };
@@ -83,7 +83,7 @@ export class LaunchCodesProvider {
     // eslint-disable-next-line guard-for-in
     for (inventorySchema in launchCodes) {
       for (let index = 0; index < launchCodes[inventorySchema].length; index++) {
-        if (launchCodes[inventorySchema][index]["released"] && launchCodes[inventorySchema][index]["name"].toLowerCase() === schemaName.toLowerCase() && launchCodes[inventorySchema][index]["version"].toLowerCase() === version) {
+        if (launchCodes[inventorySchema][index].released && launchCodes[inventorySchema][index].name.toLowerCase() === schemaName.toLowerCase() && launchCodes[inventorySchema][index].version.toLowerCase() === version) {
           schemaIndex = index;
           return { schemaIndex, inventorySchema };
         }

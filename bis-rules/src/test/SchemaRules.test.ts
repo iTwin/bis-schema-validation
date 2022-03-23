@@ -56,7 +56,7 @@ describe("Schema Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql(["3.1.0"]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.SchemaXmlVersionMustBeTheLatest);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.Schema);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.Schema);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -96,7 +96,7 @@ describe("Schema Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([schema.schemaKey.toString(), oldStandardSchemaNames[nameIndex]]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.SchemaMustNotReferenceOldStandardSchemas);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.Schema);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.Schema);
         nameIndex++;
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
@@ -143,7 +143,7 @@ describe("Schema Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([schema.schemaKey.toString()]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.SchemaWithDynamicInNameMustHaveDynamicSchemaCA);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.Schema);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.Schema);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -163,7 +163,7 @@ describe("Schema Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([schema.schemaKey.toString()]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.SchemaWithDynamicInNameMustHaveDynamicSchemaCA);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.Schema);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.Schema);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -184,7 +184,7 @@ describe("Schema Rule Tests", () => {
     class TestClass extends EntityClass {
       constructor(schema: Schema, name: string, label: string) {
         super(schema, name);
-        this["_label"] = label;
+        this._label = label;
       }
     }
 
@@ -307,7 +307,7 @@ describe("Schema Rule Tests", () => {
           expect(diagnostic!.messageArgs).to.eql(["TestSchema", "DeprecatedTestSchemaB"]);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.SchemaShouldNotUseDeprecatedSchema);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.Schema);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.Schema);
 
         ++index;
       }

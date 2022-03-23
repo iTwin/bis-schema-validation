@@ -31,7 +31,7 @@ describe("CustomAttributeClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([caClass.fullName]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.CustomAttributeClassCannotHaveBaseClasses);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });

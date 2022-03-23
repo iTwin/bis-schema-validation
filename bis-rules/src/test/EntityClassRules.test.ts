@@ -77,7 +77,7 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([childEntity.fullName]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.EntityClassMustDeriveFromBisHierarchy);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -142,7 +142,7 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([childEntity.fullName, "TestProperty", baseEntity.fullName, mixin.fullName]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.EntityClassMayNotInheritSameProperty);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -169,7 +169,7 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([childEntity.fullName, "TestProperty", mixin1.fullName, mixin2.fullName]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.EntityClassMayNotInheritSameProperty);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -284,7 +284,7 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([entity.fullName]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.ElementMultiAspectMustHaveCorrespondingRelationship);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -387,7 +387,7 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([entity.fullName]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.ElementMultiAspectMustHaveCorrespondingRelationship);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -412,7 +412,7 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([entity.fullName]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.ElementMultiAspectMustHaveCorrespondingRelationship);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -586,7 +586,7 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([entity.fullName]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.ElementUniqueAspectMustHaveCorrespondingRelationship);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -649,7 +649,7 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([entity.fullName]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.ElementUniqueAspectMustHaveCorrespondingRelationship);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -803,7 +803,7 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([testEntity.fullName]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.EntityClassesCannotDeriveFromIParentElementAndISubModeledElement);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -863,7 +863,7 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([testEntity.fullName, "BisCore.PhysicalModel"]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.EntityClassesCannotDeriveFromModelClasses);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -888,7 +888,7 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([testEntity.fullName, "BisCore.SpatialLocationModel"]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.EntityClassesCannotDeriveFromModelClasses);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -913,7 +913,7 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([testEntity.fullName, "BisCore.InformationRecordModel"]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.EntityClassesCannotDeriveFromModelClasses);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -938,7 +938,7 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([testEntity.fullName, "BisCore.DefinitionModel"]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.EntityClassesCannotDeriveFromModelClasses);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -963,7 +963,7 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([testEntity.fullName, "BisCore.DocumentListModel"]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.EntityClassesCannotDeriveFromModelClasses);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -988,7 +988,7 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([testEntity.fullName, "BisCore.LinkModel"]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.EntityClassesCannotDeriveFromModelClasses);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -1129,7 +1129,7 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([testEntity.fullName]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.BisModelSubClassesCannotDefineProperties);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -1258,7 +1258,7 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([testEntity.fullName, testEntity.baseClass!.fullName]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.EntityClassesMayNotSubclassDeprecatedClasses);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -1395,7 +1395,7 @@ describe("EntityClass Rule Tests", () => {
           expect(diagnostic!.messageArgs).to.eql([testEntity.fullName, "TestSchema.DeprecatedMixin2", "TestSchema.DeprecatedMixin2"]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.EntityClassesShouldNotDerivedFromDeprecatedMixinClasses);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
         ++index;
       }
       expect(index === 2, "Expect there are 2 warnings about deprecated mixins").to.be.true;
@@ -1430,7 +1430,7 @@ describe("EntityClass Rule Tests", () => {
           expect(diagnostic!.messageArgs).to.eql([testEntity.fullName, "TestSchema.Mixin2", "TestSchema.DeprecatedMixin2"]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.EntityClassesShouldNotDerivedFromDeprecatedMixinClasses);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
         ++index;
       }
       expect(index === 2, "Expect there are 2 warnings about deprecated mixins").to.be.true;

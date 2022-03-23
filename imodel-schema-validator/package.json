@@ -66,7 +66,6 @@
     ],
     "extends": "plugin:@itwin/itwinjs-recommended",
     "rules": {
-      "@typescript-eslint/dot-notation": "off",
       "prefer-template": "off",
       "dot-notation": "off",
       "no-console": "off"

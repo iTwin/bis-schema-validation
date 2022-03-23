@@ -81,7 +81,7 @@ describe("RelationshipClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([relationship.fullName]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.RelationshipClassMustNotUseHoldingStrength);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -165,7 +165,7 @@ describe("RelationshipClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([relationship.fullName]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.RelationshipSourceMultiplicityUpperBoundRestriction);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -323,7 +323,7 @@ describe("RelationshipClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([relationship.fullName]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.RelationshipTargetMultiplicityUpperBoundRestriction);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -485,7 +485,7 @@ describe("RelationshipClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([relationship.fullName, "Target"]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.RelationshipElementAspectContraintRestriction);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -700,7 +700,7 @@ describe("RelationshipClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([relationship.fullName, "Source"]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.RelationshipElementAspectContraintRestriction);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -783,7 +783,7 @@ describe("RelationshipClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([relationship.fullName]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.EmbeddingRelationshipsMustNotHaveHasInName);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -887,7 +887,7 @@ describe("RelationshipClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([relationship.fullName]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.EmbeddingRelationshipsMustNotHaveHasInName);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -1112,7 +1112,7 @@ describe("RelationshipClass Rule Tests", () => {
           expect(diagnostic!.messageArgs).to.eql(["Target", "TestSchema.TestRelationship", "TestSchema.EntityB1"]);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.RelationshipConstraintShouldNotUseDeprecatedConstraintClass);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
 
         ++index;
       }
@@ -1219,7 +1219,7 @@ describe("RelationshipClass Rule Tests", () => {
           expect(diagnostic!.messageArgs).to.eql(["Target", "TestSchema.TestRelationship", "TestSchema.EntityB"]);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.RelationshipConstraintShouldNotUseDeperecatedAbstractConstraint);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
 
         ++index;
       }
@@ -1312,7 +1312,7 @@ describe("RelationshipClass Rule Tests", () => {
           expect(diagnostic!.messageArgs).to.eql(["Target", "TestSchema.TestRelationship", "TestSchema.EntityB1", "TestSchema.EntityB", "TestSchema.EntityB"]);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.RelationshipConstraintShouldNotUseConstraintClassWithDeprecatedBase);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
 
         ++index;
       }
@@ -1403,7 +1403,7 @@ describe("RelationshipClass Rule Tests", () => {
           expect(diagnostic!.messageArgs).to.eql(["Target", "TestSchema.TestRelationship", "TestSchema.EntityB2", "TestSchema.DeprecatedMixin", "TestSchema.DeprecatedMixin"]);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.RelationshipConstraintShouldNotUseAbstractConstraintWithDeprecatedBase);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
 
         ++index;
       }
@@ -1462,7 +1462,7 @@ describe("RelationshipClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql(["TestSchema.TestRelationship"]);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.NoAdditionalLinkTableRelationships);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
 
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
@@ -1604,7 +1604,7 @@ describe("RelationshipClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql(["TestSchema.TestRelationship"]);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.NoAdditionalLinkTableRelationships);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
 
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
@@ -1732,7 +1732,7 @@ describe("RelationshipClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql(["TestSchema.TestRelationship"]);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.NoAdditionalLinkTableRelationships);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
 
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;

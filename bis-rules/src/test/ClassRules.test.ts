@@ -28,9 +28,9 @@ describe("Class Rule Tests", () => {
       await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty", PrimitiveType.String);
       const prop1 = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty1", PrimitiveType.String);
       const prop2 = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty2", PrimitiveType.String);
-      // tslint:disable-next-line:no-string-literal
+      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       prop1!["_label"] = "TestLabel";
-      // tslint:disable-next-line:no-string-literal
+      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       prop2!["_label"] = "TestLabel";
 
       const result = Rules.multiplePropertiesInClassWithSameLabel(testClass);
@@ -43,7 +43,7 @@ describe("Class Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([testClass.fullName, "TestProperty1", "TestProperty2", "TestLabel"]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.MultiplePropertiesInClassWithSameLabel);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -53,13 +53,13 @@ describe("Class Rule Tests", () => {
       const prop1 = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty1", PrimitiveType.String);
       const prop2 = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty2", PrimitiveType.String);
       const category = new PropertyCategory(schema, "TestCategory");
-      // tslint:disable-next-line:no-string-literal
+      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       prop1!["_label"] = "TestLabel";
-      // tslint:disable-next-line:no-string-literal
+      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       prop2!["_label"] = "TestLabel";
-      // tslint:disable-next-line:no-string-literal
+      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       prop1!["_category"] = new DelayedPromiseWithProps(category.key, async () => category) as LazyLoadedSchemaItem<PropertyCategory>;
-      // tslint:disable-next-line:no-string-literal
+      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       prop2!["_category"] = new DelayedPromiseWithProps(category.key, async () => category) as LazyLoadedSchemaItem<PropertyCategory>;
 
       const result = Rules.multiplePropertiesInClassWithSameLabel(testClass);
@@ -72,7 +72,7 @@ describe("Class Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([testClass.fullName, "TestProperty1", "TestProperty2", "TestLabel"]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.MultiplePropertiesInClassWithSameLabel);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -82,9 +82,9 @@ describe("Class Rule Tests", () => {
       await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty", PrimitiveType.String);
       const prop1 = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty1", PrimitiveType.String);
       const prop2 = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty2", PrimitiveType.String);
-      // tslint:disable-next-line:no-string-literal
+      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       prop1!["_label"] = "TestLabel";
-      // tslint:disable-next-line:no-string-literal
+      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       prop2!["_label"] = "TestLabel";
 
       const result = Rules.multiplePropertiesInClassWithSameLabel(testClass);
@@ -101,13 +101,13 @@ describe("Class Rule Tests", () => {
       const category1 = new PropertyCategory(schema, "TestCategory1");
       const category2 = new PropertyCategory(schema, "TestCategory2");
 
-      // tslint:disable-next-line:no-string-literal
+      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       prop1!["_label"] = "TestLabel";
-      // tslint:disable-next-line:no-string-literal
+      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       prop2!["_label"] = "TestLabel";
-      // tslint:disable-next-line:no-string-literal
+      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       prop1!["_category"] = new DelayedPromiseWithProps(category1.key, async () => category1) as LazyLoadedSchemaItem<PropertyCategory>;
-      // tslint:disable-next-line:no-string-literal
+      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       prop2!["_category"] = new DelayedPromiseWithProps(category2.key, async () => category2) as LazyLoadedSchemaItem<PropertyCategory>;
 
       const result = Rules.multiplePropertiesInClassWithSameLabel(testClass);
@@ -122,13 +122,13 @@ describe("Class Rule Tests", () => {
       const prop1 = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty1", PrimitiveType.String);
       const prop2 = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty2", PrimitiveType.String);
       const category = new PropertyCategory(schema, "TestCategory");
-      // tslint:disable-next-line:no-string-literal
+      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       prop1!["_label"] = "TestLabel1";
-      // tslint:disable-next-line:no-string-literal
+      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       prop2!["_label"] = "TestLabel2";
-      // tslint:disable-next-line:no-string-literal
+      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       prop1!["_category"] = new DelayedPromiseWithProps(category.key, async () => category) as LazyLoadedSchemaItem<PropertyCategory>;
-      // tslint:disable-next-line:no-string-literal
+      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       prop2!["_category"] = new DelayedPromiseWithProps(category.key, async () => category) as LazyLoadedSchemaItem<PropertyCategory>;
 
       const result = Rules.multiplePropertiesInClassWithSameLabel(testClass);
@@ -219,7 +219,7 @@ describe("Class Rule Tests", () => {
           expect(diagnostic!.messageArgs).to.eql([testEntity!.fullName, testEntity!.schema.name]);
           expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
           expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.ClassHasHandlerCACannotAppliedOutsideCoreSchemas);
-          expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+          expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
         }
         expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
       };
@@ -308,7 +308,7 @@ describe("Class Rule Tests", () => {
           expect(diagnostic!.messageArgs).to.eql([anyClass!.fullName, anyClass!.schema.name]);
           expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
           expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.NoNewClassHasHandlerCAInCoreSchemas);
-          expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+          expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
         }
         expect(resultHasEntries, `Test should have passed for class '${anyClass.fullName}' as Rule violation as it should not be in the list of allowable classes for ClassHasHandler custom attribute.`).to.be.true;
       };
@@ -365,7 +365,7 @@ describe("Class Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql(["TestSchema.Entity", "TestSchema.DeprecatedEntity", "TestSchema.DeprecatedEntity"]);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.ClassShouldNotDerivedFromDeprecatedClass);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries").to.be.true;
     });
@@ -391,7 +391,7 @@ describe("Class Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql(["TestSchema.NormalRelationship", "TestSchema.DeprecatedRelationship", "TestSchema.DeprecatedRelationship"]);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.ClassShouldNotDerivedFromDeprecatedClass);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries").to.be.true;
     });
@@ -430,7 +430,7 @@ describe("Class Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql(["TestSchema.Entity", "TestSchema.IndirectDeprecatedEntity", "TestSchema.DeprecatedEntity"]);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.ClassShouldNotDerivedFromDeprecatedClass);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries").to.be.true;
     });
@@ -502,7 +502,7 @@ describe("Class Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql(["TestSchema.NormalEntity", "intProp"]);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.ClassShouldNotHaveDeprecatedProperty);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries").to.be.true;
     });
@@ -597,7 +597,7 @@ describe("Class Rule Tests", () => {
           expect(diagnostic!.messageArgs).to.eql(["TestSchema.EntityClass", "deprecatedStructArrayProps", "TestSchema.DeprecatedStruct"]);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.ClassShouldNotHavePropertyOfDeprecatedStructClass);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
 
         ++index;
       }
@@ -626,7 +626,7 @@ describe("Class Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql(["TestSchema.EntityClass", "TestSchema.DeprecatedCustomAttribute"]);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.ClassShouldNotUseDeprecatedCustomAttributes);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
 
         ++index;
       }
