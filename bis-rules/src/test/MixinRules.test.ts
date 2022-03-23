@@ -35,7 +35,7 @@ describe("Mixin Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([mixin.fullName, "TestProperty"]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.MixinsCannotOverrideInheritedProperties);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -61,7 +61,7 @@ describe("Mixin Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([grandChildMixin.fullName, "TestProperty"]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.MixinsCannotOverrideInheritedProperties);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
