@@ -34,7 +34,7 @@ describe("Schema Rule Tests", () => {
     it.skip("EC XML version is latest, rule passes.", async () => {
       const schema = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
 
-      const result = await Rules.schemaXmlVersionMustBeTheLatest(schema);
+      const result = Rules.schemaXmlVersionMustBeTheLatest(schema);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -45,7 +45,7 @@ describe("Schema Rule Tests", () => {
     it.skip("EC XML version less than latest, rule violated.", async () => {
       const schema = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
 
-      const result = await Rules.schemaXmlVersionMustBeTheLatest(schema);
+      const result = Rules.schemaXmlVersionMustBeTheLatest(schema);
 
       expect(result).not.undefined;
       let resultHasEntries = false;
@@ -69,7 +69,7 @@ describe("Schema Rule Tests", () => {
       const mutable = schema as MutableSchema;
       mutable.addReferenceSync(new Schema(context, "NotStandardSchema", "notStandard", 1, 0, 0));
 
-      const result = await Rules.schemaMustNotReferenceOldStandardSchemas(schema);
+      const result = Rules.schemaMustNotReferenceOldStandardSchemas(schema);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -84,7 +84,7 @@ describe("Schema Rule Tests", () => {
         const ref = new Schema(context, name, "ref", 1, 0, 0);
         mutable.addReferenceSync(ref);
       }
-      const result = await Rules.schemaMustNotReferenceOldStandardSchemas(schema);
+      const result = Rules.schemaMustNotReferenceOldStandardSchemas(schema);
 
       expect(result).not.undefined;
       let resultHasEntries = false;
@@ -109,7 +109,7 @@ describe("Schema Rule Tests", () => {
       const ref = new Schema(context, "ECDbMap", "map", 2, 0, 0);
       mutable.addReferenceSync(ref);
 
-      const result = await Rules.schemaMustNotReferenceOldStandardSchemas(schema);
+      const result = Rules.schemaMustNotReferenceOldStandardSchemas(schema);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -121,7 +121,7 @@ describe("Schema Rule Tests", () => {
     it("Dynamic not in the name, rule passes.", async () => {
       const schema = new Schema(new SchemaContext(), "TestSchema", "ts", 1, 0, 0);
 
-      const result = await Rules.schemaWithDynamicInNameMustHaveDynamicSchemaCA(schema);
+      const result = Rules.schemaWithDynamicInNameMustHaveDynamicSchemaCA(schema);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -132,7 +132,7 @@ describe("Schema Rule Tests", () => {
       const schema = new Schema(new SchemaContext(), "TestDynamicSchema", "ts", 1, 0, 0);
       (schema as MutableSchema).addCustomAttribute({ className: "CoreCustomAttributes.TestAttribute" });
 
-      const result = await Rules.schemaWithDynamicInNameMustHaveDynamicSchemaCA(schema);
+      const result = Rules.schemaWithDynamicInNameMustHaveDynamicSchemaCA(schema);
 
       expect(result).not.undefined;
       let resultHasEntries = false;
@@ -152,7 +152,7 @@ describe("Schema Rule Tests", () => {
       const schema = new Schema(new SchemaContext(), "TestDYNAMICSchema", "ts", 1, 0, 0);
       (schema as MutableSchema).addCustomAttribute({ className: "CoreCustomAttributes.TestAttribute" });
 
-      const result = await Rules.schemaWithDynamicInNameMustHaveDynamicSchemaCA(schema);
+      const result = Rules.schemaWithDynamicInNameMustHaveDynamicSchemaCA(schema);
 
       expect(result).not.undefined;
       let resultHasEntries = false;
@@ -171,7 +171,7 @@ describe("Schema Rule Tests", () => {
     it("Dynamic in the name, DynamicSchema attribute applied, rule passes.", async () => {
       const schema = new Schema(new SchemaContext(), "TestDynamicSchema", "ts", 1, 0, 0);
       (schema as MutableSchema).addCustomAttribute({ className: "CoreCustomAttributes.DynamicSchema" });
-      const result = await Rules.schemaWithDynamicInNameMustHaveDynamicSchemaCA(schema);
+      const result = Rules.schemaWithDynamicInNameMustHaveDynamicSchemaCA(schema);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -194,7 +194,7 @@ describe("Schema Rule Tests", () => {
       mutable.addItem(new TestClass(schema, "TestEntityA", "LabelA"));
       mutable.addItem(new TestClass(schema, "TestEntityB", "LabelB"));
 
-      const result = await Rules.schemaClassDisplayLabelMustBeUnique(schema);
+      const result = Rules.schemaClassDisplayLabelMustBeUnique(schema);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -208,7 +208,7 @@ describe("Schema Rule Tests", () => {
       mutable.addItem(new TestClass(schema, "TestEntityB", "LabelA"));
       mutable.addItem(new TestClass(schema, "TestEntityC", "LabelA"));
 
-      const result = await Rules.schemaClassDisplayLabelMustBeUnique(schema);
+      const result = Rules.schemaClassDisplayLabelMustBeUnique(schema);
 
       expect(result).not.undefined;
       let resultHasEntries = false;
@@ -236,7 +236,7 @@ describe("Schema Rule Tests", () => {
       mutable.addItem(new TestClass(schema, "TestEntityA", "LabelA"));
       mutable.addItem(new TestClass(schema, "TestEntityB", "LabelA"));
 
-      const result = await Rules.schemaClassDisplayLabelMustBeUnique(schema);
+      const result = Rules.schemaClassDisplayLabelMustBeUnique(schema);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -253,7 +253,7 @@ describe("Schema Rule Tests", () => {
       const mutable = testSchema as MutableSchema;
       await mutable.addReference(referenceSchema);
 
-      const result = await Rules.schemaShouldNotUseDeprecatedSchema(testSchema);
+      const result = Rules.schemaShouldNotUseDeprecatedSchema(testSchema);
       for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
@@ -271,7 +271,7 @@ describe("Schema Rule Tests", () => {
       mutable.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
       await mutable.addReference(deprecatedSchemaA);
 
-      const result = await Rules.schemaShouldNotUseDeprecatedSchema(schema);
+      const result = Rules.schemaShouldNotUseDeprecatedSchema(schema);
       for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
@@ -293,7 +293,7 @@ describe("Schema Rule Tests", () => {
       await mutable.addReference(deprecatedSchemaA);
       await mutable.addReference(deprecatedSchemaB);
 
-      const result = await Rules.schemaShouldNotUseDeprecatedSchema(schema);
+      const result = Rules.schemaShouldNotUseDeprecatedSchema(schema);
 
       let index = 0;
       let resultHasEntries = false;

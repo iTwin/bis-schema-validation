@@ -21,7 +21,7 @@ describe("CustomAttributeClass Rule Tests", () => {
       const caClass = new CustomAttributeClass(schema, "TestStruct");
       caClass.baseClass = new DelayedPromiseWithProps(baseCA.key, async () => baseCA) as LazyLoadedSchemaItem<CustomAttributeClass>;
 
-      const result = await Rules.customAttributeClassCannotHaveBaseClasses(caClass);
+      const result = Rules.customAttributeClassCannotHaveBaseClasses(caClass);
 
       let resultHasEntries = false;
       for await (const diagnostic of result!) {
@@ -39,7 +39,7 @@ describe("CustomAttributeClass Rule Tests", () => {
     it("CustomAttributeClass has no base class, rule passes.", async () => {
       const caClass = new CustomAttributeClass(schema, "TestStruct");
 
-      const result = await Rules.customAttributeClassCannotHaveBaseClasses(caClass);
+      const result = Rules.customAttributeClassCannotHaveBaseClasses(caClass);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;

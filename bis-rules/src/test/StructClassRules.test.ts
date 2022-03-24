@@ -21,7 +21,7 @@ describe("StructClass Rule Tests", () => {
       const struct = new StructClass(schema, "TestStruct");
       struct.baseClass = new DelayedPromiseWithProps(baseStruct.key, async () => baseStruct) as LazyLoadedSchemaItem<ECClass>;
 
-      const result = await Rules.structsCannotHaveBaseClasses(struct);
+      const result = Rules.structsCannotHaveBaseClasses(struct);
 
       let resultHasEntries = false;
       for await (const diagnostic of result!) {
@@ -39,7 +39,7 @@ describe("StructClass Rule Tests", () => {
     it("Struct has no base class, rule passes.", async () => {
       const struct = new StructClass(schema, "TestStruct");
 
-      const result = await Rules.structsCannotHaveBaseClasses(struct);
+      const result = Rules.structsCannotHaveBaseClasses(struct);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
