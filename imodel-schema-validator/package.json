@@ -39,7 +39,7 @@
     "@bentley/schema-comparer": "0.2.143",
     "@bentley/schema-validator": "0.2.143",
     "@itwin/oidc-signin-tool": "3.3.0",
-    "@bentley/ecschema-ops": "0.1.21",
+    "@bentley/ecschema-ops": "0.1.25",
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
     "httpntlm": "~1",
