@@ -9,7 +9,7 @@ import { ECSchemaOpsNativeLibrary } from "@bentley/ecschema-ops";
  * @param schemaXmlPath: Path where schema xml file is located.
  * @param referencePaths: Schema reference paths.
  */
-export function getSha1Hash(schemaXmlPath: string, referencePaths: string [], isExactMatch: boolean = false): string {
+export function getSha1Hash(schemaXmlPath: string, referencePaths: string[], isExactMatch: boolean = false): string {
   const ecSchemaOpsNative = ECSchemaOpsNativeLibrary.load();
   const schemaOps = new ecSchemaOpsNative.ECSchemaOps();
   try {

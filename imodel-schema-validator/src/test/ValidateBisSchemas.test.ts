@@ -37,7 +37,7 @@ describe("Import and validate schemas in bis-schemas repository", async () => {
     ignoreList = JSON.parse(fs.readFileSync(ignoreFile).toString());
   });
 
-  it("Import latest released version of all schemas in bis-schemas repository into an iModel and perform all validations.", async () => {
+  it.skip("Import latest released version of all schemas in bis-schemas repository into an iModel and perform all validations.", async () => {
 
     Logger.initializeToConsole();
     Logger.setLevelDefault(LogLevel.Error);
