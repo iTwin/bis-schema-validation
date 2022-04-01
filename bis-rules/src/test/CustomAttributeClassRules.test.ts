@@ -21,7 +21,7 @@ describe("CustomAttributeClass Rule Tests", () => {
       const caClass = new CustomAttributeClass(schema, "TestStruct");
       caClass.baseClass = new DelayedPromiseWithProps(baseCA.key, async () => baseCA) as LazyLoadedSchemaItem<CustomAttributeClass>;
 
-      const result = await Rules.customAttributeClassCannotHaveBaseClasses(caClass);
+      const result = Rules.customAttributeClassCannotHaveBaseClasses(caClass);
 
       let resultHasEntries = false;
       for await (const diagnostic of result!) {
@@ -31,7 +31,7 @@ describe("CustomAttributeClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([caClass.fullName]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.CustomAttributeClassCannotHaveBaseClasses);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -39,7 +39,7 @@ describe("CustomAttributeClass Rule Tests", () => {
     it("CustomAttributeClass has no base class, rule passes.", async () => {
       const caClass = new CustomAttributeClass(schema, "TestStruct");
 
-      const result = await Rules.customAttributeClassCannotHaveBaseClasses(caClass);
+      const result = Rules.customAttributeClassCannotHaveBaseClasses(caClass);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;

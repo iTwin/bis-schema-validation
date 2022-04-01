@@ -4,9 +4,9 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { BriefcaseDb, BriefcaseManager, IModelHost, IModelHostConfiguration, RequestNewBriefcaseArg } from "@itwin/core-backend";
-import { IModelHubBackend } from "@bentley/imodelhub-client/lib/cjs/IModelHubBackend";
+import { GetIModelListParams, IModelsClient, toArray } from "@itwin/imodels-client-authoring";
+import { AccessTokenAdapter, BackendIModelsAccess } from "@itwin/imodels-access-backend";
 import { getTestAccessToken, TestUserCredentials } from "@itwin/oidc-signin-tool";
-import { IModelHubClient } from "@bentley/imodelhub-client";
 import { IModelVersionProps } from "@itwin/core-common";
 import { AccessToken } from "@itwin/core-bentley";
 import * as rimraf from "rimraf";
@@ -18,6 +18,7 @@ import * as fs from "fs";
  */
 export class IModelProvider {
   private static _regionCode: number = 0;
+  private static _client: IModelsClient;
   private static _url: string = "";
 
   /**
@@ -35,19 +36,20 @@ export class IModelProvider {
   public static async setupHost(env: string, briefcaseDir: string) {
     const iModelHostConfiguration = new IModelHostConfiguration();
     iModelHostConfiguration.cacheDir = briefcaseDir;
-    iModelHostConfiguration.hubAccess = new IModelHubBackend();
 
     if (env === "DEV") {
       this._regionCode = 103;
-      process.env["IMJS_URL_PREFIX"] = "dev-";
+      process.env.IMJS_URL_PREFIX = "dev-";
     } else if (env === "QA") {
       this._regionCode = 102;
-      process.env["IMJS_URL_PREFIX"] = "qa-";
+      process.env.IMJS_URL_PREFIX = "qa-";
     } else {
       this._regionCode = 0;
-      process.env["IMJS_URL_PREFIX"] = "";
+      process.env.IMJS_URL_PREFIX = "";
     }
 
+    this._client = new IModelsClient({ api: { baseUrl: `https://${process.env.IMJS_URL_PREFIX}api.bentley.com/imodels` } });
+    iModelHostConfiguration.hubAccess = new BackendIModelsAccess(this._client);
     await IModelHost.startup(iModelHostConfiguration);
   }
 
@@ -63,7 +65,7 @@ export class IModelProvider {
     const oidcConfig = {
       clientId: "imodel-schema-validator-spa" + postfix,
       redirectUri: "http://localhost:3000/signin-callback",
-      scope: "openid imodelhub",
+      scope: "imodels:read",
       authority: this._regionCode === 103 || this._regionCode === 102 ? "https://qa-" + this._url : "https://" + this._url,
     };
 
@@ -88,12 +90,20 @@ export class IModelProvider {
    * @param iModelName:  The name of an iModel within the project.
    */
   public static async getIModelId(accessToken: AccessToken, projectId: string, iModelName: string): Promise<string | undefined> {
-    const client = new IModelHubClient();
-    const iModels = await client.iModels.get(accessToken, projectId);
+    const iModelListParams: GetIModelListParams = {
+      authorization: AccessTokenAdapter.toAuthorizationCallback(accessToken),
+      urlParams: {
+        projectId,
+        name: iModelName,
+      },
+    };
+
+    const iModelsIterator = this._client.iModels.getMinimalList(iModelListParams);
+    const iModels = await toArray(iModelsIterator);
     // eslint-disable-next-line @typescript-eslint/prefer-for-of
     for (let num = 0; num < iModels.length; num++) {
-      if (iModels[num].name === iModelName) {
-        return iModels[num].wsgId.toString();
+      if (iModels[num].displayName === iModelName) {
+        return iModels[num].id;
       }
     }
     return;

@@ -111,7 +111,7 @@ describe("Import and validate schemas in bis-schemas repository", async () => {
       try {
         await imodel.importSchemas(schemaPaths);
       } catch (error) {
-        throw new Error(`Failed to import schema ${wipSchema} because ${error.toString()}`);
+        throw new Error(`Failed to import schema ${wipSchema} because ${error}`);
       }
 
       imodel.saveChanges();

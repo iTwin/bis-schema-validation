@@ -25,7 +25,7 @@ describe("Property Rule Tests", () => {
     it("Property of type Long, rule violated.", async () => {
       const property = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty", PrimitiveType.Long);
 
-      const result = await Rules.propertyShouldNotBeOfTypeLong(property);
+      const result = Rules.propertyShouldNotBeOfTypeLong(property);
 
       let resultHasEntries = false;
       for await (const diagnostic of result!) {
@@ -35,7 +35,7 @@ describe("Property Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([testClass.fullName, property.name]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.PropertyShouldNotBeOfTypeLong);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.Property);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.Property);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -43,7 +43,7 @@ describe("Property Rule Tests", () => {
     it("Property not of type Long, rule passes.", async () => {
       const property = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty", PrimitiveType.String);
 
-      const result = await Rules.propertyShouldNotBeOfTypeLong(property);
+      const result = Rules.propertyShouldNotBeOfTypeLong(property);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -54,10 +54,10 @@ describe("Property Rule Tests", () => {
   describe("PropertyHasInvalidExtendedType tests", () => {
     it("Property has invalid extendedType, rule violated.", async () => {
       const property = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty", PrimitiveType.Long);
-      // tslint:disable-next-line:no-string-literal
+      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       property!["_extendedTypeName"] = "UnsupportedTypeName";
 
-      const result = await Rules.propertyHasInvalidExtendedType(property);
+      const result = Rules.propertyHasInvalidExtendedType(property);
 
       let resultHasEntries = false;
       for await (const diagnostic of result!) {
@@ -67,17 +67,17 @@ describe("Property Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([testClass.fullName, property.name, "UnsupportedTypeName"]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.PropertyHasInvalidExtendedType);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.Property);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.Property);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
 
     it("Property has BeGuid extendedType, rule passes.", async () => {
       const property = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty", PrimitiveType.String);
-      // tslint:disable-next-line:no-string-literal
+      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       property!["_extendedTypeName"] = "BeGuid";
 
-      const result = await Rules.propertyHasInvalidExtendedType(property);
+      const result = Rules.propertyHasInvalidExtendedType(property);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -86,10 +86,10 @@ describe("Property Rule Tests", () => {
 
     it("Property has GeometryStream extendedType, rule passes.", async () => {
       const property = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty", PrimitiveType.String);
-      // tslint:disable-next-line:no-string-literal
+      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       property!["_extendedTypeName"] = "GeometryStream";
 
-      const result = await Rules.propertyHasInvalidExtendedType(property);
+      const result = Rules.propertyHasInvalidExtendedType(property);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -98,10 +98,10 @@ describe("Property Rule Tests", () => {
 
     it("Property has Json extendedType, rule passes.", async () => {
       const property = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty", PrimitiveType.String);
-      // tslint:disable-next-line:no-string-literal
+      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       property!["_extendedTypeName"] = "Json";
 
-      const result = await Rules.propertyHasInvalidExtendedType(property);
+      const result = Rules.propertyHasInvalidExtendedType(property);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -110,10 +110,10 @@ describe("Property Rule Tests", () => {
 
     it("Property has URI extendedType, rule passes.", async () => {
       const property = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty", PrimitiveType.String);
-      // tslint:disable-next-line:no-string-literal
+      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       property!["_extendedTypeName"] = "URI";
 
-      const result = await Rules.propertyHasInvalidExtendedType(property);
+      const result = Rules.propertyHasInvalidExtendedType(property);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -126,10 +126,10 @@ describe("Property Rule Tests", () => {
       const property = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty", PrimitiveType.String);
       const propertyCAMap = new Map<string, CustomAttribute>();
       propertyCAMap.set("CustomHandledProperty", { className: "CustomHandledProperty" });
-      // tslint:disable-next-line:no-string-literal
+      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       property!["_customAttributes"] = propertyCAMap;
 
-      const result = await Rules.propertyMustNotUseCustomHandledPropertyRestriction(property);
+      const result = Rules.propertyMustNotUseCustomHandledPropertyRestriction(property);
 
       let resultHasEntries = false;
       for await (const diagnostic of result!) {
@@ -139,7 +139,7 @@ describe("Property Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([testClass.fullName, property.name]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.PropertyMustNotUseCustomHandledPropertyRestriction);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.Property);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.Property);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -150,12 +150,12 @@ describe("Property Rule Tests", () => {
       propertyCAMap.set("CustomHandledProperty", { className: "CustomHandledProperty" });
       const classCAMap = new Map<string, CustomAttribute>();
       classCAMap.set("ClassHasHandler", { className: "ClassHasHandler" });
-      // tslint:disable-next-line:no-string-literal
+      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       property!["_customAttributes"] = propertyCAMap;
-      // tslint:disable-next-line:no-string-literal
+      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       testClass!["_customAttributes"] = classCAMap;
 
-      const result = await Rules.propertyMustNotUseCustomHandledPropertyRestriction(property);
+      const result = Rules.propertyMustNotUseCustomHandledPropertyRestriction(property);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -166,10 +166,10 @@ describe("Property Rule Tests", () => {
       const property = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty", PrimitiveType.String);
       const propertyCAMap = new Map<string, CustomAttribute>();
       propertyCAMap.set("TestAttribute", { className: "TestAttribute" });
-      // tslint:disable-next-line:no-string-literal
+      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       property!["_customAttributes"] = propertyCAMap;
 
-      const result = await Rules.propertyMustNotUseCustomHandledPropertyRestriction(property);
+      const result = Rules.propertyMustNotUseCustomHandledPropertyRestriction(property);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -179,7 +179,7 @@ describe("Property Rule Tests", () => {
     it("Property has no CustomAttributes, rule passes.", async () => {
       const property = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty", PrimitiveType.String);
 
-      const result = await Rules.propertyMustNotUseCustomHandledPropertyRestriction(property);
+      const result = Rules.propertyMustNotUseCustomHandledPropertyRestriction(property);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;

@@ -202,11 +202,13 @@ export async function classHasHandlerCACannotAppliedOutsideCoreSchemas(_diagnost
 export async function elementUniqueAspectMustHaveCorrespondingRelationship(_diagnostic: AnyDiagnostic, entity: EC.EntityClass): Promise<boolean> {
   const schemaList = [
     { name: "BuildingCommon", version: new EC.ECVersion(1, 99, 99) },
+    { name: "CifBridge", version: new EC.ECVersion(1, 99, 99) },
   ];
 
   const classList = [
     "BuildingCommon.ABDIFCOerrides", "BuildingCommon.ABDIdentification", "BuildingCommon.AcousticalProperties", "BuildingCommon.AnalyticalProperties",
     "BuildingCommon.Classification", "BuildingCommon.FireResistance", "BuildingCommon.IdentityData", "BuildingCommon.Manufacturer", "BuildingCommon.Phases",
+    "CifBridge.PipePileAspect",
   ];
 
   return findSchemaInfo(schemaList, entity.schema) && classList.includes(entity.fullName) ? true : false;

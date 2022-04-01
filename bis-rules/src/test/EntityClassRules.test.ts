@@ -67,7 +67,7 @@ describe("EntityClass Rule Tests", () => {
       const childEntity = new EntityClass(testSchema, "TestEntity");
       childEntity.baseClass = new DelayedPromiseWithProps(baseEntity.key, async () => baseEntity) as LazyLoadedSchemaItem<EntityClass>;
 
-      const result = await Rules.entityClassMustDeriveFromBisHierarchy(childEntity);
+      const result = Rules.entityClassMustDeriveFromBisHierarchy(childEntity);
 
       let resultHasEntries = false;
       for await (const diagnostic of result!) {
@@ -77,7 +77,7 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([childEntity.fullName]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.EntityClassMustDeriveFromBisHierarchy);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -87,7 +87,7 @@ describe("EntityClass Rule Tests", () => {
       const childEntity = new EntityClass(testSchema, "ChildEntity");
       childEntity.baseClass = new DelayedPromiseWithProps(baseEntity.key, async () => baseEntity) as LazyLoadedSchemaItem<EntityClass>;
 
-      const result = await Rules.entityClassMustDeriveFromBisHierarchy(childEntity);
+      const result = Rules.entityClassMustDeriveFromBisHierarchy(childEntity);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -97,7 +97,7 @@ describe("EntityClass Rule Tests", () => {
     it("EntityClass defined in BIS schema, rule passes.", async () => {
       const entityClass = new EntityClass(bisCoreSchema, "BisEntity");
 
-      const result = await Rules.entityClassMustDeriveFromBisHierarchy(entityClass);
+      const result = Rules.entityClassMustDeriveFromBisHierarchy(entityClass);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -111,7 +111,7 @@ describe("EntityClass Rule Tests", () => {
       const grandChildEntity = new EntityClass(testSchema, "GrandChildEntity");
       grandChildEntity.baseClass = new DelayedPromiseWithProps(childEntity.key, async () => childEntity) as LazyLoadedSchemaItem<EntityClass>;
 
-      const result = await Rules.entityClassMustDeriveFromBisHierarchy(grandChildEntity);
+      const result = Rules.entityClassMustDeriveFromBisHierarchy(grandChildEntity);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -132,7 +132,7 @@ describe("EntityClass Rule Tests", () => {
       childEntity.baseClass = new DelayedPromiseWithProps(baseEntity.key, async () => baseEntity) as LazyLoadedSchemaItem<EntityClass>;
       await (childEntity as MutableEntityClass).addMixin(mixin);
 
-      const result = await Rules.entityClassMayNotInheritSameProperty(childEntity);
+      const result = Rules.entityClassMayNotInheritSameProperty(childEntity);
 
       let resultHasEntries = false;
       for await (const diagnostic of result!) {
@@ -142,7 +142,7 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([childEntity.fullName, "TestProperty", baseEntity.fullName, mixin.fullName]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.EntityClassMayNotInheritSameProperty);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -159,7 +159,7 @@ describe("EntityClass Rule Tests", () => {
       await (childEntity as MutableEntityClass).addMixin(mixin1);
       await (childEntity as MutableEntityClass).addMixin(mixin2);
 
-      const result = await Rules.entityClassMayNotInheritSameProperty(childEntity);
+      const result = Rules.entityClassMayNotInheritSameProperty(childEntity);
 
       let resultHasEntries = false;
       for await (const diagnostic of result!) {
@@ -169,7 +169,7 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([childEntity.fullName, "TestProperty", mixin1.fullName, mixin2.fullName]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.EntityClassMayNotInheritSameProperty);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -186,7 +186,7 @@ describe("EntityClass Rule Tests", () => {
       childEntity.baseClass = new DelayedPromiseWithProps(baseEntity.key, async () => baseEntity) as LazyLoadedSchemaItem<EntityClass>;
       await (childEntity as MutableEntityClass).addMixin(mixin);
 
-      const result = await Rules.entityClassMayNotInheritSameProperty(childEntity);
+      const result = Rules.entityClassMayNotInheritSameProperty(childEntity);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -204,7 +204,7 @@ describe("EntityClass Rule Tests", () => {
       await (childEntity as MutableEntityClass).addMixin(mixin);
       childEntity.baseClass = new DelayedPromiseWithProps(baseEntity.key, async () => baseEntity) as LazyLoadedSchemaItem<EntityClass>;
 
-      const result = await Rules.entityClassMayNotInheritSameProperty(childEntity);
+      const result = Rules.entityClassMayNotInheritSameProperty(childEntity);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -218,7 +218,7 @@ describe("EntityClass Rule Tests", () => {
       childEntity.baseClass = new DelayedPromiseWithProps(baseEntity.key, async () => baseEntity) as LazyLoadedSchemaItem<EntityClass>;
       const spy = sinon.spy(EntityClass.prototype, "getProperties");
 
-      const result = await Rules.entityClassMayNotInheritSameProperty(childEntity);
+      const result = Rules.entityClassMayNotInheritSameProperty(childEntity);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -233,7 +233,7 @@ describe("EntityClass Rule Tests", () => {
       await (childEntity as MutableEntityClass).addMixin(mixin);
       const spy = sinon.spy(EntityClass.prototype, "getProperties");
 
-      const result = await Rules.entityClassMayNotInheritSameProperty(childEntity);
+      const result = Rules.entityClassMayNotInheritSameProperty(childEntity);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -274,7 +274,7 @@ describe("EntityClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const entity = (await schema.getItem("TestEntity")) as EntityClass;
 
-      const result = await Rules.elementMultiAspectMustHaveCorrespondingRelationship(entity);
+      const result = Rules.elementMultiAspectMustHaveCorrespondingRelationship(entity);
 
       let resultHasEntries = false;
       for await (const diagnostic of result!) {
@@ -284,7 +284,7 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([entity.fullName]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.ElementMultiAspectMustHaveCorrespondingRelationship);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -320,7 +320,7 @@ describe("EntityClass Rule Tests", () => {
       const entity = (await schema.getItem("TestEntity")) as EntityClass;
       (schema as MutableSchema).addCustomAttribute({ className: "CoreCustomAttributes.DynamicSchema" });
 
-      const result = await Rules.elementMultiAspectMustHaveCorrespondingRelationship(entity);
+      const result = Rules.elementMultiAspectMustHaveCorrespondingRelationship(entity);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -377,7 +377,7 @@ describe("EntityClass Rule Tests", () => {
       const schema = await Schema.fromJson(schemaJson, context);
       const entity = (await schema.getItem("TestEntity")) as EntityClass;
 
-      const result = await Rules.elementMultiAspectMustHaveCorrespondingRelationship(entity);
+      const result = Rules.elementMultiAspectMustHaveCorrespondingRelationship(entity);
 
       let resultHasEntries = false;
       for await (const diagnostic of result!) {
@@ -387,7 +387,7 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([entity.fullName]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.ElementMultiAspectMustHaveCorrespondingRelationship);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -402,7 +402,7 @@ describe("EntityClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const entity = (await schema.getItem("TestEntity")) as EntityClass;
 
-      const result = await Rules.elementMultiAspectMustHaveCorrespondingRelationship(entity);
+      const result = Rules.elementMultiAspectMustHaveCorrespondingRelationship(entity);
 
       let resultHasEntries = false;
       for await (const diagnostic of result!) {
@@ -412,7 +412,7 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([entity.fullName]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.ElementMultiAspectMustHaveCorrespondingRelationship);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -447,7 +447,7 @@ describe("EntityClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const entity = (await schema.getItem("TestEntity")) as EntityClass;
 
-      const result = await Rules.elementMultiAspectMustHaveCorrespondingRelationship(entity);
+      const result = Rules.elementMultiAspectMustHaveCorrespondingRelationship(entity);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -485,7 +485,7 @@ describe("EntityClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const entity = (await schema.getItem("TestEntity")) as EntityClass;
 
-      const result = await Rules.elementMultiAspectMustHaveCorrespondingRelationship(entity);
+      const result = Rules.elementMultiAspectMustHaveCorrespondingRelationship(entity);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -495,10 +495,52 @@ describe("EntityClass Rule Tests", () => {
     it("BisCore schema not referenced, rule passes.", async () => {
       const testEntity = new EntityClass(testSchema, "TestEntity");
 
-      const result = await Rules.elementMultiAspectMustHaveCorrespondingRelationship(testEntity);
+      const result = Rules.elementMultiAspectMustHaveCorrespondingRelationship(testEntity);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
+      }
+    });
+
+    it("Abstract base ElementMultiAspect EntityClass has child in a corresponding relationship, rule passes.", async () => {
+      const schemaJson = {
+        TestRelationship: {
+          baseClass: "BisCore.ElementOwnsMultiAspects",
+          schemaItemType: "RelationshipClass",
+          strength: "embedding",
+          strengthDirection: "forward",
+          source: {
+            multiplicity: "(1..1)",
+            polymorphic: true,
+            roleLabel: "owns",
+            constraintClasses: [
+            ],
+          },
+          target: {
+            multiplicity: "(0..*)",
+            polymorphic: true,
+            roleLabel: "is owned by",
+            constraintClasses: [
+              "TestSchema.TestEntity",
+            ],
+          },
+        },
+        TestBaseEntity: {
+          baseClass: "BisCore.ElementMultiAspect",
+          modifier: "Abstract",
+          schemaItemType: "EntityClass",
+        },
+        TestEntity: {
+          baseClass: "TestSchema.TestBaseEntity",
+          schemaItemType: "EntityClass",
+        },
+      };
+      const schema = await getTestSchema(schemaJson);
+      const entity = (await schema.getItem("TestBaseEntity")) as EntityClass;
+      const result = Rules.elementUniqueAspectMustHaveCorrespondingRelationship(entity);
+
+      for await (const _diagnostic of result!) {
+        expect(false, "Rule should have passed.").to.be.true;
       }
     });
   });
@@ -534,7 +576,7 @@ describe("EntityClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const entity = (await schema.getItem("TestEntity")) as EntityClass;
 
-      const result = await Rules.elementUniqueAspectMustHaveCorrespondingRelationship(entity);
+      const result = Rules.elementUniqueAspectMustHaveCorrespondingRelationship(entity);
 
       let resultHasEntries = false;
       for await (const diagnostic of result!) {
@@ -544,7 +586,7 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([entity.fullName]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.ElementUniqueAspectMustHaveCorrespondingRelationship);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -580,7 +622,7 @@ describe("EntityClass Rule Tests", () => {
       const entity = (await schema.getItem("TestEntity")) as EntityClass;
       (schema as MutableSchema).addCustomAttribute({ className: "CoreCustomAttributes.DynamicSchema" });
 
-      const result = await Rules.elementUniqueAspectMustHaveCorrespondingRelationship(entity);
+      const result = Rules.elementUniqueAspectMustHaveCorrespondingRelationship(entity);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed.").to.be.true;
@@ -597,7 +639,7 @@ describe("EntityClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const entity = (await schema.getItem("TestEntity")) as EntityClass;
 
-      const result = await Rules.elementUniqueAspectMustHaveCorrespondingRelationship(entity);
+      const result = Rules.elementUniqueAspectMustHaveCorrespondingRelationship(entity);
 
       let resultHasEntries = false;
       for await (const diagnostic of result!) {
@@ -607,7 +649,7 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([entity.fullName]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.ElementUniqueAspectMustHaveCorrespondingRelationship);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -642,7 +684,7 @@ describe("EntityClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const entity = (await schema.getItem("TestEntity")) as EntityClass;
 
-      const result = await Rules.elementUniqueAspectMustHaveCorrespondingRelationship(entity);
+      const result = Rules.elementUniqueAspectMustHaveCorrespondingRelationship(entity);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -680,17 +722,59 @@ describe("EntityClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const entity = (await schema.getItem("TestEntity")) as EntityClass;
 
-      const result = await Rules.elementUniqueAspectMustHaveCorrespondingRelationship(entity);
+      const result = Rules.elementUniqueAspectMustHaveCorrespondingRelationship(entity);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
       }
     });
 
+    it("Abstract base ElementUniqueAspect EntityClass has child in a corresponding relationship, rule passes.", async () => {
+      const schemaJson = {
+        TestRelationship: {
+          schemaItemType: "RelationshipClass",
+          baseClass: "BisCore.ElementOwnsUniqueAspect",
+          strength: "embedding",
+          strengthDirection: "forward",
+          source: {
+            multiplicity: "(1..1)",
+            polymorphic: true,
+            roleLabel: "owns",
+            constraintClasses: [
+            ],
+          },
+          target: {
+            multiplicity: "(0..*)",
+            polymorphic: true,
+            roleLabel: "is owned by",
+            constraintClasses: [
+              "TestSchema.TestEntity",
+            ],
+          },
+        },
+        TestBaseEntity: {
+          baseClass: "BisCore.ElementUniqueAspect",
+          modifier: "Abstract",
+          schemaItemType: "EntityClass",
+        },
+        TestEntity: {
+          baseClass: "TestSchema.TestBaseEntity",
+          schemaItemType: "EntityClass",
+        },
+      };
+      const schema = await getTestSchema(schemaJson);
+      const entity = (await schema.getItem("TestBaseEntity")) as EntityClass;
+      const result = Rules.elementUniqueAspectMustHaveCorrespondingRelationship(entity);
+
+      for await (const _diagnostic of result!) {
+        expect(false, "Rule should have passed.").to.be.true;
+      }
+    });
+
     it("BisCore schema not referenced, rule passes.", async () => {
       const testEntity = new EntityClass(testSchema, "TestEntity");
 
-      const result = await Rules.elementUniqueAspectMustHaveCorrespondingRelationship(testEntity);
+      const result = Rules.elementUniqueAspectMustHaveCorrespondingRelationship(testEntity);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -709,7 +793,7 @@ describe("EntityClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const testEntity = (await schema.getItem("TestEntity")) as EntityClass;
 
-      const result = await Rules.entityClassesCannotDeriveFromIParentElementAndISubModeledElement(testEntity);
+      const result = Rules.entityClassesCannotDeriveFromIParentElementAndISubModeledElement(testEntity);
 
       let resultHasEntries = false;
       for await (const diagnostic of result!) {
@@ -719,7 +803,7 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([testEntity.fullName]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.EntityClassesCannotDeriveFromIParentElementAndISubModeledElement);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -734,7 +818,7 @@ describe("EntityClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const testEntity = (await schema.getItem("TestEntity")) as EntityClass;
 
-      const result = await Rules.entityClassesCannotDeriveFromIParentElementAndISubModeledElement(testEntity);
+      const result = Rules.entityClassesCannotDeriveFromIParentElementAndISubModeledElement(testEntity);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -750,7 +834,7 @@ describe("EntityClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson, "TestSchema", new SchemaContext(), false);
       const testEntity = (await schema.getItem("TestEntity")) as EntityClass;
 
-      const result = await Rules.entityClassesCannotDeriveFromIParentElementAndISubModeledElement(testEntity);
+      const result = Rules.entityClassesCannotDeriveFromIParentElementAndISubModeledElement(testEntity);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -769,7 +853,7 @@ describe("EntityClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const testEntity = (await schema.getItem("TestEntity")) as EntityClass;
 
-      const result = await Rules.entityClassesCannotDeriveFromModelClasses(testEntity);
+      const result = Rules.entityClassesCannotDeriveFromModelClasses(testEntity);
 
       let resultHasEntries = false;
       for await (const diagnostic of result!) {
@@ -779,7 +863,7 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([testEntity.fullName, "BisCore.PhysicalModel"]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.EntityClassesCannotDeriveFromModelClasses);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -794,7 +878,7 @@ describe("EntityClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const testEntity = (await schema.getItem("TestEntity")) as EntityClass;
 
-      const result = await Rules.entityClassesCannotDeriveFromModelClasses(testEntity);
+      const result = Rules.entityClassesCannotDeriveFromModelClasses(testEntity);
 
       let resultHasEntries = false;
       for await (const diagnostic of result!) {
@@ -804,7 +888,7 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([testEntity.fullName, "BisCore.SpatialLocationModel"]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.EntityClassesCannotDeriveFromModelClasses);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -819,7 +903,7 @@ describe("EntityClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const testEntity = (await schema.getItem("TestEntity")) as EntityClass;
 
-      const result = await Rules.entityClassesCannotDeriveFromModelClasses(testEntity);
+      const result = Rules.entityClassesCannotDeriveFromModelClasses(testEntity);
 
       let resultHasEntries = false;
       for await (const diagnostic of result!) {
@@ -829,7 +913,7 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([testEntity.fullName, "BisCore.InformationRecordModel"]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.EntityClassesCannotDeriveFromModelClasses);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -844,7 +928,7 @@ describe("EntityClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const testEntity = (await schema.getItem("TestEntity")) as EntityClass;
 
-      const result = await Rules.entityClassesCannotDeriveFromModelClasses(testEntity);
+      const result = Rules.entityClassesCannotDeriveFromModelClasses(testEntity);
 
       let resultHasEntries = false;
       for await (const diagnostic of result!) {
@@ -854,7 +938,7 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([testEntity.fullName, "BisCore.DefinitionModel"]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.EntityClassesCannotDeriveFromModelClasses);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -869,7 +953,7 @@ describe("EntityClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const testEntity = (await schema.getItem("TestEntity")) as EntityClass;
 
-      const result = await Rules.entityClassesCannotDeriveFromModelClasses(testEntity);
+      const result = Rules.entityClassesCannotDeriveFromModelClasses(testEntity);
 
       let resultHasEntries = false;
       for await (const diagnostic of result!) {
@@ -879,7 +963,7 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([testEntity.fullName, "BisCore.DocumentListModel"]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.EntityClassesCannotDeriveFromModelClasses);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -894,7 +978,7 @@ describe("EntityClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const testEntity = (await schema.getItem("TestEntity")) as EntityClass;
 
-      const result = await Rules.entityClassesCannotDeriveFromModelClasses(testEntity);
+      const result = Rules.entityClassesCannotDeriveFromModelClasses(testEntity);
 
       let resultHasEntries = false;
       for await (const diagnostic of result!) {
@@ -904,7 +988,7 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([testEntity.fullName, "BisCore.LinkModel"]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.EntityClassesCannotDeriveFromModelClasses);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -947,7 +1031,7 @@ describe("EntityClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson, "BisCore", new SchemaContext(), false);
       const testEntity = (await schema.getItem("TestEntity")) as EntityClass;
 
-      const result = await Rules.entityClassesCannotDeriveFromModelClasses(testEntity);
+      const result = Rules.entityClassesCannotDeriveFromModelClasses(testEntity);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -963,7 +1047,7 @@ describe("EntityClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson, "TestSchema", new SchemaContext(), false);
       const testEntity = (await schema.getItem("TestEntity")) as EntityClass;
 
-      const result = await Rules.entityClassesCannotDeriveFromModelClasses(testEntity);
+      const result = Rules.entityClassesCannotDeriveFromModelClasses(testEntity);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -985,7 +1069,7 @@ describe("EntityClass Rule Tests", () => {
       stub.callThrough();
 
       try {
-        const result = await Rules.entityClassesCannotDeriveFromModelClasses(testEntity);
+        const result = Rules.entityClassesCannotDeriveFromModelClasses(testEntity);
         for await (const _r of result!) { }
       } catch (e) {
         error = e;
@@ -1009,7 +1093,7 @@ describe("EntityClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const testEntity = (await schema.getItem("TestEntity")) as EntityClass;
 
-      const result = await Rules.entityClassesCannotDeriveFromModelClasses(testEntity);
+      const result = Rules.entityClassesCannotDeriveFromModelClasses(testEntity);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -1035,7 +1119,7 @@ describe("EntityClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const testEntity = (await schema.getItem("TestEntity")) as EntityClass;
 
-      const result = await Rules.bisModelSubClassesCannotDefineProperties(testEntity);
+      const result = Rules.bisModelSubClassesCannotDefineProperties(testEntity);
 
       let resultHasEntries = false;
       for await (const diagnostic of result!) {
@@ -1045,7 +1129,7 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([testEntity.fullName]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.BisModelSubClassesCannotDefineProperties);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -1071,7 +1155,7 @@ describe("EntityClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson, "BisCore", context, false);
       const testEntity = (await schema.getItem("TestEntity")) as EntityClass;
 
-      const result = await Rules.bisModelSubClassesCannotDefineProperties(testEntity);
+      const result = Rules.bisModelSubClassesCannotDefineProperties(testEntity);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -1088,7 +1172,7 @@ describe("EntityClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const testEntity = (await schema.getItem("TestEntity")) as EntityClass;
 
-      const result = await Rules.bisModelSubClassesCannotDefineProperties(testEntity);
+      const result = Rules.bisModelSubClassesCannotDefineProperties(testEntity);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -1111,7 +1195,7 @@ describe("EntityClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const testEntity = (await schema.getItem("TestEntity")) as EntityClass;
 
-      const result = await Rules.bisModelSubClassesCannotDefineProperties(testEntity);
+      const result = Rules.bisModelSubClassesCannotDefineProperties(testEntity);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -1133,7 +1217,7 @@ describe("EntityClass Rule Tests", () => {
       stub.callThrough();
 
       try {
-        const result = await Rules.bisModelSubClassesCannotDefineProperties(testEntity);
+        const result = Rules.bisModelSubClassesCannotDefineProperties(testEntity);
         for await (const _r of result!) { }
       } catch (e) {
         error = e;
@@ -1164,7 +1248,7 @@ describe("EntityClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const testEntity = (await schema.getItem("TestEntity")) as EntityClass;
 
-      const result = await Rules.entityClassesMayNotSubclassDeprecatedClasses(testEntity);
+      const result = Rules.entityClassesMayNotSubclassDeprecatedClasses(testEntity);
 
       let resultHasEntries = false;
       for await (const diagnostic of result!) {
@@ -1174,7 +1258,7 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([testEntity.fullName, testEntity.baseClass!.fullName]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.EntityClassesMayNotSubclassDeprecatedClasses);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -1202,7 +1286,7 @@ describe("EntityClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const testEntity = (await schema.getItem("TestEntity")) as EntityClass;
 
-      const result = await Rules.entityClassesMayNotSubclassDeprecatedClasses(testEntity);
+      const result = Rules.entityClassesMayNotSubclassDeprecatedClasses(testEntity);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -1224,7 +1308,7 @@ describe("EntityClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const testEntity = (await schema.getItem("TestEntity")) as EntityClass;
 
-      const result = await Rules.entityClassesMayNotSubclassDeprecatedClasses(testEntity);
+      const result = Rules.entityClassesMayNotSubclassDeprecatedClasses(testEntity);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -1240,7 +1324,7 @@ describe("EntityClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const testEntity = (await schema.getItem("TestEntity")) as EntityClass;
 
-      const result = await Rules.entityClassesMayNotSubclassDeprecatedClasses(testEntity);
+      const result = Rules.entityClassesMayNotSubclassDeprecatedClasses(testEntity);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -1300,7 +1384,7 @@ describe("EntityClass Rule Tests", () => {
       mutableEntity.addMixin(firstDeprecatedMixin);
       mutableEntity.addMixin(secondDeprecatedMixin);
 
-      const result = await Rules.entityClassesShouldNotDerivedFromDeprecatedMixinClasses(testEntity);
+      const result = Rules.entityClassesShouldNotDerivedFromDeprecatedMixinClasses(testEntity);
       let index = 0;
       for await (const diagnostic of result) {
         expect(diagnostic).to.not.be.undefined;
@@ -1311,7 +1395,7 @@ describe("EntityClass Rule Tests", () => {
           expect(diagnostic!.messageArgs).to.eql([testEntity.fullName, "TestSchema.DeprecatedMixin2", "TestSchema.DeprecatedMixin2"]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.EntityClassesShouldNotDerivedFromDeprecatedMixinClasses);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
         ++index;
       }
       expect(index === 2, "Expect there are 2 warnings about deprecated mixins").to.be.true;
@@ -1335,7 +1419,7 @@ describe("EntityClass Rule Tests", () => {
       mutableEntity.addMixin(firstMixin);
       mutableEntity.addMixin(secondMixin);
 
-      const result = await Rules.entityClassesShouldNotDerivedFromDeprecatedMixinClasses(testEntity);
+      const result = Rules.entityClassesShouldNotDerivedFromDeprecatedMixinClasses(testEntity);
       let index = 0;
       for await (const diagnostic of result) {
         expect(diagnostic).to.not.be.undefined;
@@ -1346,7 +1430,7 @@ describe("EntityClass Rule Tests", () => {
           expect(diagnostic!.messageArgs).to.eql([testEntity.fullName, "TestSchema.Mixin2", "TestSchema.DeprecatedMixin2"]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.EntityClassesShouldNotDerivedFromDeprecatedMixinClasses);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
         ++index;
       }
       expect(index === 2, "Expect there are 2 warnings about deprecated mixins").to.be.true;
@@ -1365,7 +1449,7 @@ describe("EntityClass Rule Tests", () => {
       mutableEntity.addMixin(firstDeprecatedMixin);
       mutableEntity.addMixin(secondDeprecatedMixin);
 
-      const result = await Rules.entityClassesShouldNotDerivedFromDeprecatedMixinClasses(testEntity);
+      const result = Rules.entityClassesShouldNotDerivedFromDeprecatedMixinClasses(testEntity);
       for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
@@ -1381,7 +1465,7 @@ describe("EntityClass Rule Tests", () => {
       mutableEntity.addMixin(firstMixin);
       mutableEntity.addMixin(secondMixin);
 
-      const result = await Rules.entityClassesShouldNotDerivedFromDeprecatedMixinClasses(testEntity);
+      const result = Rules.entityClassesShouldNotDerivedFromDeprecatedMixinClasses(testEntity);
       for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }

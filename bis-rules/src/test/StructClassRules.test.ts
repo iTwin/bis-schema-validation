@@ -21,7 +21,7 @@ describe("StructClass Rule Tests", () => {
       const struct = new StructClass(schema, "TestStruct");
       struct.baseClass = new DelayedPromiseWithProps(baseStruct.key, async () => baseStruct) as LazyLoadedSchemaItem<ECClass>;
 
-      const result = await Rules.structsCannotHaveBaseClasses(struct);
+      const result = Rules.structsCannotHaveBaseClasses(struct);
 
       let resultHasEntries = false;
       for await (const diagnostic of result!) {
@@ -31,7 +31,7 @@ describe("StructClass Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([struct.fullName]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.StructsCannotHaveBaseClasses);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -39,7 +39,7 @@ describe("StructClass Rule Tests", () => {
     it("Struct has no base class, rule passes.", async () => {
       const struct = new StructClass(schema, "TestStruct");
 
-      const result = await Rules.structsCannotHaveBaseClasses(struct);
+      const result = Rules.structsCannotHaveBaseClasses(struct);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;

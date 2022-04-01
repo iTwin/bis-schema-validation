@@ -8,5 +8,10 @@
     "module_name": "set-value",
     "severity": "HIGH",
     "from": "@itwin/build-tools"
+  },
+  {
+    "module_name": "minimist",
+    "severity": "HIGH",
+    "from": "@itwin/build-tools"
   }
 ]

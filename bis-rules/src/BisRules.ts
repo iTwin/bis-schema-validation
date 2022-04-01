@@ -9,6 +9,7 @@ import {
   createSchemaItemDiagnosticClass, DiagnosticCategory, IRuleSet, PropertyDiagnostic,
   SchemaDiagnostic, SchemaItemDiagnostic,
 } from "@itwin/ecschema-editing";
+import { ECClassModifier } from "@itwin/ecschema-metadata";
 
 const bisCoreName = "BisCore";
 const bisModelName = "Model";
@@ -591,6 +592,9 @@ export async function* elementMultiAspectMustHaveCorrespondingRelationship(entit
   const attributes = entity.schema.customAttributes;
   if (attributes !== undefined && attributes.has("CoreCustomAttributes.DynamicSchema")) return;
 
+  if (entity.modifier === ECClassModifier.Abstract)
+    return;
+
   if (!await entity.is(elementMultiAspectName, bisCoreName))
     return;
 
@@ -605,8 +609,7 @@ export async function* elementMultiAspectMustHaveCorrespondingRelationship(entit
     if (!await relationship.is(elementOwnsMultiAspectsName, bisCoreName))
       continue;
 
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    if ((relationship as EC.RelationshipClass).target.supportsClass(entity))
+    if (await (relationship as EC.RelationshipClass).target.supportsClass(entity))
       return;
   }
 
@@ -621,6 +624,9 @@ export async function* elementUniqueAspectMustHaveCorrespondingRelationship(enti
   const context = entity.schema.context;
   if (!context)
     throw new EC.ECObjectsError(EC.ECObjectsStatus.SchemaContextUndefined, `Schema context is undefined for schema ${entity.schema.fullName}.`);
+
+  if (entity.modifier === ECClassModifier.Abstract)
+    return;
 
   const attributes = entity.schema.customAttributes;
   if (attributes !== undefined && attributes.has("CoreCustomAttributes.DynamicSchema")) return;
@@ -639,8 +645,7 @@ export async function* elementUniqueAspectMustHaveCorrespondingRelationship(enti
     if (!await relationship.is(elementOwnsUniqueAspectName, bisCoreName))
       continue;
 
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    if ((relationship as EC.RelationshipClass).target.supportsClass(entity))
+    if (await (relationship as EC.RelationshipClass).target.supportsClass(entity))
       return;
   }
 

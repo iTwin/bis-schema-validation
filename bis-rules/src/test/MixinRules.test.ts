@@ -25,7 +25,7 @@ describe("Mixin Rule Tests", () => {
       await (mixin as MutableClass).createPrimitiveProperty("TestProperty", PrimitiveType.Integer);
       mixin.baseClass = new DelayedPromiseWithProps(baseMixin.key, async () => baseMixin) as LazyLoadedSchemaItem<Mixin>;
 
-      const result = await Rules.mixinsCannotOverrideInheritedProperties(mixin as Mixin);
+      const result = Rules.mixinsCannotOverrideInheritedProperties(mixin as Mixin);
 
       let resultHasEntries = false;
       for await (const diagnostic of result!) {
@@ -35,7 +35,7 @@ describe("Mixin Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([mixin.fullName, "TestProperty"]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.MixinsCannotOverrideInheritedProperties);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -51,7 +51,7 @@ describe("Mixin Rule Tests", () => {
       await (grandChildMixin as MutableClass).createPrimitiveProperty("TestProperty", PrimitiveType.Integer);
       grandChildMixin.baseClass = new DelayedPromiseWithProps(childMixin.key, async () => childMixin) as LazyLoadedSchemaItem<Mixin>;
 
-      const result = await Rules.mixinsCannotOverrideInheritedProperties(grandChildMixin as Mixin);
+      const result = Rules.mixinsCannotOverrideInheritedProperties(grandChildMixin as Mixin);
 
       let resultHasEntries = false;
       for await (const diagnostic of result!) {
@@ -61,7 +61,7 @@ describe("Mixin Rule Tests", () => {
         expect(diagnostic!.messageArgs).to.eql([grandChildMixin.fullName, "TestProperty"]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.MixinsCannotOverrideInheritedProperties);
-        expect(diagnostic!["diagnosticType"]).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -69,7 +69,7 @@ describe("Mixin Rule Tests", () => {
     it("No base class, rule passes.", async () => {
       const mixin = new Mixin(schema, "TestMixin") as ECClass;
 
-      const result = await Rules.mixinsCannotOverrideInheritedProperties(mixin as Mixin);
+      const result = Rules.mixinsCannotOverrideInheritedProperties(mixin as Mixin);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -84,7 +84,7 @@ describe("Mixin Rule Tests", () => {
       await (mixin as MutableClass).createPrimitiveProperty("TestIntProperty", PrimitiveType.Integer);
       mixin.baseClass = new DelayedPromiseWithProps(baseMixin.key, async () => baseMixin) as LazyLoadedSchemaItem<Mixin>;
 
-      const result = await Rules.mixinsCannotOverrideInheritedProperties(mixin as Mixin);
+      const result = Rules.mixinsCannotOverrideInheritedProperties(mixin as Mixin);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;

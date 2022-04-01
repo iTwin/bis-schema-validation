@@ -28,9 +28,9 @@
     "url": "http://www.bentley.com"
   },
   "devDependencies": {
-    "@itwin/build-tools": "3.0.0-dev.134",
-    "@itwin/eslint-plugin": "3.0.0-dev.134",
-    "@itwin/ecschema-metadata": "3.0.0-dev.134",
+    "@itwin/build-tools": "3.0.2",
+    "@itwin/eslint-plugin": "3.0.2",
+    "@itwin/ecschema-metadata": "3.0.2",
     "@types/chai": "^4.1.7",
     "@types/mocha": "^8.2.2",
     "@types/rimraf": "^2.0.2",
@@ -48,12 +48,12 @@
     "eslint": "^7.11.0"
   },
   "peerDependencies": {
-    "@itwin/ecschema-metadata": "3.0.0-dev.134",
-    "@itwin/ecschema-editing": "3.0.0-dev.134"
+    "@itwin/ecschema-metadata": "3.0.2",
+    "@itwin/ecschema-editing": "3.0.2"
   },
   "dependencies": {
-    "@itwin/core-bentley": "3.0.0-dev.134",
-    "@itwin/core-backend": "3.0.0-dev.134"
+    "@itwin/core-bentley": "3.0.2",
+    "@itwin/core-backend": "3.0.2"
   },
   "nyc": {
     "extends": "./node_modules/@itwin/build-tools/.nycrc",
@@ -68,8 +68,6 @@
     "extends": "plugin:@itwin/itwinjs-recommended",
     "rules": {
       "prefer-template": "off",
-      "dot-notation": "off",
-      "@typescript-eslint/await-thenable": "off",
       "@typescript-eslint/naming-convention": "off",
       "@typescript-eslint/no-unnecessary-type-assertion": "off"
     }
