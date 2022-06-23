@@ -8,7 +8,7 @@ import * as path from "path";
 import * as chalk from "chalk";
 import * as readdirp from "readdirp";
 import { Reporter } from "./Reporter";
-import { getSha1Hash } from "./Sha1HashHelper";
+import { IModelHost } from "@itwin/core-backend";
 import { SchemaCompareCodes } from "@itwin/ecschema-editing";
 import { SchemaValidator, ValidationOptions, ValidationResultType } from "@bentley/schema-validator";
 import { CompareOptions, ComparisonResultType, IComparisonResult, SchemaComparison } from "@bentley/schema-comparer";
@@ -123,7 +123,7 @@ async function applyValidations(iModelSchemaDir: string, iModelSchemaFile: strin
       }
 
     } else {
-      validationResult.releasedSchemaSha1 = getSha1Hash(releasedSchemaPath, releasedSchemaDirectories);
+      validationResult.releasedSchemaSha1 = IModelHost.computeSchemaChecksum({ schemaXmlPath: releasedSchemaPath, referencePaths: releasedSchemaDirectories });
       await compareSchema(name, version, iModelSchemaPath, releasedSchemaPath, [iModelSchemaDir], releasedSchemaDirectories, output, validationResult);
       // @bentley/schema-comparer is auto pushing the input schema path to reference array.
       // Removing this path to fix the bug in finding releasedSchemaFile otherwise it finds the iModel schema path
@@ -131,10 +131,10 @@ async function applyValidations(iModelSchemaDir: string, iModelSchemaFile: strin
       if (iModelSchemaDirIndex !== -1) { releasedSchemaDirectories.splice(iModelSchemaDirIndex, 1); }
 
       if (validationResult.comparer === iModelValidationResultTypes.Passed || validationResult.comparer === iModelValidationResultTypes.ReferenceDifferenceWarning)
-        validationResult.releasedSchemaIModelContextSha1 = getSha1Hash(releasedSchemaPath, [iModelSchemaDir]);
+        validationResult.releasedSchemaIModelContextSha1 = IModelHost.computeSchemaChecksum({ schemaXmlPath: releasedSchemaPath, referencePaths: [iModelSchemaDir] });
     }
   }
-  validationResult.sha1 = getSha1Hash(iModelSchemaPath, [iModelSchemaDir]);
+  validationResult.sha1 = IModelHost.computeSchemaChecksum({ schemaXmlPath: iModelSchemaPath, referencePaths: [iModelSchemaDir] });
   console.log("END VALIDATION AND DIFFERENCE AUDIT: ", name, version);
   Reporter.writeToLogFile(name, version, `END VALIDATION AND DIFFERENCE AUDIT: ${name}.${version}\n`, output);
   return validationResult;
