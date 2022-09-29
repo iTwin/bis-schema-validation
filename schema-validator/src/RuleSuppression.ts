@@ -150,6 +150,7 @@ export async function schemaClassDisplayLabelMustBeUnique(diagnostic: AnyDiagnos
 export async function multiplePropertiesInClassWithSameLabel(diagnostic: AnyDiagnostic, ecClass: EC.AnyClass): Promise<boolean> {
   const schemaList = [
     { name: "ProcessPhysical", version: new EC.ECVersion(1, 0, 1) },
+    { name: "IntegratedStructuralModel", version: new EC.ECVersion(1, 99, 99) },
   ];
 
   const schemaInfo = findSchemaInfo(schemaList, ecClass.schema);
@@ -160,6 +161,11 @@ export async function multiplePropertiesInClassWithSameLabel(diagnostic: AnyDiag
     && diagnostic.messageArgs.includes("DesignState")
     && diagnostic.messageArgs.includes("DESIGN_STATE")
     && diagnostic.messageArgs.includes("Design State"))
+    return true;
+
+  if (diagnostic.messageArgs
+    && diagnostic.messageArgs.includes("IntegratedStructuralModel.IsmDesignParameter")
+    && diagnostic.messageArgs.includes("Parameter Value"))
     return true;
 
   return false;
@@ -203,12 +209,13 @@ export async function elementUniqueAspectMustHaveCorrespondingRelationship(_diag
   const schemaList = [
     { name: "BuildingCommon", version: new EC.ECVersion(1, 99, 99) },
     { name: "CifBridge", version: new EC.ECVersion(1, 99, 99) },
+    { name: "IsmSynchronization", version: new EC.ECVersion(1, 0, 1) },
   ];
 
   const classList = [
     "BuildingCommon.ABDIFCOerrides", "BuildingCommon.ABDIdentification", "BuildingCommon.AcousticalProperties", "BuildingCommon.AnalyticalProperties",
     "BuildingCommon.Classification", "BuildingCommon.FireResistance", "BuildingCommon.IdentityData", "BuildingCommon.Manufacturer", "BuildingCommon.Phases",
-    "CifBridge.PipePileAspect",
+    "CifBridge.PipePileAspect", "IsmSynchronization.IsmCurveMemberAspect", "IsmSynchronization.IsmSurfaceMemberAspect",
   ];
 
   return findSchemaInfo(schemaList, entity.schema) && classList.includes(entity.fullName) ? true : false;
