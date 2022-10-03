@@ -170,7 +170,7 @@ export async function schemaClassDisplayLabelMustBeUnique(diagnostic: AnyDiagnos
 export async function multiplePropertiesInClassWithSameLabel(diagnostic: AnyDiagnostic, ecClass: EC.AnyClass): Promise<boolean> {
   const schemaList = [
     { name: "ProcessPhysical", version: new EC.ECVersion(1, 0, 1) },
-    { name: "IntegratedStructuralModel", version: new EC.ECVersion(1, 99, 99) },
+    { name: "IntegratedStructuralModel", version: new EC.ECVersion(1, 0, 2) },
   ];
 
   const schemaInfo = findSchemaInfo(schemaList, ecClass.schema);
