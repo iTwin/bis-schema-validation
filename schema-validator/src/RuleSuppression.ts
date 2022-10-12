@@ -90,6 +90,7 @@ export async function schemaClassDisplayLabelMustBeUnique(diagnostic: AnyDiagnos
     { name: "ProcessPidGraphical", version: new EC.ECVersion(1, 99, 99) },
     { name: "RoadRailPhysical", version: new EC.ECVersion(1, 99, 99) },
     { name: "ProcessPhysical", version: new EC.ECVersion(1, 0, 1) },
+    { name: "IntegratedStructuralModel", version: new EC.ECVersion(1, 0, 2) },
   ];
 
   const schemaInfo = findSchemaInfo(schemaList, schema);
@@ -143,6 +144,25 @@ export async function schemaClassDisplayLabelMustBeUnique(diagnostic: AnyDiagnos
     return false;
   }
 
+  if (schemaInfo.name === "IntegratedStructuralModel") {
+    if (diagnostic.messageArgs && diagnostic.messageArgs.includes("IntegratedStructuralModel.IsmRebarCage")
+      && diagnostic.messageArgs.includes("IntegratedStructuralModel.IsmRebar")
+      && diagnostic.messageArgs.includes("Rebar"))
+      return true;
+
+    if (diagnostic.messageArgs && diagnostic.messageArgs.includes("IntegratedStructuralModel.IsmRebarLabelRule")
+      && diagnostic.messageArgs.includes("IntegratedStructuralModel.IsmModelRule")
+      && diagnostic.messageArgs.includes("Model Rule"))
+      return true;
+
+    if (diagnostic.messageArgs && diagnostic.messageArgs.includes("IntegratedStructuralModel.IsmAreaSurfaceRebarLabelRule")
+      && diagnostic.messageArgs.includes("IntegratedStructuralModel.IsmConcentratedSurfaceRebarLabelRule")
+      && diagnostic.messageArgs.includes("Concentrated Surface Rebar Label Rule"))
+      return true;
+
+    return false;
+  }
+
   return false;
 }
 
@@ -150,6 +170,7 @@ export async function schemaClassDisplayLabelMustBeUnique(diagnostic: AnyDiagnos
 export async function multiplePropertiesInClassWithSameLabel(diagnostic: AnyDiagnostic, ecClass: EC.AnyClass): Promise<boolean> {
   const schemaList = [
     { name: "ProcessPhysical", version: new EC.ECVersion(1, 0, 1) },
+    { name: "IntegratedStructuralModel", version: new EC.ECVersion(1, 0, 2) },
   ];
 
   const schemaInfo = findSchemaInfo(schemaList, ecClass.schema);
@@ -160,6 +181,11 @@ export async function multiplePropertiesInClassWithSameLabel(diagnostic: AnyDiag
     && diagnostic.messageArgs.includes("DesignState")
     && diagnostic.messageArgs.includes("DESIGN_STATE")
     && diagnostic.messageArgs.includes("Design State"))
+    return true;
+
+  if (diagnostic.messageArgs
+    && diagnostic.messageArgs.includes("IntegratedStructuralModel.IsmDesignParameter")
+    && diagnostic.messageArgs.includes("Parameter Value"))
     return true;
 
   return false;
@@ -203,12 +229,13 @@ export async function elementUniqueAspectMustHaveCorrespondingRelationship(_diag
   const schemaList = [
     { name: "BuildingCommon", version: new EC.ECVersion(1, 99, 99) },
     { name: "CifBridge", version: new EC.ECVersion(1, 99, 99) },
+    { name: "IsmSynchronization", version: new EC.ECVersion(1, 0, 1) },
   ];
 
   const classList = [
     "BuildingCommon.ABDIFCOerrides", "BuildingCommon.ABDIdentification", "BuildingCommon.AcousticalProperties", "BuildingCommon.AnalyticalProperties",
     "BuildingCommon.Classification", "BuildingCommon.FireResistance", "BuildingCommon.IdentityData", "BuildingCommon.Manufacturer", "BuildingCommon.Phases",
-    "CifBridge.PipePileAspect",
+    "CifBridge.PipePileAspect", "IsmSynchronization.IsmCurveMemberAspect", "IsmSynchronization.IsmSurfaceMemberAspect",
   ];
 
   return findSchemaInfo(schemaList, entity.schema) && classList.includes(entity.fullName) ? true : false;
