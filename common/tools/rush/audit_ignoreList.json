@@ -13,5 +13,30 @@
     "module_name": "minimist",
     "severity": "HIGH",
     "from": "@itwin/build-tools"
+  },
+  {
+    "module_name": "minimatch",
+    "severity": "HIGH",
+    "from": "@itwin/build-tools"
+  },
+  {
+    "module_name": "json5",
+    "severity": "HIGH",
+    "from": "@itwin/core-backend"
+  },
+  {
+    "module_name": "xmldom",
+    "severity": "CRITICAL",
+    "from": "xmldom"
+  },
+  {
+    "module_name": "@xmldom/xmldom",
+    "severity": "CRITICAL",
+    "from": "@xmldom/xmldom"
+  },
+  {
+    "module_name": "json5",
+    "severity": "HIGH",
+    "from": "tsconfig-paths"
   }
 ]

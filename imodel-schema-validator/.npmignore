@@ -5,6 +5,7 @@
 !lib/**/*.js
 !public/**
 !package.json
+!lib/**/*.json
 !*.md
 src/
 test/
