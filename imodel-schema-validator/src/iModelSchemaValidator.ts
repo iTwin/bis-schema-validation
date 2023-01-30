@@ -287,15 +287,44 @@ async function generateSchemaDirectoryLists(schemaDirectory: any) {
 }
 
 /**
+ * Contains list of validation suppressions
+ * @returns suppression list
+ */
+export function getSuppressionsList(filePath) {
+  if (!fs.existsSync(filePath))
+    throw Error("Suppression file not found");
+
+  const rawData = fs.readFileSync(filePath, "utf-8");
+  const suppressionsList = JSON.parse(rawData);
+
+  return suppressionsList;
+}
+
+/**
+ * Decides whether to suppress a sha1 validation for a specific schema or not
+ * @param result It contains validation results data.
+ * @param suppressionList items need to be suppressed
+ * @returns boolean value
+ */
+export function shouldSuppressSha1Validation(result: IModelValidationResult, suppressionList) {
+  const matches = suppressionList.filter((s) => s.name === result.name && s.version === result.version && (s.released) && (s.sha1Validation));
+  if (matches.length !== 0)
+    return true;
+
+  return false;
+}
+
+/**
  * Log and display results. Define success or failure scenario based upon results
  * @param results Array containing the IModelValidationResult
  * @param baseSchemaRefDir: Path of bis-schemas root directory
  * @param output The directory where output logs will go.
  */
 export function getResults(results: IModelValidationResult[], baseSchemaRefDir: string, output: string) {
+  const suppressionList = getSuppressionsList(path.resolve(__dirname, "./suppression.json"));
   const reporter = new Reporter();
-  reporter.logAllValidationsResults(results, baseSchemaRefDir, output);
-  reporter.displayAllValidationsResults(results, baseSchemaRefDir);
+  reporter.logAllValidationsResults(results, baseSchemaRefDir, output, suppressionList);
+  reporter.displayAllValidationsResults(results, baseSchemaRefDir, suppressionList);
   if (reporter.diffChanged === 0 && reporter.diffErrors === 0 && reporter.validFailed === 0 &&
     reporter.checksumFailed === 0 && reporter.approvalFailed === 0) {
     console.log("All validations passed successfully.");

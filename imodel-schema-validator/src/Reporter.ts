@@ -7,7 +7,7 @@ import * as fs from "fs";
 import * as path from "path";
 import * as chalk from "chalk";
 import { LaunchCodesProvider } from "./LaunchCodesProvider";
-import { IModelValidationResult, iModelValidationResultTypes } from "./iModelSchemaValidator";
+import { IModelValidationResult, iModelValidationResultTypes, shouldSuppressSha1Validation } from "./iModelSchemaValidator";
 
 /**
  * This class reports validation results
@@ -130,7 +130,7 @@ export class Reporter {
    * @param fileDescriptor: It is the file descriptor.
    * @param launchCodes: Json object containing the launchCodes.
    */
-  private logSha1HashComparisonResult(result: IModelValidationResult, fileDescriptor: any, launchCodes: any) {
+  private logSha1HashComparisonResult(result: IModelValidationResult, fileDescriptor: any, launchCodes: any, suppressionsList: any) {
     if (result.sha1Comparison === iModelValidationResultTypes.Skipped) {
       fs.writeSync(fileDescriptor, "   > Schema SHA1 checksum verification             <skipped>\n");
       fs.writeSync(fileDescriptor, "       SHA1 checksum verification is skipped intentionally for dynamic schemas\n");
@@ -144,10 +144,15 @@ export class Reporter {
         if ((result.comparer === iModelValidationResultTypes.Passed && releasedSchemaChecksumResult.result) ||
           (result.releasedSchemaIModelContextSha1 && result.sha1 === result.releasedSchemaIModelContextSha1)) {
           fs.writeSync(fileDescriptor, "   > Schema SHA1 checksum verification             <passed with exception>\n");
-          fs.writeSync(fileDescriptor, "       The SHA1 checksum does not match the one in the wiki because of updates to schema references\n");
+          fs.writeSync(fileDescriptor, "       The SHA1 checksum does not match the one in the SchemaInventory.json because of updates to schema references\n");
           fs.writeSync(fileDescriptor, `       Released schema SHA1: ${result.releasedSchemaSha1}\n`);
           fs.writeSync(fileDescriptor, "       The released schema was loaded into the context of the iModel's schemas and checksums matched.\n");
           this._checksumResult = releasedSchemaChecksumResult;
+        } else if (shouldSuppressSha1Validation(result, suppressionsList)) {
+          fs.writeSync(fileDescriptor, "   > Schema SHA1 checksum verification             <suppressed>\n");
+          fs.writeSync(fileDescriptor, "       The SHA1 checksum does not match the one in the SchemaInventory.json\n");
+          fs.writeSync(fileDescriptor, `       Released schema SHA1: ${result.releasedSchemaSha1}\n`);
+          fs.writeSync(fileDescriptor, "       This validation was suppressed because corresponding entry was found in suppression.json .\n");
         } else {
           fs.writeSync(fileDescriptor, "   > Schema SHA1 checksum verification             <failed>\n");
           this.checksumFailed++;
@@ -250,7 +255,7 @@ export class Reporter {
    * @param result: It contains results data.
    * @param launchCodes: Json object containing the launchCodes.
    */
-  private displaySha1HashComparisonResult(result: IModelValidationResult, launchCodes: any) {
+  private displaySha1HashComparisonResult(result: IModelValidationResult, launchCodes: any, suppressionsList: any) {
     // skip checking against launch code, if the schema is dynamic schema
     if (result.sha1Comparison === iModelValidationResultTypes.Skipped) {
       console.log("   > Schema SHA1 checksum verification             ", chalk.default.yellow("<skipped>"));
@@ -273,6 +278,11 @@ export class Reporter {
           console.log("       Released schema SHA1: %s ", result.releasedSchemaSha1);
           console.log("       The released schema was loaded into the context of the iModel's schemas and checksums matched.");
           this._checksumResult = releasedSchemaChecksumResult;
+        } else if (shouldSuppressSha1Validation(result, suppressionsList)) {
+          console.log("   > Schema SHA1 checksum verification             ", chalk.default.yellow("<suppressed>"));
+          console.log("       The SHA1 checksum does not match the one in the SchemaInventory.json");
+          console.log(`       Released schema SHA1: ${result.releasedSchemaSha1}`);
+          console.log("       This validation was suppressed because corresponding entry was found in suppression.json");
         } else {
           console.log("   > Schema SHA1 checksum verification             ", chalk.default.red("<failed>"));
         }
@@ -312,7 +322,7 @@ export class Reporter {
    * @param baseSchemaRefDir: It is the root of bis-schemas directory.
    * @param outputDir: Path of output directory.
    */
-  public logAllValidationsResults(results: IModelValidationResult[], baseSchemaRefDir: string, outputDir: string) {
+  public logAllValidationsResults(results: IModelValidationResult[], baseSchemaRefDir: string, outputDir: string, suppressionList: any) {
     const launchCodes = this._launchCodesProvider.getSchemaInventory(baseSchemaRefDir);
     outputDir = this.allValidationLogsDir(outputDir);
     const filePath = path.join(outputDir, "AllValidationsResults.logs");
@@ -322,7 +332,7 @@ export class Reporter {
       fs.writeSync(fd, `\n> ${item.name}.${item.version} SHA1(${item.sha1})\n`);
       this.logSchemaValidatorResult(item, fd);
       this.logSchemaComparerResult(item, fd);
-      this.logSha1HashComparisonResult(item, fd, launchCodes);
+      this.logSha1HashComparisonResult(item, fd, launchCodes, suppressionList);
       this.logApprovalValidationResult(item, fd, launchCodes);
     }
     fs.writeSync(fd, "\n\n------------------ SUMMARY -----------------\n");
@@ -346,14 +356,14 @@ export class Reporter {
    * @param baseSchemaRefDir: It is the root of bis-schemas directory.
    * @param outputDir: Path of output directory.
    */
-  public displayAllValidationsResults(results: IModelValidationResult[], baseSchemaRefDir: string) {
+  public displayAllValidationsResults(results: IModelValidationResult[], baseSchemaRefDir: string, suppressionList: any) {
     const launchCodes = this._launchCodesProvider.getSchemaInventory(baseSchemaRefDir);
     console.log("\niModel schemas:");
     for (const item of results) {
       console.log("\n> %s.%s SHA1(%s)", item.name, item.version, item.sha1);
       this.displaySchemaValidatorResult(item);
       this.displaySchemaComparerResult(item);
-      this.displaySha1HashComparisonResult(item, launchCodes);
+      this.displaySha1HashComparisonResult(item, launchCodes, suppressionList);
       this.displayApprovalValidationResult(item, launchCodes);
     }
     console.log("\n\n------------------ SUMMARY -----------------");

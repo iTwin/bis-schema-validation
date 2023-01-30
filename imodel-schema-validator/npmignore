@@ -3,6 +3,7 @@
 !bin/**/*.js
 !lib/**/*.d.ts
 !lib/**/*.js
+!lib/**/*.json
 lib/test
 !public/**
 !package.json

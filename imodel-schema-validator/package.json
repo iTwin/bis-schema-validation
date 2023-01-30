@@ -23,7 +23,7 @@
     "tests:ValidateWIPBisSchemas": "betools test --grep \"Import WIP version of all schemas from bis-schemas repository into an iModel and perform BIS-rules validation.\" --timeout=999999999",
     "cover": "nyc npm -s test",
     "clean": "rimraf lib",
-    "copy:assets": "cpx ./src/index.js ./lib",
+    "copy:assets": "cpx ./src/index.js ./lib && cpx ./suppression.json ./lib",
     "copy:test-assets": "cpx \"./src/test/assets/**/*\" ./lib/test/assets"
   },
   "dependencies": {
