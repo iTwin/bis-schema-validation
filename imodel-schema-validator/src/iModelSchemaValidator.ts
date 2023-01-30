@@ -306,8 +306,9 @@ export function getSuppressionsList(filePath) {
  * @param suppressionList items need to be suppressed
  * @returns boolean value
  */
-export function shouldSuppressSha1Validation(result: IModelValidationResult, suppressionList) {
-  const matches = suppressionList.filter((s) => s.name === result.name && s.version === result.version && (s.released) && (s.sha1Validation));
+export function shouldSuppressSha1Validation(result: IModelValidationResult, suppressionList: any) {
+  const list = Object.values(suppressionList);
+  const matches = list.filter((s: any) => s.name === result.name && s.version === result.version && (s.released) && (s.sha1Validation));
   if (matches.length !== 0)
     return true;
 
