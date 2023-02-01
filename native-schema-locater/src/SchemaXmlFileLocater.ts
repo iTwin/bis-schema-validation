@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import * as path from "path";
-import { DOMParser } from "xmldom";
+import { DOMParser } from "@xmldom/xmldom";
 import { ECSchemaXmlContext } from "@itwin/core-backend";
 import { FileSchemaKey, SchemaFileLocater } from "@itwin/ecschema-locaters";
 import {

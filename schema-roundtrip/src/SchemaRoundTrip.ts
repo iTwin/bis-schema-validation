@@ -5,7 +5,7 @@
 
 import * as fs from "fs-extra";
 import * as path from "path";
-import { DOMParser, XMLSerializer } from "xmldom";
+import { DOMParser, XMLSerializer } from "@xmldom/xmldom";
 import { SchemaXmlFileLocater } from "@itwin/ecschema-locaters";
 import { ComparisonResultType, IComparisonResult, SchemaComparison } from "@bentley/schema-comparer";
 import { ECVersion, Schema, SchemaContext, SchemaKey, SchemaMatchType } from "@itwin/ecschema-metadata";

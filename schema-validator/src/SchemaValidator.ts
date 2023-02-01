@@ -5,7 +5,7 @@
 
 import * as fs from "fs-extra";
 import * as path from "path";
-import { DOMParser } from "xmldom";
+import { DOMParser } from "@xmldom/xmldom";
 
 import { ISchemaPartVisitor, Schema, SchemaContext, SchemaWalker } from "@itwin/ecschema-metadata";
 import { createSchemaDiagnosticClass, ECRuleSet, IDiagnosticReporter, IRuleSet, SchemaDiagnostic, SchemaValidationVisitor } from "@itwin/ecschema-editing";

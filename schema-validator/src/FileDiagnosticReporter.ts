@@ -69,7 +69,8 @@ export class FileDiagnosticReporter extends ValidationDiagnosticReporter {
       return;
 
     this._stream.write(text + "\r\n", (err) => {
-      if (err) throw err;
+      if (err)
+        throw err;
     });
   }
 }

@@ -8,7 +8,7 @@ import * as sinon from "sinon";
 import * as path from "path";
 import * as utils from "./utilities/utils";
 import * as chaiAsPromised from "chai-as-promised";
-import { XMLSerializer } from "xmldom";
+import { XMLSerializer } from "@xmldom/xmldom";
 import { RoundTripOptions, RoundTripResultType, SchemaRoundTrip } from "../SchemaRoundTrip";
 import { Schema } from "@itwin/ecschema-metadata";
 import { ComparisonResultType, SchemaComparison } from "@bentley/schema-comparer";

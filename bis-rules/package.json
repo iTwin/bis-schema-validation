@@ -28,9 +28,9 @@
     "url": "http://www.bentley.com"
   },
   "devDependencies": {
-    "@itwin/build-tools": "3.3.0-dev.41",
-    "@itwin/eslint-plugin": "3.3.0-dev.41",
-    "@itwin/ecschema-metadata": "3.3.0-dev.41",
+    "@itwin/build-tools": "3.6.0-dev.65",
+    "@itwin/eslint-plugin": "3.6.0-dev.65",
+    "@itwin/ecschema-metadata": "3.6.0-dev.65",
     "@types/chai": "^4.1.7",
     "@types/mocha": "^8.2.2",
     "@types/rimraf": "^2.0.2",
@@ -38,23 +38,22 @@
     "@types/xml2js": "^0.4.3",
     "ts-node": "^7.0.1",
     "chai": "^4.2.0",
-    "mocha": "^8.3.2",
+    "mocha": "^10.0.0",
     "nyc": "^15.1.0",
     "rimraf": "^2.6.2",
     "sinon": "^7.1.1",
     "source-map-support": "^0.5.9",
-    "tsconfig-paths": "^3.3.2",
     "typescript": "~4.3.0",
     "eslint": "^7.11.0"
   },
   "peerDependencies": {
-    "@itwin/ecschema-metadata": "3.3.0-dev.41",
-    "@itwin/ecschema-editing": "3.3.0-dev.41"
+    "@itwin/ecschema-metadata": "3.6.0-dev.65",
+    "@itwin/ecschema-editing": "3.6.0-dev.65"
   },
   "dependencies": {
-    "@itwin/core-bentley": "3.3.0-dev.41",
-    "@itwin/core-backend": "3.3.0-dev.41",
-    "@itwin/core-quantity": "3.3.0-dev.41"
+    "@itwin/core-bentley": "3.6.0-dev.65",
+    "@itwin/core-backend": "3.6.0-dev.65",
+    "@itwin/core-quantity": "3.6.0-dev.65"
   },
   "nyc": {
     "extends": "./node_modules/@itwin/build-tools/.nycrc",

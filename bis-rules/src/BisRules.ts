@@ -590,7 +590,8 @@ export async function* elementMultiAspectMustHaveCorrespondingRelationship(entit
     throw new EC.ECObjectsError(EC.ECObjectsStatus.SchemaContextUndefined, `Schema context is undefined for schema ${entity.schema.fullName}.`);
 
   const attributes = entity.schema.customAttributes;
-  if (attributes !== undefined && attributes.has("CoreCustomAttributes.DynamicSchema")) return;
+  if (attributes !== undefined && attributes.has("CoreCustomAttributes.DynamicSchema"))
+    return;
 
   if (entity.modifier === ECClassModifier.Abstract)
     return;
@@ -629,7 +630,9 @@ export async function* elementUniqueAspectMustHaveCorrespondingRelationship(enti
     return;
 
   const attributes = entity.schema.customAttributes;
-  if (attributes !== undefined && attributes.has("CoreCustomAttributes.DynamicSchema")) return;
+
+  if (attributes !== undefined && attributes.has("CoreCustomAttributes.DynamicSchema"))
+    return;
 
   if (!await entity.is(elementUniqueAspectName, bisCoreName))
     return;
