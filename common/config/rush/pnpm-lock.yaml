@@ -34,7 +34,7 @@ specifiers:
   chai-as-promised: ^7
   chalk: ^2.4.1
   commander: ^2.19.0
-  cpx: ^1.5.0
+  cpx2: ^3.0.0
   eslint: ^7.11.0
   fs-extra: ^7.0.1
   httpntlm: ~1
@@ -82,7 +82,7 @@ dependencies:
   chai-as-promised: 7.1.1_chai@4.3.6
   chalk: 2.4.2
   commander: 2.20.3
-  cpx: 1.5.0
+  cpx2: 3.0.2
   eslint: 7.32.0
   fs-extra: 7.0.1
   httpntlm: 1.7.7
@@ -5544,7 +5544,7 @@ packages:
     dev: false
 
   /subarg/1.0.0:
-    resolution: {integrity: sha1-9izxdYHplrSPyWVpn1TAauJouNI=}
+    resolution: {integrity: sha512-RIrIdRY0X1xojthNcVtgT9sjpOGagEUKpZdgBUi054OEPFo282yg+zE+t1Rj3+RqKq2xStL7uUHhY+AjbC4BXg==}
     dependencies:
       minimist: 1.2.6
     dev: false
@@ -6238,7 +6238,7 @@ packages:
     dev: false
 
   file:projects/imodel-schema-validator.tgz:
-    resolution: {integrity: sha512-0Me2IPbKQNQ9M6pl9ZnzZPsGhQSCHpde7FMBcHkL+JjgihVKNTPcfWe55A0RSeDTJoM6vizC5DJJpi7+OppWxg==, tarball: file:projects/imodel-schema-validator.tgz}
+    resolution: {integrity: sha512-vvWjV66jrYEtTeuzPUz8JaZtB3cjpgvvmzoJWBfKkFaXEVxmgWH14NkHpmn37SMlQi00DPuzJJFVVkxEwjbNvQ==, tarball: file:projects/imodel-schema-validator.tgz}
     name: '@rush-temp/imodel-schema-validator'
     version: 0.0.0
     dependencies:
@@ -6263,6 +6263,7 @@ packages:
       chalk: 2.4.2
       commander: 2.20.3
       cpx: 1.5.0
+      cpx2: 3.0.2
       eslint: 7.32.0
       httpntlm: 1.7.7
       js-sha1: 0.6.0
@@ -6282,7 +6283,7 @@ packages:
     dev: false
 
   file:projects/native-schema-locater.tgz:
-    resolution: {integrity: sha512-WmHb5EnKJ8AA1T8GqWX7EonTLyeDewBp2uNYJksZ+iEjkLXOMIbQJ8qbmyLWhjd5gHpAz9Sa+Sf2mLs1D/USgQ==, tarball: file:projects/native-schema-locater.tgz}
+    resolution: {integrity: sha512-lkDw+L9zW/lpnYkIgtkLvPXAZss/eBvIn2OPFNKW0HGt61on8C6qZzTgeJrTh4nxcDjJhwro7XAYWbXc8cMogg==, tarball: file:projects/native-schema-locater.tgz}
     name: '@rush-temp/native-schema-locater'
     version: 0.0.0
     dependencies:
@@ -6311,6 +6312,7 @@ packages:
       chalk: 2.4.2
       commander: 2.20.3
       cpx: 1.5.0
+      cpx2: 3.0.2
       eslint: 7.32.0
       fs-extra: 7.0.1
       mocha: 10.0.0
@@ -6331,7 +6333,7 @@ packages:
     dev: false
 
   file:projects/schema-comparer.tgz:
-    resolution: {integrity: sha512-aa6OdCQxeY5GQHf+6Y43mJP2T7NzClkjtRC7SlHwDqHtXdzECuNvjYTqDcPx4fzJjgx9X8FH5nB1MPXbF4M4hA==, tarball: file:projects/schema-comparer.tgz}
+    resolution: {integrity: sha512-Q2vZP/c5whvJp5txW8JkORcIyY0K6Y5XPgdjfXqRPRZnbU/mjNnXJFwnbARmoiTJoom3K32OU55fbZt3wqQPLQ==, tarball: file:projects/schema-comparer.tgz}
     name: '@rush-temp/schema-comparer'
     version: 0.0.0
     dependencies:
@@ -6363,6 +6365,7 @@ packages:
       chalk: 2.4.2
       commander: 2.20.3
       cpx: 1.5.0
+      cpx2: 3.0.2
       eslint: 7.32.0
       fs-extra: 7.0.1
       mocha: 10.0.0
@@ -6383,7 +6386,7 @@ packages:
     dev: false
 
   file:projects/schema-roundtrip.tgz:
-    resolution: {integrity: sha512-wt2KSYDSQOgGqfxMjGlIFJCDZLaYEwwixF2PUw2VgyacgTOYAGzoh/gAvGK49Aw9O5npvba7OC9xHKF89Gk6/g==, tarball: file:projects/schema-roundtrip.tgz}
+    resolution: {integrity: sha512-EaP546C/UpVdn+0n1NHgLx7n31AJkJCGtXplIskX5CmwoJns9/1x66Wii4wb+bniFZIzxWwL5i61aT6QpxF2Mg==, tarball: file:projects/schema-roundtrip.tgz}
     name: '@rush-temp/schema-roundtrip'
     version: 0.0.0
     dependencies:
@@ -6414,6 +6417,7 @@ packages:
       chalk: 2.4.2
       commander: 2.20.3
       cpx: 1.5.0
+      cpx2: 3.0.2
       eslint: 7.32.0
       fs-extra: 7.0.1
       mocha: 10.0.0
@@ -6433,7 +6437,7 @@ packages:
     dev: false
 
   file:projects/schema-validator.tgz:
-    resolution: {integrity: sha512-JXq6OsJEQ6XVbjcHHrSIvuZDcvZrd6lZnNyj1tI5spZlwM/Dk5bmQSzTNBt3hNMWVPtuKzu1GQEUd/I8vWzp4Q==, tarball: file:projects/schema-validator.tgz}
+    resolution: {integrity: sha512-GkYF1GRT6WEGXfQ9/lXYLS/c9PGjQHsPHwAJLZcrCNeu7BupxG4QG06STseIPtEH4rcyQRj0emPZIStCF3OdcA==, tarball: file:projects/schema-validator.tgz}
     name: '@rush-temp/schema-validator'
     version: 0.0.0
     dependencies:
@@ -6464,6 +6468,7 @@ packages:
       chalk: 2.4.2
       commander: 2.20.3
       cpx: 1.5.0
+      cpx2: 3.0.2
       eslint: 7.32.0
       fs-extra: 7.0.1
       mocha: 10.0.0
