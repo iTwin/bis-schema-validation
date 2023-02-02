@@ -89,7 +89,8 @@ async function applyValidations(iModelSchemaDir: string, iModelSchemaFile: strin
   // @bentley/schema-validator is auto pushing the input schema path to reference array.
   // Removing this path to fix the bug in finding releasedSchemaFile otherwise it finds the iModel schema path
   const index = releasedSchemaDirectories.indexOf(iModelSchemaDir);
-  if (index !== -1) { releasedSchemaDirectories.splice(index, 1); }
+  if (index !== -1)
+    releasedSchemaDirectories.splice(index, 1);
 
   // find out if a schema is dynamic or not
   if (isDynamicSchema(iModelSchemaPath) && (!checkReleaseDynamicSchema)) {
@@ -128,7 +129,8 @@ async function applyValidations(iModelSchemaDir: string, iModelSchemaFile: strin
       // @bentley/schema-comparer is auto pushing the input schema path to reference array.
       // Removing this path to fix the bug in finding releasedSchemaFile otherwise it finds the iModel schema path
       const iModelSchemaDirIndex = releasedSchemaDirectories.indexOf(iModelSchemaDir);
-      if (iModelSchemaDirIndex !== -1) { releasedSchemaDirectories.splice(iModelSchemaDirIndex, 1); }
+      if (iModelSchemaDirIndex !== -1)
+        releasedSchemaDirectories.splice(iModelSchemaDirIndex, 1);
 
       if (validationResult.comparer === iModelValidationResultTypes.Passed || validationResult.comparer === iModelValidationResultTypes.ReferenceDifferenceWarning)
         validationResult.releasedSchemaIModelContextSha1 = IModelHost.computeSchemaChecksum({ schemaXmlPath: releasedSchemaPath, referencePaths: [iModelSchemaDir] });

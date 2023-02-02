@@ -185,7 +185,9 @@ export function fixSchemaValidatorIssue(exportDir: string, releasedFolders: stri
   // @bentley/schema-validator is auto pushing the input schema path to reference array.
   // Removing this path to fix the bug in finding releasedSchemaFile otherwise it finds the iModel schema path
   const index = releasedFolders.indexOf(exportDir);
-  if (index !== -1) { releasedFolders.splice(index, 1); }
+  if (index !== -1)
+    releasedFolders.splice(index, 1);
+
   return releasedFolders;
 }
 
