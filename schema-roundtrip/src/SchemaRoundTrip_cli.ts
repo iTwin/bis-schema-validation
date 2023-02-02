@@ -21,7 +21,8 @@ program.option("-c, --compare [optional flag]", "Indicates if the resultant seri
 
 program.parse(process.argv);
 
-if (process.argv.length === 0) program.help();
+if (process.argv.length === 0)
+  program.help();
 
 if (!program.input || !program.output) {
   // tslint:disable-next-line:no-console

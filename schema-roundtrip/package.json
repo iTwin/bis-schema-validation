@@ -33,46 +33,44 @@
     "url": "http://www.bentley.com"
   },
   "devDependencies": {
-    "@itwin/eslint-plugin": "3.3.0-dev.41",
-    "@itwin/build-tools": "3.3.0-dev.41",
+    "@itwin/eslint-plugin": "3.6.0-dev.65",
+    "@itwin/build-tools": "3.6.0-dev.65",
     "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "^7",
     "@types/fs-extra": "^5.0.4",
     "@types/mocha": "^8.2.2",
-    "@types/node": "14.14.31",
+    "@types/node": "18.11.5",
     "@types/rimraf": "^2.0.2",
     "@types/sinon": "^7.0.5",
     "@types/xml2js": "^0.4.3",
     "chai": "^4.2.0",
     "chai-as-promised": "^7",
-    "cpx": "^1.5.0",
-    "mocha": "^8.3.2",
+    "cpx2": "^3.0.0",
+    "mocha": "^10.0.0",
     "nyc": "^15.1.0",
-    "rimraf": "^2.6.2",
+    "rimraf": "^3.0.2",
     "sinon": "^7.1.1",
-    "tsconfig-paths": "^3.3.2",
     "typescript": "~4.3.0",
     "eslint": "^7.11.0"
   },
   "peerDependencies": {
-    "@itwin/ecschema-metadata": "3.3.0-dev.41",
-    "@itwin/ecschema-locaters": "3.3.0-dev.41"
+    "@itwin/ecschema-metadata": "3.6.0-dev.65",
+    "@itwin/ecschema-locaters": "3.6.0-dev.65"
   },
   "dependencies": {
-    "@itwin/core-bentley": "3.3.0-dev.41",
-    "@itwin/core-geometry": "3.3.0-dev.41",
-    "@itwin/core-backend": "3.3.0-dev.41",
-    "@itwin/core-quantity": "3.3.0-dev.41",
-    "@itwin/core-common": "3.3.0-dev.41",
-    "@itwin/core-i18n": "3.3.0-dev.41",
+    "@itwin/core-bentley": "3.6.0-dev.65",
+    "@itwin/core-geometry": "3.6.0-dev.65",
+    "@itwin/core-backend": "3.6.0-dev.65",
+    "@itwin/core-quantity": "3.6.0-dev.65",
+    "@itwin/core-common": "3.6.0-dev.65",
+    "@itwin/core-i18n": "3.6.0-dev.65",
     "@itwin/imodels-access-backend": "1.0.1",
     "@itwin/imodels-client-authoring": "1.0.1",
     "@bentley/schema-comparer": "0.2.153",
-    "@types/xmldom": "^0.1.29",
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
     "fs-extra": "^7.0.1",
-    "xmldom": "^0.1.27"
+    "@xmldom/xmldom": "~0.8.5"
   },
   "eslintConfig": {
     "plugins": [

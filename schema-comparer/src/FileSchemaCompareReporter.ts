@@ -67,7 +67,8 @@ export class FileSchemaCompareReporter extends SchemaCompareReporter {
       return;
 
     this._stream.write(text + "\r\n", (err) => {
-      if (err) throw err;
+      if (err)
+        throw err;
     });
   }
 }

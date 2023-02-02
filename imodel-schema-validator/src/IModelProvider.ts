@@ -60,7 +60,8 @@ export class IModelProvider {
    */
   public static async getTokenFromSigninTool(username: string, secret: string): Promise<AccessToken> {
     let postfix = "";
-    if (this._regionCode === 0) { postfix = "-prod"; }
+    if (this._regionCode === 0)
+      postfix = "-prod";
 
     const oidcConfig = {
       clientId: "imodel-schema-validator-spa" + postfix,
