@@ -8,8 +8,13 @@ import { IModelProvider } from "../IModelProvider";
 import * as path from "path";
 import * as rimraf from "rimraf";
 import { IModelHost } from "@itwin/core-backend";
+import { verifyIModelSchema, getResults } from "../iModelSchemaValidator";
+import { SchemaXmlFileLocater, StubSchemaXmlFileLocater } from "@itwin/ecschema-locaters";
+import { DOMParser, XMLSerializer } from "@xmldom/xmldom";
+import { SchemaContext, SchemaKey, SchemaMatchType, Schema } from "@itwin/ecschema-metadata";
+import * as fs1 from "fs-extra";
 
-describe("IModelProvider Tests", async () => {
+describe.only("IModelProvider Tests", async () => {
   const oidcUserName: any = process.env.oidcUserName;
   const oidcPassword: any = process.env.oidcPassword;
   const tempDir: any = process.env.TMP;
@@ -20,9 +25,9 @@ describe("IModelProvider Tests", async () => {
   const projectIdProd: any = process.env.ProjectId_PROD;
 
   beforeEach(async () => {
-    if (fs.existsSync(briefcaseDir)) {
-      rimraf.sync(briefcaseDir);
-    }
+    // if (fs.existsSync(briefcaseDir)) {
+    //   rimraf.sync(briefcaseDir);
+    // }
   });
 
   afterEach(async () => {
@@ -94,5 +99,61 @@ describe("IModelProvider Tests", async () => {
     const iModelId: any = await IModelProvider.getIModelId(token, projectIdProd, "test");
 
     expect(iModelId, "undefined");
+  });
+
+  async function writeSchemaXmlFile(schema: Schema, outputPath: string) {
+    let xmlDoc = new DOMParser().parseFromString(`<?xml version="1.0" encoding="UTF-8"?>`, "application/xml");
+    const baseFile = getSchemaPath(schema, outputPath);
+
+    xmlDoc = await schema.toXml(xmlDoc);
+    const serializer = new XMLSerializer();
+    const xml = serializer.serializeToString(xmlDoc);
+
+    try {
+      await fs1.writeFile(baseFile, xml);
+    } catch (err: any) {
+      const msg = `An error occurred writing to file '${baseFile}': ${err.message}`;
+      throw new Error(msg);
+    }
+  }
+
+  function getSchemaPath(schema: Schema, outputPath: string): string {
+    const realDir = path.normalize(outputPath);
+    const test = fs1.pathExistsSync(realDir);
+    if (!test) {
+      const msg = `The output directory '${realDir}' does not exist.`;
+      throw new Error(msg);
+    }
+
+    return path.resolve(realDir, `${schema.name}.ecschema.xml`);
+  }
+
+  it.only("run", async () => {
+    const iModelSchemaDir = "D:\\SignoffTool\\test\\schemas";
+    const validationResult = await verifyIModelSchema(iModelSchemaDir, "Functional.01.00.04.ecschema.xml", false, "D:\\SignoffTool\\bis-schemas", "D:\\SignoffTool\\out");
+    getResults([validationResult], "D:\\SignoffTool\\bis-schemas", "D:\\SignoffTool\\out");
+
+    // const doc = new DOMParser().parseFromString(`<?xml version="1.0" encoding="UTF-8"?>`);
+    // const locater = new StubSchemaXmlFileLocater();
+    // locater.addSchemaSearchPaths([iModelSchemaDir]);
+    // const loadedSchema = locater.loadSchema(iModelSchemaDir + "\\Functional.01.00.04.ecschema.xml");
+    // const schema = loadedSchema.toJSON();
+    // const schema = loadedSchema.toXml(doc);
+
+    // const serializer = new XMLSerializer();
+    // const xml = serializer.serializeToString(doc);
+    //console.log(schema);
+
+
+    // const locater: SchemaXmlFileLocater = new SchemaXmlFileLocater();
+    // locater.addSchemaSearchPaths([iModelSchemaDir]);
+    // const context: SchemaContext = new SchemaContext();
+    // context.addLocater(locater);
+
+
+    // const schemaKey = new SchemaKey("Functional", 1, 0, 4);
+    // //const schema = await locater.getSchema(schemaKey, SchemaMatchType.Exact, context);
+    // const schema = await context.getSchema(schemaKey, SchemaMatchType.Exact);
+    // writeSchemaXmlFile(schema!, "D:\\SignoffTool\\output\\out");
   });
 });

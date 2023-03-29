@@ -44,7 +44,8 @@
     "commander": "^2.19.0",
     "httpntlm": "~1",
     "js-sha1": "^0.6.0",
-    "readdirp": "^3.0.0"
+    "readdirp": "^3.0.0",
+    "@xmldom/xmldom": "~0.8.5"
   },
   "devDependencies": {
     "@itwin/eslint-plugin": "3.6.0-dev.65",
@@ -58,7 +59,9 @@
     "chai": "^4.2.0",
     "mocha": "^10.0.0",
     "nyc": "^15.1.0",
-    "eslint": "^7.11.0"
+    "eslint": "^7.11.0",
+    "@types/fs-extra": "^5.0.4",
+    "fs-extra": "^7.0.1"
   },
   "eslintConfig": {
     "plugins": [
