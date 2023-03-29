@@ -1,6 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
+  '@bentley/imodeljs-native': 4.0.2
   '@itwin/build-tools': 3.6.0-dev.65
   '@itwin/core-backend': 3.6.0-dev.65
   '@itwin/core-bentley': 3.6.0-dev.65
@@ -49,6 +50,7 @@ specifiers:
   typescript: ~4.3.0
 
 dependencies:
+  '@bentley/imodeljs-native': 4.0.2
   '@itwin/build-tools': 3.6.0-dev.65
   '@itwin/core-backend': 3.6.0-dev.65_0550d3e0f14ca6ec98c8da2cbe9792c9
   '@itwin/core-bentley': 3.6.0-dev.65
@@ -506,6 +508,11 @@ packages:
 
   /@bentley/imodeljs-native/3.6.6:
     resolution: {integrity: sha512-4KoIjibO7B+qf04MklBEr4dnJtcryqOsgdFH4Hlg9jkp7nj9lwlbb0+AnW1BeyAvIW2jp768MIDjxOhnB8GROg==}
+    requiresBuild: true
+    dev: false
+
+  /@bentley/imodeljs-native/4.0.2:
+    resolution: {integrity: sha512-NP4LeeynDaBP9KxbxJk9dM4umGRqfY1ZysA6fCIl1HtS/Q7Cl93Mw94SP7A9am5uUmZdCw43Tl0xh6DhJcFlZA==}
     requiresBuild: true
     dev: false
 
@@ -2170,7 +2177,7 @@ packages:
     dev: false
 
   /decamelize/1.2.0:
-    resolution: {integrity: sha1-9lNNFRSCabIDUue+4m9QH5oZEpA=}
+    resolution: {integrity: sha512-z2S+W9X73hAUUki+N+9Za2lBlun89zigOyGrsax+KUQ6wKW4ZoWpEYBkGhQjwAjjDCkWxhY0VKEhk8wzY7F5cA==}
     engines: {node: '>=0.10.0'}
     dev: false
 
@@ -3742,7 +3749,7 @@ packages:
     dev: false
 
   /isexe/2.0.0:
-    resolution: {integrity: sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=}
+    resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
     dev: false
 
   /isobject/2.1.0:
@@ -5265,7 +5272,7 @@ packages:
     dev: false
 
   /set-blocking/2.0.0:
-    resolution: {integrity: sha1-BF+XgtARrppoA93TgrJDkrPYkPc=}
+    resolution: {integrity: sha512-KiKBS8AnWGEyLzofFfmvKwpdPzqiy16LvQfK3yv/fVH7Bj13/wl3JSR1J+rfgRE9q7xUJK4qvgS8raSOeLUehw==}
     dev: false
 
   /set-value/2.0.1:
@@ -5960,7 +5967,7 @@ packages:
     dev: false
 
   /which-module/2.0.0:
-    resolution: {integrity: sha1-2e8H3Od7mQK4o6j6SzHD4/fm6Ho=}
+    resolution: {integrity: sha512-B+enWhmw6cjfVC7kS8Pj9pCrKSc5txArRyaYGe088shv/FGWH+0Rjx/xPgtsWfsUtS27FkP697E4DDhgrgoc0Q==}
     dev: false
 
   /which/2.0.2:
@@ -6235,7 +6242,7 @@ packages:
     dev: false
 
   file:projects/imodel-schema-validator.tgz:
-    resolution: {integrity: sha512-mW+nB7nLYeWH+tK0Q2wr8cdz3/JbLirdis2uuQZfBmXMGX5563g+Ha9I5plLZkKNv7k4lhFIdmMiOYxQWEs5mQ==, tarball: file:projects/imodel-schema-validator.tgz}
+    resolution: {integrity: sha512-/on+Rg7lOxrYBNwf8uzHd+tad6MQkA9RpsI9ZxVhr2LEEMu0PgyhCAKaHcG3KJQs14agS3Fs/Lq2L/pTIdcI1g==, tarball: file:projects/imodel-schema-validator.tgz}
     name: '@rush-temp/imodel-schema-validator'
     version: 0.0.0
     dependencies:
@@ -6280,10 +6287,11 @@ packages:
     dev: false
 
   file:projects/native-schema-locater.tgz:
-    resolution: {integrity: sha512-Kz7S1D61ynsk/+o+spf4nfjGrlm+oCXq7ORLk2wObB7HggEzCef4o6mksuV0dt5IKt1tqsWELO3hewggEfEpCw==, tarball: file:projects/native-schema-locater.tgz}
+    resolution: {integrity: sha512-zNTiB1mpJ9YUTf3AlBjSXsG5fnOPBZYQW3i5VB2Xp5ksCgeRD5MyWf+mbMAXnOYL2cQShmZLFp0ziSN2Ktgksg==, tarball: file:projects/native-schema-locater.tgz}
     name: '@rush-temp/native-schema-locater'
     version: 0.0.0
     dependencies:
+      '@bentley/imodeljs-native': 4.0.2
       '@itwin/build-tools': 3.6.0-dev.65
       '@itwin/core-backend': 3.6.0-dev.65_0550d3e0f14ca6ec98c8da2cbe9792c9
       '@itwin/core-bentley': 3.6.0-dev.65
@@ -6330,7 +6338,7 @@ packages:
     dev: false
 
   file:projects/schema-comparer.tgz:
-    resolution: {integrity: sha512-QWVItLF9lvikp9CQHP6agTtgmOl2Lyn8PGbjIIb7/nz2cMJ3suOhmZo6Y6e8YO8G7F/rPhMd5Dqpix7qWfr9kg==, tarball: file:projects/schema-comparer.tgz}
+    resolution: {integrity: sha512-cJQtQTjwHlANoSFd8XKTYuBy0s0m0mH2uKIgdCAdTFW7s4AZhI3e5MwY4EhxjcAaThEgvAIIdIroUqmZh55pxQ==, tarball: file:projects/schema-comparer.tgz}
     name: '@rush-temp/schema-comparer'
     version: 0.0.0
     dependencies:
@@ -6383,7 +6391,7 @@ packages:
     dev: false
 
   file:projects/schema-roundtrip.tgz:
-    resolution: {integrity: sha512-70WSJMHFsWODpX5bGuCrI5mr+keEze477XdFutJCNqt/0W437KaZtKXm8+j3nFwvPBV7k0xm41PbSeQMXFpagg==, tarball: file:projects/schema-roundtrip.tgz}
+    resolution: {integrity: sha512-8/DxXXTSyIhWCQ3Cj+qmVEy9ONIdvQf3jfqEp0lStS5PRDXAQ2TpvSTxyJ7xUju1xV1oXgpVeFZoK50y5aFckA==, tarball: file:projects/schema-roundtrip.tgz}
     name: '@rush-temp/schema-roundtrip'
     version: 0.0.0
     dependencies:
@@ -6434,7 +6442,7 @@ packages:
     dev: false
 
   file:projects/schema-validator.tgz:
-    resolution: {integrity: sha512-X2BZOMttTgiHqhX7aHmpvpF0KZ4M9rzVa0cLYgS0cR4y5cQrLVzJJL2mB+8ohY5C9oXpOSRfMHpOMWMVDmQAng==, tarball: file:projects/schema-validator.tgz}
+    resolution: {integrity: sha512-HLLBd5GnS8p6o3FrY4TU+d7ecnWBQAxJHeAgCS3yUY/oB2cfR/zKIoAMNzMBi+A6wp70Zh3DKwZgssPgcICapA==, tarball: file:projects/schema-validator.tgz}
     name: '@rush-temp/schema-validator'
     version: 0.0.0
     dependencies:
