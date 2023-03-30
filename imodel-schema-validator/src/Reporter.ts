@@ -134,11 +134,8 @@ export class Reporter {
       fs.writeSync(fileDescriptor, "       Approvals validation is skipped intentionally for dynamic schemas\n");
       this._approvalSkipped++;
     } else {
-      let approvalResult = this._launchCodesProvider.checkApprovalAndVerification(result.name, this._checksumResult.schemaIndex, this._checksumResult.inventorySchema, launchCodes);
-      if (!approvalResult) {
-        const schemaInfo = this._launchCodesProvider.findSchemaInfo(result.name, result.version, launchCodes);
-        approvalResult = this._launchCodesProvider.checkApprovalAndVerification(result.name, schemaInfo.schemaIndex, schemaInfo.inventorySchema, launchCodes);
-      }
+      const schemaInfo = this._launchCodesProvider.findSchemaInfo(result.name, result.version, launchCodes);
+      const approvalResult = this._launchCodesProvider.checkApprovalAndVerification(result.name, schemaInfo.schemaIndex, schemaInfo.inventorySchema, launchCodes);
 
       if (approvalResult) {
         fs.writeSync(fileDescriptor, "   > Released schema is approved and verified      <passed>\n");
@@ -222,12 +219,8 @@ export class Reporter {
       console.log("   > Released schema is approved and verified      ", chalk.default.yellow("<skipped>"));
       console.log("       Approvals validation is skipped intentionally for dynamic schemas");
     } else {
-      let approvalResult = this._launchCodesProvider.checkApprovalAndVerification(result.name, this._checksumResult.schemaIndex, this._checksumResult.inventorySchema, launchCodes);
-      if (!approvalResult) {
-        const schemaInfo = this._launchCodesProvider.findSchemaInfo(result.name, result.version, launchCodes);
-        approvalResult = this._launchCodesProvider.checkApprovalAndVerification(result.name, schemaInfo.schemaIndex, schemaInfo.inventorySchema, launchCodes);
-
-      }
+      const schemaInfo = this._launchCodesProvider.findSchemaInfo(result.name, result.version, launchCodes);
+      const approvalResult = this._launchCodesProvider.checkApprovalAndVerification(result.name, schemaInfo.schemaIndex, schemaInfo.inventorySchema, launchCodes);
 
       if (approvalResult) {
         console.log("   > Released schema is approved and verified      ", chalk.default.green("<passed>"));
