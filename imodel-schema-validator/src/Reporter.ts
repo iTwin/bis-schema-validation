@@ -243,7 +243,7 @@ export class Reporter {
     const fd = fs.openSync(filePath, "a");
     fs.writeSync(fd, "iModel schemas:");
     for (const item of results) {
-      fs.writeSync(fd, `\n> ${item.name}.${item.version})\n`);
+      fs.writeSync(fd, `\n> ${item.name}.${item.version}\n`);
       this.logSchemaValidatorResult(item, fd);
       this.logSchemaComparerResult(item, fd);
       this.logApprovalValidationResult(item, fd, launchCodes);
@@ -271,7 +271,7 @@ export class Reporter {
     const launchCodes = this._launchCodesProvider.getSchemaInventory(baseSchemaRefDir);
     console.log("\niModel schemas:");
     for (const item of results) {
-      console.log("\n> %s.%s SHA1(%s)", item.name, item.version);
+      console.log("\n> %s.%s", item.name, item.version);
       this.displaySchemaValidatorResult(item);
       this.displaySchemaComparerResult(item);
       this.displayApprovalValidationResult(item, launchCodes);
