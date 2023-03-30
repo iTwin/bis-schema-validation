@@ -23,9 +23,9 @@ stages:
         clean: all
       - checkout: bis-schemas
       - task: NodeTool@0
-        displayName: 'Install Node 14.17.0'
+        displayName: 'Install Node 18.x'
         inputs:
-          versionSpec: 14.17.0
+          versionSpec: 18.x
           checkLatest: true
 
       - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js check
