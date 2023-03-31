@@ -5,9 +5,8 @@
 
 import * as path from "path";
 import { DOMParser } from "@xmldom/xmldom";
-import { ECSchemaXmlContext } from "@itwin/core-backend";
+import { ECSchemaXmlContext, NativeLoggerCategory } from "@itwin/core-backend";
 import { Logger, LogLevel } from "@itwin/core-bentley";
-import { NativeLoggerCategory } from "@bentley/imodeljs-native";
 import { FileSchemaKey, SchemaFileLocater } from "@itwin/ecschema-locaters";
 import {
   ECObjectsError, ECObjectsStatus, ECVersion, ISchemaLocater, Schema, SchemaContext,
