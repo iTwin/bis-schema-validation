@@ -33,8 +33,8 @@
     "url": "http://www.bentley.com"
   },
   "devDependencies": {
-    "@itwin/eslint-plugin": "3.6.0-dev.65",
-    "@itwin/build-tools": "3.6.0-dev.65",
+    "@itwin/eslint-plugin": "3.6.3",
+    "@itwin/build-tools": "3.6.3",
     "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "^7",
     "@types/fs-extra": "^5.0.4",
@@ -54,16 +54,16 @@
     "eslint": "^7.11.0"
   },
   "peerDependencies": {
-    "@itwin/ecschema-metadata": "3.6.0-dev.65",
-    "@itwin/ecschema-locaters": "3.6.0-dev.65"
+    "@itwin/ecschema-metadata": "3.6.3",
+    "@itwin/ecschema-locaters": "3.6.3"
   },
   "dependencies": {
-    "@itwin/core-bentley": "3.6.0-dev.65",
-    "@itwin/core-geometry": "3.6.0-dev.65",
-    "@itwin/core-backend": "3.6.0-dev.65",
-    "@itwin/core-quantity": "3.6.0-dev.65",
-    "@itwin/core-common": "3.6.0-dev.65",
-    "@itwin/core-i18n": "3.6.0-dev.65",
+    "@itwin/core-bentley": "3.6.3",
+    "@itwin/core-geometry": "3.6.3",
+    "@itwin/core-backend": "3.6.3",
+    "@itwin/core-quantity": "3.6.3",
+    "@itwin/core-common": "3.6.3",
+    "@itwin/core-i18n": "3.6.3",
     "@itwin/imodels-access-backend": "1.0.1",
     "@itwin/imodels-client-authoring": "1.0.1",
     "@bentley/schema-comparer": "0.2.155",

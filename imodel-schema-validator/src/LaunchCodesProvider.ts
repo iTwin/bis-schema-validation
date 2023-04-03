@@ -45,32 +45,6 @@ export class LaunchCodesProvider {
   }
 
   /**
-   * Compares the sha1 hash of schema with the hash value in schema inventory json
-   * @param schemaName: Name of the schema.
-   * @param sha1: Its the Sha1 Hash.
-   * @param launchCodes: Json object containing the launchCodes.
-   */
-  public compareCheckSums(schemaName: string, sha1: string | undefined, launchCodes: any) {
-    let result = false;
-    let schemaIndex: number | undefined;
-    let inventorySchema: string = "";
-
-    // eslint-disable-next-line guard-for-in
-    for (inventorySchema in launchCodes) {
-      for (let index = 0; index < launchCodes[inventorySchema].length; index++) {
-        if (launchCodes[inventorySchema][index].released && launchCodes[inventorySchema][index].name.toLowerCase() === schemaName.toLowerCase()) {
-          if (launchCodes[inventorySchema][index].sha1 === sha1) {
-            result = true;
-            schemaIndex = index;
-            return { result, schemaIndex, inventorySchema };
-          }
-        }
-      }
-    }
-    return { result, schemaIndex, inventorySchema };
-  }
-
-  /**
    * Find schema index and name based upon its version in schema inventory json
    * @param schemaName: Name of the schema.
    * @param version: It is the version of schema in format e.g 1.0.2.

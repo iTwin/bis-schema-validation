@@ -8,7 +8,6 @@ import * as path from "path";
 import * as chalk from "chalk";
 import * as readdirp from "readdirp";
 import { Reporter } from "./Reporter";
-import { IModelHost } from "@itwin/core-backend";
 import { SchemaCompareCodes } from "@itwin/ecschema-editing";
 import { SchemaValidator, ValidationOptions, ValidationResultType } from "@bentley/schema-validator";
 import { CompareOptions, ComparisonResultType, IComparisonResult, SchemaComparison } from "@bentley/schema-comparer";
@@ -32,12 +31,8 @@ export enum iModelValidationResultTypes {
 export interface IModelValidationResult {
   name: string;
   version: string;
-  sha1?: string;
-  releasedSchemaSha1?: string;
-  releasedSchemaIModelContextSha1?: string;
   validator?: iModelValidationResultTypes;
   comparer?: iModelValidationResultTypes;
-  sha1Comparison?: iModelValidationResultTypes;
   approval?: iModelValidationResultTypes;
 }
 
@@ -99,7 +94,6 @@ async function applyValidations(iModelSchemaDir: string, iModelSchemaFile: strin
     Reporter.writeToLogFile(name, version, `Skipping difference audit for ${name}.${version}.
     The schema is a dynamic schema and released versions of dynamic schemas are not saved.\n`, output);
     validationResult.comparer = iModelValidationResultTypes.Skipped;
-    validationResult.sha1Comparison = iModelValidationResultTypes.Skipped;
     validationResult.approval = iModelValidationResultTypes.Skipped;
   } else {
     let releasedSchemaPath = "";
@@ -124,19 +118,14 @@ async function applyValidations(iModelSchemaDir: string, iModelSchemaFile: strin
       }
 
     } else {
-      validationResult.releasedSchemaSha1 = IModelHost.computeSchemaChecksum({ schemaXmlPath: releasedSchemaPath, referencePaths: releasedSchemaDirectories });
       await compareSchema(name, version, iModelSchemaPath, releasedSchemaPath, [iModelSchemaDir], releasedSchemaDirectories, output, validationResult);
       // @bentley/schema-comparer is auto pushing the input schema path to reference array.
       // Removing this path to fix the bug in finding releasedSchemaFile otherwise it finds the iModel schema path
       const iModelSchemaDirIndex = releasedSchemaDirectories.indexOf(iModelSchemaDir);
       if (iModelSchemaDirIndex !== -1)
         releasedSchemaDirectories.splice(iModelSchemaDirIndex, 1);
-
-      if (validationResult.comparer === iModelValidationResultTypes.Passed || validationResult.comparer === iModelValidationResultTypes.ReferenceDifferenceWarning)
-        validationResult.releasedSchemaIModelContextSha1 = IModelHost.computeSchemaChecksum({ schemaXmlPath: releasedSchemaPath, referencePaths: [iModelSchemaDir] });
     }
   }
-  validationResult.sha1 = IModelHost.computeSchemaChecksum({ schemaXmlPath: iModelSchemaPath, referencePaths: [iModelSchemaDir] });
   console.log("END VALIDATION AND DIFFERENCE AUDIT: ", name, version);
   Reporter.writeToLogFile(name, version, `END VALIDATION AND DIFFERENCE AUDIT: ${name}.${version}\n`, output);
   return validationResult;
@@ -289,47 +278,17 @@ async function generateSchemaDirectoryLists(schemaDirectory: any) {
 }
 
 /**
- * Contains list of validation suppressions
- * @returns suppression list
- */
-export function getSuppressionsList(filePath) {
-  if (!fs.existsSync(filePath))
-    throw Error("Suppression file not found");
-
-  const rawData = fs.readFileSync(filePath, "utf-8");
-  const suppressionsList = JSON.parse(rawData);
-
-  return suppressionsList;
-}
-
-/**
- * Decides whether to suppress a sha1 validation for a specific schema or not
- * @param result It contains validation results data.
- * @param suppressionList items need to be suppressed
- * @returns boolean value
- */
-export function shouldSuppressSha1Validation(result: IModelValidationResult, suppressionList: any) {
-  const list = Object.values(suppressionList);
-  const matches = list.filter((s: any) => s.name === result.name && s.version === result.version && (s.released) && (s.sha1Validation));
-  if (matches.length !== 0)
-    return true;
-
-  return false;
-}
-
-/**
  * Log and display results. Define success or failure scenario based upon results
  * @param results Array containing the IModelValidationResult
  * @param baseSchemaRefDir: Path of bis-schemas root directory
  * @param output The directory where output logs will go.
  */
 export function getResults(results: IModelValidationResult[], baseSchemaRefDir: string, output: string) {
-  const suppressionList = getSuppressionsList(path.resolve(__dirname, "./suppression.json"));
   const reporter = new Reporter();
-  reporter.logAllValidationsResults(results, baseSchemaRefDir, output, suppressionList);
-  reporter.displayAllValidationsResults(results, baseSchemaRefDir, suppressionList);
+  reporter.logAllValidationsResults(results, baseSchemaRefDir, output);
+  reporter.displayAllValidationsResults(results, baseSchemaRefDir);
   if (reporter.diffChanged === 0 && reporter.diffErrors === 0 && reporter.validFailed === 0 &&
-    reporter.checksumFailed === 0 && reporter.approvalFailed === 0) {
+    reporter.approvalFailed === 0) {
     console.log("All validations passed successfully.");
   } else {
     throw Error("Failing the tool because a validation has failed.");

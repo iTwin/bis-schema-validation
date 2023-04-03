@@ -7,7 +7,7 @@ import * as fs from "fs";
 import * as path from "path";
 import * as chalk from "chalk";
 import { LaunchCodesProvider } from "./LaunchCodesProvider";
-import { IModelValidationResult, iModelValidationResultTypes, shouldSuppressSha1Validation } from "./iModelSchemaValidator";
+import { IModelValidationResult, iModelValidationResultTypes } from "./iModelSchemaValidator";
 
 /**
  * This class reports validation results
@@ -17,12 +17,10 @@ export class Reporter {
   private _validSkipped = 0;
   private _diffWarnings = 0;
   private _diffSkipped = 0;
-  private _checksumSkipped = 0;
   private _approvalSkipped = 0;
   private _checksumResult;
   private _launchCodesProvider = new LaunchCodesProvider();
   public approvalFailed = 0;
-  public checksumFailed = 0;
   public validFailed = 0;
   public diffChanged = 0;
   public diffErrors = 0;
@@ -125,43 +123,6 @@ export class Reporter {
   }
 
   /**
-   * Log results of Sha1 Hash comparison validation.
-   * @param result: It contains results data.
-   * @param fileDescriptor: It is the file descriptor.
-   * @param launchCodes: Json object containing the launchCodes.
-   */
-  private logSha1HashComparisonResult(result: IModelValidationResult, fileDescriptor: any, launchCodes: any, suppressionsList: any) {
-    if (result.sha1Comparison === iModelValidationResultTypes.Skipped) {
-      fs.writeSync(fileDescriptor, "   > Schema SHA1 checksum verification             <skipped>\n");
-      fs.writeSync(fileDescriptor, "       SHA1 checksum verification is skipped intentionally for dynamic schemas\n");
-      this._checksumSkipped++;
-    } else {
-      this._checksumResult = this._launchCodesProvider.compareCheckSums(result.name, result.sha1, launchCodes);
-      if (this._checksumResult.result) {
-        fs.writeSync(fileDescriptor, "   > Schema SHA1 checksum verification             <passed>\n");
-      } else {
-        const releasedSchemaChecksumResult = this._launchCodesProvider.compareCheckSums(result.name, result.releasedSchemaSha1, launchCodes);
-        if ((result.comparer === iModelValidationResultTypes.Passed && releasedSchemaChecksumResult.result) ||
-          (result.releasedSchemaIModelContextSha1 && result.sha1 === result.releasedSchemaIModelContextSha1)) {
-          fs.writeSync(fileDescriptor, "   > Schema SHA1 checksum verification             <passed with exception>\n");
-          fs.writeSync(fileDescriptor, "       The SHA1 checksum does not match the one in the SchemaInventory.json because of updates to schema references\n");
-          fs.writeSync(fileDescriptor, `       Released schema SHA1: ${result.releasedSchemaSha1}\n`);
-          fs.writeSync(fileDescriptor, "       The released schema was loaded into the context of the iModel's schemas and checksums matched.\n");
-          this._checksumResult = releasedSchemaChecksumResult;
-        } else if (shouldSuppressSha1Validation(result, suppressionsList)) {
-          fs.writeSync(fileDescriptor, "   > Schema SHA1 checksum verification             <suppressed>\n");
-          fs.writeSync(fileDescriptor, "       The SHA1 checksum does not match the one in the SchemaInventory.json\n");
-          fs.writeSync(fileDescriptor, `       Released schema SHA1: ${result.releasedSchemaSha1}\n`);
-          fs.writeSync(fileDescriptor, "       This validation was suppressed because corresponding entry was found in suppression.json .\n");
-        } else {
-          fs.writeSync(fileDescriptor, "   > Schema SHA1 checksum verification             <failed>\n");
-          this.checksumFailed++;
-        }
-      }
-    }
-  }
-
-  /**
    * Log approval validation results.
    * @param result: It contains results data.
    * @param fileDescriptor: It is the file descriptor.
@@ -173,11 +134,8 @@ export class Reporter {
       fs.writeSync(fileDescriptor, "       Approvals validation is skipped intentionally for dynamic schemas\n");
       this._approvalSkipped++;
     } else {
-      let approvalResult = this._launchCodesProvider.checkApprovalAndVerification(result.name, this._checksumResult.schemaIndex, this._checksumResult.inventorySchema, launchCodes);
-      if (!approvalResult) {
-        const schemaInfo = this._launchCodesProvider.findSchemaInfo(result.name, result.version, launchCodes);
-        approvalResult = this._launchCodesProvider.checkApprovalAndVerification(result.name, schemaInfo.schemaIndex, schemaInfo.inventorySchema, launchCodes);
-      }
+      const schemaInfo = this._launchCodesProvider.findSchemaInfo(result.name, result.version, launchCodes);
+      const approvalResult = this._launchCodesProvider.checkApprovalAndVerification(result.name, schemaInfo.schemaIndex, schemaInfo.inventorySchema, launchCodes);
 
       if (approvalResult) {
         fs.writeSync(fileDescriptor, "   > Released schema is approved and verified      <passed>\n");
@@ -251,46 +209,6 @@ export class Reporter {
   }
 
   /**
-   * Display results of Sha1 Hash comparison validation.
-   * @param result: It contains results data.
-   * @param launchCodes: Json object containing the launchCodes.
-   */
-  private displaySha1HashComparisonResult(result: IModelValidationResult, launchCodes: any, suppressionsList: any) {
-    // skip checking against launch code, if the schema is dynamic schema
-    if (result.sha1Comparison === iModelValidationResultTypes.Skipped) {
-      console.log("   > Schema SHA1 checksum verification             ", chalk.default.yellow("<skipped>"));
-      console.log("       SHA1 checksum verification is skipped intentionally for dynamic schemas");
-    } else {
-      this._checksumResult = this._launchCodesProvider.compareCheckSums(result.name, result.sha1, launchCodes);
-      if (this._checksumResult.result) {
-        // This means that there was no difference and the schema did not have to be loaded into the iModel context.
-        console.log("   > Schema SHA1 checksum verification             ", chalk.default.green("<passed>"));
-      } else {
-        const releasedSchemaChecksumResult = this._launchCodesProvider.compareCheckSums(result.name, result.releasedSchemaSha1, launchCodes);
-        if ((result.comparer === iModelValidationResultTypes.Passed && releasedSchemaChecksumResult.result) ||
-          (result.releasedSchemaIModelContextSha1 && result.sha1 === result.releasedSchemaIModelContextSha1)) {
-          // First check determines if loading the released schema into the iModel's context allowed the checksums to match.  This will be the case most of the time.
-          // However, due to the way ECDb roundtrips schemas there are a few cases where the checksum will differ for the same exact schema. The second check comes
-          // at this point to check that the released schema we found has the same checksum as the one in the wiki and there is no difference between that released
-          // schema and the one within the iModel.
-          console.log("   > Schema SHA1 checksum verification             ", chalk.default.green("<passed with exception>"));
-          console.log("       The SHA1 checksum does not match the one in the wiki because of updates to schema references");
-          console.log("       Released schema SHA1: %s ", result.releasedSchemaSha1);
-          console.log("       The released schema was loaded into the context of the iModel's schemas and checksums matched.");
-          this._checksumResult = releasedSchemaChecksumResult;
-        } else if (shouldSuppressSha1Validation(result, suppressionsList)) {
-          console.log("   > Schema SHA1 checksum verification             ", chalk.default.yellow("<suppressed>"));
-          console.log("       The SHA1 checksum does not match the one in the SchemaInventory.json");
-          console.log(`       Released schema SHA1: ${result.releasedSchemaSha1}`);
-          console.log("       This validation was suppressed because corresponding entry was found in suppression.json");
-        } else {
-          console.log("   > Schema SHA1 checksum verification             ", chalk.default.red("<failed>"));
-        }
-      }
-    }
-  }
-
-  /**
    * Display approval validation results.
    * @param result: It contains results data.
    * @param launchCodes: Json object containing the launchCodes.
@@ -301,12 +219,8 @@ export class Reporter {
       console.log("   > Released schema is approved and verified      ", chalk.default.yellow("<skipped>"));
       console.log("       Approvals validation is skipped intentionally for dynamic schemas");
     } else {
-      let approvalResult = this._launchCodesProvider.checkApprovalAndVerification(result.name, this._checksumResult.schemaIndex, this._checksumResult.inventorySchema, launchCodes);
-      if (!approvalResult) {
-        const schemaInfo = this._launchCodesProvider.findSchemaInfo(result.name, result.version, launchCodes);
-        approvalResult = this._launchCodesProvider.checkApprovalAndVerification(result.name, schemaInfo.schemaIndex, schemaInfo.inventorySchema, launchCodes);
-
-      }
+      const schemaInfo = this._launchCodesProvider.findSchemaInfo(result.name, result.version, launchCodes);
+      const approvalResult = this._launchCodesProvider.checkApprovalAndVerification(result.name, schemaInfo.schemaIndex, schemaInfo.inventorySchema, launchCodes);
 
       if (approvalResult) {
         console.log("   > Released schema is approved and verified      ", chalk.default.green("<passed>"));
@@ -322,17 +236,16 @@ export class Reporter {
    * @param baseSchemaRefDir: It is the root of bis-schemas directory.
    * @param outputDir: Path of output directory.
    */
-  public logAllValidationsResults(results: IModelValidationResult[], baseSchemaRefDir: string, outputDir: string, suppressionList: any) {
+  public logAllValidationsResults(results: IModelValidationResult[], baseSchemaRefDir: string, outputDir: string) {
     const launchCodes = this._launchCodesProvider.getSchemaInventory(baseSchemaRefDir);
     outputDir = this.allValidationLogsDir(outputDir);
     const filePath = path.join(outputDir, "AllValidationsResults.logs");
     const fd = fs.openSync(filePath, "a");
     fs.writeSync(fd, "iModel schemas:");
     for (const item of results) {
-      fs.writeSync(fd, `\n> ${item.name}.${item.version} SHA1(${item.sha1})\n`);
+      fs.writeSync(fd, `\n> ${item.name}.${item.version}\n`);
       this.logSchemaValidatorResult(item, fd);
       this.logSchemaComparerResult(item, fd);
-      this.logSha1HashComparisonResult(item, fd, launchCodes, suppressionList);
       this.logApprovalValidationResult(item, fd, launchCodes);
     }
     fs.writeSync(fd, "\n\n------------------ SUMMARY -----------------\n");
@@ -343,8 +256,6 @@ export class Reporter {
     fs.writeSync(fd, `Differences Skipped:               ${this._diffSkipped}\n`);
     fs.writeSync(fd, `Differences Errors:                ${this.diffErrors}\n`);
     fs.writeSync(fd, `Differences Warnings:              ${this._diffWarnings}\n`);
-    fs.writeSync(fd, `Checksums Failed:                  ${this.checksumFailed}\n`);
-    fs.writeSync(fd, `Checksums Skipped:                 ${this._checksumSkipped}\n`);
     fs.writeSync(fd, `Approval and Verification Failed:  ${this.approvalFailed}\n`);
     fs.writeSync(fd, `Approval and Verification Skipped: ${this._approvalSkipped}\n`);
     fs.writeSync(fd, "--------------------------------------------");
@@ -356,14 +267,13 @@ export class Reporter {
    * @param baseSchemaRefDir: It is the root of bis-schemas directory.
    * @param outputDir: Path of output directory.
    */
-  public displayAllValidationsResults(results: IModelValidationResult[], baseSchemaRefDir: string, suppressionList: any) {
+  public displayAllValidationsResults(results: IModelValidationResult[], baseSchemaRefDir: string) {
     const launchCodes = this._launchCodesProvider.getSchemaInventory(baseSchemaRefDir);
     console.log("\niModel schemas:");
     for (const item of results) {
-      console.log("\n> %s.%s SHA1(%s)", item.name, item.version, item.sha1);
+      console.log("\n> %s.%s", item.name, item.version);
       this.displaySchemaValidatorResult(item);
       this.displaySchemaComparerResult(item);
-      this.displaySha1HashComparisonResult(item, launchCodes, suppressionList);
       this.displayApprovalValidationResult(item, launchCodes);
     }
     console.log("\n\n------------------ SUMMARY -----------------");
@@ -374,8 +284,6 @@ export class Reporter {
     console.log("Differences Skipped:               ", this._diffSkipped);
     console.log("Differences Errors:                ", this.diffErrors);
     console.log("Differences Warnings:              ", this._diffWarnings);
-    console.log("Checksums Failed:                  ", this.checksumFailed);
-    console.log("Checksums Skipped:                 ", this._checksumSkipped);
     console.log("Approval and Verification Failed:  ", this.approvalFailed);
     console.log("Approval and Verification Skipped: ", this._approvalSkipped);
     console.log("--------------------------------------------");
