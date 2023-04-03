@@ -14,7 +14,7 @@ specifiers:
   '@itwin/eslint-plugin': 3.7.0
   '@itwin/imodels-access-backend': 1.0.1
   '@itwin/imodels-client-authoring': 1.0.1
-  '@itwin/oidc-signin-tool': 3.7.1
+  '@itwin/oidc-signin-tool': ~3.6.0
   '@rush-temp/bis-rules': file:./projects/bis-rules.tgz
   '@rush-temp/imodel-schema-validator': file:./projects/imodel-schema-validator.tgz
   '@rush-temp/native-schema-locater': file:./projects/native-schema-locater.tgz
@@ -62,7 +62,7 @@ dependencies:
   '@itwin/eslint-plugin': 3.7.0_eslint@7.32.0+typescript@4.3.5
   '@itwin/imodels-access-backend': 1.0.1_d9a1ff4dd18e47d058df2ce2efa0d599
   '@itwin/imodels-client-authoring': 1.0.1
-  '@itwin/oidc-signin-tool': 3.7.1_@itwin+core-bentley@3.7.0
+  '@itwin/oidc-signin-tool': 3.6.1_@itwin+core-bentley@3.7.0
   '@rush-temp/bis-rules': file:projects/bis-rules.tgz_d11f1ad018e2a665071ef6acecda3553
   '@rush-temp/imodel-schema-validator': file:projects/imodel-schema-validator.tgz
   '@rush-temp/native-schema-locater': file:projects/native-schema-locater.tgz
@@ -868,18 +868,17 @@ packages:
       - debug
     dev: false
 
-  /@itwin/oidc-signin-tool/3.7.1_@itwin+core-bentley@3.7.0:
-    resolution: {integrity: sha512-1Hnoga1YwmI9j1SdoPg2WnHBKQx0G5a5WO2wtagKlit73JgzHotpaWHI5ZgdbF0gubgCnYFtdK0JvLx6Y+XWcQ==}
-    requiresBuild: true
+  /@itwin/oidc-signin-tool/3.6.1_@itwin+core-bentley@3.7.0:
+    resolution: {integrity: sha512-4M391FMMwPuRVZSC8DAtLlWlWMDwAVigI8ZY5gvPkHTOOHSAKPxFxZD/zXsySJ3Rn+tFNpP6DctU6OVxrYolRQ==}
     peerDependencies:
       '@itwin/core-bentley': ^3.3.0
     dependencies:
       '@itwin/certa': 3.7.0
       '@itwin/core-bentley': 3.7.0
-      '@playwright/test': 1.31.2
       dotenv: 10.0.0
       dotenv-expand: 5.1.0
       openid-client: 4.9.1
+      puppeteer: 13.7.0
     transitivePeerDependencies:
       - bufferutil
       - electron
@@ -1020,17 +1019,6 @@ packages:
   /@panva/asn1.js/1.0.0:
     resolution: {integrity: sha512-UdkG3mLEqXgnlKsWanWcgb6dOjUzJ+XC5f+aWw30qrtjxeNUSfKX1cd5FBzOaXQumoe9nIqeZUvrRJS03HCCtw==}
     engines: {node: '>=10.13.0'}
-    dev: false
-
-  /@playwright/test/1.31.2:
-    resolution: {integrity: sha512-BYVutxDI4JeZKV1+ups6dt5WiqKhjBtIYowyZIJ3kBDmJgsuPKsqqKNIMFbUePLSCmp2cZu+BDL427RcNKTRYw==}
-    engines: {node: '>=14'}
-    hasBin: true
-    dependencies:
-      '@types/node': 18.11.5
-      playwright-core: 1.31.2
-    optionalDependencies:
-      fsevents: 2.3.2
     dev: false
 
   /@rushstack/node-core-library/3.45.5:
@@ -2193,6 +2181,10 @@ packages:
 
   /devtools-protocol/0.0.1019158:
     resolution: {integrity: sha512-wvq+KscQ7/6spEV7czhnZc9RM/woz1AY+/Vpd8/h2HFMwJSdTliu7f/yr1A6vDdJfKICZsShqsYpEQbdhg8AFQ==}
+    dev: false
+
+  /devtools-protocol/0.0.981744:
+    resolution: {integrity: sha512-0cuGS8+jhR67Fy7qG3i3Pc7Aw494sb9yG9QgpG97SFVWwolgYjlhJg7n+UaHxOQT30d1TYu/EYe9k01ivLErIg==}
     dev: false
 
   /diff/3.5.0:
@@ -4376,12 +4368,6 @@ packages:
       find-up: 4.1.0
     dev: false
 
-  /playwright-core/1.31.2:
-    resolution: {integrity: sha512-a1dFgCNQw4vCsG7bnojZjDnPewZcw7tZUNFN0ZkcLYKj+mPmXvg4MpaaKZ5SgqPsOmqIf2YsVRkgqiRDxD+fDQ==}
-    engines: {node: '>=14'}
-    hasBin: true
-    dev: false
-
   /prelude-ls/1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
@@ -4438,6 +4424,31 @@ packages:
   /punycode/2.3.0:
     resolution: {integrity: sha512-rRV+zQD8tVFys26lAGR9WUuS4iUAngJScM+ZRSKtvl5tKeZ2t5bvdNFdNHBW9FWR4guGHlgmsZ1G7BSm2wTbuA==}
     engines: {node: '>=6'}
+    dev: false
+
+  /puppeteer/13.7.0:
+    resolution: {integrity: sha512-U1uufzBjz3+PkpCxFrWzh4OrMIdIb2ztzCu0YEPfRHjHswcSwHZswnK+WdsOQJsRV8WeTg3jLhJR4D867+fjsA==}
+    engines: {node: '>=10.18.1'}
+    deprecated: < 19.4.0 is no longer supported
+    requiresBuild: true
+    dependencies:
+      cross-fetch: 3.1.5
+      debug: 4.3.4
+      devtools-protocol: 0.0.981744
+      extract-zip: 2.0.1
+      https-proxy-agent: 5.0.1
+      pkg-dir: 4.2.0
+      progress: 2.0.3
+      proxy-from-env: 1.1.0
+      rimraf: 3.0.2
+      tar-fs: 2.1.1
+      unbzip2-stream: 1.4.3
+      ws: 8.5.0
+    transitivePeerDependencies:
+      - bufferutil
+      - encoding
+      - supports-color
+      - utf-8-validate
     dev: false
 
   /puppeteer/15.5.0:
@@ -5405,6 +5416,19 @@ packages:
         optional: true
     dev: false
 
+  /ws/8.5.0:
+    resolution: {integrity: sha512-BWX0SWVgLPzYwF8lTzEy1egjhS4S4OEAHfsO8o65WOVsrnSRGaSiUaa9e0ggGlkMTtBlmOpEXiie9RUcBO86qg==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: ^5.0.2
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+    dev: false
+
   /ws/8.8.0:
     resolution: {integrity: sha512-JDAgSYQ1ksuwqfChJusw1LSJ8BizJ2e/vVu5Lxjq3YvNJNlROv1ui4i+c/kUUrPheBvQl4c5UbERhTwKa6QBJQ==}
     engines: {node: '>=10.0.0'}
@@ -5596,7 +5620,7 @@ packages:
     dev: false
 
   file:projects/imodel-schema-validator.tgz:
-    resolution: {integrity: sha512-afFQ0yBStqVFR6u+8n6eiN+0KL/ycbk7N2CMwp7j/H4CT8AGaX3X2YtItYTuEOrCvIeksG9brseSEjTUAjF9Ag==, tarball: file:projects/imodel-schema-validator.tgz}
+    resolution: {integrity: sha512-epCsjRG2mvLxToHaM/gjOR3dLwSXXMVv11pQXVsuVku7sGhxf/xSpvL4MxNq7IBGnYMyuETX3mSn9sxGhnkRjQ==, tarball: file:projects/imodel-schema-validator.tgz}
     name: '@rush-temp/imodel-schema-validator'
     version: 0.0.0
     dependencies:
@@ -5612,7 +5636,7 @@ packages:
       '@itwin/eslint-plugin': 3.7.0_eslint@7.32.0+typescript@4.3.5
       '@itwin/imodels-access-backend': 1.0.1_d9a1ff4dd18e47d058df2ce2efa0d599
       '@itwin/imodels-client-authoring': 1.0.1
-      '@itwin/oidc-signin-tool': 3.7.1_@itwin+core-bentley@3.7.0
+      '@itwin/oidc-signin-tool': 3.6.1_@itwin+core-bentley@3.7.0
       '@types/chai': 4.3.4
       '@types/mocha': 8.2.3
       '@types/node': 18.11.5
