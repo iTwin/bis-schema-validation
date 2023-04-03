@@ -4,15 +4,13 @@
 * Licensed under the MIT License. See LICENSE.md in the project root for license terms.
 *--------------------------------------------------------------------------------------------*/
 import {
-  compareSchema, getSuppressionsList, IModelValidationResult, iModelValidationResultTypes, isDynamicSchema, ruleViolationError, shouldSuppressSha1Validation,
+  compareSchema, IModelValidationResult, iModelValidationResultTypes, isDynamicSchema, ruleViolationError,
 } from "../iModelSchemaValidator";
 import { expect } from "chai";
 import * as path from "path";
 import * as fs from "fs";
 
 describe("iModelSchemaValidator Tests", async () => {
-
-  const suppressionFilePath = path.resolve(path.normalize(__dirname + "/assets/"), "suppression.json");
 
   it("Dynamic Schema, A schema is a dynamic schema.", async () => {
     const schemaFile = path.resolve(path.normalize(__dirname + "/assets/"), "SchemaE.ecschema.xml");
@@ -74,22 +72,6 @@ describe("iModelSchemaValidator Tests", async () => {
   it("EC Rule Violation, Violation is not of type error", async () => {
     const violation = ruleViolationError("Warning ECObjects-101: Test rule.");
     expect(violation).to.equals(false);
-  });
-
-  it("Sha1 Validation Suppression, should suppress the validation", async () => {
-    const result: IModelValidationResult = { name: "SchemaA", version: "1.1.1" };
-    const suppressionList = getSuppressionsList(suppressionFilePath);
-
-    const suppress = shouldSuppressSha1Validation(result, suppressionList);
-    expect(suppress).to.equal(true);
-  });
-
-  it("Sha1 Validation Suppression, should not suppress the validation", async () => {
-    const result: IModelValidationResult = { name: "SchemaB", version: "1.1.1" };
-    const suppressionList = getSuppressionsList(suppressionFilePath);
-
-    const suppress = shouldSuppressSha1Validation(result, suppressionList);
-    expect(suppress).to.equal(false);
   });
 
 });

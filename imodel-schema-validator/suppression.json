@@ -1,9 +1,0 @@
-[
-  {
-    "name": "ECDbSystem",
-    "version": "05.00.01",
-    "released": true,
-    "sha1Validation": true,
-    "reason": "reference schema version and extendedTypeName properties made sha1 validation to fail"
-  }
-]

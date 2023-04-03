@@ -2,7 +2,7 @@
   "name": "@bentley/native-schema-locater",
   "description": "Contains an XML schema file locater which uses the native addon to deserialize EC 3.1 schemas",
   "license": "MIT",
-  "version": "0.2.155",
+  "version": "0.2.157",
   "main": "./lib/native-schema-locater.js",
   "typings": "./lib/native-schema-locater",
   "repository": {

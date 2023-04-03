@@ -15,7 +15,6 @@ describe("Reporter class tests.", () => {
   const references = path.normalize(__dirname + "/assets/references/");
   const outputDir = path.normalize(__dirname);
   const reporter = new Reporter();
-  const suppressionFilePath = path.resolve(path.normalize(__dirname + "/assets/"), "suppression.json");
 
   it("Log comparison validation result.", async () => {
     const schemaAFile = path.resolve(path.normalize(__dirname + "/assets/"), "SchemaA.ecschema.xml");
@@ -42,7 +41,7 @@ describe("Reporter class tests.", () => {
     const output = path.join(outputDir, "wip");
 
     const result = await verifyIModelSchema(exportDir, "SchemaG.01.00.02.ecschema.xml", false, bisSchemaRepo, output);
-    reporter.logAllValidationsResults([result], bisSchemaRepo, output, suppressionFilePath);
+    reporter.logAllValidationsResults([result], bisSchemaRepo, output);
 
     let check = false;
     const outputFIle = path.join(output, "SchemaG.01.00.02.logs");

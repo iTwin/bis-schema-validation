@@ -11,7 +11,7 @@
     "name": "Bentley Systems, Inc.",
     "url": "http://www.bentley.com"
   },
-  "version": "0.2.155",
+  "version": "0.2.157",
   "bin": {
     "imodel-schema-validator": "./lib/index.js"
   },
@@ -23,7 +23,7 @@
     "tests:ValidateWIPBisSchemas": "betools test --grep \"Import WIP version of all schemas from bis-schemas repository into an iModel and perform BIS-rules validation.\" --timeout=999999999",
     "cover": "nyc npm -s test",
     "clean": "rimraf lib",
-    "copy:assets": "cpx ./src/index.js ./lib && cpx ./suppression.json ./lib",
+    "copy:assets": "cpx ./src/index.js ./lib",
     "copy:test-assets": "cpx \"./src/test/assets/**/*\" ./lib/test/assets"
   },
   "dependencies": {
@@ -38,8 +38,8 @@
     "@itwin/core-common": "3.7.0",
     "@itwin/imodels-access-backend": "1.0.1",
     "@itwin/imodels-client-authoring": "1.0.1",
-    "@bentley/schema-comparer": "0.2.155",
-    "@bentley/schema-validator": "0.2.155",
+    "@bentley/schema-comparer": "0.2.157",
+    "@bentley/schema-validator": "0.2.157",
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
     "httpntlm": "~1",
