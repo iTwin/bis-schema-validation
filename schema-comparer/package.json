@@ -69,7 +69,7 @@
     "@itwin/core-quantity": "3.7.0",
     "@itwin/core-common": "3.7.0",
     "@itwin/core-i18n": "3.7.0",
-    "@bentley/native-schema-locater": "0.2.155",
+    "@bentley/native-schema-locater": "0.2.157",
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
     "fs-extra": "^7.0.1",
