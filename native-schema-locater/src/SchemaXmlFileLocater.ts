@@ -5,7 +5,8 @@
 
 import * as path from "path";
 import { DOMParser } from "@xmldom/xmldom";
-import { ECSchemaXmlContext } from "@itwin/core-backend";
+import { ECSchemaXmlContext, NativeLoggerCategory } from "@itwin/core-backend";
+import { Logger, LogLevel } from "@itwin/core-bentley";
 import { FileSchemaKey, SchemaFileLocater } from "@itwin/ecschema-locaters";
 import {
   ECObjectsError, ECObjectsStatus, ECVersion, ISchemaLocater, Schema, SchemaContext,
@@ -23,6 +24,13 @@ function isECv2Schema(schemaText: string): boolean {
  * @internal This is a workaround the current lack of a full xml parser.
  */
 export class SchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLocater {
+
+  constructor() {
+    super();
+    Logger.initializeToConsole();
+    Logger.setLevelDefault(LogLevel.Error);
+    Logger.setLevel(NativeLoggerCategory.ECObjectsNative, LogLevel.Error);
+  }
   /**
    * Attempts to retrieve a Schema with the given SchemaKey by using the configured search paths
    * to locate the XML Schema file from the file system.
