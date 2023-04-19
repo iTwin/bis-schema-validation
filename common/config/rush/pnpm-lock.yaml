@@ -1,17 +1,17 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@itwin/build-tools': 3.7.0
-  '@itwin/core-backend': 3.7.0
-  '@itwin/core-bentley': 3.7.0
-  '@itwin/core-common': 3.7.0
-  '@itwin/core-geometry': 3.7.0
-  '@itwin/core-i18n': 3.7.0
-  '@itwin/core-quantity': 3.7.0
-  '@itwin/ecschema-editing': 3.7.0
-  '@itwin/ecschema-locaters': 3.7.0
-  '@itwin/ecschema-metadata': 3.7.0
-  '@itwin/eslint-plugin': 3.7.0
+  '@itwin/build-tools': 3.7.2
+  '@itwin/core-backend': 3.7.2
+  '@itwin/core-bentley': 3.7.2
+  '@itwin/core-common': 3.7.2
+  '@itwin/core-geometry': 3.7.2
+  '@itwin/core-i18n': 3.7.2
+  '@itwin/core-quantity': 3.7.2
+  '@itwin/ecschema-editing': 3.7.2
+  '@itwin/ecschema-locaters': 3.7.2
+  '@itwin/ecschema-metadata': 3.7.2
+  '@itwin/eslint-plugin': 3.7.2
   '@itwin/imodels-access-backend': 1.0.1
   '@itwin/imodels-client-authoring': 1.0.1
   '@itwin/oidc-signin-tool': ~3.6.0
@@ -49,21 +49,21 @@ specifiers:
   typescript: ~4.3.0
 
 dependencies:
-  '@itwin/build-tools': 3.7.0
-  '@itwin/core-backend': 3.7.0_2e2eeb2d4f6956b00f5bf88055124b54
-  '@itwin/core-bentley': 3.7.0
-  '@itwin/core-common': 3.7.0_d3cf7b747b827c7a0a662ddd00c672b6
-  '@itwin/core-geometry': 3.7.0
-  '@itwin/core-i18n': 3.7.0_@itwin+core-bentley@3.7.0
-  '@itwin/core-quantity': 3.7.0_@itwin+core-bentley@3.7.0
-  '@itwin/ecschema-editing': 3.7.0_087c9e4f5da3e16162af870e0b98a3f7
-  '@itwin/ecschema-locaters': 3.7.0_@itwin+ecschema-metadata@3.7.0
-  '@itwin/ecschema-metadata': 3.7.0_fdb6011f839825f043b6a0c032ed4064
-  '@itwin/eslint-plugin': 3.7.0_eslint@7.32.0+typescript@4.3.5
-  '@itwin/imodels-access-backend': 1.0.1_d9a1ff4dd18e47d058df2ce2efa0d599
+  '@itwin/build-tools': 3.7.2
+  '@itwin/core-backend': 3.7.2_1a79653218959a7597d70ac583ffdfe7
+  '@itwin/core-bentley': 3.7.2
+  '@itwin/core-common': 3.7.2_da60928250afbeaa66b3d916492a4fd7
+  '@itwin/core-geometry': 3.7.2
+  '@itwin/core-i18n': 3.7.2_@itwin+core-bentley@3.7.2
+  '@itwin/core-quantity': 3.7.2_@itwin+core-bentley@3.7.2
+  '@itwin/ecschema-editing': 3.7.2_26b2a0ead6435e740bac9f23958f94a9
+  '@itwin/ecschema-locaters': 3.7.2_@itwin+ecschema-metadata@3.7.2
+  '@itwin/ecschema-metadata': 3.7.2_0d5d08019fdd24232ee9b8a55e01cd13
+  '@itwin/eslint-plugin': 3.7.2_eslint@7.32.0+typescript@4.3.5
+  '@itwin/imodels-access-backend': 1.0.1_c426bc9be7be6d65993fedc6d34a98ba
   '@itwin/imodels-client-authoring': 1.0.1
-  '@itwin/oidc-signin-tool': 3.6.1_@itwin+core-bentley@3.7.0
-  '@rush-temp/bis-rules': file:projects/bis-rules.tgz_d11f1ad018e2a665071ef6acecda3553
+  '@itwin/oidc-signin-tool': 3.6.1_@itwin+core-bentley@3.7.2
+  '@rush-temp/bis-rules': file:projects/bis-rules.tgz_6f4a9bb17dffa2739a76458c0d1ae926
   '@rush-temp/imodel-schema-validator': file:projects/imodel-schema-validator.tgz
   '@rush-temp/native-schema-locater': file:projects/native-schema-locater.tgz
   '@rush-temp/schema-comparer': file:projects/schema-comparer.tgz
@@ -294,7 +294,7 @@ packages:
       '@azure/abort-controller': 1.1.0
       '@azure/core-http': 1.2.6
       '@azure/core-lro': 1.0.5
-      '@azure/core-paging': 1.2.1
+      '@azure/core-paging': 1.5.0
       '@azure/core-tracing': 1.0.0-preview.9
       '@azure/logger': 1.0.4
       '@opentelemetry/api': 0.10.2
@@ -526,8 +526,8 @@ packages:
       to-fast-properties: 2.0.0
     dev: false
 
-  /@bentley/imodeljs-native/3.6.9:
-    resolution: {integrity: sha512-IwOYWve4/GwVpo9ksAhV4cSfmYOxvMZLaKZQe5QFp5TqDzVXqTTpQ2si7RRy+pBydP2fw7eDpR3rokXoWPWxDA==}
+  /@bentley/imodeljs-native/3.6.10:
+    resolution: {integrity: sha512-SxPIEOEwVf9BS85bI8B8Pp61IdVP/ZqKUGqzzpEFRIz2JPG8atnp1n6AwB/6QsTT27VNTC70IWP1/OrTZDVubg==}
     requiresBuild: true
     dev: false
 
@@ -598,8 +598,8 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
-  /@itwin/build-tools/3.7.0:
-    resolution: {integrity: sha512-RV30bHmPtN0/4gUTa1R1wUuMpuvPM9f1nFQFcICe/wfniIQc3ZyeTpEwjF4SfWFcqS90p6sCzwqYaDtVW6XbQw==}
+  /@itwin/build-tools/3.7.2:
+    resolution: {integrity: sha512-uqVwtG/K0X5Km8Iw60WeR+20SSvD8Qm7+SseuK7aAdFXFMBIYeZFeXCiifTT7ZVzEZ46ECvEC8nIecD1F2F7OQ==}
     hasBin: true
     dependencies:
       '@microsoft/api-extractor': 7.23.2
@@ -653,25 +653,25 @@ packages:
       reflect-metadata: 0.1.13
     dev: false
 
-  /@itwin/core-backend/3.7.0_2e2eeb2d4f6956b00f5bf88055124b54:
-    resolution: {integrity: sha512-YAUVoAmdXO3sn8KNpFWPmq/6/kFJDZYFmQwI7Z0eS7aTKxJ9uD9zHZ8Xui/m1sX6JLcQNRgQAV+Vi2+cGZAxQg==}
+  /@itwin/core-backend/3.7.2_1a79653218959a7597d70ac583ffdfe7:
+    resolution: {integrity: sha512-7hMjCQPe2uSOAmYLdsQPy0ZSGDFLm3TIsBEt3X4X6Jh5hOJtmFd6KJZQf0yL53+e+8rzqTRObDumckCKjYlDoQ==}
     engines: {node: '>=12.22.0 < 14.0 || >=14.17.0 < 19.0'}
     peerDependencies:
-      '@itwin/core-bentley': ^3.7.0
-      '@itwin/core-common': ^3.7.0
-      '@itwin/core-geometry': ^3.7.0
+      '@itwin/core-bentley': ^3.7.2
+      '@itwin/core-common': ^3.7.2
+      '@itwin/core-geometry': ^3.7.2
       '@opentelemetry/api': ^1.0.4
     peerDependenciesMeta:
       '@opentelemetry/api':
         optional: true
     dependencies:
       '@azure/storage-blob': 12.13.0
-      '@bentley/imodeljs-native': 3.6.9
+      '@bentley/imodeljs-native': 3.6.10
       '@itwin/cloud-agnostic-core': 1.4.0
-      '@itwin/core-bentley': 3.7.0
-      '@itwin/core-common': 3.7.0_d3cf7b747b827c7a0a662ddd00c672b6
-      '@itwin/core-geometry': 3.7.0
-      '@itwin/core-telemetry': 3.7.0_@itwin+core-geometry@3.7.0
+      '@itwin/core-bentley': 3.7.2
+      '@itwin/core-common': 3.7.2_da60928250afbeaa66b3d916492a4fd7
+      '@itwin/core-geometry': 3.7.2
+      '@itwin/core-telemetry': 3.7.2_@itwin+core-geometry@3.7.2
       '@itwin/object-storage-azure': 1.4.0
       '@itwin/object-storage-core': 1.4.0
       form-data: 2.5.1
@@ -689,18 +689,18 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@itwin/core-bentley/3.7.0:
-    resolution: {integrity: sha512-HzkFgiSDTWUxcWqbBoV0PXe5YDl2tCNzCl/IEwR8fqYjKX12KL7B1+L10QNB8YwnxqrmKfI0vC7ejTPjRgNmDg==}
+  /@itwin/core-bentley/3.7.2:
+    resolution: {integrity: sha512-ZKwW+yVf0UeqvHjRwV9+20gM+e/TkywooWhMruGK41H5WK9HoqDzZj527k91hCKwsESDDfsO0Opqiaqi/51rOw==}
     dev: false
 
-  /@itwin/core-common/3.7.0_d3cf7b747b827c7a0a662ddd00c672b6:
-    resolution: {integrity: sha512-rD/51qebYBdYN+NeOdOTnceR8KJCoyOLyZEDYxO6C2/rBNjdok1LRTfluAeRHFnp0h/xfIzfChNP0yUidsycog==}
+  /@itwin/core-common/3.7.2_da60928250afbeaa66b3d916492a4fd7:
+    resolution: {integrity: sha512-ky9p/T/Xxlym2a7tSgpst2mE54hjAd3W3kDvOhXwMzKefGZ9BQTUroyBH3tmA2P9l03uxJ7UFUPagF89STMbyA==}
     peerDependencies:
-      '@itwin/core-bentley': ^3.7.0
-      '@itwin/core-geometry': ^3.7.0
+      '@itwin/core-bentley': ^3.7.2
+      '@itwin/core-geometry': ^3.7.2
     dependencies:
-      '@itwin/core-bentley': 3.7.0
-      '@itwin/core-geometry': 3.7.0
+      '@itwin/core-bentley': 3.7.2
+      '@itwin/core-geometry': 3.7.2
       '@itwin/object-storage-core': 1.4.0
       flatbuffers: 1.12.0
       js-base64: 3.7.5
@@ -709,19 +709,19 @@ packages:
       - debug
     dev: false
 
-  /@itwin/core-geometry/3.7.0:
-    resolution: {integrity: sha512-CRwdXtDMHYGnxu2/T1OTiJ6MWJJ3Wvu4LbYiJcQJY7ofVM9Qmf+dioOwsaHL9IzK5ZVVxyK0lJH9mzcp8KK30g==}
+  /@itwin/core-geometry/3.7.2:
+    resolution: {integrity: sha512-7FdS4iah1sBpRsvHqK2QDHGxb3rS2GXq7meYaCtK2kPz9gkHm987NkIZl2xe7EEph6LZlypy7SQvVL3sQXEbSA==}
     dependencies:
-      '@itwin/core-bentley': 3.7.0
+      '@itwin/core-bentley': 3.7.2
       flatbuffers: 1.12.0
     dev: false
 
-  /@itwin/core-i18n/3.7.0_@itwin+core-bentley@3.7.0:
-    resolution: {integrity: sha512-Uow+5vQKq8NtA8xcxbJ5CgV4sk5eJ55nt6Nxm63q5NKXronzkTZG91r9P8wCmx3EbceAobXGby29FBVUBczLWQ==}
+  /@itwin/core-i18n/3.7.2_@itwin+core-bentley@3.7.2:
+    resolution: {integrity: sha512-pP93cW7a2vNI8ASVxrjNBTbatWq9oWNf8JHWL3ThkZ/U/N2tZHFgSnEFAOTrgRpnWzdmFot45moN8gji1LEPjw==}
     peerDependencies:
-      '@itwin/core-bentley': ^3.7.0
+      '@itwin/core-bentley': ^3.7.2
     dependencies:
-      '@itwin/core-bentley': 3.7.0
+      '@itwin/core-bentley': 3.7.2
       i18next: 21.10.0
       i18next-browser-languagedetector: 6.1.8
       i18next-http-backend: 1.4.5
@@ -729,60 +729,60 @@ packages:
       - encoding
     dev: false
 
-  /@itwin/core-quantity/3.7.0_@itwin+core-bentley@3.7.0:
-    resolution: {integrity: sha512-O6UiuaFR3QfZ49g2ryiGuumkdQvvce/HfwJ8TWBf3taOjXLtTWAJ7DAOdxRnX91+ycCxsqPuAuwV3KZCOIJzYw==}
+  /@itwin/core-quantity/3.7.2_@itwin+core-bentley@3.7.2:
+    resolution: {integrity: sha512-pDfDsQHTwu/k40WdqeeL+4Dj4ANHFvFCQ5mmvMF3XNFXl30pW02GvTAb1km4leMLoE/fwDhZ5h9fcwYO7NzxHQ==}
     peerDependencies:
-      '@itwin/core-bentley': ^3.7.0
+      '@itwin/core-bentley': ^3.7.2
     dependencies:
-      '@itwin/core-bentley': 3.7.0
+      '@itwin/core-bentley': 3.7.2
     dev: false
 
-  /@itwin/core-telemetry/3.7.0_@itwin+core-geometry@3.7.0:
-    resolution: {integrity: sha512-1xjJaFs1780YpRFPjg2MuRgPhKGaWgG/ui+uNjQOsBdP4wIu/FonatQG0HQ0oY8vkKSSCjbfuLr9Eo3tlygO1Q==}
+  /@itwin/core-telemetry/3.7.2_@itwin+core-geometry@3.7.2:
+    resolution: {integrity: sha512-Cn0wgcV7n4uGRcC3vb0J4a65MsfS84KQn1ACg/wMSkA6bQ2SXPspibbuHK2LTNHrBQNqMXcd7s8Jj8kDMy73Pw==}
     dependencies:
-      '@itwin/core-bentley': 3.7.0
-      '@itwin/core-common': 3.7.0_d3cf7b747b827c7a0a662ddd00c672b6
+      '@itwin/core-bentley': 3.7.2
+      '@itwin/core-common': 3.7.2_da60928250afbeaa66b3d916492a4fd7
     transitivePeerDependencies:
       - '@itwin/core-geometry'
       - debug
     dev: false
 
-  /@itwin/ecschema-editing/3.7.0_087c9e4f5da3e16162af870e0b98a3f7:
-    resolution: {integrity: sha512-Tgux7zRnAialmR6+jgTUhEJoO21588UpOVL7acrlWwMFIvkPtXwyeyReOwOHE3In2w1AizRLVg4mzI1GSk9LHQ==}
+  /@itwin/ecschema-editing/3.7.2_26b2a0ead6435e740bac9f23958f94a9:
+    resolution: {integrity: sha512-goPo/6UrkPGUHkoGe+AWPqlUYD9cVRg7WSJbI0j/YeyE0qkKlwXU8CiauyKGiwqbrtrsFeQfIRGTDJB/BXrfKg==}
     peerDependencies:
-      '@itwin/core-bentley': ^3.7.0
-      '@itwin/core-quantity': ^3.7.0
-      '@itwin/ecschema-metadata': ^3.7.0
+      '@itwin/core-bentley': ^3.7.2
+      '@itwin/core-quantity': ^3.7.2
+      '@itwin/ecschema-metadata': ^3.7.2
     dependencies:
-      '@itwin/core-bentley': 3.7.0
-      '@itwin/core-quantity': 3.7.0_@itwin+core-bentley@3.7.0
-      '@itwin/ecschema-metadata': 3.7.0_fdb6011f839825f043b6a0c032ed4064
+      '@itwin/core-bentley': 3.7.2
+      '@itwin/core-quantity': 3.7.2_@itwin+core-bentley@3.7.2
+      '@itwin/ecschema-metadata': 3.7.2_0d5d08019fdd24232ee9b8a55e01cd13
     dev: false
 
-  /@itwin/ecschema-locaters/3.7.0_@itwin+ecschema-metadata@3.7.0:
-    resolution: {integrity: sha512-+Zp8/5ZWzz+rtSiO9+sXAqWinKdSPj7xgX+k4QVjjCbFJAgrjMtMViCD9WVLNofKC90guEdMtZpBd/fWK1tTKw==}
+  /@itwin/ecschema-locaters/3.7.2_@itwin+ecschema-metadata@3.7.2:
+    resolution: {integrity: sha512-KthrrKf3q3Bm3eTKixpgje36zWmfsOft83wbuHI0Ui8CRLvXdsMrW9IIiBPLezDYPNPV9t0MHOm/Cb3WeMaczQ==}
     peerDependencies:
-      '@itwin/ecschema-metadata': ^3.7.0
+      '@itwin/ecschema-metadata': ^3.7.2
     dependencies:
-      '@itwin/ecschema-metadata': 3.7.0_fdb6011f839825f043b6a0c032ed4064
+      '@itwin/ecschema-metadata': 3.7.2_0d5d08019fdd24232ee9b8a55e01cd13
       '@xmldom/xmldom': 0.8.7
       fs-extra: 8.1.0
       glob: 7.2.3
     dev: false
 
-  /@itwin/ecschema-metadata/3.7.0_fdb6011f839825f043b6a0c032ed4064:
-    resolution: {integrity: sha512-iCgKMwxezmTgN5qvETLc0QftM7txZFSPIlQ8+ljuKQwGaDD7jRfmiQHsg4MYAkNuZhI6fzu0cDuHr9Ew4QENMA==}
+  /@itwin/ecschema-metadata/3.7.2_0d5d08019fdd24232ee9b8a55e01cd13:
+    resolution: {integrity: sha512-0JaFaeW2zlHESmfo9vRnrtCXyzHmHO6U7kfSIHnuye7pwM+4knlC+DYWbcJZx//BZj6zZLvtP+IdYYsoYt2Uvg==}
     peerDependencies:
-      '@itwin/core-bentley': ^3.7.0
-      '@itwin/core-quantity': ^3.7.0
+      '@itwin/core-bentley': ^3.7.2
+      '@itwin/core-quantity': ^3.7.2
     dependencies:
-      '@itwin/core-bentley': 3.7.0
-      '@itwin/core-quantity': 3.7.0_@itwin+core-bentley@3.7.0
+      '@itwin/core-bentley': 3.7.2
+      '@itwin/core-quantity': 3.7.2_@itwin+core-bentley@3.7.2
       almost-equal: 1.1.0
     dev: false
 
-  /@itwin/eslint-plugin/3.7.0_eslint@7.32.0+typescript@4.3.5:
-    resolution: {integrity: sha512-JecsaPGuYjoD85imKzRxO9mXbi6SUi1HSOStedwV8tgaUQe9S/yshdKH7ZkqYCYu2Fj1LlY9tEoAbykrsB/kMg==}
+  /@itwin/eslint-plugin/3.7.2_eslint@7.32.0+typescript@4.3.5:
+    resolution: {integrity: sha512-TumZVNahF7hU5K59hT9Rcx1rDvGQkdsak5tqp6lGm2tZ4MOO0NogIBylMXTpQUKBYGGK7IQizU5qBkQN3BImxg==}
     hasBin: true
     peerDependencies:
       eslint: ^7.0.0
@@ -807,16 +807,16 @@ packages:
       - supports-color
     dev: false
 
-  /@itwin/imodels-access-backend/1.0.1_d9a1ff4dd18e47d058df2ce2efa0d599:
+  /@itwin/imodels-access-backend/1.0.1_c426bc9be7be6d65993fedc6d34a98ba:
     resolution: {integrity: sha512-W3g/V6lFMPYdlfGRqWbBQaAlyIP9LdHslOgMShDWGK4AOtnVoWP6WJGU+/iomKGhb0FMYoKMW8Vyy1+0U3Sxig==}
     peerDependencies:
       '@itwin/core-backend': ^3.0.0
       '@itwin/core-bentley': ^3.0.0
       '@itwin/core-common': ^3.0.0
     dependencies:
-      '@itwin/core-backend': 3.7.0_2e2eeb2d4f6956b00f5bf88055124b54
-      '@itwin/core-bentley': 3.7.0
-      '@itwin/core-common': 3.7.0_d3cf7b747b827c7a0a662ddd00c672b6
+      '@itwin/core-backend': 3.7.2_1a79653218959a7597d70ac583ffdfe7
+      '@itwin/core-bentley': 3.7.2
+      '@itwin/core-common': 3.7.2_da60928250afbeaa66b3d916492a4fd7
       '@itwin/imodels-client-authoring': 1.0.1
     transitivePeerDependencies:
       - debug
@@ -868,13 +868,13 @@ packages:
       - debug
     dev: false
 
-  /@itwin/oidc-signin-tool/3.6.1_@itwin+core-bentley@3.7.0:
+  /@itwin/oidc-signin-tool/3.6.1_@itwin+core-bentley@3.7.2:
     resolution: {integrity: sha512-4M391FMMwPuRVZSC8DAtLlWlWMDwAVigI8ZY5gvPkHTOOHSAKPxFxZD/zXsySJ3Rn+tFNpP6DctU6OVxrYolRQ==}
     peerDependencies:
       '@itwin/core-bentley': ^3.3.0
     dependencies:
       '@itwin/certa': 3.7.1
-      '@itwin/core-bentley': 3.7.0
+      '@itwin/core-bentley': 3.7.2
       dotenv: 10.0.0
       dotenv-expand: 5.1.0
       openid-client: 4.9.1
@@ -5581,19 +5581,19 @@ packages:
       commander: 9.5.0
     dev: false
 
-  file:projects/bis-rules.tgz_d11f1ad018e2a665071ef6acecda3553:
-    resolution: {integrity: sha512-MXiwdUHO20e1FeCX21yBmWtrOfiZjwJxeocdTZvJ8YJrkVrWsQJuidf30SVaoEvxpYuwD330m0r1czuy6N5fSg==, tarball: file:projects/bis-rules.tgz}
+  file:projects/bis-rules.tgz_6f4a9bb17dffa2739a76458c0d1ae926:
+    resolution: {integrity: sha512-qvZPBeTOhbjkFheiQ7YFXPFS3GdG9qcO3jEHMhmjwVJ6PQClh+qf1FrlZzBgR6NCi5hu+iqtT4Gr+36cuxN+Gw==, tarball: file:projects/bis-rules.tgz}
     id: file:projects/bis-rules.tgz
     name: '@rush-temp/bis-rules'
     version: 0.0.0
     dependencies:
-      '@itwin/build-tools': 3.7.0
-      '@itwin/core-backend': 3.7.0_2e2eeb2d4f6956b00f5bf88055124b54
-      '@itwin/core-bentley': 3.7.0
-      '@itwin/core-quantity': 3.7.0_@itwin+core-bentley@3.7.0
-      '@itwin/ecschema-editing': 3.7.0_087c9e4f5da3e16162af870e0b98a3f7
-      '@itwin/ecschema-metadata': 3.7.0_fdb6011f839825f043b6a0c032ed4064
-      '@itwin/eslint-plugin': 3.7.0_eslint@7.32.0+typescript@4.3.5
+      '@itwin/build-tools': 3.7.2
+      '@itwin/core-backend': 3.7.2_1a79653218959a7597d70ac583ffdfe7
+      '@itwin/core-bentley': 3.7.2
+      '@itwin/core-quantity': 3.7.2_@itwin+core-bentley@3.7.2
+      '@itwin/ecschema-editing': 3.7.2_26b2a0ead6435e740bac9f23958f94a9
+      '@itwin/ecschema-metadata': 3.7.2_0d5d08019fdd24232ee9b8a55e01cd13
+      '@itwin/eslint-plugin': 3.7.2_eslint@7.32.0+typescript@4.3.5
       '@types/chai': 4.3.4
       '@types/mocha': 8.2.3
       '@types/rimraf': 2.0.5
@@ -5620,23 +5620,23 @@ packages:
     dev: false
 
   file:projects/imodel-schema-validator.tgz:
-    resolution: {integrity: sha512-fOM5JKC18bgQslh/hokbUVDfpRGsBwdggG6osFmoPqtSibcMzdUsQoOyO+vKUyRtun8SbPq9vpOtAmjt5ctFdA==, tarball: file:projects/imodel-schema-validator.tgz}
+    resolution: {integrity: sha512-H+RWWXXfcV/dwjq7nCh1NTPJ1chPexfzaYBZ4iuJpNzm0iutAvFxzrvA+q3EP+P+PQ10BSKkAlCWeTvmymWsaw==, tarball: file:projects/imodel-schema-validator.tgz}
     name: '@rush-temp/imodel-schema-validator'
     version: 0.0.0
     dependencies:
-      '@itwin/build-tools': 3.7.0
-      '@itwin/core-backend': 3.7.0_2e2eeb2d4f6956b00f5bf88055124b54
-      '@itwin/core-bentley': 3.7.0
-      '@itwin/core-common': 3.7.0_d3cf7b747b827c7a0a662ddd00c672b6
-      '@itwin/core-geometry': 3.7.0
-      '@itwin/core-quantity': 3.7.0_@itwin+core-bentley@3.7.0
-      '@itwin/ecschema-editing': 3.7.0_087c9e4f5da3e16162af870e0b98a3f7
-      '@itwin/ecschema-locaters': 3.7.0_@itwin+ecschema-metadata@3.7.0
-      '@itwin/ecschema-metadata': 3.7.0_fdb6011f839825f043b6a0c032ed4064
-      '@itwin/eslint-plugin': 3.7.0_eslint@7.32.0+typescript@4.3.5
-      '@itwin/imodels-access-backend': 1.0.1_d9a1ff4dd18e47d058df2ce2efa0d599
+      '@itwin/build-tools': 3.7.2
+      '@itwin/core-backend': 3.7.2_1a79653218959a7597d70ac583ffdfe7
+      '@itwin/core-bentley': 3.7.2
+      '@itwin/core-common': 3.7.2_da60928250afbeaa66b3d916492a4fd7
+      '@itwin/core-geometry': 3.7.2
+      '@itwin/core-quantity': 3.7.2_@itwin+core-bentley@3.7.2
+      '@itwin/ecschema-editing': 3.7.2_26b2a0ead6435e740bac9f23958f94a9
+      '@itwin/ecschema-locaters': 3.7.2_@itwin+ecschema-metadata@3.7.2
+      '@itwin/ecschema-metadata': 3.7.2_0d5d08019fdd24232ee9b8a55e01cd13
+      '@itwin/eslint-plugin': 3.7.2_eslint@7.32.0+typescript@4.3.5
+      '@itwin/imodels-access-backend': 1.0.1_c426bc9be7be6d65993fedc6d34a98ba
       '@itwin/imodels-client-authoring': 1.0.1
-      '@itwin/oidc-signin-tool': 3.6.1_@itwin+core-bentley@3.7.0
+      '@itwin/oidc-signin-tool': 3.6.1_@itwin+core-bentley@3.7.2
       '@types/chai': 4.3.4
       '@types/mocha': 8.2.3
       '@types/node': 18.11.5
@@ -5663,20 +5663,20 @@ packages:
     dev: false
 
   file:projects/native-schema-locater.tgz:
-    resolution: {integrity: sha512-IbZHlFFvD2TJy9NhmNEKcXQw8jN4vMa96WBRUdkx3sH5Xbl2a2QAwiZA5o+xJ1yxkPvLP/uWVa423c3XdzLmhQ==, tarball: file:projects/native-schema-locater.tgz}
+    resolution: {integrity: sha512-vORx4goum9DK9TwB9f7TGJqnKORwcnmjlK+N9VzDa4JNB/IuOMz8JD1ml72KNdxlahvkJ/duArcIO1OK7SQ8Fg==, tarball: file:projects/native-schema-locater.tgz}
     name: '@rush-temp/native-schema-locater'
     version: 0.0.0
     dependencies:
-      '@itwin/build-tools': 3.7.0
-      '@itwin/core-backend': 3.7.0_2e2eeb2d4f6956b00f5bf88055124b54
-      '@itwin/core-bentley': 3.7.0
-      '@itwin/core-common': 3.7.0_d3cf7b747b827c7a0a662ddd00c672b6
-      '@itwin/core-geometry': 3.7.0
-      '@itwin/core-quantity': 3.7.0_@itwin+core-bentley@3.7.0
-      '@itwin/ecschema-locaters': 3.7.0_@itwin+ecschema-metadata@3.7.0
-      '@itwin/ecschema-metadata': 3.7.0_fdb6011f839825f043b6a0c032ed4064
-      '@itwin/eslint-plugin': 3.7.0_eslint@7.32.0+typescript@4.3.5
-      '@itwin/imodels-access-backend': 1.0.1_d9a1ff4dd18e47d058df2ce2efa0d599
+      '@itwin/build-tools': 3.7.2
+      '@itwin/core-backend': 3.7.2_1a79653218959a7597d70ac583ffdfe7
+      '@itwin/core-bentley': 3.7.2
+      '@itwin/core-common': 3.7.2_da60928250afbeaa66b3d916492a4fd7
+      '@itwin/core-geometry': 3.7.2
+      '@itwin/core-quantity': 3.7.2_@itwin+core-bentley@3.7.2
+      '@itwin/ecschema-locaters': 3.7.2_@itwin+ecschema-metadata@3.7.2
+      '@itwin/ecschema-metadata': 3.7.2_0d5d08019fdd24232ee9b8a55e01cd13
+      '@itwin/eslint-plugin': 3.7.2_eslint@7.32.0+typescript@4.3.5
+      '@itwin/imodels-access-backend': 1.0.1_c426bc9be7be6d65993fedc6d34a98ba
       '@types/chai': 4.3.4
       '@types/chai-as-promised': 7.1.5
       '@types/fs-extra': 5.1.0
@@ -5709,22 +5709,22 @@ packages:
     dev: false
 
   file:projects/schema-comparer.tgz:
-    resolution: {integrity: sha512-4jGVr1kynq78hfz/d043Huv3Wc7DvJG+4HPFRaG46G/NAvLdEOfHUzLalvCKD9TMWDAPmqdifvdcC5VEDPMVeQ==, tarball: file:projects/schema-comparer.tgz}
+    resolution: {integrity: sha512-Q96Oapy++s5Ru9eNJtN+3w0CNlR8vF4Ykoiew2R1/qOPg/Swsom6fDIdj6tqdN28C017/b1dS3JerIyhdtjBcQ==, tarball: file:projects/schema-comparer.tgz}
     name: '@rush-temp/schema-comparer'
     version: 0.0.0
     dependencies:
-      '@itwin/build-tools': 3.7.0
-      '@itwin/core-backend': 3.7.0_2e2eeb2d4f6956b00f5bf88055124b54
-      '@itwin/core-bentley': 3.7.0
-      '@itwin/core-common': 3.7.0_d3cf7b747b827c7a0a662ddd00c672b6
-      '@itwin/core-geometry': 3.7.0
-      '@itwin/core-i18n': 3.7.0_@itwin+core-bentley@3.7.0
-      '@itwin/core-quantity': 3.7.0_@itwin+core-bentley@3.7.0
-      '@itwin/ecschema-editing': 3.7.0_087c9e4f5da3e16162af870e0b98a3f7
-      '@itwin/ecschema-locaters': 3.7.0_@itwin+ecschema-metadata@3.7.0
-      '@itwin/ecschema-metadata': 3.7.0_fdb6011f839825f043b6a0c032ed4064
-      '@itwin/eslint-plugin': 3.7.0_eslint@7.32.0+typescript@4.3.5
-      '@itwin/imodels-access-backend': 1.0.1_d9a1ff4dd18e47d058df2ce2efa0d599
+      '@itwin/build-tools': 3.7.2
+      '@itwin/core-backend': 3.7.2_1a79653218959a7597d70ac583ffdfe7
+      '@itwin/core-bentley': 3.7.2
+      '@itwin/core-common': 3.7.2_da60928250afbeaa66b3d916492a4fd7
+      '@itwin/core-geometry': 3.7.2
+      '@itwin/core-i18n': 3.7.2_@itwin+core-bentley@3.7.2
+      '@itwin/core-quantity': 3.7.2_@itwin+core-bentley@3.7.2
+      '@itwin/ecschema-editing': 3.7.2_26b2a0ead6435e740bac9f23958f94a9
+      '@itwin/ecschema-locaters': 3.7.2_@itwin+ecschema-metadata@3.7.2
+      '@itwin/ecschema-metadata': 3.7.2_0d5d08019fdd24232ee9b8a55e01cd13
+      '@itwin/eslint-plugin': 3.7.2_eslint@7.32.0+typescript@4.3.5
+      '@itwin/imodels-access-backend': 1.0.1_c426bc9be7be6d65993fedc6d34a98ba
       '@itwin/imodels-client-authoring': 1.0.1
       '@types/chai': 4.3.4
       '@types/chai-as-promised': 7.1.5
@@ -5758,21 +5758,21 @@ packages:
     dev: false
 
   file:projects/schema-roundtrip.tgz:
-    resolution: {integrity: sha512-7uvEd9n94bcR8muBvgPCVN7reMdgzuTtJ1YrYKSdOpo8yV0LLwhWZubYK0rZNoiRg9RrStqGV61ZJaHaCpnDNw==, tarball: file:projects/schema-roundtrip.tgz}
+    resolution: {integrity: sha512-jfHRZgGhJtLgWFslTscT5olMxrUhaE8yzfqRuGF8X9WNizi1vKuEPHu9neJdvKJl5S9Pw/uM/8R6jCy8jBcGaw==, tarball: file:projects/schema-roundtrip.tgz}
     name: '@rush-temp/schema-roundtrip'
     version: 0.0.0
     dependencies:
-      '@itwin/build-tools': 3.7.0
-      '@itwin/core-backend': 3.7.0_2e2eeb2d4f6956b00f5bf88055124b54
-      '@itwin/core-bentley': 3.7.0
-      '@itwin/core-common': 3.7.0_d3cf7b747b827c7a0a662ddd00c672b6
-      '@itwin/core-geometry': 3.7.0
-      '@itwin/core-i18n': 3.7.0_@itwin+core-bentley@3.7.0
-      '@itwin/core-quantity': 3.7.0_@itwin+core-bentley@3.7.0
-      '@itwin/ecschema-locaters': 3.7.0_@itwin+ecschema-metadata@3.7.0
-      '@itwin/ecschema-metadata': 3.7.0_fdb6011f839825f043b6a0c032ed4064
-      '@itwin/eslint-plugin': 3.7.0_eslint@7.32.0+typescript@4.3.5
-      '@itwin/imodels-access-backend': 1.0.1_d9a1ff4dd18e47d058df2ce2efa0d599
+      '@itwin/build-tools': 3.7.2
+      '@itwin/core-backend': 3.7.2_1a79653218959a7597d70ac583ffdfe7
+      '@itwin/core-bentley': 3.7.2
+      '@itwin/core-common': 3.7.2_da60928250afbeaa66b3d916492a4fd7
+      '@itwin/core-geometry': 3.7.2
+      '@itwin/core-i18n': 3.7.2_@itwin+core-bentley@3.7.2
+      '@itwin/core-quantity': 3.7.2_@itwin+core-bentley@3.7.2
+      '@itwin/ecschema-locaters': 3.7.2_@itwin+ecschema-metadata@3.7.2
+      '@itwin/ecschema-metadata': 3.7.2_0d5d08019fdd24232ee9b8a55e01cd13
+      '@itwin/eslint-plugin': 3.7.2_eslint@7.32.0+typescript@4.3.5
+      '@itwin/imodels-access-backend': 1.0.1_c426bc9be7be6d65993fedc6d34a98ba
       '@itwin/imodels-client-authoring': 1.0.1
       '@types/chai': 4.3.4
       '@types/chai-as-promised': 7.1.5
@@ -5805,21 +5805,21 @@ packages:
     dev: false
 
   file:projects/schema-validator.tgz:
-    resolution: {integrity: sha512-CUeip91R5Gsxt3ksxuEyNqqSvguLh6zLznUWE+Wjhtm52nDRaKr2DP1F/QcIKRc/QtjvViK9pFlyTfjihofDtA==, tarball: file:projects/schema-validator.tgz}
+    resolution: {integrity: sha512-04bM/KkP9FYbYupLU9CLCGxoJTENMxoaUiYUXBJt3hw4+YPVJCcnJsFqx1uymSXsrZbKE/kkYJD8ICBXOHYhWw==, tarball: file:projects/schema-validator.tgz}
     name: '@rush-temp/schema-validator'
     version: 0.0.0
     dependencies:
-      '@itwin/build-tools': 3.7.0
-      '@itwin/core-backend': 3.7.0_2e2eeb2d4f6956b00f5bf88055124b54
-      '@itwin/core-bentley': 3.7.0
-      '@itwin/core-common': 3.7.0_d3cf7b747b827c7a0a662ddd00c672b6
-      '@itwin/core-geometry': 3.7.0
-      '@itwin/core-quantity': 3.7.0_@itwin+core-bentley@3.7.0
-      '@itwin/ecschema-editing': 3.7.0_087c9e4f5da3e16162af870e0b98a3f7
-      '@itwin/ecschema-locaters': 3.7.0_@itwin+ecschema-metadata@3.7.0
-      '@itwin/ecschema-metadata': 3.7.0_fdb6011f839825f043b6a0c032ed4064
-      '@itwin/eslint-plugin': 3.7.0_eslint@7.32.0+typescript@4.3.5
-      '@itwin/imodels-access-backend': 1.0.1_d9a1ff4dd18e47d058df2ce2efa0d599
+      '@itwin/build-tools': 3.7.2
+      '@itwin/core-backend': 3.7.2_1a79653218959a7597d70ac583ffdfe7
+      '@itwin/core-bentley': 3.7.2
+      '@itwin/core-common': 3.7.2_da60928250afbeaa66b3d916492a4fd7
+      '@itwin/core-geometry': 3.7.2
+      '@itwin/core-quantity': 3.7.2_@itwin+core-bentley@3.7.2
+      '@itwin/ecschema-editing': 3.7.2_26b2a0ead6435e740bac9f23958f94a9
+      '@itwin/ecschema-locaters': 3.7.2_@itwin+ecschema-metadata@3.7.2
+      '@itwin/ecschema-metadata': 3.7.2_0d5d08019fdd24232ee9b8a55e01cd13
+      '@itwin/eslint-plugin': 3.7.2_eslint@7.32.0+typescript@4.3.5
+      '@itwin/imodels-access-backend': 1.0.1_c426bc9be7be6d65993fedc6d34a98ba
       '@itwin/imodels-client-authoring': 1.0.1
       '@types/chai': 4.3.4
       '@types/chai-as-promised': 7.1.5
