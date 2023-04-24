@@ -11,7 +11,7 @@
     "name": "Bentley Systems, Inc.",
     "url": "http://www.bentley.com"
   },
-  "version": "0.2.162",
+  "version": "0.2.164",
   "bin": {
     "imodel-schema-validator": "./lib/index.js"
   },
@@ -27,19 +27,19 @@
     "copy:test-assets": "cpx \"./src/test/assets/**/*\" ./lib/test/assets"
   },
   "dependencies": {
-    "@itwin/ecschema-locaters": "3.7.0",
-    "@itwin/ecschema-metadata": "3.7.0",
-    "@itwin/ecschema-editing": "3.7.0",
+    "@itwin/ecschema-locaters": "^3.7.3",
+    "@itwin/ecschema-metadata": "^3.7.3",
+    "@itwin/ecschema-editing": "^3.7.3",
     "@itwin/oidc-signin-tool": "~3.6.0",
-    "@itwin/core-bentley": "3.7.0",
-    "@itwin/core-geometry": "3.7.0",
-    "@itwin/core-backend": "3.7.0",
-    "@itwin/core-quantity": "3.7.0",
-    "@itwin/core-common": "3.7.0",
+    "@itwin/core-bentley": "^3.7.3",
+    "@itwin/core-geometry": "^3.7.3",
+    "@itwin/core-backend": "^3.7.3",
+    "@itwin/core-quantity": "^3.7.3",
+    "@itwin/core-common": "^3.7.3",
     "@itwin/imodels-access-backend": "1.0.1",
     "@itwin/imodels-client-authoring": "1.0.1",
-    "@bentley/schema-comparer": "0.2.162",
-    "@bentley/schema-validator": "0.2.162",
+    "@bentley/schema-comparer": "0.2.164",
+    "@bentley/schema-validator": "0.2.164",
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
     "httpntlm": "~1",
@@ -47,8 +47,8 @@
     "readdirp": "^3.0.0"
   },
   "devDependencies": {
-    "@itwin/eslint-plugin": "3.7.0",
-    "@itwin/build-tools": "3.7.0",
+    "@itwin/eslint-plugin": "^3.7.3",
+    "@itwin/build-tools": "^3.7.3",
     "@types/node": "18.11.5",
     "@types/chai": "^4.1.7",
     "@types/mocha": "^8.2.2",
