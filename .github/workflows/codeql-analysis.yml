@@ -1,4 +1,4 @@
-name: "CodeQL"
+name: "Bis-Schema-Validation-CodeQL"
 
 on:
   push:
