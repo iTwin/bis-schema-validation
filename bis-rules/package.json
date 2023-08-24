@@ -55,6 +55,9 @@
     "@itwin/core-quantity": "^4.1.0"
   },
   "nyc": {
-    "extends": "./node_modules/@itwin/build-tools/.nycrc"
+    "extends": "./node_modules/@itwin/build-tools/.nycrc",
+    "require": [
+      "ts-node/register"
+    ]
   }
 }
