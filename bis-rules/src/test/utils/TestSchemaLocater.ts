@@ -3,13 +3,13 @@
 * Licensed under the MIT License. See LICENSE.md in the project root for license terms.
 *--------------------------------------------------------------------------------------------*/
 
-import { ISchemaLocater, Schema, SchemaContext, SchemaKey, SchemaMatchType } from "@itwin/ecschema-metadata";
+import { ISchemaLocater, Schema, SchemaContext, SchemaInfo, SchemaKey, SchemaMatchType } from "@itwin/ecschema-metadata";
 
 const formatsKey = new SchemaKey("Formats", 1, 0, 0);
 const unitsKey = new SchemaKey("Units", 1, 0, 0);
 
 export class TestSchemaLocater implements ISchemaLocater {
-  public async getSchema<T extends Schema>(schemaKey: SchemaKey, matchType: SchemaMatchType, context: SchemaContext): Promise<T | undefined> {
+  public async getSchema<T extends Schema>(schemaKey: Readonly<SchemaKey>, matchType: SchemaMatchType, context: SchemaContext): Promise<T | undefined> {
     if (schemaKey.matches(formatsKey, matchType))
       return await Schema.fromJson(testFormatSchema, context) as T;
 
@@ -27,6 +27,10 @@ export class TestSchemaLocater implements ISchemaLocater {
       return Schema.fromJsonSync(testUnitsSchema, context) as T;
 
     return undefined;
+  }
+
+  public async getSchemaInfo(schemaKey: Readonly<SchemaKey>, _matchType: SchemaMatchType, context: SchemaContext): Promise<SchemaInfo | undefined> {
+    return this.getSchema(schemaKey, _matchType, context);
   }
 }
 

@@ -52,7 +52,7 @@ async function roundTrip() {
           console.log(chalk.default.green(line.resultText));
       }
     }
-  } catch (err) {
+  } catch (err: any) {
     // tslint:disable-next-line:no-console
     console.log(chalk.default.red("An error occurred during round trip: " + err.message));
     process.exit(1);

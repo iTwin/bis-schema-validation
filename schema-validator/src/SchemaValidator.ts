@@ -202,7 +202,7 @@ export class SchemaValidator {
 
       message = collectionReporter.diagnostics.length === 0 ? " Schema Validation Succeeded. No rule violations found." : undefined;
       msgType = ValidationResultType.Message;
-    } catch (err) {
+    } catch (err: any) {
       message = ` An error occurred validating the schema ${schemaFullName}: ${err.message}`;
       msgType = ValidationResultType.Error;
     }
@@ -285,7 +285,7 @@ export class SchemaValidator {
         schema = await deserializer.deserializeXmlFile(schemaPath, context, referencePaths);
 
       return schema;
-    } catch (err) {
+    } catch (err: any) {
       const msg = ` An error occurred de-serializing the schema ${schemaPath}: ${err.message}`;
       results.push({ resultType: ValidationResultType.Error, resultText: msg });
     }

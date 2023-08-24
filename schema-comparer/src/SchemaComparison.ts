@@ -169,7 +169,7 @@ export class SchemaComparison {
 
       message = collectionReporter.changeMessages.length === 0 ? " Schema Comparison Succeeded. No differences found." : undefined;
       msgType = ComparisonResultType.Message;
-    } catch (err) {
+    } catch (err: any) {
       message = ` An error occurred comparing the schema ${schemaName}: ${err.message}`;
       msgType = ComparisonResultType.Error;
     }
@@ -211,7 +211,7 @@ export class SchemaComparison {
         schema = await deserializer.deserializeXmlFile(schemaPath, context, referencePaths);
 
       return schema;
-    } catch (err) {
+    } catch (err: any) {
       const msg = ` An error occurred de-serializing the schema ${schemaPath}: ${err.message}`;
       results.push({ resultType: ComparisonResultType.Error, resultText: msg });
     }

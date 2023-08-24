@@ -10,7 +10,7 @@ import { Logger, LogLevel } from "@itwin/core-bentley";
 import { FileSchemaKey, SchemaFileLocater } from "@itwin/ecschema-locaters";
 import {
   ECObjectsError, ECObjectsStatus, ECVersion, ISchemaLocater, Schema, SchemaContext,
-  SchemaGraphUtil, SchemaKey, SchemaMatchType, SchemaReadHelper, XmlParser,
+  SchemaGraphUtil, SchemaInfo, SchemaKey, SchemaMatchType, SchemaReadHelper, XmlParser,
 } from "@itwin/ecschema-metadata";
 
 function isECv2Schema(schemaText: string): boolean {
@@ -52,6 +52,41 @@ export class SchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLo
    */
   public getSchemaSync<T extends Schema>(key: SchemaKey, matchType: SchemaMatchType, context: SchemaContext): T | undefined {
     return this.loadSchema(key, matchType, context);
+  }
+
+  /**
+    * Gets the schema info which matches the provided SchemaKey.  The schema info may be returned before the schema is fully loaded.
+    * The fully loaded schema can be gotten later from the context using the getCachedSchema method.
+    * @param schemaKey The SchemaKey describing the schema to get from the cache.
+    * @param matchType The match type to use when locating the schema
+    * @param context The SchemaContext that will control the lifetime of the schema and holds the schema's references, if they exist.
+    */
+  public async getSchemaInfo(schemaKey: SchemaKey, matchType: SchemaMatchType, context: SchemaContext): Promise<SchemaInfo | undefined> {
+    const candidates: FileSchemaKey[] = this.findEligibleSchemaKeys(schemaKey, matchType, "xml");
+
+    if (0 === candidates.length)
+      return undefined;
+
+    // eslint-disable-next-line @typescript-eslint/unbound-method
+    const maxCandidate = candidates.sort(this.compareSchemaKeyByVersion)[candidates.length - 1];
+    const schemaPath = maxCandidate.fileName;
+
+    // Load the file
+    if (undefined === await this.fileExists(schemaPath))
+      return undefined;
+
+    const schemaText = await this.readUtf8FileToString(schemaPath);
+    if (undefined === schemaText)
+      return undefined;
+
+    const parser = new DOMParser();
+    const document = parser.parseFromString(schemaText);
+
+    this.addSchemaSearchPaths([path.dirname(schemaPath)]);
+    const reader = new SchemaReadHelper(XmlParser, context);
+    const schema = new Schema(context);
+
+    return reader.readSchemaInfo(schema, document);
   }
 
   /**
@@ -195,7 +230,7 @@ export class SchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLo
         const xmlKey = currentStub.schemaKey as FileSchemaKey;
         const schemaJson = nativeContext!.readSchemaFromXmlFile(xmlKey.fileName);
         Schema.fromJsonSync(schemaJson, context);
-      } catch (err) {
+      } catch (err: any) {
         if (err.message === "ReferencedSchemaNotFound")
           throw new ECObjectsError(ECObjectsStatus.UnableToLocateSchema, `Unable to load schema '${parentSchema.name}'. A referenced schema could not be found.`);
         throw (err);
@@ -266,6 +301,41 @@ class StubSchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLocat
 
     this.addSchemaReferences(schema, context, SchemaMatchType.LatestWriteCompatible);
     return schema;
+  }
+
+  /**
+  * Gets the schema info which matches the provided SchemaKey.  The schema info may be returned before the schema is fully loaded.
+  * The fully loaded schema can be gotten later from the context using the getCachedSchema method.
+  * @param schemaKey The SchemaKey describing the schema to get from the cache.
+  * @param matchType The match type to use when locating the schema
+  * @param context The SchemaContext that will control the lifetime of the schema and holds the schema's references, if they exist.
+  */
+  public async getSchemaInfo(schemaKey: SchemaKey, matchType: SchemaMatchType, context: SchemaContext): Promise<SchemaInfo | undefined> {
+    const candidates: FileSchemaKey[] = this.findEligibleSchemaKeys(schemaKey, matchType, "xml");
+
+    if (0 === candidates.length)
+      return undefined;
+
+    // eslint-disable-next-line @typescript-eslint/unbound-method
+    const maxCandidate = candidates.sort(this.compareSchemaKeyByVersion)[candidates.length - 1];
+    const schemaPath = maxCandidate.fileName;
+
+    // Load the file
+    if (undefined === await this.fileExists(schemaPath))
+      return undefined;
+
+    const schemaText = await this.readUtf8FileToString(schemaPath);
+    if (undefined === schemaText)
+      return undefined;
+
+    const parser = new DOMParser();
+    const document = parser.parseFromString(schemaText);
+
+    this.addSchemaSearchPaths([path.dirname(schemaPath)]);
+    const reader = new SchemaReadHelper(XmlParser, context);
+    const schema = new Schema(context);
+
+    return reader.readSchemaInfo(schema, document);
   }
 
   /**
