@@ -51,5 +51,3 @@ steps:
   - script: 'git push --follow-tags https://$(GITHUBTOKEN)@github.com/iTwin/bis-schema-validation HEAD:master'
     displayName: 'Push version bump'
     condition: succeeded()
-
-
