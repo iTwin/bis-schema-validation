@@ -9,7 +9,7 @@ const formatsKey = new SchemaKey("Formats", 1, 0, 0);
 const unitsKey = new SchemaKey("Units", 1, 0, 0);
 
 export class TestSchemaLocater implements ISchemaLocater {
-  public async getSchema<T extends Schema>(schemaKey: Readonly<SchemaKey>, matchType: SchemaMatchType, context: SchemaContext): Promise<T | undefined> {
+  public async getSchema<T extends Schema>(schemaKey: SchemaKey, matchType: SchemaMatchType, context: SchemaContext): Promise<T | undefined> {
     if (schemaKey.matches(formatsKey, matchType))
       return await Schema.fromJson(testFormatSchema, context) as T;
 
@@ -29,7 +29,7 @@ export class TestSchemaLocater implements ISchemaLocater {
     return undefined;
   }
 
-  public async getSchemaInfo(schemaKey: Readonly<SchemaKey>, _matchType: SchemaMatchType, context: SchemaContext): Promise<SchemaInfo | undefined> {
+  public async getSchemaInfo(schemaKey: SchemaKey, _matchType: SchemaMatchType, context: SchemaContext): Promise<SchemaInfo | undefined> {
     return this.getSchema(schemaKey, _matchType, context);
   }
 }
