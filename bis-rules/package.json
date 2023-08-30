@@ -28,47 +28,36 @@
     "url": "http://www.bentley.com"
   },
   "devDependencies": {
-    "@itwin/build-tools": "^3.7.5",
-    "@itwin/eslint-plugin": "^3.7.5",
-    "@itwin/ecschema-metadata": "^3.7.5",
-    "@types/chai": "^4.1.7",
+    "@itwin/build-tools": "^4.1.0",
+    "@itwin/eslint-plugin": "4.0.0-dev.44",
+    "@itwin/ecschema-metadata": "^4.1.0",
+    "@types/chai": "4.3.1",
     "@types/mocha": "^8.2.2",
     "@types/rimraf": "^2.0.2",
     "@types/sinon": "^7.0.5",
     "ts-node": "^7.0.1",
-    "chai": "^4.2.0",
+    "chai": "^4.1.2",
     "mocha": "^10.0.0",
     "nyc": "^15.1.0",
     "rimraf": "^3.0.2",
     "sinon": "^7.1.1",
     "source-map-support": "^0.5.9",
-    "typescript": "~4.3.0",
-    "eslint": "^7.11.0"
+    "typescript": "~5.0.2",
+    "eslint": "^8.44.0"
   },
   "peerDependencies": {
-    "@itwin/ecschema-metadata": "^3.7.5",
-    "@itwin/ecschema-editing": "^3.7.5"
+    "@itwin/ecschema-metadata": "^4.1.0",
+    "@itwin/ecschema-editing": "^4.1.0"
   },
   "dependencies": {
-    "@itwin/core-bentley": "^3.7.5",
-    "@itwin/core-backend": "^3.7.5",
-    "@itwin/core-quantity": "^3.7.5"
+    "@itwin/core-bentley": "^4.1.0",
+    "@itwin/core-backend": "^4.1.0",
+    "@itwin/core-quantity": "^4.1.0"
   },
   "nyc": {
     "extends": "./node_modules/@itwin/build-tools/.nycrc",
     "require": [
       "ts-node/register"
     ]
-  },
-  "eslintConfig": {
-    "plugins": [
-      "@itwin"
-    ],
-    "extends": "plugin:@itwin/itwinjs-recommended",
-    "rules": {
-      "prefer-template": "off",
-      "@typescript-eslint/naming-convention": "off",
-      "@typescript-eslint/no-unnecessary-type-assertion": "off"
-    }
   }
 }

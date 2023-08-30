@@ -102,7 +102,7 @@ export class SchemaRoundTrip {
     let doc = this.createEmptyXmlDocument();
     try {
       doc = await schema.toXml(doc);
-    } catch (err) {
+    } catch (err: any) {
       const msg = `An error occurred serializing schema '${schema.fullName}': ${err.message}`;
       results.push({ resultType: RoundTripResultType.Error, resultText: msg });
     }
@@ -110,7 +110,7 @@ export class SchemaRoundTrip {
     // Write the serialized schema to the out dir specified in the options.
     try {
       await this.writeSchemaXmlFile(schema, doc, options, results);
-    } catch (err) {
+    } catch (err: any) {
       const msg = `An error occurred writing xml file for schema '${schema.fullName}': ${err.message}`;
       results.push({ resultType: RoundTripResultType.Error, resultText: msg });
     }
@@ -149,7 +149,7 @@ export class SchemaRoundTrip {
     const xml = serializer.serializeToString(xmlDoc);
     try {
       await fs.writeFile(baseFile, xml);
-    } catch (err) {
+    } catch (err: any) {
       const msg = `An error occurred writing to file '${baseFile}': ${err.message}`;
       results.push({ resultType: RoundTripResultType.Error, resultText: msg });
     }
@@ -184,7 +184,7 @@ export class SchemaRoundTrip {
     let schemaText: string;
     try {
       schemaText = fs.readFileSync(schemaPath, "utf-8");
-    } catch (err) {
+    } catch (err: any) {
       const msg = ` An error occurred reading the schema XML file '${schemaPath}': ${err.message}`;
       results.push({ resultType: RoundTripResultType.Error, resultText: msg });
       return;
@@ -207,7 +207,7 @@ export class SchemaRoundTrip {
 
     try {
       return await context.getSchema(schemaKey, SchemaMatchType.Exact);
-    } catch (err) {
+    } catch (err: any) {
       const msg = `An error occurred retrieving the schema '${schemaKey.toString()}': ${err.message}`;
       results.push({ resultType: RoundTripResultType.Error, resultText: msg });
     }

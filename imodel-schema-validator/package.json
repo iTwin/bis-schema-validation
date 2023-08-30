@@ -27,15 +27,15 @@
     "copy:test-assets": "cpx \"./src/test/assets/**/*\" ./lib/test/assets"
   },
   "dependencies": {
-    "@itwin/ecschema-locaters": "^3.7.5",
-    "@itwin/ecschema-metadata": "^3.7.5",
-    "@itwin/ecschema-editing": "^3.7.5",
+    "@itwin/ecschema-locaters": "^4.1.0",
+    "@itwin/ecschema-metadata": "^4.1.0",
+    "@itwin/ecschema-editing": "^4.1.0",
     "@itwin/oidc-signin-tool": "~3.6.0",
-    "@itwin/core-bentley": "^3.7.5",
-    "@itwin/core-geometry": "^3.7.5",
-    "@itwin/core-backend": "^3.7.5",
-    "@itwin/core-quantity": "^3.7.5",
-    "@itwin/core-common": "^3.7.5",
+    "@itwin/core-bentley": "^4.1.0",
+    "@itwin/core-geometry": "^4.1.0",
+    "@itwin/core-backend": "^4.1.0",
+    "@itwin/core-quantity": "^4.1.0",
+    "@itwin/core-common": "^4.1.0",
     "@itwin/imodels-access-backend": "1.0.1",
     "@itwin/imodels-client-authoring": "1.0.1",
     "@bentley/schema-comparer": "0.2.168",
@@ -47,28 +47,17 @@
     "readdirp": "^3.0.0"
   },
   "devDependencies": {
-    "@itwin/eslint-plugin": "^3.7.5",
-    "@itwin/build-tools": "^3.7.5",
-    "@types/node": "18.11.5",
-    "@types/chai": "^4.1.7",
+    "@itwin/eslint-plugin": "4.0.0-dev.44",
+    "@itwin/build-tools": "^4.1.0",
+    "@types/node": "18.16.1",
+    "@types/chai": "4.3.1",
     "@types/mocha": "^8.2.2",
     "cpx2": "^3.0.0",
     "rimraf": "^3.0.2",
-    "typescript": "~4.3.0",
-    "chai": "^4.2.0",
+    "typescript": "~5.0.2",
+    "chai": "^4.1.2",
     "mocha": "^10.0.0",
     "nyc": "^15.1.0",
-    "eslint": "^7.11.0"
-  },
-  "eslintConfig": {
-    "plugins": [
-      "@itwin"
-    ],
-    "extends": "plugin:@itwin/itwinjs-recommended",
-    "rules": {
-      "prefer-template": "off",
-      "dot-notation": "off",
-      "no-console": "off"
-    }
+    "eslint": "^8.44.0"
   }
 }

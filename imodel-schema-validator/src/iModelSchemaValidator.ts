@@ -184,7 +184,7 @@ export async function validateSchema(schemaName: string, version: string, imodel
           validationResult.validator = iModelValidationResultTypes.Passed;
       }
     }
-  } catch (error) {
+  } catch (error: any) {
     console.log(chalk.default.red("An error occurred during validation: " + error.message));
     Reporter.writeToLogFile(schemaName, version, "An error occurred during validation: " + error.message + "\n", output);
     validationResult.validator = iModelValidationResultTypes.Error;
@@ -227,7 +227,7 @@ export async function compareSchema(schemaName: string, version: string, imodelS
           validationResult.comparer = iModelValidationResultTypes.Passed;
       }
     }
-  } catch (err) {
+  } catch (err: any) {
     console.log(chalk.default.red("An error occurred during comparison: " + err.message));
     Reporter.writeToLogFile(schemaName, version, "An error occurred during comparison: " + err.message + "\n", output);
     validationResult.comparer = iModelValidationResultTypes.Error;
