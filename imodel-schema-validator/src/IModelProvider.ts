@@ -90,11 +90,11 @@ export class IModelProvider {
    * @param projectId: The Id of a project on iModelHub.
    * @param iModelName:  The name of an iModel within the project.
    */
-  public static async getIModelId(accessToken: AccessToken, projectId: string, iModelName: string): Promise<string | undefined> {
+  public static async getIModelId(accessToken: AccessToken, iTwinId: string, iModelName: string): Promise<string | undefined> {
     const iModelListParams: GetIModelListParams = {
       authorization: AccessTokenAdapter.toAuthorizationCallback(accessToken),
       urlParams: {
-        projectId,
+        iTwinId,
         name: iModelName,
       },
     };

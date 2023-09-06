@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@itwin/eslint-plugin": "4.0.0-dev.44",
-    "@itwin/build-tools": "^4.1.0",
+    "@itwin/build-tools": "^4.2.0-dev.13",
     "@types/chai": "4.3.1",
     "@types/chai-as-promised": "^7",
     "@types/fs-extra": "^5.0.4",
@@ -54,20 +54,20 @@
     "eslint": "^8.44.0"
   },
   "peerDependencies": {
-    "@itwin/ecschema-metadata": "^4.1.0",
-    "@itwin/ecschema-editing": "^4.1.0",
-    "@itwin/ecschema-locaters": "^4.1.0"
+    "@itwin/ecschema-metadata": "^4.2.0-dev.13",
+    "@itwin/ecschema-editing": "^4.2.0-dev.13",
+    "@itwin/ecschema-locaters": "^4.2.0-dev.13"
   },
   "dependencies": {
     "@bentley/bis-rules": "0.2.170",
     "@bentley/native-schema-locater": "0.2.170",
-    "@itwin/core-bentley": "^4.1.0",
-    "@itwin/core-geometry": "^4.1.0",
-    "@itwin/imodels-access-backend": "1.0.1",
-    "@itwin/imodels-client-authoring": "1.0.1",
-    "@itwin/core-backend": "^4.1.0",
-    "@itwin/core-quantity": "^4.1.0",
-    "@itwin/core-common": "^4.1.0",
+    "@itwin/core-bentley": "^4.2.0-dev.13",
+    "@itwin/core-geometry": "^4.2.0-dev.13",
+    "@itwin/imodels-access-backend": "^3.0.0",
+    "@itwin/imodels-client-authoring": "^3.0.0",
+    "@itwin/core-backend": "^4.2.0-dev.13",
+    "@itwin/core-quantity": "^4.2.0-dev.13",
+    "@itwin/core-common": "^4.2.0-dev.13",
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
     "fs-extra": "^7.0.1",
