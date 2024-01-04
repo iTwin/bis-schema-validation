@@ -1,16 +1,16 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@itwin/build-tools': ^4.2.0-dev.23
-  '@itwin/core-backend': ^4.2.0-dev.23
-  '@itwin/core-bentley': ^4.2.0-dev.23
-  '@itwin/core-common': ^4.2.0-dev.23
-  '@itwin/core-geometry': ^4.2.0-dev.23
-  '@itwin/core-i18n': ^4.2.0-dev.23
-  '@itwin/core-quantity': ^4.2.0-dev.23
-  '@itwin/ecschema-editing': ^4.2.0-dev.23
-  '@itwin/ecschema-locaters': ^4.2.0-dev.23
-  '@itwin/ecschema-metadata': ^4.2.0-dev.23
+  '@itwin/build-tools': ^4.3.3
+  '@itwin/core-backend': ^4.3.3
+  '@itwin/core-bentley': ^4.3.3
+  '@itwin/core-common': ^4.3.3
+  '@itwin/core-geometry': ^4.3.3
+  '@itwin/core-i18n': ^4.3.3
+  '@itwin/core-quantity': ^4.3.3
+  '@itwin/ecschema-editing': ^4.3.3
+  '@itwin/ecschema-locaters': ^4.3.3
+  '@itwin/ecschema-metadata': ^4.3.3
   '@itwin/eslint-plugin': 4.0.0-dev.44
   '@itwin/imodels-access-backend': ^3.0.0
   '@itwin/imodels-client-authoring': ^3.0.0
@@ -24,13 +24,13 @@ specifiers:
   '@types/chai': 4.3.1
   '@types/chai-as-promised': ^7
   '@types/fs-extra': ^5.0.4
-  '@types/mocha': ^8.2.2
-  '@types/node': 18.16.1
+  '@types/mocha': ^10.0.6
+  '@types/node': ~18.16.20
   '@types/rimraf': ^2.0.2
-  '@types/sinon': ^7.0.5
+  '@types/sinon': ^17.0.2
   '@xmldom/xmldom': ~0.8.5
-  chai: ^4.1.2
-  chai-as-promised: ^7
+  chai: ^4.3.10
+  chai-as-promised: ^7.1.1
   chalk: ^2.4.1
   commander: ^2.19.0
   cpx2: ^3.0.0
@@ -38,31 +38,31 @@ specifiers:
   fs-extra: ^7.0.1
   httpntlm: ~1
   js-sha1: ^0.6.0
-  mocha: ^10.0.0
+  mocha: ^10.2.0
   nyc: ^15.1.0
   readdirp: ^3.0.0
   rimraf: ^3.0.2
-  sinon: ^7.1.1
+  sinon: ^17.0.1
   source-map-support: ^0.5.9
   ts-node: ^7.0.1
   typescript: ~5.0.2
 
 dependencies:
-  '@itwin/build-tools': 4.2.0-dev.24_@types+node@18.16.1
-  '@itwin/core-backend': 4.2.0-dev.24_bd8c5f8ac511c5b0b6ea24e9f6627b89
-  '@itwin/core-bentley': 4.2.0-dev.24
-  '@itwin/core-common': 4.2.0-dev.24_2f6720151078928ffd8ae11c6d241e42
-  '@itwin/core-geometry': 4.2.0-dev.24
-  '@itwin/core-i18n': 4.2.0-dev.24_@itwin+core-bentley@4.2.0-dev.24
-  '@itwin/core-quantity': 4.2.0-dev.24_@itwin+core-bentley@4.2.0-dev.24
-  '@itwin/ecschema-editing': 4.2.0-dev.24_b75d5c0e0e9398cabe8bb602c8d0112b
-  '@itwin/ecschema-locaters': 4.2.0-dev.24_f8a052a18bb7d386c0113898c19e7376
-  '@itwin/ecschema-metadata': 4.2.0-dev.24_f487d2bc017d4fe71d85b4ea15a373b6
+  '@itwin/build-tools': 4.3.3_@types+node@18.16.20
+  '@itwin/core-backend': 4.3.3_fc0a40a8c55626c1c7a6128fc1c06026
+  '@itwin/core-bentley': 4.3.3
+  '@itwin/core-common': 4.3.3_19be6e932f8d3a18770afc9f1446400f
+  '@itwin/core-geometry': 4.3.3
+  '@itwin/core-i18n': 4.3.3_@itwin+core-bentley@4.3.3
+  '@itwin/core-quantity': 4.3.3_@itwin+core-bentley@4.3.3
+  '@itwin/ecschema-editing': 4.3.3_00b2555bde24b1989d4d8c9dda6399e0
+  '@itwin/ecschema-locaters': 4.3.3_@itwin+ecschema-metadata@4.3.3
+  '@itwin/ecschema-metadata': 4.3.3_90d9d310cb211a1837030f5ca5c123b2
   '@itwin/eslint-plugin': 4.0.0-dev.44_eslint@8.49.0+typescript@5.0.4
-  '@itwin/imodels-access-backend': 3.1.1_91390ec049547194d2f4bad37254dba5
+  '@itwin/imodels-access-backend': 3.1.1_eddb1e048e22360fbce661ac2b7e5afc
   '@itwin/imodels-client-authoring': 3.1.0
-  '@itwin/oidc-signin-tool': 3.6.1_@itwin+core-bentley@4.2.0-dev.24
-  '@rush-temp/bis-rules': file:projects/bis-rules.tgz_1011b4e1155ac1f843db84924796cdb5
+  '@itwin/oidc-signin-tool': 3.6.1_@itwin+core-bentley@4.3.3
+  '@rush-temp/bis-rules': file:projects/bis-rules.tgz_cda452f90956e70f883d90490264151b
   '@rush-temp/imodel-schema-validator': file:projects/imodel-schema-validator.tgz
   '@rush-temp/native-schema-locater': file:projects/native-schema-locater.tgz
   '@rush-temp/schema-comparer': file:projects/schema-comparer.tgz
@@ -71,13 +71,13 @@ dependencies:
   '@types/chai': 4.3.1
   '@types/chai-as-promised': 7.1.6
   '@types/fs-extra': 5.1.0
-  '@types/mocha': 8.2.3
-  '@types/node': 18.16.1
+  '@types/mocha': 10.0.6
+  '@types/node': 18.16.20
   '@types/rimraf': 2.0.5
-  '@types/sinon': 7.5.2
+  '@types/sinon': 17.0.2
   '@xmldom/xmldom': 0.8.10
-  chai: 4.3.8
-  chai-as-promised: 7.1.1_chai@4.3.8
+  chai: 4.3.10
+  chai-as-promised: 7.1.1_chai@4.3.10
   chalk: 2.4.2
   commander: 2.20.3
   cpx2: 3.0.2
@@ -89,7 +89,7 @@ dependencies:
   nyc: 15.1.0
   readdirp: 3.6.0
   rimraf: 3.0.2
-  sinon: 7.5.0
+  sinon: 17.0.1
   source-map-support: 0.5.21
   ts-node: 7.0.1
   typescript: 5.0.4
@@ -438,8 +438,8 @@ packages:
       to-fast-properties: 2.0.0
     dev: false
 
-  /@bentley/imodeljs-native/4.2.5:
-    resolution: {integrity: sha512-fmjUQulMGp9gUaUJEPiUOrm5T5F2C1QGbBomo0r4wYfkU6UoltfRMIwXLG4KnhBljShoErIfobNL4JxK2VYWrw==}
+  /@bentley/imodeljs-native/4.3.6:
+    resolution: {integrity: sha512-c0DKEqyUpGOqu2NNU9IFJ96IcmIYA0eyl7rBmmeu9B4mmLW1n8ktdAPVIqd6jxbM+sdmiVwQIZOkAKk1DQpU3Q==}
     requiresBuild: true
     dev: false
 
@@ -525,11 +525,11 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
-  /@itwin/build-tools/4.2.0-dev.24_@types+node@18.16.1:
-    resolution: {integrity: sha512-CRLCIsLDOys/eZqG8q5qsIk7hN88PB36nKbFZRvDrYyPjER3glAUKVqiBbb30U1IWubcRKCEXtwsgoUpkE6rCg==}
+  /@itwin/build-tools/4.3.3_@types+node@18.16.20:
+    resolution: {integrity: sha512-puHB5iXiGT+Q6IZdLImLqyL7Ed7bN0cwwnBMe2YaH/j5syLO3UEgbVM1OJHizygS17VlJmp94568VtNOL+NkRA==}
     hasBin: true
     dependencies:
-      '@microsoft/api-extractor': 7.36.4_@types+node@18.16.1
+      '@microsoft/api-extractor': 7.36.4_@types+node@18.16.20
       chalk: 3.0.0
       cpx2: 3.0.2
       cross-spawn: 7.0.3
@@ -592,24 +592,24 @@ packages:
       reflect-metadata: 0.1.13
     dev: false
 
-  /@itwin/core-backend/4.2.0-dev.24_bd8c5f8ac511c5b0b6ea24e9f6627b89:
-    resolution: {integrity: sha512-KSy2/aAb+v/fU9kKMfhLXc+Nm7beece9Xdjs/enupY+wxXynKiBn56/WQve9xnap/ok6CCc5Z9w8G2BknI/DoA==}
-    engines: {node: ^18.0.0}
+  /@itwin/core-backend/4.3.3_fc0a40a8c55626c1c7a6128fc1c06026:
+    resolution: {integrity: sha512-zhKqmnUQsgwWMbbMD17eK2gbZ39/N5hKiFLP4l5dfAZBDgk0VPHhHo4uwsh6izloT6x7Wox9RnrVGVP6n39S+A==}
+    engines: {node: ^18.0.0 || ^20.0.0}
     peerDependencies:
-      '@itwin/core-bentley': ^4.2.0-dev.24
-      '@itwin/core-common': ^4.2.0-dev.24
-      '@itwin/core-geometry': ^4.2.0-dev.24
+      '@itwin/core-bentley': ^4.3.3
+      '@itwin/core-common': ^4.3.3
+      '@itwin/core-geometry': ^4.3.3
       '@opentelemetry/api': ^1.0.4
     peerDependenciesMeta:
       '@opentelemetry/api':
         optional: true
     dependencies:
-      '@bentley/imodeljs-native': 4.2.5
+      '@bentley/imodeljs-native': 4.3.6
       '@itwin/cloud-agnostic-core': 2.1.0_90b3e846c411421b9b95929cf52f60fd
-      '@itwin/core-bentley': 4.2.0-dev.24
-      '@itwin/core-common': 4.2.0-dev.24_2f6720151078928ffd8ae11c6d241e42
-      '@itwin/core-geometry': 4.2.0-dev.24
-      '@itwin/core-telemetry': 4.2.0-dev.24_ed6ba609ea27f539fcb327baf3797a50
+      '@itwin/core-bentley': 4.3.3
+      '@itwin/core-common': 4.3.3_19be6e932f8d3a18770afc9f1446400f
+      '@itwin/core-geometry': 4.3.3
+      '@itwin/core-telemetry': 4.3.3_@itwin+core-geometry@4.3.3
       '@itwin/object-storage-azure': 2.1.0_90b3e846c411421b9b95929cf52f60fd
       '@itwin/object-storage-core': 2.1.0_90b3e846c411421b9b95929cf52f60fd
       form-data: 2.5.1
@@ -628,35 +628,35 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@itwin/core-bentley/4.2.0-dev.24:
-    resolution: {integrity: sha512-4kYn3/LJ8/JUyc72rK2OaXQkVkyMseOGcmMDp0+P293P+C8gff4AL4iMhkg9g+WDmsstPPxLRK0/Pm/6ai5YnA==}
+  /@itwin/core-bentley/4.3.3:
+    resolution: {integrity: sha512-7Fs/JFYX3T6HW5zS0YHyUX5beWiT7JHR6v9dKkPk+i27i6bdDrQaVnj+IITe+eYrIQPchOMIxrOpKRZdR5Oz2A==}
     dev: false
 
-  /@itwin/core-common/4.2.0-dev.24_2f6720151078928ffd8ae11c6d241e42:
-    resolution: {integrity: sha512-4TfLePhwwnhvmRDEexJIalcWAMGxx5C4vB6YiFKTOv1qEdwXdzbo191v5Lx2+zx6BAMjXr9bjtOmDlYr+bkFJg==}
+  /@itwin/core-common/4.3.3_19be6e932f8d3a18770afc9f1446400f:
+    resolution: {integrity: sha512-SwBVWtIyIMC2ww3TWGwqL24kOClT8QOHiNOpOTOSeVkDv1k12+oO4BzpAmMqwyJ/ucC0qlrBLDv+umcr1mQVwg==}
     peerDependencies:
-      '@itwin/core-bentley': ^4.2.0-dev.24
-      '@itwin/core-geometry': ^4.2.0-dev.24
+      '@itwin/core-bentley': ^4.3.3
+      '@itwin/core-geometry': ^4.3.3
     dependencies:
-      '@itwin/core-bentley': 4.2.0-dev.24
-      '@itwin/core-geometry': 4.2.0-dev.24
+      '@itwin/core-bentley': 4.3.3
+      '@itwin/core-geometry': 4.3.3
       flatbuffers: 1.12.0
       js-base64: 3.7.5
     dev: false
 
-  /@itwin/core-geometry/4.2.0-dev.24:
-    resolution: {integrity: sha512-5d85yTLe0b9LtM1C4EVKKs3vEGD18KDfpr6ljLbLbqS6pQgeKlICif3hGSvy4WUNrFvXnQNA9YgALcY4+uPoPg==}
+  /@itwin/core-geometry/4.3.3:
+    resolution: {integrity: sha512-wGUXSYnll2kJ42XoauEcdCikrll9qiHe2p3zK5vUgIrt9Edggao8t2tmLQxuz1NlxWOxoWDGNCAs665I46GM8w==}
     dependencies:
-      '@itwin/core-bentley': 4.2.0-dev.24
+      '@itwin/core-bentley': 4.3.3
       flatbuffers: 1.12.0
     dev: false
 
-  /@itwin/core-i18n/4.2.0-dev.24_@itwin+core-bentley@4.2.0-dev.24:
-    resolution: {integrity: sha512-N7WZdhviDpM7T8GmCDEGcBhjgMKLEEwDqPuvcvES91g93HAZEBtzv2nxosuhIMU+fQYRArJSBKdLAVlb0gjcEg==}
+  /@itwin/core-i18n/4.3.3_@itwin+core-bentley@4.3.3:
+    resolution: {integrity: sha512-4LTCNEvsgz4FJGAG+NwbYH12/4ExG3lisW9y/J5rJVKRtsXV7aCDPaEe2HAFCHGH93qv/FiFK0yKP8glcHiacQ==}
     peerDependencies:
-      '@itwin/core-bentley': ^4.2.0-dev.24
+      '@itwin/core-bentley': ^4.3.3
     dependencies:
-      '@itwin/core-bentley': 4.2.0-dev.24
+      '@itwin/core-bentley': 4.3.3
       i18next: 21.10.0
       i18next-browser-languagedetector: 6.1.8
       i18next-http-backend: 1.4.5
@@ -664,54 +664,54 @@ packages:
       - encoding
     dev: false
 
-  /@itwin/core-quantity/4.2.0-dev.24_@itwin+core-bentley@4.2.0-dev.24:
-    resolution: {integrity: sha512-4RlE/fxd4SKCw6bYpfMHQnhdqBl3HIDEbACL6JCWHiKMYNFYUKGA+GdGmwG1LtjK9Gw4XobT9fHVLuHk/8raoQ==}
+  /@itwin/core-quantity/4.3.3_@itwin+core-bentley@4.3.3:
+    resolution: {integrity: sha512-IIq1iRFqwzwFV4oVj4UyHgwAWCze2jAipJKWnha37BQrYvwaJZP1Pt+6agzbcTaQCOnzubIQoEsxJIQymx4Xpg==}
     peerDependencies:
-      '@itwin/core-bentley': ^4.2.0-dev.24
+      '@itwin/core-bentley': ^4.3.3
     dependencies:
-      '@itwin/core-bentley': 4.2.0-dev.24
+      '@itwin/core-bentley': 4.3.3
     dev: false
 
-  /@itwin/core-telemetry/4.2.0-dev.24_ed6ba609ea27f539fcb327baf3797a50:
-    resolution: {integrity: sha512-ovpHP5nH2+9JiJd0ZE1Cl427hybDwjs5leTAO09o1U2dL0/bcBVYHIRmqdrwLRn0HSsDzS9yZzjFChOGKA8GsQ==}
+  /@itwin/core-telemetry/4.3.3_@itwin+core-geometry@4.3.3:
+    resolution: {integrity: sha512-M8DxiSBHdsJJjg55bE9/BbrQKug51NpUijJlQoXhOEk1fu2Op8oIRCy0dUATRFbY1mRO/NwdFqsxsBucVgq85A==}
     dependencies:
-      '@itwin/core-bentley': 4.2.0-dev.24
-      '@itwin/core-common': 4.2.0-dev.24_2f6720151078928ffd8ae11c6d241e42
+      '@itwin/core-bentley': 4.3.3
+      '@itwin/core-common': 4.3.3_19be6e932f8d3a18770afc9f1446400f
     transitivePeerDependencies:
       - '@itwin/core-geometry'
     dev: false
 
-  /@itwin/ecschema-editing/4.2.0-dev.24_b75d5c0e0e9398cabe8bb602c8d0112b:
-    resolution: {integrity: sha512-AAmKypwX09Vrd/0KYl8yyEz7d60Pod6bXN0w2KjQNbMNq5vapVKF9ulqCKREFtdnmS0avibr+FhzvO/ccx+k9w==}
+  /@itwin/ecschema-editing/4.3.3_00b2555bde24b1989d4d8c9dda6399e0:
+    resolution: {integrity: sha512-1x2Lyi9qm6V+yvpR0+RtmGu7td8YZ3XxFOyn9AkOJs3uD7k9duLdf64RH1KvRloyud7wtw6UQN0pj/2dmfgiTA==}
     peerDependencies:
-      '@itwin/core-bentley': ^4.2.0-dev.24
-      '@itwin/core-quantity': ^4.2.0-dev.24
-      '@itwin/ecschema-metadata': ^4.2.0-dev.24
+      '@itwin/core-bentley': ^4.3.3
+      '@itwin/core-quantity': ^4.3.3
+      '@itwin/ecschema-metadata': ^4.3.3
     dependencies:
-      '@itwin/core-bentley': 4.2.0-dev.24
-      '@itwin/core-quantity': 4.2.0-dev.24_@itwin+core-bentley@4.2.0-dev.24
-      '@itwin/ecschema-metadata': 4.2.0-dev.24_f487d2bc017d4fe71d85b4ea15a373b6
+      '@itwin/core-bentley': 4.3.3
+      '@itwin/core-quantity': 4.3.3_@itwin+core-bentley@4.3.3
+      '@itwin/ecschema-metadata': 4.3.3_90d9d310cb211a1837030f5ca5c123b2
     dev: false
 
-  /@itwin/ecschema-locaters/4.2.0-dev.24_f8a052a18bb7d386c0113898c19e7376:
-    resolution: {integrity: sha512-Sd/y7BCgD1RSYEHu+kEoMmapGCF7eVPjH6mDR0tLDJy86i+/gHHty6IRW5s4bRgSf0v7mh/BmY0R3oPMU2ytgg==}
+  /@itwin/ecschema-locaters/4.3.3_@itwin+ecschema-metadata@4.3.3:
+    resolution: {integrity: sha512-YL4J/nWTZElumNd0FtANGsd8xs/z+oEOOU6+J9k95vqtxES9I+WJwiN3lxqbizR9juDMT6xiyM5npZSGxx7m+Q==}
     peerDependencies:
-      '@itwin/ecschema-metadata': ^4.2.0-dev.24
+      '@itwin/ecschema-metadata': ^4.3.3
     dependencies:
-      '@itwin/ecschema-metadata': 4.2.0-dev.24_f487d2bc017d4fe71d85b4ea15a373b6
+      '@itwin/ecschema-metadata': 4.3.3_90d9d310cb211a1837030f5ca5c123b2
       '@xmldom/xmldom': 0.8.10
       fs-extra: 8.1.0
       glob: 7.2.3
     dev: false
 
-  /@itwin/ecschema-metadata/4.2.0-dev.24_f487d2bc017d4fe71d85b4ea15a373b6:
-    resolution: {integrity: sha512-VQRUIM57B4a0FrAdSdwgnIWji/5VIzZU5Fbytw9ofiRs/LwtV+395yL4o0G73XWiS/JTGQgMWgkqBpAJUehlRQ==}
+  /@itwin/ecschema-metadata/4.3.3_90d9d310cb211a1837030f5ca5c123b2:
+    resolution: {integrity: sha512-rQx4mm99EahWzUC7l8hZnA1DT+D+/lOxVHxaokFdMxlVYzsyONoRmZPemJln5GkbXOQuI38zCxMCc8AFWGQVzA==}
     peerDependencies:
-      '@itwin/core-bentley': ^4.2.0-dev.24
-      '@itwin/core-quantity': ^4.2.0-dev.24
+      '@itwin/core-bentley': ^4.3.3
+      '@itwin/core-quantity': ^4.3.3
     dependencies:
-      '@itwin/core-bentley': 4.2.0-dev.24
-      '@itwin/core-quantity': 4.2.0-dev.24_@itwin+core-bentley@4.2.0-dev.24
+      '@itwin/core-bentley': 4.3.3
+      '@itwin/core-quantity': 4.3.3_@itwin+core-bentley@4.3.3
       almost-equal: 1.1.0
     dev: false
 
@@ -740,7 +740,7 @@ packages:
       - supports-color
     dev: false
 
-  /@itwin/imodels-access-backend/3.1.1_91390ec049547194d2f4bad37254dba5:
+  /@itwin/imodels-access-backend/3.1.1_eddb1e048e22360fbce661ac2b7e5afc:
     resolution: {integrity: sha512-OXQ1NGqO49XKUYsmuo/tDXNd4Zj+nqDc64McZKlcMSeJlVlZg8pWBqPYZehsVg7I16ns7NSiuftWO+iWx4R/KA==}
     peerDependencies:
       '@itwin/core-backend': ^3.6.0
@@ -748,9 +748,9 @@ packages:
       '@itwin/core-common': ^3.6.0
     dependencies:
       '@azure/abort-controller': 1.1.0
-      '@itwin/core-backend': 4.2.0-dev.24_bd8c5f8ac511c5b0b6ea24e9f6627b89
-      '@itwin/core-bentley': 4.2.0-dev.24
-      '@itwin/core-common': 4.2.0-dev.24_2f6720151078928ffd8ae11c6d241e42
+      '@itwin/core-backend': 4.3.3_fc0a40a8c55626c1c7a6128fc1c06026
+      '@itwin/core-bentley': 4.3.3
+      '@itwin/core-common': 4.3.3_19be6e932f8d3a18770afc9f1446400f
       '@itwin/imodels-client-authoring': 3.1.0
       axios: 0.21.4
     transitivePeerDependencies:
@@ -838,13 +838,13 @@ packages:
       - debug
     dev: false
 
-  /@itwin/oidc-signin-tool/3.6.1_@itwin+core-bentley@4.2.0-dev.24:
+  /@itwin/oidc-signin-tool/3.6.1_@itwin+core-bentley@4.3.3:
     resolution: {integrity: sha512-4M391FMMwPuRVZSC8DAtLlWlWMDwAVigI8ZY5gvPkHTOOHSAKPxFxZD/zXsySJ3Rn+tFNpP6DctU6OVxrYolRQ==}
     peerDependencies:
       '@itwin/core-bentley': ^3.3.0
     dependencies:
       '@itwin/certa': 3.7.13
-      '@itwin/core-bentley': 4.2.0-dev.24
+      '@itwin/core-bentley': 4.3.3
       dotenv: 10.0.0
       dotenv-expand: 5.1.0
       openid-client: 4.9.1
@@ -887,24 +887,24 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: false
 
-  /@microsoft/api-extractor-model/7.27.6_@types+node@18.16.1:
+  /@microsoft/api-extractor-model/7.27.6_@types+node@18.16.20:
     resolution: {integrity: sha512-eiCnlayyum1f7fS2nA9pfIod5VCNR1G+Tq84V/ijDrKrOFVa598BLw145nCsGDMoFenV6ajNi2PR5WCwpAxW6Q==}
     dependencies:
       '@microsoft/tsdoc': 0.14.2
       '@microsoft/tsdoc-config': 0.16.2
-      '@rushstack/node-core-library': 3.59.7_@types+node@18.16.1
+      '@rushstack/node-core-library': 3.59.7_@types+node@18.16.20
     transitivePeerDependencies:
       - '@types/node'
     dev: false
 
-  /@microsoft/api-extractor/7.36.4_@types+node@18.16.1:
+  /@microsoft/api-extractor/7.36.4_@types+node@18.16.20:
     resolution: {integrity: sha512-21UECq8C/8CpHT23yiqTBQ10egKUacIpxkPyYR7hdswo/M5yTWdBvbq+77YC9uPKQJOUfOD1FImBQ1DzpsdeQQ==}
     hasBin: true
     dependencies:
-      '@microsoft/api-extractor-model': 7.27.6_@types+node@18.16.1
+      '@microsoft/api-extractor-model': 7.27.6_@types+node@18.16.20
       '@microsoft/tsdoc': 0.14.2
       '@microsoft/tsdoc-config': 0.16.2
-      '@rushstack/node-core-library': 3.59.7_@types+node@18.16.1
+      '@rushstack/node-core-library': 3.59.7_@types+node@18.16.20
       '@rushstack/rig-package': 0.4.1
       '@rushstack/ts-command-line': 4.15.2
       colors: 1.2.5
@@ -961,7 +961,7 @@ packages:
     engines: {node: '>=10.13.0'}
     dev: false
 
-  /@rushstack/node-core-library/3.59.7_@types+node@18.16.1:
+  /@rushstack/node-core-library/3.59.7_@types+node@18.16.20:
     resolution: {integrity: sha512-ln1Drq0h+Hwa1JVA65x5mlSgUrBa1uHL+V89FqVWQgXd1vVIMhrtqtWGQrhTnFHxru5ppX+FY39VWELF/FjQCw==}
     peerDependencies:
       '@types/node': '*'
@@ -969,7 +969,7 @@ packages:
       '@types/node':
         optional: true
     dependencies:
-      '@types/node': 18.16.1
+      '@types/node': 18.16.20
       colors: 1.2.5
       fs-extra: 7.0.1
       import-lazy: 4.0.0
@@ -1000,25 +1000,36 @@ packages:
     engines: {node: '>=10'}
     dev: false
 
-  /@sinonjs/commons/1.8.6:
-    resolution: {integrity: sha512-Ky+XkAkqPZSm3NLBeUng77EBQl3cmeJhITaGHdYH8kjVB+aun3S4XBRti2zt17mtt0mIUDiNxYeoJm6drVvBJQ==}
+  /@sinonjs/commons/2.0.0:
+    resolution: {integrity: sha512-uLa0j859mMrg2slwQYdO/AkrOfmH+X6LTVmNTS9CqexuE2IvVORIkSpJLqePAbEnKJ77aMmCwr1NUZ57120Xcg==}
     dependencies:
       type-detect: 4.0.8
     dev: false
 
-  /@sinonjs/formatio/3.2.2:
-    resolution: {integrity: sha512-B8SEsgd8gArBLMD6zpRw3juQ2FVSsmdd7qlevyDqzS9WTCtvF55/gAL+h6gue8ZvPYcdiPdvueM/qm//9XzyTQ==}
+  /@sinonjs/commons/3.0.0:
+    resolution: {integrity: sha512-jXBtWAF4vmdNmZgD5FoKsVLv3rPgDnLgPbU84LIJ3otV44vJlDRokVng5v8NFJdCf/da9legHcKaRuZs4L7faA==}
     dependencies:
-      '@sinonjs/commons': 1.8.6
-      '@sinonjs/samsam': 3.3.3
+      type-detect: 4.0.8
     dev: false
 
-  /@sinonjs/samsam/3.3.3:
-    resolution: {integrity: sha512-bKCMKZvWIjYD0BLGnNrxVuw4dkWCYsLqFOUWw8VgKF/+5Y+mE7LfHWPIYoDXowH+3a9LsWDMo0uAP8YDosPvHQ==}
+  /@sinonjs/fake-timers/10.3.0:
+    resolution: {integrity: sha512-V4BG07kuYSUkTCSBHG8G8TNhM+F19jXFWnQtzj+we8DrkpSBCee9Z3Ms8yiGer/dlmhe35/Xdgyo3/0rQKg7YA==}
     dependencies:
-      '@sinonjs/commons': 1.8.6
-      array-from: 2.1.1
-      lodash: 4.17.21
+      '@sinonjs/commons': 3.0.0
+    dev: false
+
+  /@sinonjs/fake-timers/11.2.2:
+    resolution: {integrity: sha512-G2piCSxQ7oWOxwGSAyFHfPIsyeJGXYtc6mFbnFA+kRXkiEnTl8c/8jul2S329iFBnDI9HGoeWWAZvuvOkZccgw==}
+    dependencies:
+      '@sinonjs/commons': 3.0.0
+    dev: false
+
+  /@sinonjs/samsam/8.0.0:
+    resolution: {integrity: sha512-Bp8KUVlLp8ibJZrnvq2foVhP0IVX2CIprMJPK0vqGqgrDa0OHVKeZyBykqskkrdxV6yKBPmGasO8LVjAKR3Gew==}
+    dependencies:
+      '@sinonjs/commons': 2.0.0
+      lodash.get: 4.4.2
+      type-detect: 4.0.8
     dev: false
 
   /@sinonjs/text-encoding/0.7.2:
@@ -1090,8 +1101,8 @@ packages:
     resolution: {integrity: sha512-K0VQKziLUWkVKiRVrx4a40iPaxTUefQmjtkQofBkYRcoaaL/8rhwDWww9qWbrgicNOgnpIsMxyNIUM4+n6dUIA==}
     dev: false
 
-  /@types/mocha/8.2.3:
-    resolution: {integrity: sha512-ekGvFhFgrc2zYQoX4JeZPmVzZxw6Dtllga7iGHzfbYIYkAMUx/sAFP2GdFpLff+vdHXu5fl7WX9AT+TtqYcsyw==}
+  /@types/mocha/10.0.6:
+    resolution: {integrity: sha512-dJvrYWxP/UcXm36Qn36fxhUKu8A/xMRXVT2cliFF1Z7UA9liG5Psj3ezNSZw+5puH2czDXRLcXQxf8JbJt0ejg==}
     dev: false
 
   /@types/node-fetch/2.6.5:
@@ -1103,6 +1114,10 @@ packages:
 
   /@types/node/18.16.1:
     resolution: {integrity: sha512-DZxSZWXxFfOlx7k7Rv4LAyiMroaxa3Ly/7OOzZO8cBNho0YzAi4qlbrx8W27JGqG57IgR/6J7r+nOJWw6kcvZA==}
+    dev: false
+
+  /@types/node/18.16.20:
+    resolution: {integrity: sha512-nL54VfDjThdP2UXJXZao5wp76CDiDw4zSRO8d4Tk7UgDqNKGKVEQB0/t3ti63NS+YNNkIQDvwEAF04BO+WYu7Q==}
     dev: false
 
   /@types/responselike/1.0.0:
@@ -1122,8 +1137,14 @@ packages:
     resolution: {integrity: sha512-7aqorHYgdNO4DM36stTiGO3DvKoex9TQRwsJU6vMaFGyqpBA1MNZkz+PG3gaNUPpTAOYhT1WR7M1JyA3fbS9Cw==}
     dev: false
 
-  /@types/sinon/7.5.2:
-    resolution: {integrity: sha512-T+m89VdXj/eidZyejvmoP9jivXgBDdkOSBVQjU9kF349NEx10QdPNGxHeZUaj1IlJ32/ewdyXJjnJxyxJroYwg==}
+  /@types/sinon/17.0.2:
+    resolution: {integrity: sha512-Zt6heIGsdqERkxctIpvN5Pv3edgBrhoeb3yHyxffd4InN0AX2SVNKSrhdDZKGQICVOxWP/q4DyhpfPNMSrpIiA==}
+    dependencies:
+      '@types/sinonjs__fake-timers': 8.1.5
+    dev: false
+
+  /@types/sinonjs__fake-timers/8.1.5:
+    resolution: {integrity: sha512-mQkU2jY8jJEF7YHjHvsQO8+3ughTL1mcnn96igfhONmR+fUPSKIkefQYpSe8bsly2Ep7oQbn/6VG5/9/0qcArQ==}
     dev: false
 
   /@types/tunnel/0.0.3:
@@ -1476,10 +1497,6 @@ packages:
     resolution: {integrity: sha512-PCVAQswWemu6UdxsDFFX/+gVeYqKAod3D3UVm91jHwynguOwAvYPhx8nNlM++NqRcK6CxxpUafjmhIdKiHibqg==}
     dev: false
 
-  /array-from/2.1.1:
-    resolution: {integrity: sha512-GQTc6Uupx1FCavi5mPzBvVT7nEOeWMmUA9P95wpfpW1XwMSKs+KaymD5C2Up7KAUKg/mYwbsUYzdZWcoajlNZg==}
-    dev: false
-
   /array-includes/3.1.7:
     resolution: {integrity: sha512-dlcsNBIiWhPkHdOEEKnehA+RNUWDc4UqFtnIXU4uuYDPtA4LDkr7qip2p0VvFAEXNDr0yWZ9PJyIRiGjRLQzwQ==}
     engines: {node: '>= 0.4'}
@@ -1754,23 +1771,23 @@ packages:
     resolution: {integrity: sha512-HWJnhnID+0YMtGlzcp3T9drmBJUVDchPJ08tpUGFLs9CYlwWPH2uLgpHn8fND5pCgXVtnGS3H4QR9XLMHVNkHw==}
     dev: false
 
-  /chai-as-promised/7.1.1_chai@4.3.8:
+  /chai-as-promised/7.1.1_chai@4.3.10:
     resolution: {integrity: sha512-azL6xMoi+uxu6z4rhWQ1jbdUhOMhis2PvscD/xjLqNMkv3BPPp2JyyuTHOrf9BOosGpNQ11v6BKv/g57RXbiaA==}
     peerDependencies:
       chai: '>= 2.1.2 < 5'
     dependencies:
-      chai: 4.3.8
+      chai: 4.3.10
       check-error: 1.0.2
     dev: false
 
-  /chai/4.3.8:
-    resolution: {integrity: sha512-vX4YvVVtxlfSZ2VecZgFUTU5qPCYsobVI2O9FmwEXBhDigYGQA6jRXCycIs1yJnnWbZ6/+a2zNIF5DfVCcJBFQ==}
+  /chai/4.3.10:
+    resolution: {integrity: sha512-0UXG04VuVbruMUYbJ6JctvH0YnC/4q3/AkT18q4NaITo91CUm0liMS9VqzT9vZhVQ/1eqPanMWjBM+Juhfb/9g==}
     engines: {node: '>=4'}
     dependencies:
       assertion-error: 1.1.0
-      check-error: 1.0.2
+      check-error: 1.0.3
       deep-eql: 4.1.3
-      get-func-name: 2.0.0
+      get-func-name: 2.0.2
       loupe: 2.3.6
       pathval: 1.1.1
       type-detect: 4.0.8
@@ -1807,6 +1824,12 @@ packages:
 
   /check-error/1.0.2:
     resolution: {integrity: sha512-BrgHpW9NURQgzoNyjfq0Wu6VFO6D7IZEmJNdtgNqpzGG8RuNFHt2jQxWlAs4HMe119chBnv+34syEZtc6IhLtA==}
+    dev: false
+
+  /check-error/1.0.3:
+    resolution: {integrity: sha512-iKEoDYaRmd1mxM90a2OEfWhjsjPpYPuQ+lMYsoxB126+t8fw7ySEO48nmDg5COTjxDI65/Y2OWpeEHk3ZOe8zg==}
+    dependencies:
+      get-func-name: 2.0.2
     dev: false
 
   /chokidar/3.5.3:
@@ -2151,6 +2174,11 @@ packages:
 
   /diff/5.0.0:
     resolution: {integrity: sha512-/VTCrvm5Z0JGty/BWHljh+BAiw3IK+2j87NGMu8Nwc/f48WoDAC395uomO9ZD117ZOBaHmkX1oyLvkVM/aIT3w==}
+    engines: {node: '>=0.3.1'}
+    dev: false
+
+  /diff/5.1.0:
+    resolution: {integrity: sha512-D+mk+qE8VC/PAUrlAU34N+VfXev0ghe5ywmpqrawphmVZc1bEfn56uo9qpyGp1p4xpzOHkSW4ztBd6L7Xx4ACw==}
     engines: {node: '>=0.3.1'}
     dev: false
 
@@ -2919,8 +2947,8 @@ packages:
     engines: {node: 6.* || 8.* || >= 10.*}
     dev: false
 
-  /get-func-name/2.0.0:
-    resolution: {integrity: sha512-Hm0ixYtaSZ/V7C8FJrtZIuBBI+iSgL+1Aq82zSu8VQNB4S3Gk8e7Qs3VwBDJAhmRZcFqkl3tQu36g/Foh5I5ig==}
+  /get-func-name/2.0.2:
+    resolution: {integrity: sha512-8vXOvuE167CtIc3OyItco7N/dpRtBbYOsPsXCz7X/PMnlGjYjSGuZJgM1Y7mmew7BKf9BqvLX2tnOVy1BBUsxQ==}
     dev: false
 
   /get-intrinsic/1.2.1:
@@ -3733,16 +3761,6 @@ packages:
       is-unicode-supported: 0.1.0
     dev: false
 
-  /lolex/4.2.0:
-    resolution: {integrity: sha512-gKO5uExCXvSm6zbF562EvM+rd1kQDnB9AZBbiQVzf1ZmdDpxUSvpnAaVOP83N/31mRK8Ml8/VE8DMvsAZQ+7wg==}
-    dev: false
-
-  /lolex/5.1.2:
-    resolution: {integrity: sha512-h4hmjAvHTmd+25JSwrtTIuwbKdwg5NzZVRMLn9saij4SZaepCrTCxPr35H/3bjwfMJtN+t3CX8672UIkglz28A==}
-    dependencies:
-      '@sinonjs/commons': 1.8.6
-    dev: false
-
   /loose-envify/1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
     hasBin: true
@@ -3752,8 +3770,9 @@ packages:
 
   /loupe/2.3.6:
     resolution: {integrity: sha512-RaPMZKiMy8/JruncMU5Bt6na1eftNoo++R4Y+N2FrxkDVTrGvcyzFTsaGif4QTeKESheMGegbhw6iUAq+5A8zA==}
+    deprecated: Please upgrade to 2.3.7 which fixes GHSA-4q6p-r6v2-jvc5
     dependencies:
-      get-func-name: 2.0.0
+      get-func-name: 2.0.2
     dev: false
 
   /lowercase-keys/2.0.0:
@@ -3993,13 +4012,13 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
-  /nise/1.5.3:
-    resolution: {integrity: sha512-Ymbac/94xeIrMf59REBPOv0thr+CJVFMhrlAkW/gjCIE58BGQdCj0x7KRCb3yz+Ga2Rz3E9XXSvUyyxqqhjQAQ==}
+  /nise/5.1.5:
+    resolution: {integrity: sha512-VJuPIfUFaXNRzETTQEEItTOP8Y171ijr+JLq42wHes3DiryR8vT+1TXQW/Rx8JNUhyYYWyIvjXTU6dOhJcs9Nw==}
     dependencies:
-      '@sinonjs/formatio': 3.2.2
+      '@sinonjs/commons': 2.0.0
+      '@sinonjs/fake-timers': 10.3.0
       '@sinonjs/text-encoding': 0.7.2
       just-extend: 4.2.1
-      lolex: 5.1.2
       path-to-regexp: 1.8.0
     dev: false
 
@@ -4754,16 +4773,15 @@ packages:
     resolution: {integrity: sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==}
     dev: false
 
-  /sinon/7.5.0:
-    resolution: {integrity: sha512-AoD0oJWerp0/rY9czP/D6hDTTUYGpObhZjMpd7Cl/A6+j0xBE+ayL/ldfggkBXUs0IkvIiM1ljM8+WkOc5k78Q==}
+  /sinon/17.0.1:
+    resolution: {integrity: sha512-wmwE19Lie0MLT+ZYNpDymasPHUKTaZHUH/pKEubRXIzySv9Atnlw+BUMGCzWgV7b7wO+Hw6f1TEOr0IUnmU8/g==}
     dependencies:
-      '@sinonjs/commons': 1.8.6
-      '@sinonjs/formatio': 3.2.2
-      '@sinonjs/samsam': 3.3.3
-      diff: 3.5.0
-      lolex: 4.2.0
-      nise: 1.5.3
-      supports-color: 5.5.0
+      '@sinonjs/commons': 3.0.0
+      '@sinonjs/fake-timers': 11.2.2
+      '@sinonjs/samsam': 8.0.0
+      diff: 5.1.0
+      nise: 5.1.5
+      supports-color: 7.2.0
     dev: false
 
   /slash/3.0.0:
@@ -5553,29 +5571,29 @@ packages:
       commander: 9.5.0
     dev: false
 
-  file:projects/bis-rules.tgz_1011b4e1155ac1f843db84924796cdb5:
-    resolution: {integrity: sha512-fYa7NRzhpANT0b+8JHxqn/Jl2vnLnc2ZmwgBpwHJPR93+l3ea4Y/y3gM2iJY0MYWGIkhSqntVKzSWag7M2Tubg==, tarball: file:projects/bis-rules.tgz}
+  file:projects/bis-rules.tgz_cda452f90956e70f883d90490264151b:
+    resolution: {integrity: sha512-gq+HWBXEYMbwSoavEK/eyxLSkeBA0ICt2v+7GXtep8PhzDGlbh7+3xLM3GBjOQbLmuvtAfKvrAyG8KsamuKptQ==, tarball: file:projects/bis-rules.tgz}
     id: file:projects/bis-rules.tgz
     name: '@rush-temp/bis-rules'
     version: 0.0.0
     dependencies:
-      '@itwin/build-tools': 4.2.0-dev.24_@types+node@18.16.1
-      '@itwin/core-backend': 4.2.0-dev.24_bd8c5f8ac511c5b0b6ea24e9f6627b89
-      '@itwin/core-bentley': 4.2.0-dev.24
-      '@itwin/core-quantity': 4.2.0-dev.24_@itwin+core-bentley@4.2.0-dev.24
-      '@itwin/ecschema-editing': 4.2.0-dev.24_b75d5c0e0e9398cabe8bb602c8d0112b
-      '@itwin/ecschema-metadata': 4.2.0-dev.24_f487d2bc017d4fe71d85b4ea15a373b6
+      '@itwin/build-tools': 4.3.3_@types+node@18.16.20
+      '@itwin/core-backend': 4.3.3_fc0a40a8c55626c1c7a6128fc1c06026
+      '@itwin/core-bentley': 4.3.3
+      '@itwin/core-quantity': 4.3.3_@itwin+core-bentley@4.3.3
+      '@itwin/ecschema-editing': 4.3.3_00b2555bde24b1989d4d8c9dda6399e0
+      '@itwin/ecschema-metadata': 4.3.3_90d9d310cb211a1837030f5ca5c123b2
       '@itwin/eslint-plugin': 4.0.0-dev.44_eslint@8.49.0+typescript@5.0.4
       '@types/chai': 4.3.1
-      '@types/mocha': 8.2.3
+      '@types/mocha': 10.0.6
       '@types/rimraf': 2.0.5
-      '@types/sinon': 7.5.2
-      chai: 4.3.8
+      '@types/sinon': 17.0.2
+      chai: 4.3.10
       eslint: 8.49.0
       mocha: 10.2.0
       nyc: 15.1.0
       rimraf: 3.0.2
-      sinon: 7.5.0
+      sinon: 17.0.1
       source-map-support: 0.5.21
       ts-node: 7.0.1
       typescript: 5.0.4
@@ -5592,27 +5610,27 @@ packages:
     dev: false
 
   file:projects/imodel-schema-validator.tgz:
-    resolution: {integrity: sha512-EURmYvf6eBXCKuJPVWr3uZRs7oj6nfIDbgws2JJwdESnHsLN9u6mnebeR3GOCdK6Tb1OaRXt2R5TG1zaAF068g==, tarball: file:projects/imodel-schema-validator.tgz}
+    resolution: {integrity: sha512-/MVl83i6P9HI4AvQQiM7Y0lDPS01kBSZem9bKUtgbeHTnKImP4teD2T04UIcM1cpKOfNh0VXGsod75uG45lvaA==, tarball: file:projects/imodel-schema-validator.tgz}
     name: '@rush-temp/imodel-schema-validator'
     version: 0.0.0
     dependencies:
-      '@itwin/build-tools': 4.2.0-dev.24_@types+node@18.16.1
-      '@itwin/core-backend': 4.2.0-dev.24_bd8c5f8ac511c5b0b6ea24e9f6627b89
-      '@itwin/core-bentley': 4.2.0-dev.24
-      '@itwin/core-common': 4.2.0-dev.24_2f6720151078928ffd8ae11c6d241e42
-      '@itwin/core-geometry': 4.2.0-dev.24
-      '@itwin/core-quantity': 4.2.0-dev.24_@itwin+core-bentley@4.2.0-dev.24
-      '@itwin/ecschema-editing': 4.2.0-dev.24_b75d5c0e0e9398cabe8bb602c8d0112b
-      '@itwin/ecschema-locaters': 4.2.0-dev.24_f8a052a18bb7d386c0113898c19e7376
-      '@itwin/ecschema-metadata': 4.2.0-dev.24_f487d2bc017d4fe71d85b4ea15a373b6
+      '@itwin/build-tools': 4.3.3_@types+node@18.16.20
+      '@itwin/core-backend': 4.3.3_fc0a40a8c55626c1c7a6128fc1c06026
+      '@itwin/core-bentley': 4.3.3
+      '@itwin/core-common': 4.3.3_19be6e932f8d3a18770afc9f1446400f
+      '@itwin/core-geometry': 4.3.3
+      '@itwin/core-quantity': 4.3.3_@itwin+core-bentley@4.3.3
+      '@itwin/ecschema-editing': 4.3.3_00b2555bde24b1989d4d8c9dda6399e0
+      '@itwin/ecschema-locaters': 4.3.3_@itwin+ecschema-metadata@4.3.3
+      '@itwin/ecschema-metadata': 4.3.3_90d9d310cb211a1837030f5ca5c123b2
       '@itwin/eslint-plugin': 4.0.0-dev.44_eslint@8.49.0+typescript@5.0.4
-      '@itwin/imodels-access-backend': 3.1.1_91390ec049547194d2f4bad37254dba5
+      '@itwin/imodels-access-backend': 3.1.1_eddb1e048e22360fbce661ac2b7e5afc
       '@itwin/imodels-client-authoring': 3.1.0
-      '@itwin/oidc-signin-tool': 3.6.1_@itwin+core-bentley@4.2.0-dev.24
+      '@itwin/oidc-signin-tool': 3.6.1_@itwin+core-bentley@4.3.3
       '@types/chai': 4.3.1
-      '@types/mocha': 8.2.3
-      '@types/node': 18.16.1
-      chai: 4.3.8
+      '@types/mocha': 10.0.6
+      '@types/node': 18.16.20
+      chai: 4.3.10
       chalk: 2.4.2
       commander: 2.20.3
       cpx2: 3.0.2
@@ -5635,30 +5653,30 @@ packages:
     dev: false
 
   file:projects/native-schema-locater.tgz:
-    resolution: {integrity: sha512-udeT+oUTK3s0PFvCu3fesUPnMtwmZJ8TGNcXohgJmasB+090g8idkIFWl370GDG5nQrRCOu5GpfZGlAYHOJBIA==, tarball: file:projects/native-schema-locater.tgz}
+    resolution: {integrity: sha512-TnDyWXL+hC5dzqjYL6FojZdB6Yxp+Od/2AcdeP31pER4GKLy6lxDTB6kjHfppiCMBDmup+8AcpoqxHhCbDUGjg==, tarball: file:projects/native-schema-locater.tgz}
     name: '@rush-temp/native-schema-locater'
     version: 0.0.0
     dependencies:
-      '@itwin/build-tools': 4.2.0-dev.24_@types+node@18.16.1
-      '@itwin/core-backend': 4.2.0-dev.24_bd8c5f8ac511c5b0b6ea24e9f6627b89
-      '@itwin/core-bentley': 4.2.0-dev.24
-      '@itwin/core-common': 4.2.0-dev.24_2f6720151078928ffd8ae11c6d241e42
-      '@itwin/core-geometry': 4.2.0-dev.24
-      '@itwin/core-quantity': 4.2.0-dev.24_@itwin+core-bentley@4.2.0-dev.24
-      '@itwin/ecschema-locaters': 4.2.0-dev.24_f8a052a18bb7d386c0113898c19e7376
-      '@itwin/ecschema-metadata': 4.2.0-dev.24_f487d2bc017d4fe71d85b4ea15a373b6
+      '@itwin/build-tools': 4.3.3_@types+node@18.16.20
+      '@itwin/core-backend': 4.3.3_fc0a40a8c55626c1c7a6128fc1c06026
+      '@itwin/core-bentley': 4.3.3
+      '@itwin/core-common': 4.3.3_19be6e932f8d3a18770afc9f1446400f
+      '@itwin/core-geometry': 4.3.3
+      '@itwin/core-quantity': 4.3.3_@itwin+core-bentley@4.3.3
+      '@itwin/ecschema-locaters': 4.3.3_@itwin+ecschema-metadata@4.3.3
+      '@itwin/ecschema-metadata': 4.3.3_90d9d310cb211a1837030f5ca5c123b2
       '@itwin/eslint-plugin': 4.0.0-dev.44_eslint@8.49.0+typescript@5.0.4
-      '@itwin/imodels-access-backend': 3.1.1_91390ec049547194d2f4bad37254dba5
+      '@itwin/imodels-access-backend': 3.1.1_eddb1e048e22360fbce661ac2b7e5afc
       '@types/chai': 4.3.1
       '@types/chai-as-promised': 7.1.6
       '@types/fs-extra': 5.1.0
-      '@types/mocha': 8.2.3
-      '@types/node': 18.16.1
+      '@types/mocha': 10.0.6
+      '@types/node': 18.16.20
       '@types/rimraf': 2.0.5
-      '@types/sinon': 7.5.2
+      '@types/sinon': 17.0.2
       '@xmldom/xmldom': 0.8.10
-      chai: 4.3.8
-      chai-as-promised: 7.1.1_chai@4.3.8
+      chai: 4.3.10
+      chai-as-promised: 7.1.1_chai@4.3.10
       chalk: 2.4.2
       commander: 2.20.3
       cpx2: 3.0.2
@@ -5667,7 +5685,7 @@ packages:
       mocha: 10.2.0
       nyc: 15.1.0
       rimraf: 3.0.2
-      sinon: 7.5.0
+      sinon: 17.0.1
       source-map-support: 0.5.21
       typescript: 5.0.4
     transitivePeerDependencies:
@@ -5680,33 +5698,33 @@ packages:
     dev: false
 
   file:projects/schema-comparer.tgz:
-    resolution: {integrity: sha512-7zjB5erFa5+Qd9xCaYFMDK93pY85RT6NfCVHKcVohhE138dTQnKHMe8OhXc7RxvYVv5u9PFBeFCCbyOFxFr4YA==, tarball: file:projects/schema-comparer.tgz}
+    resolution: {integrity: sha512-O8+xwa1UCK0URYECIALkgm+MWduKpgdoP3u9RWACfaaN19iIkkwjGe5Xxk30e84IahLhQR+NCdC0uuuoG+G34A==, tarball: file:projects/schema-comparer.tgz}
     name: '@rush-temp/schema-comparer'
     version: 0.0.0
     dependencies:
-      '@itwin/build-tools': 4.2.0-dev.24_@types+node@18.16.1
-      '@itwin/core-backend': 4.2.0-dev.24_bd8c5f8ac511c5b0b6ea24e9f6627b89
-      '@itwin/core-bentley': 4.2.0-dev.24
-      '@itwin/core-common': 4.2.0-dev.24_2f6720151078928ffd8ae11c6d241e42
-      '@itwin/core-geometry': 4.2.0-dev.24
-      '@itwin/core-i18n': 4.2.0-dev.24_@itwin+core-bentley@4.2.0-dev.24
-      '@itwin/core-quantity': 4.2.0-dev.24_@itwin+core-bentley@4.2.0-dev.24
-      '@itwin/ecschema-editing': 4.2.0-dev.24_b75d5c0e0e9398cabe8bb602c8d0112b
-      '@itwin/ecschema-locaters': 4.2.0-dev.24_f8a052a18bb7d386c0113898c19e7376
-      '@itwin/ecschema-metadata': 4.2.0-dev.24_f487d2bc017d4fe71d85b4ea15a373b6
+      '@itwin/build-tools': 4.3.3_@types+node@18.16.20
+      '@itwin/core-backend': 4.3.3_fc0a40a8c55626c1c7a6128fc1c06026
+      '@itwin/core-bentley': 4.3.3
+      '@itwin/core-common': 4.3.3_19be6e932f8d3a18770afc9f1446400f
+      '@itwin/core-geometry': 4.3.3
+      '@itwin/core-i18n': 4.3.3_@itwin+core-bentley@4.3.3
+      '@itwin/core-quantity': 4.3.3_@itwin+core-bentley@4.3.3
+      '@itwin/ecschema-editing': 4.3.3_00b2555bde24b1989d4d8c9dda6399e0
+      '@itwin/ecschema-locaters': 4.3.3_@itwin+ecschema-metadata@4.3.3
+      '@itwin/ecschema-metadata': 4.3.3_90d9d310cb211a1837030f5ca5c123b2
       '@itwin/eslint-plugin': 4.0.0-dev.44_eslint@8.49.0+typescript@5.0.4
-      '@itwin/imodels-access-backend': 3.1.1_91390ec049547194d2f4bad37254dba5
+      '@itwin/imodels-access-backend': 3.1.1_eddb1e048e22360fbce661ac2b7e5afc
       '@itwin/imodels-client-authoring': 3.1.0
       '@types/chai': 4.3.1
       '@types/chai-as-promised': 7.1.6
       '@types/fs-extra': 5.1.0
-      '@types/mocha': 8.2.3
-      '@types/node': 18.16.1
+      '@types/mocha': 10.0.6
+      '@types/node': 18.16.20
       '@types/rimraf': 2.0.5
-      '@types/sinon': 7.5.2
+      '@types/sinon': 17.0.2
       '@xmldom/xmldom': 0.8.10
-      chai: 4.3.8
-      chai-as-promised: 7.1.1_chai@4.3.8
+      chai: 4.3.10
+      chai-as-promised: 7.1.1_chai@4.3.10
       chalk: 2.4.2
       commander: 2.20.3
       cpx2: 3.0.2
@@ -5715,7 +5733,7 @@ packages:
       mocha: 10.2.0
       nyc: 15.1.0
       rimraf: 3.0.2
-      sinon: 7.5.0
+      sinon: 17.0.1
       source-map-support: 0.5.21
       typescript: 5.0.4
     transitivePeerDependencies:
@@ -5728,32 +5746,32 @@ packages:
     dev: false
 
   file:projects/schema-roundtrip.tgz:
-    resolution: {integrity: sha512-eBTbfCArYwjXiWSxYnRTNxj34KYkg6wTOYmjhgORgdcDZuOSPrfAq7KBU6eBmjOrn7LDVEoifgJlQETTBWo+BA==, tarball: file:projects/schema-roundtrip.tgz}
+    resolution: {integrity: sha512-fJQirEMYcDjqbC9+ZHf7QRUxZp1moNCHuyP3wsANlZkeTTUieOq9AGneepvgGXJHXzryCVt23xfYPqkDhEx6Pw==, tarball: file:projects/schema-roundtrip.tgz}
     name: '@rush-temp/schema-roundtrip'
     version: 0.0.0
     dependencies:
-      '@itwin/build-tools': 4.2.0-dev.24_@types+node@18.16.1
-      '@itwin/core-backend': 4.2.0-dev.24_bd8c5f8ac511c5b0b6ea24e9f6627b89
-      '@itwin/core-bentley': 4.2.0-dev.24
-      '@itwin/core-common': 4.2.0-dev.24_2f6720151078928ffd8ae11c6d241e42
-      '@itwin/core-geometry': 4.2.0-dev.24
-      '@itwin/core-i18n': 4.2.0-dev.24_@itwin+core-bentley@4.2.0-dev.24
-      '@itwin/core-quantity': 4.2.0-dev.24_@itwin+core-bentley@4.2.0-dev.24
-      '@itwin/ecschema-locaters': 4.2.0-dev.24_f8a052a18bb7d386c0113898c19e7376
-      '@itwin/ecschema-metadata': 4.2.0-dev.24_f487d2bc017d4fe71d85b4ea15a373b6
+      '@itwin/build-tools': 4.3.3_@types+node@18.16.20
+      '@itwin/core-backend': 4.3.3_fc0a40a8c55626c1c7a6128fc1c06026
+      '@itwin/core-bentley': 4.3.3
+      '@itwin/core-common': 4.3.3_19be6e932f8d3a18770afc9f1446400f
+      '@itwin/core-geometry': 4.3.3
+      '@itwin/core-i18n': 4.3.3_@itwin+core-bentley@4.3.3
+      '@itwin/core-quantity': 4.3.3_@itwin+core-bentley@4.3.3
+      '@itwin/ecschema-locaters': 4.3.3_@itwin+ecschema-metadata@4.3.3
+      '@itwin/ecschema-metadata': 4.3.3_90d9d310cb211a1837030f5ca5c123b2
       '@itwin/eslint-plugin': 4.0.0-dev.44_eslint@8.49.0+typescript@5.0.4
-      '@itwin/imodels-access-backend': 3.1.1_91390ec049547194d2f4bad37254dba5
+      '@itwin/imodels-access-backend': 3.1.1_eddb1e048e22360fbce661ac2b7e5afc
       '@itwin/imodels-client-authoring': 3.1.0
       '@types/chai': 4.3.1
       '@types/chai-as-promised': 7.1.6
       '@types/fs-extra': 5.1.0
-      '@types/mocha': 8.2.3
-      '@types/node': 18.16.1
+      '@types/mocha': 10.0.6
+      '@types/node': 18.16.20
       '@types/rimraf': 2.0.5
-      '@types/sinon': 7.5.2
+      '@types/sinon': 17.0.2
       '@xmldom/xmldom': 0.8.10
-      chai: 4.3.8
-      chai-as-promised: 7.1.1_chai@4.3.8
+      chai: 4.3.10
+      chai-as-promised: 7.1.1_chai@4.3.10
       chalk: 2.4.2
       commander: 2.20.3
       cpx2: 3.0.2
@@ -5762,7 +5780,7 @@ packages:
       mocha: 10.2.0
       nyc: 15.1.0
       rimraf: 3.0.2
-      sinon: 7.5.0
+      sinon: 17.0.1
       typescript: 5.0.4
     transitivePeerDependencies:
       - '@opentelemetry/api'
@@ -5774,32 +5792,32 @@ packages:
     dev: false
 
   file:projects/schema-validator.tgz:
-    resolution: {integrity: sha512-ujAec9K/eNgPQo2VsticIBfshfa+7vzm3gYDzcMSWWB6B66HqN0jxtlsXvwBd7wnahqWT8MW9hkxaaI8oWHX/Q==, tarball: file:projects/schema-validator.tgz}
+    resolution: {integrity: sha512-1YJJyhLPB8kwKoakSycapOJD0FkvQJNWpUIO3loz5TGNwXRdXLQ6rW2O3aIsAIkBXfRJy2PMtbEy0i37N7MoOQ==, tarball: file:projects/schema-validator.tgz}
     name: '@rush-temp/schema-validator'
     version: 0.0.0
     dependencies:
-      '@itwin/build-tools': 4.2.0-dev.24_@types+node@18.16.1
-      '@itwin/core-backend': 4.2.0-dev.24_bd8c5f8ac511c5b0b6ea24e9f6627b89
-      '@itwin/core-bentley': 4.2.0-dev.24
-      '@itwin/core-common': 4.2.0-dev.24_2f6720151078928ffd8ae11c6d241e42
-      '@itwin/core-geometry': 4.2.0-dev.24
-      '@itwin/core-quantity': 4.2.0-dev.24_@itwin+core-bentley@4.2.0-dev.24
-      '@itwin/ecschema-editing': 4.2.0-dev.24_b75d5c0e0e9398cabe8bb602c8d0112b
-      '@itwin/ecschema-locaters': 4.2.0-dev.24_f8a052a18bb7d386c0113898c19e7376
-      '@itwin/ecschema-metadata': 4.2.0-dev.24_f487d2bc017d4fe71d85b4ea15a373b6
+      '@itwin/build-tools': 4.3.3_@types+node@18.16.20
+      '@itwin/core-backend': 4.3.3_fc0a40a8c55626c1c7a6128fc1c06026
+      '@itwin/core-bentley': 4.3.3
+      '@itwin/core-common': 4.3.3_19be6e932f8d3a18770afc9f1446400f
+      '@itwin/core-geometry': 4.3.3
+      '@itwin/core-quantity': 4.3.3_@itwin+core-bentley@4.3.3
+      '@itwin/ecschema-editing': 4.3.3_00b2555bde24b1989d4d8c9dda6399e0
+      '@itwin/ecschema-locaters': 4.3.3_@itwin+ecschema-metadata@4.3.3
+      '@itwin/ecschema-metadata': 4.3.3_90d9d310cb211a1837030f5ca5c123b2
       '@itwin/eslint-plugin': 4.0.0-dev.44_eslint@8.49.0+typescript@5.0.4
-      '@itwin/imodels-access-backend': 3.1.1_91390ec049547194d2f4bad37254dba5
+      '@itwin/imodels-access-backend': 3.1.1_eddb1e048e22360fbce661ac2b7e5afc
       '@itwin/imodels-client-authoring': 3.1.0
       '@types/chai': 4.3.1
       '@types/chai-as-promised': 7.1.6
       '@types/fs-extra': 5.1.0
-      '@types/mocha': 8.2.3
-      '@types/node': 18.16.1
+      '@types/mocha': 10.0.6
+      '@types/node': 18.16.20
       '@types/rimraf': 2.0.5
-      '@types/sinon': 7.5.2
+      '@types/sinon': 17.0.2
       '@xmldom/xmldom': 0.8.10
-      chai: 4.3.8
-      chai-as-promised: 7.1.1_chai@4.3.8
+      chai: 4.3.10
+      chai-as-promised: 7.1.1_chai@4.3.10
       chalk: 2.4.2
       commander: 2.20.3
       cpx2: 3.0.2
@@ -5808,7 +5826,7 @@ packages:
       mocha: 10.2.0
       nyc: 15.1.0
       rimraf: 3.0.2
-      sinon: 7.5.0
+      sinon: 17.0.1
       source-map-support: 0.5.21
       typescript: 5.0.4
     transitivePeerDependencies:
