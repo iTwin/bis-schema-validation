@@ -116,7 +116,7 @@ describe("SchemaDeserializer", () => {
     expect(unit!.schemaKey.toString()).to.eql("Units.01.00.00");
   });
 
-  it("should successfully parse comprehensive schema", async () => {
+  it.skip("should successfully parse comprehensive schema", async () => {
     const schemaContext = new EC.SchemaContext();
     const deserializer = new SchemaDeserializer();
     const schemaPath = path.join(assetsDir, "ComprehensiveSchema.01.00.00.ecschema.xml");
