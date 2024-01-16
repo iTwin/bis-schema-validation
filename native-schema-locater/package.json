@@ -30,7 +30,7 @@
     "url": "http://www.bentley.com"
   },
   "devDependencies": {
-    "@itwin/eslint-plugin": "4.0.0-dev.44",
+    "@itwin/eslint-plugin": "4.0.0-dev.48",
     "@itwin/build-tools": "4.2.4",
     "@types/chai": "4.3.1",
     "@types/chai-as-promised": "^7",
