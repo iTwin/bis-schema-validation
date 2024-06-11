@@ -104,11 +104,11 @@ describe("SchemaValidater Tests", () => {
     expect(results[5].resultText).to.equal(" -\t\t\tLabel: undefined -> undefined");
     expect(results[6].resultText).to.equal(" -\t\t\tSchemaItemType: EntityClass -> undefined");
     expect(results[7].resultText).to.equal(" -\t\t\tModifier: None -> undefined");
-    expect(results[8].resultText).to.equal(" +\t\tClass(TestClassB)");
-    expect(results[9].resultText).to.equal(" +\t\t\tDescription: undefined -> undefined");
-    expect(results[10].resultText).to.equal(" +\t\t\tLabel: undefined -> undefined");
-    expect(results[11].resultText).to.equal(" +\t\t\tSchemaItemType: EntityClass -> undefined");
-    expect(results[12].resultText).to.equal(" +\t\t\tModifier: None -> undefined");
+    expect(results[10].resultText).to.equal(" +\t\tClass(TestClassB)");
+    expect(results[11].resultText).to.equal(" +\t\t\tDescription: undefined -> undefined");
+    expect(results[12].resultText).to.equal(" +\t\t\tLabel: undefined -> undefined");
+    expect(results[13].resultText).to.equal(" +\t\t\tSchemaItemType: EntityClass -> undefined");
+    expect(results[14].resultText).to.equal(" +\t\t\tModifier: None -> undefined");
   });
 
   it("Compare, schema A reference exact version not found, results returned successfully", async () => {
