@@ -1,5 +1,5 @@
 {
-  "$schema": "https://dev.office.com/json-schemas/rush/command-line.schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/command-line.schema.json",
   "commands": [
     {
       "name": "build",
@@ -36,8 +36,7 @@
       "commandKind": "global",
       "summary": "Runs npm audit for the entire monorepo",
       "description": "Scans the entire monorepo for security vulnerabilities via npm audit",
-      "shellCommand": "node common/tools/rush/audit.js",
-      "allowWarningsInSuccessfulBuild": true
+      "shellCommand": "node common/tools/rush/audit.js"
     }
   ]
 }
