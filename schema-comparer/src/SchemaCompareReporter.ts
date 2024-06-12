@@ -5,9 +5,9 @@
 
 import { Schema, SchemaItemType } from "@itwin/ecschema-metadata";
 import {
-  ChangeType, ClassChanges, CustomAttributeContainerChanges, EntityMixinChanges, EnumerationChanges, EnumeratorChanges,
+  ChangeType, ClassChanges, CustomAttributeContainerChanges, EntityClassChanges, EntityMixinChanges, EnumerationChanges, EnumeratorChanges,
   FormatChanges, FormatUnitChanges, ISchemaChange, ISchemaCompareReporter, KindOfQuantityChanges, PresentationUnitChanges,
-  PropertyChanges, RelationshipConstraintChanges, SchemaChanges, SchemaItemChanges,
+  PropertyChanges, RelationshipClassChanges, RelationshipConstraintChanges, SchemaChanges, SchemaItemChanges,
 } from "@itwin/ecschema-editing";
 
 const SCHEMA_DEPTH = 0;
@@ -86,6 +86,32 @@ export abstract class SchemaCompareReporter implements ISchemaCompareReporter {
     this.reportKindOfQuantityChanges(changes.kindOfQuantityChanges);
     this.reportFormatChanges(changes.formatChanges);
     this.reportSchemaItemChanges(changes.schemaItemChanges);
+
+    this.reportEntityClassChanges(changes.entityClassChanges);
+    this.reportRelationshipClassChanges(changes.relationshipClassChanges);
+  }
+
+  private reportEntityClassChanges(map: Map<string, EntityClassChanges>) {
+    if (map.size === 0)
+      return;
+
+    this.reportHeader(SCHEMA_ITEM_GROUP_DEPTH, "EnityClass");
+    for (const [entityClass, changes] of map) {
+      this.reportClassChange(entityClass, changes);
+      this.reportEntityMixinChanges(changes.entityMixinChanges);
+    }
+  }
+
+  private reportRelationshipClassChanges(map: Map<string, RelationshipClassChanges>) {
+    if (map.size === 0)
+      return;
+
+    this.reportHeader(SCHEMA_ITEM_GROUP_DEPTH, "RelationshipClass");
+    for (const [relationshipClass, changes] of map) {
+      this.reportClassChange(relationshipClass, changes);
+      this.reportSourceConstraintChanges(changes.sourceConstraintChanges);
+      this.reportTargetConstraintChanges(changes.targetConstraintChanges);
+    }
   }
 
   private reportClassChanges(map: Map<string, ClassChanges>) {
@@ -114,9 +140,9 @@ export abstract class SchemaCompareReporter implements ISchemaCompareReporter {
       this.reportChange(SCHEMA_ITEM_DEPTH + 1, changes.baseClassDelta, markAsRemoved);
     }
     this.reportPropertyChanges(changes.propertyChanges, markAsRemoved);
-    this.reportEntityMixinChanges(changes.entityMixinChanges, markAsRemoved);
-    this.reportSourceConstraintChanges(changes.sourceConstraintChanges, markAsRemoved);
-    this.reportTargetConstraintChanges(changes.targetConstraintChanges, markAsRemoved);
+    // this.reportEntityMixinChanges(changes.entityMixinChanges, markAsRemoved);
+    // this.reportSourceConstraintChanges(changes.sourceConstraintChanges, markAsRemoved);
+    // this.reportTargetConstraintChanges(changes.targetConstraintChanges, markAsRemoved);
     this.reportCAContainerChanges(SCHEMA_ITEM_DEPTH + 1, changes.customAttributeChanges, markAsRemoved);
   }
 
@@ -241,7 +267,7 @@ export abstract class SchemaCompareReporter implements ISchemaCompareReporter {
       this.reportChange(SCHEMA_ITEM_DEPTH + 1, change, markAsRemoved);
     }
 
-    this.reportCAContainerChanges(SCHEMA_ITEM_DEPTH + 1, changes.customAttributeChanges, markAsRemoved);
+    // this.reportCAContainerChanges(SCHEMA_ITEM_DEPTH + 1, changes.customAttributeChanges, markAsRemoved);
   }
 
   private reportEnumerationChanges(map: Map<string, EnumerationChanges>) {
@@ -268,7 +294,7 @@ export abstract class SchemaCompareReporter implements ISchemaCompareReporter {
     }
 
     this.reportEnumeratorChanges(changes.enumeratorChanges, markAsRemoved);
-    this.reportCAContainerChanges(SCHEMA_ITEM_DEPTH + 1, changes.customAttributeChanges, markAsRemoved);
+    // this.reportCAContainerChanges(SCHEMA_ITEM_DEPTH + 1, changes.customAttributeChanges, markAsRemoved);
   }
 
   private reportEnumeratorChanges(map: Map<string, EnumeratorChanges>, markAsRemoved?: boolean) {
@@ -316,7 +342,7 @@ export abstract class SchemaCompareReporter implements ISchemaCompareReporter {
     }
 
     this.reportPresentationUnitChanges(changes.presentationUnitChanges, markAsRemoved);
-    this.reportCAContainerChanges(SCHEMA_ITEM_DEPTH + 1, changes.customAttributeChanges, markAsRemoved);
+    // this.reportCAContainerChanges(SCHEMA_ITEM_DEPTH + 1, changes.customAttributeChanges, markAsRemoved);
   }
 
   private reportPresentationUnitChanges(map: Map<string, PresentationUnitChanges>, markAsRemoved?: boolean) {
@@ -355,7 +381,7 @@ export abstract class SchemaCompareReporter implements ISchemaCompareReporter {
     }
 
     this.reportFormatUnitChanges(changes.formatUnitChanges, markAsRemoved);
-    this.reportCAContainerChanges(SCHEMA_ITEM_DEPTH + 1, changes.customAttributeChanges, markAsRemoved);
+    // this.reportCAContainerChanges(SCHEMA_ITEM_DEPTH + 1, changes.customAttributeChanges, markAsRemoved);
   }
 
   private reportFormatUnitChanges(map: Map<string, FormatUnitChanges>, markAsRemoved?: boolean) {
