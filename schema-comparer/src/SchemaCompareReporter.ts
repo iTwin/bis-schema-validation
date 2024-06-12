@@ -95,7 +95,7 @@ export abstract class SchemaCompareReporter implements ISchemaCompareReporter {
     if (map.size === 0)
       return;
 
-    this.reportHeader(SCHEMA_ITEM_GROUP_DEPTH, "EnityClass");
+    this.reportHeader(SCHEMA_ITEM_GROUP_DEPTH, "Classes");
     for (const [entityClass, changes] of map) {
       this.reportClassChange(entityClass, changes);
       this.reportEntityMixinChanges(changes.entityMixinChanges);
@@ -106,7 +106,7 @@ export abstract class SchemaCompareReporter implements ISchemaCompareReporter {
     if (map.size === 0)
       return;
 
-    this.reportHeader(SCHEMA_ITEM_GROUP_DEPTH, "RelationshipClass");
+    this.reportHeader(SCHEMA_ITEM_GROUP_DEPTH, "Classes");
     for (const [relationshipClass, changes] of map) {
       this.reportClassChange(relationshipClass, changes);
       this.reportSourceConstraintChanges(changes.sourceConstraintChanges);

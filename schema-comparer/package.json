@@ -19,7 +19,7 @@
     "build": "npm run beforeBuild && tsc  && npm run copy:test-assets",
     "test": "mocha",
     "test:watch": "betools test --watch",
-    "cover": "npm run beforeBuild && tsc  && npm run copy:test-assets",
+    "cover": "nyc npm -s test",
     "cli-dev": "cd .. & rush publish --publish --pack --include-all & npm install -g ./common/temp/artifacts/packages/bentley-schema-comparer-0.2.24.tgz",
     "copy:test-assets": "cpx \"./src/test/assets/**/*\" ./lib/test/assets"
   },
