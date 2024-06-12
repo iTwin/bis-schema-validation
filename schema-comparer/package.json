@@ -19,7 +19,7 @@
     "build": "npm run beforeBuild && tsc  && npm run copy:test-assets",
     "test": "mocha",
     "test:watch": "betools test --watch",
-    "cover": "nyc npm -s test",
+    "cover": "npm run beforeBuild && tsc  && npm run copy:test-assets",
     "cli-dev": "cd .. & rush publish --publish --pack --include-all & npm install -g ./common/temp/artifacts/packages/bentley-schema-comparer-0.2.24.tgz",
     "copy:test-assets": "cpx \"./src/test/assets/**/*\" ./lib/test/assets"
   },
@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@itwin/eslint-plugin": "4.0.0-dev.48",
-    "@itwin/build-tools": "4.5.0",
+    "@itwin/build-tools": "4.6.1",
     "@types/chai": "4.3.1",
     "@types/chai-as-promised": "^7",
     "@types/fs-extra": "^5.0.4",
@@ -55,19 +55,19 @@
     "eslint": "^8.44.0"
   },
   "peerDependencies": {
-    "@itwin/ecschema-metadata": "4.5.0",
-    "@itwin/ecschema-editing": "4.5.0",
-    "@itwin/ecschema-locaters": "4.5.0"
+    "@itwin/ecschema-metadata": "4.6.1",
+    "@itwin/ecschema-editing": "4.6.1",
+    "@itwin/ecschema-locaters": "4.6.1"
   },
   "dependencies": {
-    "@itwin/core-bentley": "4.5.0",
-    "@itwin/core-geometry": "4.5.0",
+    "@itwin/core-bentley": "4.6.1",
+    "@itwin/core-geometry": "4.6.1",
     "@itwin/imodels-access-backend": "4.0.0",
     "@itwin/imodels-client-authoring": "4.0.0",
-    "@itwin/core-backend": "4.5.0",
-    "@itwin/core-quantity": "4.5.0",
-    "@itwin/core-common": "4.5.0",
-    "@itwin/core-i18n": "4.5.0",
+    "@itwin/core-backend": "4.6.1",
+    "@itwin/core-quantity": "4.6.1",
+    "@itwin/core-common": "4.6.1",
+    "@itwin/core-i18n": "4.6.1",
     "@bentley/native-schema-locater": "0.2.178",
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
