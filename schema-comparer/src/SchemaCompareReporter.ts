@@ -82,13 +82,22 @@ export abstract class SchemaCompareReporter implements ISchemaCompareReporter {
 
     this.reportCAContainerChanges(SCHEMA_DEPTH + 1, changes.customAttributeChanges);
     this.reportClassChanges(changes.classChanges);
+    this.reportEntityClassChanges(changes.entityClassChanges);
+    this.reportRelationshipClassChanges(changes.relationshipClassChanges);
     this.reportEnumerationChanges(changes.enumerationChanges);
     this.reportKindOfQuantityChanges(changes.kindOfQuantityChanges);
     this.reportFormatChanges(changes.formatChanges);
     this.reportSchemaItemChanges(changes.schemaItemChanges);
+  }
 
-    this.reportEntityClassChanges(changes.entityClassChanges);
-    this.reportRelationshipClassChanges(changes.relationshipClassChanges);
+  private reportClassChanges(map: Map<string, ClassChanges>) {
+    if (map.size === 0)
+      return;
+
+    this.reportHeader(SCHEMA_ITEM_GROUP_DEPTH, "Classes");
+    for (const [anyClass, classChange] of map) {
+      this.reportClassChange(anyClass, classChange);
+    }
   }
 
   private reportEntityClassChanges(map: Map<string, EntityClassChanges>) {
@@ -98,7 +107,14 @@ export abstract class SchemaCompareReporter implements ISchemaCompareReporter {
     this.reportHeader(SCHEMA_ITEM_GROUP_DEPTH, "Classes");
     for (const [entityClass, changes] of map) {
       this.reportClassChange(entityClass, changes);
-      this.reportEntityMixinChanges(changes.entityMixinChanges);
+
+      let markAsRemoved: boolean | undefined;
+
+      if (changes.schemaItemMissing) {
+        markAsRemoved = true;
+      }
+
+      this.reportEntityMixinChanges(changes.entityMixinChanges, markAsRemoved);
     }
   }
 
@@ -109,18 +125,15 @@ export abstract class SchemaCompareReporter implements ISchemaCompareReporter {
     this.reportHeader(SCHEMA_ITEM_GROUP_DEPTH, "Classes");
     for (const [relationshipClass, changes] of map) {
       this.reportClassChange(relationshipClass, changes);
-      this.reportSourceConstraintChanges(changes.sourceConstraintChanges);
-      this.reportTargetConstraintChanges(changes.targetConstraintChanges);
-    }
-  }
 
-  private reportClassChanges(map: Map<string, ClassChanges>) {
-    if (map.size === 0)
-      return;
+      let markAsRemoved: boolean | undefined;
 
-    this.reportHeader(SCHEMA_ITEM_GROUP_DEPTH, "Classes");
-    for (const [anyClass, classChange] of map) {
-      this.reportClassChange(anyClass, classChange);
+      if (changes.schemaItemMissing) {
+        markAsRemoved = true;
+      }
+
+      this.reportSourceConstraintChanges(changes.sourceConstraintChanges, markAsRemoved);
+      this.reportTargetConstraintChanges(changes.targetConstraintChanges, markAsRemoved);
     }
   }
 
