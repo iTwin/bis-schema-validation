@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "@itwin/build-tools": "4.6.1",
-    "@itwin/eslint-plugin": "4.0.0-dev.48",
+    "@itwin/eslint-plugin": "^4.0.2",
     "@itwin/ecschema-metadata": "4.6.1",
     "@types/chai": "4.3.1",
     "@types/mocha": "^10.0.6",
