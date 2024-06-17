@@ -153,9 +153,6 @@ export abstract class SchemaCompareReporter implements ISchemaCompareReporter {
       this.reportChange(SCHEMA_ITEM_DEPTH + 1, changes.baseClassDelta, markAsRemoved);
     }
     this.reportPropertyChanges(changes.propertyChanges, markAsRemoved);
-    // this.reportEntityMixinChanges(changes.entityMixinChanges, markAsRemoved);
-    // this.reportSourceConstraintChanges(changes.sourceConstraintChanges, markAsRemoved);
-    // this.reportTargetConstraintChanges(changes.targetConstraintChanges, markAsRemoved);
     this.reportCAContainerChanges(SCHEMA_ITEM_DEPTH + 1, changes.customAttributeChanges, markAsRemoved);
   }
 
