@@ -280,7 +280,6 @@ export abstract class SchemaCompareReporter implements ISchemaCompareReporter {
       this.reportChange(SCHEMA_ITEM_DEPTH + 1, change, markAsRemoved);
     }
 
-    // this.reportCAContainerChanges(SCHEMA_ITEM_DEPTH + 1, changes.customAttributeChanges, markAsRemoved);
   }
 
   private reportEnumerationChanges(map: Map<string, EnumerationChanges>) {
@@ -307,7 +306,6 @@ export abstract class SchemaCompareReporter implements ISchemaCompareReporter {
     }
 
     this.reportEnumeratorChanges(changes.enumeratorChanges, markAsRemoved);
-    // this.reportCAContainerChanges(SCHEMA_ITEM_DEPTH + 1, changes.customAttributeChanges, markAsRemoved);
   }
 
   private reportEnumeratorChanges(map: Map<string, EnumeratorChanges>, markAsRemoved?: boolean) {
@@ -355,7 +353,6 @@ export abstract class SchemaCompareReporter implements ISchemaCompareReporter {
     }
 
     this.reportPresentationUnitChanges(changes.presentationUnitChanges, markAsRemoved);
-    // this.reportCAContainerChanges(SCHEMA_ITEM_DEPTH + 1, changes.customAttributeChanges, markAsRemoved);
   }
 
   private reportPresentationUnitChanges(map: Map<string, PresentationUnitChanges>, markAsRemoved?: boolean) {
@@ -394,7 +391,6 @@ export abstract class SchemaCompareReporter implements ISchemaCompareReporter {
     }
 
     this.reportFormatUnitChanges(changes.formatUnitChanges, markAsRemoved);
-    // this.reportCAContainerChanges(SCHEMA_ITEM_DEPTH + 1, changes.customAttributeChanges, markAsRemoved);
   }
 
   private reportFormatUnitChanges(map: Map<string, FormatUnitChanges>, markAsRemoved?: boolean) {
