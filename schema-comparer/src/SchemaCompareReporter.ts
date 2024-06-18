@@ -108,12 +108,7 @@ export abstract class SchemaCompareReporter implements ISchemaCompareReporter {
     for (const [entityClass, changes] of map) {
       this.reportClassChange(entityClass, changes);
 
-      let markAsRemoved: boolean | undefined;
-
-      if (changes.schemaItemMissing) {
-        markAsRemoved = true;
-      }
-
+      const markAsRemoved = changes.schemaItemMissing !== undefined;
       this.reportEntityMixinChanges(changes.entityMixinChanges, markAsRemoved);
     }
   }
@@ -126,12 +121,7 @@ export abstract class SchemaCompareReporter implements ISchemaCompareReporter {
     for (const [relationshipClass, changes] of map) {
       this.reportClassChange(relationshipClass, changes);
 
-      let markAsRemoved: boolean | undefined;
-
-      if (changes.schemaItemMissing) {
-        markAsRemoved = true;
-      }
-
+      const markAsRemoved = changes.schemaItemMissing !== undefined;
       this.reportSourceConstraintChanges(changes.sourceConstraintChanges, markAsRemoved);
       this.reportTargetConstraintChanges(changes.targetConstraintChanges, markAsRemoved);
     }
