@@ -93,7 +93,7 @@ describe("SchemaDeserializer", () => {
 
     const coreCA = biscore.getReferenceSync("CoreCustomAttributes");
     expect(coreCA).not.to.be.undefined;
-    expect(coreCA!.schemaKey.toString()).to.eql("CoreCustomAttributes.01.00.03");
+    expect(coreCA!.schemaKey.toString()).to.eql("CoreCustomAttributes.01.00.04");
 
     const ecdbMap = biscore.getReferenceSync("ECDbMap");
     expect(ecdbMap).not.to.be.undefined;
@@ -125,7 +125,7 @@ describe("SchemaDeserializer", () => {
 
     const coreCA = comprehensiveSchema.getReferenceSync("CoreCustomAttributes");
     expect(coreCA).not.to.be.undefined;
-    expect(coreCA!.schemaKey.toString()).to.eql("CoreCustomAttributes.01.00.03");
+    expect(coreCA!.schemaKey.toString()).to.eql("CoreCustomAttributes.01.00.04");
 
     const biscore = comprehensiveSchema.getReferenceSync("BisCore");
     expect(biscore).not.to.be.undefined;
@@ -165,7 +165,7 @@ describe("SchemaDeserializer", () => {
 
     const coreCA = partialComprehensiveSchema.getReferenceSync("CoreCustomAttributes");
     expect(coreCA).not.to.be.undefined;
-    expect(coreCA!.schemaKey.toString()).to.eql("CoreCustomAttributes.01.00.03");
+    expect(coreCA!.schemaKey.toString()).to.eql("CoreCustomAttributes.01.00.04");
 
     const biscore = partialComprehensiveSchema.getReferenceSync("BisCore");
     expect(biscore).not.to.be.undefined;

@@ -60,7 +60,7 @@ describe("SchemaCompareReporter Tests", () => {
 
       expect(reporterSpy.calledWithExactly("!Schema(TestSchema)", undefined)).to.be.true;
       expect(reporterSpy.calledWithExactly("!\tClasses", undefined)).to.be.true;
-      const change = changes.classChanges.get(testClass.name)!.schemaItemMissing;
+      const change = changes.entityClassChanges.get(testClass.name)!.schemaItemMissing;
       expect(reporterSpy.calledWithExactly("+\t\tClass(TestClass)", change)).to.be.true;
     });
 
@@ -183,7 +183,7 @@ describe("SchemaCompareReporter Tests", () => {
       expect(reporterSpy.calledWithExactly("-Schema(TestSchema)", undefined)).to.be.true;
       expect(reporterSpy.calledWithExactly("-\tClasses", undefined)).to.be.true;
       expect(reporterSpy.calledWithExactly("-\t\tClass(TestClass)", undefined)).to.be.true;
-      const change = changes.classChanges.get("TestClass")!.propertyValueChanges[0];
+      const change = changes.entityClassChanges.get("TestClass")!.propertyValueChanges[0];
       expect(reporterSpy.calledWithExactly("-\t\t\tLabel: LabelA -> LabelB", change)).to.be.true;
     });
 
@@ -200,7 +200,7 @@ describe("SchemaCompareReporter Tests", () => {
       expect(reporterSpy.calledWithExactly("+Schema(TestSchemaB)", undefined)).to.be.true;
       expect(reporterSpy.calledWithExactly("+\tClasses", undefined)).to.be.true;
       expect(reporterSpy.calledWithExactly("+\t\tClass(TestClass)", undefined)).to.be.true;
-      const change = changes.classChanges.get("TestClass")!.propertyValueChanges[0];
+      const change = changes.entityClassChanges.get("TestClass")!.propertyValueChanges[0];
       expect(reporterSpy.calledWithExactly("+\t\t\tLabel: LabelA -> LabelB", change)).to.be.true;
     });
 
@@ -218,7 +218,7 @@ describe("SchemaCompareReporter Tests", () => {
       expect(reporterSpy.calledWithExactly("!Schema(TestSchema)", undefined)).to.be.true;
       expect(reporterSpy.calledWithExactly("!\tClasses", undefined)).to.be.true;
       expect(reporterSpy.calledWithExactly("!\t\tClass(TestClass)", undefined)).to.be.true;
-      const change = changes.classChanges.get("TestClass")!.baseClassDelta!;
+      const change = changes.entityClassChanges.get("TestClass")!.baseClassDelta!;
       expect(reporterSpy.calledWithExactly("!\t\t\tBaseClass: TestSchema.BaseClassA -> TestSchema.BaseClassB", change)).to.be.true;
     });
 
@@ -234,7 +234,7 @@ describe("SchemaCompareReporter Tests", () => {
       expect(reporterSpy.calledWithExactly("!Schema(TestSchema)", undefined)).to.be.true;
       expect(reporterSpy.calledWithExactly("!\tClasses", undefined)).to.be.true;
       expect(reporterSpy.calledWithExactly("!\t\tClass(TestClass)", undefined)).to.be.true;
-      const change = changes.classChanges.get("TestClass")!.propertyValueChanges[0];
+      const change = changes.entityClassChanges.get("TestClass")!.propertyValueChanges[0];
       expect(reporterSpy.calledWithExactly("!\t\t\tLabel: LabelA -> LabelB", change)).to.be.true;
     });
 
@@ -252,7 +252,7 @@ describe("SchemaCompareReporter Tests", () => {
       expect(reporterSpy.calledWithExactly("!\tClasses", undefined)).to.be.true;
       expect(reporterSpy.calledWithExactly("!\t\tClass(TestClass)", undefined)).to.be.true;
       expect(reporterSpy.calledWithExactly("!\t\t\tCustomAttributes", undefined)).to.be.true;
-      const change = changes.classChanges.get("TestClass")!.customAttributeChanges.get("TestSchema.TestCustomAttribute")!.customAttributeChanges[0];
+      const change = changes.entityClassChanges.get("TestClass")!.customAttributeChanges.get("TestSchema.TestCustomAttribute")!.customAttributeChanges[0];
       expect(reporterSpy.calledWithExactly("-\t\t\t\tCustomAttribute: TestSchema.TestCustomAttribute", change)).to.be.true;
     });
 
@@ -270,7 +270,7 @@ describe("SchemaCompareReporter Tests", () => {
       expect(reporterSpy.calledWithExactly("!\tClasses", undefined)).to.be.true;
       expect(reporterSpy.calledWithExactly("!\t\tClass(TestClass)", undefined)).to.be.true;
       expect(reporterSpy.calledWithExactly("!\t\t\tCustomAttributes", undefined)).to.be.true;
-      const change = changes.classChanges.get("TestClass")!.customAttributeChanges.get("TestSchema.TestCustomAttribute")!.customAttributeChanges[0];
+      const change = changes.entityClassChanges.get("TestClass")!.customAttributeChanges.get("TestSchema.TestCustomAttribute")!.customAttributeChanges[0];
       expect(reporterSpy.calledWithExactly("+\t\t\t\tCustomAttribute: TestSchema.TestCustomAttribute", change)).to.be.true;
     });
 
@@ -288,7 +288,7 @@ describe("SchemaCompareReporter Tests", () => {
       expect(reporterSpy.calledWithExactly("!\tClasses", undefined)).to.be.true;
       expect(reporterSpy.calledWithExactly("!\t\tClass(TestClass)", undefined)).to.be.true;
       expect(reporterSpy.calledWithExactly("!\t\t\tMixins", undefined)).to.be.true;
-      const change = changes.classChanges.get("TestClass")!.entityMixinChanges.get("TestSchema.TestMixin")!.entityMixinChange[0];
+      const change = changes.entityClassChanges.get("TestClass")!.entityMixinChanges.get("TestSchema.TestMixin")!.entityMixinChange[0];
       expect(reporterSpy.calledWithExactly("-\t\t\t\tMixin: TestSchema.TestMixin", change)).to.be.true;
     });
 
@@ -306,7 +306,7 @@ describe("SchemaCompareReporter Tests", () => {
       expect(reporterSpy.calledWithExactly("!\tClasses", undefined)).to.be.true;
       expect(reporterSpy.calledWithExactly("!\t\tClass(TestClass)", undefined)).to.be.true;
       expect(reporterSpy.calledWithExactly("!\t\t\tMixins", undefined)).to.be.true;
-      const change = changes.classChanges.get("TestClass")!.entityMixinChanges.get("TestSchema.TestMixin")!.entityMixinChange[0];
+      const change = changes.entityClassChanges.get("TestClass")!.entityMixinChanges.get("TestSchema.TestMixin")!.entityMixinChange[0];
       expect(reporterSpy.calledWithExactly("+\t\t\t\tMixin: TestSchema.TestMixin", change)).to.be.true;
     });
 
@@ -325,7 +325,7 @@ describe("SchemaCompareReporter Tests", () => {
         expect(reporterSpy.calledWithExactly("!\tClasses", undefined)).to.be.true;
         expect(reporterSpy.calledWithExactly("!\t\tClass(TestClass)", undefined)).to.be.true;
         expect(reporterSpy.calledWithExactly("!\t\t\tSource", undefined)).to.be.true;
-        const change = changes.classChanges.get("TestClass")!.sourceConstraintChanges.get("TestClass:Source")!.propertyValueChanges[0];
+        const change = changes.relationshipClassChanges.get("TestClass")!.sourceConstraintChanges.get("TestClass:Source")!.propertyValueChanges[0];
         expect(reporterSpy.calledWithExactly("!\t\t\t\tPolymorphic: true -> false", change)).to.be.true;
       });
 
@@ -345,7 +345,7 @@ describe("SchemaCompareReporter Tests", () => {
         expect(reporterSpy.calledWithExactly("!\t\tClass(TestClass)", undefined)).to.be.true;
         expect(reporterSpy.calledWithExactly("!\t\t\tSource", undefined)).to.be.true;
         expect(reporterSpy.calledWithExactly("!\t\t\t\tConstraintClasses", undefined)).to.be.true;
-        const change = changes.classChanges.get("TestClass")!.sourceConstraintChanges.get("TestClass:Source")!.constraintClassChanges[0];
+        const change = changes.relationshipClassChanges.get("TestClass")!.sourceConstraintChanges.get("TestClass:Source")!.constraintClassChanges[0];
         expect(reporterSpy.calledWithExactly("-\t\t\t\t\tConstraintClass: TestSchema.TestConstraintClass", change)).to.be.true;
       });
 
@@ -365,7 +365,7 @@ describe("SchemaCompareReporter Tests", () => {
         expect(reporterSpy.calledWithExactly("!\t\tClass(TestClass)", undefined)).to.be.true;
         expect(reporterSpy.calledWithExactly("!\t\t\tSource", undefined)).to.be.true;
         expect(reporterSpy.calledWithExactly("!\t\t\t\tConstraintClasses", undefined)).to.be.true;
-        const change = changes.classChanges.get("TestClass")!.sourceConstraintChanges.get("TestClass:Source")!.constraintClassChanges[0];
+        const change = changes.relationshipClassChanges.get("TestClass")!.sourceConstraintChanges.get("TestClass:Source")!.constraintClassChanges[0];
         expect(reporterSpy.calledWithExactly("+\t\t\t\t\tConstraintClass: TestSchema.TestConstraintClass", change)).to.be.true;
       });
 
@@ -385,7 +385,7 @@ describe("SchemaCompareReporter Tests", () => {
         expect(reporterSpy.calledWithExactly("!\t\tClass(TestClass)", undefined)).to.be.true;
         expect(reporterSpy.calledWithExactly("!\t\t\tSource", undefined)).to.be.true;
         expect(reporterSpy.calledWithExactly("!\t\t\t\tCustomAttributes", undefined)).to.be.true;
-        const change = changes.classChanges.get("TestClass")!.sourceConstraintChanges.get("TestClass:Source")!.customAttributeChanges.get("TestSchema.TestCustomAttribute")!.customAttributeChanges[0];
+        const change = changes.relationshipClassChanges.get("TestClass")!.sourceConstraintChanges.get("TestClass:Source")!.customAttributeChanges.get("TestSchema.TestCustomAttribute")!.customAttributeChanges[0];
         expect(reporterSpy.calledWithExactly("-\t\t\t\t\tCustomAttribute: TestSchema.TestCustomAttribute", change)).to.be.true;
       });
 
@@ -405,7 +405,7 @@ describe("SchemaCompareReporter Tests", () => {
         expect(reporterSpy.calledWithExactly("!\t\tClass(TestClass)", undefined)).to.be.true;
         expect(reporterSpy.calledWithExactly("!\t\t\tSource", undefined)).to.be.true;
         expect(reporterSpy.calledWithExactly("!\t\t\t\tCustomAttributes", undefined)).to.be.true;
-        const change = changes.classChanges.get("TestClass")!.sourceConstraintChanges.get("TestClass:Source")!.customAttributeChanges.get("TestSchema.TestCustomAttribute")!.customAttributeChanges[0];
+        const change = changes.relationshipClassChanges.get("TestClass")!.sourceConstraintChanges.get("TestClass:Source")!.customAttributeChanges.get("TestSchema.TestCustomAttribute")!.customAttributeChanges[0];
         expect(reporterSpy.calledWithExactly("+\t\t\t\t\tCustomAttribute: TestSchema.TestCustomAttribute", change)).to.be.true;
       });
 
@@ -423,7 +423,7 @@ describe("SchemaCompareReporter Tests", () => {
         expect(reporterSpy.calledWithExactly("!\tClasses", undefined)).to.be.true;
         expect(reporterSpy.calledWithExactly("!\t\tClass(TestClass)", undefined)).to.be.true;
         expect(reporterSpy.calledWithExactly("!\t\t\tTarget", undefined)).to.be.true;
-        const change = changes.classChanges.get("TestClass")!.targetConstraintChanges.get("TestClass:Target")!.propertyValueChanges[0];
+        const change = changes.relationshipClassChanges.get("TestClass")!.targetConstraintChanges.get("TestClass:Target")!.propertyValueChanges[0];
         expect(reporterSpy.calledWithExactly("!\t\t\t\tPolymorphic: true -> false", change)).to.be.true;
       });
 
@@ -443,7 +443,7 @@ describe("SchemaCompareReporter Tests", () => {
         expect(reporterSpy.calledWithExactly("!\t\tClass(TestClass)", undefined)).to.be.true;
         expect(reporterSpy.calledWithExactly("!\t\t\tTarget", undefined)).to.be.true;
         expect(reporterSpy.calledWithExactly("!\t\t\t\tConstraintClasses", undefined)).to.be.true;
-        const change = changes.classChanges.get("TestClass")!.targetConstraintChanges.get("TestClass:Target")!.constraintClassChanges[0];
+        const change = changes.relationshipClassChanges.get("TestClass")!.targetConstraintChanges.get("TestClass:Target")!.constraintClassChanges[0];
         expect(reporterSpy.calledWithExactly("-\t\t\t\t\tConstraintClass: TestSchema.TestConstraintClass", change)).to.be.true;
       });
 
@@ -463,7 +463,7 @@ describe("SchemaCompareReporter Tests", () => {
         expect(reporterSpy.calledWithExactly("!\t\tClass(TestClass)", undefined)).to.be.true;
         expect(reporterSpy.calledWithExactly("!\t\t\tTarget", undefined)).to.be.true;
         expect(reporterSpy.calledWithExactly("!\t\t\t\tConstraintClasses", undefined)).to.be.true;
-        const change = changes.classChanges.get("TestClass")!.targetConstraintChanges.get("TestClass:Target")!.constraintClassChanges[0];
+        const change = changes.relationshipClassChanges.get("TestClass")!.targetConstraintChanges.get("TestClass:Target")!.constraintClassChanges[0];
         expect(reporterSpy.calledWithExactly("+\t\t\t\t\tConstraintClass: TestSchema.TestConstraintClass", change)).to.be.true;
       });
 
@@ -483,7 +483,7 @@ describe("SchemaCompareReporter Tests", () => {
         expect(reporterSpy.calledWithExactly("!\t\tClass(TestClass)", undefined)).to.be.true;
         expect(reporterSpy.calledWithExactly("!\t\t\tTarget", undefined)).to.be.true;
         expect(reporterSpy.calledWithExactly("!\t\t\t\tCustomAttributes", undefined)).to.be.true;
-        const change = changes.classChanges.get("TestClass")!.targetConstraintChanges.get("TestClass:Target")!.customAttributeChanges.get("TestSchema.TestCustomAttribute")!.customAttributeChanges[0];
+        const change = changes.relationshipClassChanges.get("TestClass")!.targetConstraintChanges.get("TestClass:Target")!.customAttributeChanges.get("TestSchema.TestCustomAttribute")!.customAttributeChanges[0];
         expect(reporterSpy.calledWithExactly("-\t\t\t\t\tCustomAttribute: TestSchema.TestCustomAttribute", change)).to.be.true;
       });
 
@@ -503,7 +503,7 @@ describe("SchemaCompareReporter Tests", () => {
         expect(reporterSpy.calledWithExactly("!\t\tClass(TestClass)", undefined)).to.be.true;
         expect(reporterSpy.calledWithExactly("!\t\t\tTarget", undefined)).to.be.true;
         expect(reporterSpy.calledWithExactly("!\t\t\t\tCustomAttributes", undefined)).to.be.true;
-        const change = changes.classChanges.get("TestClass")!.targetConstraintChanges.get("TestClass:Target")!.customAttributeChanges.get("TestSchema.TestCustomAttribute")!.customAttributeChanges[0];
+        const change = changes.relationshipClassChanges.get("TestClass")!.targetConstraintChanges.get("TestClass:Target")!.customAttributeChanges.get("TestSchema.TestCustomAttribute")!.customAttributeChanges[0];
         expect(reporterSpy.calledWithExactly("+\t\t\t\t\tCustomAttribute: TestSchema.TestCustomAttribute", change)).to.be.true;
       });
     });
@@ -523,7 +523,7 @@ describe("SchemaCompareReporter Tests", () => {
         expect(reporterSpy.calledWithExactly("!\tClasses", undefined)).to.be.true;
         expect(reporterSpy.calledWithExactly("!\t\tClass(TestClass)", undefined)).to.be.true;
         expect(reporterSpy.calledWithExactly("!\t\t\tProperties", undefined)).to.be.true;
-        const change = changes.classChanges.get("TestClass")!.propertyChanges.get("TestProperty")!.propertyMissing;
+        const change = changes.entityClassChanges.get("TestClass")!.propertyChanges.get("TestProperty")!.propertyMissing;
         expect(reporterSpy.calledWithExactly("-\t\t\t\tProperty(TestProperty)", change)).to.be.true;
       });
 
@@ -541,7 +541,7 @@ describe("SchemaCompareReporter Tests", () => {
         expect(reporterSpy.calledWithExactly("!\tClasses", undefined)).to.be.true;
         expect(reporterSpy.calledWithExactly("!\t\tClass(TestClass)", undefined)).to.be.true;
         expect(reporterSpy.calledWithExactly("!\t\t\tProperties", undefined)).to.be.true;
-        const change = changes.classChanges.get("TestClass")!.propertyChanges.get("TestProperty")!.propertyMissing;
+        const change = changes.entityClassChanges.get("TestClass")!.propertyChanges.get("TestProperty")!.propertyMissing;
         expect(reporterSpy.calledWithExactly("+\t\t\t\tProperty(TestProperty)", change)).to.be.true;
       });
 
@@ -560,7 +560,7 @@ describe("SchemaCompareReporter Tests", () => {
         expect(reporterSpy.calledWithExactly("!\t\tClass(TestClass)", undefined)).to.be.true;
         expect(reporterSpy.calledWithExactly("!\t\t\tProperties", undefined)).to.be.true;
         expect(reporterSpy.calledWithExactly("!\t\t\t\tProperty(TestProperty)", undefined)).to.be.true;
-        const change = changes.classChanges.get("TestClass")!.propertyChanges.get("TestProperty")!.propertyValueChanges[0];
+        const change = changes.entityClassChanges.get("TestClass")!.propertyChanges.get("TestProperty")!.propertyValueChanges[0];
         expect(reporterSpy.calledWithExactly("!\t\t\t\t\tLabel: LabelA -> LabelB", change)).to.be.true;
       });
 
@@ -581,7 +581,7 @@ describe("SchemaCompareReporter Tests", () => {
         expect(reporterSpy.calledWithExactly("!\t\t\tProperties", undefined)).to.be.true;
         expect(reporterSpy.calledWithExactly("!\t\t\t\tProperty(TestProperty)", undefined)).to.be.true;
         expect(reporterSpy.calledWithExactly("!\t\t\t\t\tCustomAttributes", undefined)).to.be.true;
-        const change = changes.classChanges.get("TestClass")!.propertyChanges.get("TestProperty")!.customAttributeChanges.get("TestSchema.TestCustomAttribute")!.customAttributeChanges[0];
+        const change = changes.entityClassChanges.get("TestClass")!.propertyChanges.get("TestProperty")!.customAttributeChanges.get("TestSchema.TestCustomAttribute")!.customAttributeChanges[0];
         expect(reporterSpy.calledWithExactly("-\t\t\t\t\t\tCustomAttribute: TestSchema.TestCustomAttribute", change)).to.be.true;
       });
 
@@ -602,7 +602,7 @@ describe("SchemaCompareReporter Tests", () => {
         expect(reporterSpy.calledWithExactly("!\t\t\tProperties", undefined)).to.be.true;
         expect(reporterSpy.calledWithExactly("!\t\t\t\tProperty(TestProperty)", undefined)).to.be.true;
         expect(reporterSpy.calledWithExactly("!\t\t\t\t\tCustomAttributes", undefined)).to.be.true;
-        const change = changes.classChanges.get("TestClass")!.propertyChanges.get("TestProperty")!.customAttributeChanges.get("TestSchema.TestCustomAttribute")!.customAttributeChanges[0];
+        const change = changes.entityClassChanges.get("TestClass")!.propertyChanges.get("TestProperty")!.customAttributeChanges.get("TestSchema.TestCustomAttribute")!.customAttributeChanges[0];
         expect(reporterSpy.calledWithExactly("+\t\t\t\t\t\tCustomAttribute: TestSchema.TestCustomAttribute", change)).to.be.true;
       });
 
@@ -624,7 +624,7 @@ describe("SchemaCompareReporter Tests", () => {
         expect(reporterSpy.calledWithExactly("+\t\t\tProperties", undefined)).to.be.true;
         expect(reporterSpy.calledWithExactly("+\t\t\t\tProperty(TestProperty)", undefined)).to.be.true;
         expect(reporterSpy.calledWithExactly("+\t\t\t\t\tCustomAttributes", undefined)).to.be.true;
-        const change = changes.classChanges.get("TestClass")!.propertyChanges.get("TestProperty")!.customAttributeChanges.get("TestSchema.TestCustomAttribute")!.customAttributeChanges[0];
+        const change = changes.entityClassChanges.get("TestClass")!.propertyChanges.get("TestProperty")!.customAttributeChanges.get("TestSchema.TestCustomAttribute")!.customAttributeChanges[0];
         expect(reporterSpy.calledWithExactly("+\t\t\t\t\t\tCustomAttribute: TestSchema.TestCustomAttribute", change)).to.be.true;
       });
     });

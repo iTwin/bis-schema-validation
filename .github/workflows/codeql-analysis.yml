@@ -1,6 +1,7 @@
 name: "Bis-Schema-Validation-CodeQL"
 
 on:
+  workflow_dispatch: #Enable manual execution
   push:
     branches: [ master ]
   pull_request:

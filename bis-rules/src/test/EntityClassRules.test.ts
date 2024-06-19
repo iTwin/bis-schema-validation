@@ -32,6 +32,10 @@ describe("EntityClass Rule Tests", () => {
           name: "BisCore",
           version: "1.0.0",
         },
+        {
+          name: "CoreCustomAttributes",
+          version: "01.00.01",
+        },
       ],
     };
     return createSchemaJsonWithItems(name, items, refJson);
