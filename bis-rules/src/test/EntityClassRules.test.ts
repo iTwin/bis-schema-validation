@@ -9,7 +9,7 @@ import { MutableSchema } from "@itwin/ecschema-metadata/lib/cjs/Metadata/Schema"
 import { MutableClass } from "@itwin/ecschema-metadata/lib/cjs/Metadata/Class";
 import { MutableEntityClass } from "@itwin/ecschema-metadata/lib/cjs/Metadata/EntityClass";
 import * as Rules from "../BisRules";
-import { DelayedPromiseWithProps, ECClass, ECObjectsError, ECObjectsStatus, EntityClass, LazyLoadedSchemaItem, Mixin, PrimitiveType, Schema, SchemaContext } from "@itwin/ecschema-metadata";
+import { DelayedPromiseWithProps, ECClass, ECClassModifier, ECObjectsError, ECObjectsStatus, EntityClass, LazyLoadedSchemaItem, Mixin, PrimitiveType, Schema, SchemaContext } from "@itwin/ecschema-metadata";
 import { DiagnosticCategory, DiagnosticType } from "@itwin/ecschema-editing";
 import { BisTestHelper } from "./utils/BisTestHelper";
 
@@ -84,6 +84,37 @@ describe("EntityClass Rule Tests", () => {
         expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
+    });
+
+    it("Non-abstract EntityClass with QueryView custom attribute does not derive from BIS hierarchy, rule violated.", async () => {
+      const entityClass = new EntityClass(testSchema, "TestEntity");
+      const mutableClass = entityClass as ECClass as MutableClass;
+      (mutableClass).addCustomAttribute({ className: "ECDbMap.QueryView"});
+
+      const result = Rules.entityClassMustDeriveFromBisHierarchy(entityClass);
+
+      let resultHasEntries = false;
+      for await (const diagnostic of result!) {
+        resultHasEntries = true;
+        expect(diagnostic).to.not.be.undefined;
+        expect(diagnostic!.ecDefinition).to.equal(entityClass);
+        expect(diagnostic!.messageArgs).to.eql([entityClass.fullName]);
+        expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
+        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.EntityClassMustDeriveFromBisHierarchy);
+        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
+      }
+      expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
+    });
+
+    it("Abstract EntityClass with QueryView custom attribute does not derive from BIS base class, rule passes.", async () => {
+      const entityClass = new EntityClass(testSchema, "AbstractEntity", ECClassModifier.Abstract);
+      const mutableClass = entityClass as ECClass as MutableClass;
+      (mutableClass).addCustomAttribute({ className: "ECDbMap.QueryView"});
+      const result = Rules.entityClassMustDeriveFromBisHierarchy(entityClass);
+
+      for await (const _diagnostic of result!) {
+        expect(false, "Rule should have passed").to.be.true;
+      }
     });
 
     it("EntityClass does derive from BIS base class, rule passes.", async () => {

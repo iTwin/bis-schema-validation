@@ -540,6 +540,11 @@ export async function* entityClassMustDeriveFromBisHierarchy(entity: EC.EntityCl
       return;
   }
 
+  // Allow non-bis abstract classes that have the QueryView custom attribute (views should not derive from a bis base class)
+  if (entity.modifier === ECClassModifier.Abstract && entity.customAttributes && entity.customAttributes.has("ECDbMap.QueryView")) {
+    return;
+  }
+
   yield new Diagnostics.EntityClassMustDeriveFromBisHierarchy(entity, [entity.fullName]);
 }
 
