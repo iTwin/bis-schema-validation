@@ -687,17 +687,6 @@ packages:
       '@itwin/ecschema-metadata': 4.9.0-dev.20_shoxuat57binqrnwexhjlekt2i
     dev: false
 
-  /@itwin/ecschema-locaters/4.8.0-dev.8_rm2kw25bgw6qhyrqtyobd5ow2y:
-    resolution: {integrity: sha512-Tcr/RR3Bd/DUf1xeyM6kWdv97G/4suxHTFVFGDhKmSANNDGo6P/v95H25YEknaaNWCGoyB0sL9iZVffHT0gCag==}
-    peerDependencies:
-      '@itwin/ecschema-metadata': ^4.8.0-dev.8
-    dependencies:
-      '@itwin/ecschema-metadata': 4.9.0-dev.20_shoxuat57binqrnwexhjlekt2i
-      '@xmldom/xmldom': 0.8.10
-      fs-extra: 8.1.0
-      glob: 10.4.5
-    dev: false
-
   /@itwin/ecschema-locaters/4.9.0-dev.20_rm2kw25bgw6qhyrqtyobd5ow2y:
     resolution: {integrity: sha512-0w0PCL19s3RmB30toTS+GmAXjeFRWqQ0UXODEsbdwaGP29oda8lP6JRWmVJxlDbhdr1hDl4FD0Lc4GFdg/d5Pw==}
     peerDependencies:
@@ -6269,7 +6258,7 @@ packages:
     dev: false
 
   file:projects/imodel-schema-validator.tgz:
-    resolution: {integrity: sha512-OX/V6nWNSJN1I8F83YFHkvkVjz6dqetiFlWUn2wPjw+NwBXH7P1GletfkaSq1a8ugVIARZBGNjP41SfK004i1w==, tarball: file:projects/imodel-schema-validator.tgz}
+    resolution: {integrity: sha512-CLnAQz/6r9yDv4ugknX5DJMYebboAHhDXkYztVlYfBsZjeu3YxEBPw0YAXMFmlmgjUss+zRW9v1MGtF/NA4Opw==, tarball: file:projects/imodel-schema-validator.tgz}
     name: '@rush-temp/imodel-schema-validator'
     version: 0.0.0
     dependencies:
@@ -6313,7 +6302,7 @@ packages:
     dev: false
 
   file:projects/native-schema-locater.tgz:
-    resolution: {integrity: sha512-PO+IXw/55FmAYEWsLD+kmEBaRiMJgYRnjL5o0EYv3U7MSlj667oJlZsQ8CMgFTjW1JM4nqqrm4CxXVfdeE4T5w==, tarball: file:projects/native-schema-locater.tgz}
+    resolution: {integrity: sha512-8Az8YLmwyQ8qOD2bbmDMAlz+2FPE7AWuJP5bh/a7i7ieErzSiEVanTUiiTZbCq0YTpawvRndAZ06rgfHH8Qv/w==, tarball: file:projects/native-schema-locater.tgz}
     name: '@rush-temp/native-schema-locater'
     version: 0.0.0
     dependencies:
@@ -6323,7 +6312,7 @@ packages:
       '@itwin/core-common': 4.9.0-dev.20_sstnj6m4uxhukpdeylp3jqjidu
       '@itwin/core-geometry': 4.9.0-dev.20
       '@itwin/core-quantity': 4.9.0-dev.20_w2whwbytdhq4uujdapy65evtja
-      '@itwin/ecschema-locaters': 4.8.0-dev.8_rm2kw25bgw6qhyrqtyobd5ow2y
+      '@itwin/ecschema-locaters': 4.9.0-dev.20_rm2kw25bgw6qhyrqtyobd5ow2y
       '@itwin/ecschema-metadata': 4.9.0-dev.20_shoxuat57binqrnwexhjlekt2i
       '@itwin/eslint-plugin': 4.1.1_lhzdwpbtv2n477nxjcr5ny2fnm
       '@itwin/imodels-access-backend': 5.2.2_x3ckftzxvzkgw73kddmoa6dxoe
@@ -6359,7 +6348,7 @@ packages:
     dev: false
 
   file:projects/schema-comparer.tgz:
-    resolution: {integrity: sha512-uWT1VGwNvjHyaTo1Y3hIClAgTfjWoKKa+9nEnXGAIVbR3oyPgR+qoPcgWCZyxyMVi9nRzY1vqoqNQktfuD2DoQ==, tarball: file:projects/schema-comparer.tgz}
+    resolution: {integrity: sha512-/0AJp6s64JXPa8wvBWgXsI0aVUAlRvcudnZLjM1w9vpzbViZ+O/TRoLLureBWJMg51hN+N93KkZ2xlrXKPJr7g==, tarball: file:projects/schema-comparer.tgz}
     name: '@rush-temp/schema-comparer'
     version: 0.0.0
     dependencies:
@@ -6371,7 +6360,7 @@ packages:
       '@itwin/core-i18n': 4.9.0-dev.20_w2whwbytdhq4uujdapy65evtja
       '@itwin/core-quantity': 4.9.0-dev.20_w2whwbytdhq4uujdapy65evtja
       '@itwin/ecschema-editing': 4.9.0-dev.20_njr4udxeiefg7fnnsn7hdny6bm
-      '@itwin/ecschema-locaters': 4.8.0-dev.8_rm2kw25bgw6qhyrqtyobd5ow2y
+      '@itwin/ecschema-locaters': 4.9.0-dev.20_rm2kw25bgw6qhyrqtyobd5ow2y
       '@itwin/ecschema-metadata': 4.9.0-dev.20_shoxuat57binqrnwexhjlekt2i
       '@itwin/eslint-plugin': 4.1.1_lhzdwpbtv2n477nxjcr5ny2fnm
       '@itwin/imodels-access-backend': 5.2.2_x3ckftzxvzkgw73kddmoa6dxoe
@@ -6408,7 +6397,7 @@ packages:
     dev: false
 
   file:projects/schema-roundtrip.tgz:
-    resolution: {integrity: sha512-/lYuuGkFVB/tYV72cJJtqzmcRMQLHlaJsCkr8xZr7drpey7CcmP5YQ22C5zILVtKpPCdhhWNZLC4i0L27uUc+w==, tarball: file:projects/schema-roundtrip.tgz}
+    resolution: {integrity: sha512-mvJfmZkrsTY/1coQovZs06DHOkSx+TiWjjZqvUM3AxGDHCjJwudRD9R2ZDMgRZdY51qYZ2nnaQfvybKeCS8mcg==, tarball: file:projects/schema-roundtrip.tgz}
     name: '@rush-temp/schema-roundtrip'
     version: 0.0.0
     dependencies:
@@ -6419,7 +6408,7 @@ packages:
       '@itwin/core-geometry': 4.9.0-dev.20
       '@itwin/core-i18n': 4.9.0-dev.20_w2whwbytdhq4uujdapy65evtja
       '@itwin/core-quantity': 4.9.0-dev.20_w2whwbytdhq4uujdapy65evtja
-      '@itwin/ecschema-locaters': 4.8.0-dev.8_rm2kw25bgw6qhyrqtyobd5ow2y
+      '@itwin/ecschema-locaters': 4.9.0-dev.20_rm2kw25bgw6qhyrqtyobd5ow2y
       '@itwin/ecschema-metadata': 4.9.0-dev.20_shoxuat57binqrnwexhjlekt2i
       '@itwin/eslint-plugin': 4.1.1_lhzdwpbtv2n477nxjcr5ny2fnm
       '@itwin/imodels-access-backend': 5.2.2_x3ckftzxvzkgw73kddmoa6dxoe
@@ -6455,7 +6444,7 @@ packages:
     dev: false
 
   file:projects/schema-validator.tgz:
-    resolution: {integrity: sha512-sI5uuXl5fSZX73yZt5bQx0HST1NBhMukYJuZZMNP6gegOuxJCuV2N3z7L8yJkYcs8a/7QOsvI1SFKOZ9XDOikQ==, tarball: file:projects/schema-validator.tgz}
+    resolution: {integrity: sha512-Wq2eVCWCMH2ndHDgBT5YLjm84Npx/S9b90Bv95evcsXdIAaRraCGokEghQsXpWf5m26Dsbr8mXvdgMMvnHRhSA==, tarball: file:projects/schema-validator.tgz}
     name: '@rush-temp/schema-validator'
     version: 0.0.0
     dependencies:
@@ -6466,7 +6455,7 @@ packages:
       '@itwin/core-geometry': 4.9.0-dev.20
       '@itwin/core-quantity': 4.9.0-dev.20_w2whwbytdhq4uujdapy65evtja
       '@itwin/ecschema-editing': 4.9.0-dev.20_njr4udxeiefg7fnnsn7hdny6bm
-      '@itwin/ecschema-locaters': 4.8.0-dev.8_rm2kw25bgw6qhyrqtyobd5ow2y
+      '@itwin/ecschema-locaters': 4.9.0-dev.20_rm2kw25bgw6qhyrqtyobd5ow2y
       '@itwin/ecschema-metadata': 4.9.0-dev.20_shoxuat57binqrnwexhjlekt2i
       '@itwin/eslint-plugin': 4.1.1_lhzdwpbtv2n477nxjcr5ny2fnm
       '@itwin/imodels-access-backend': 5.2.2_x3ckftzxvzkgw73kddmoa6dxoe
