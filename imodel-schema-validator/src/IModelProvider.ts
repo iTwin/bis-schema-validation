@@ -158,6 +158,8 @@ export class IModelProvider {
       }
 
       fs.mkdirSync(exportDir, { recursive: true });
+
+      // eslint-disable-next-line deprecation/deprecation
       iModel.nativeDb.exportSchemas(exportDir);
     } finally {
       iModel.close();

@@ -68,6 +68,7 @@ describe("Import and validate schemas in bis-schemas repository", async () => {
       const imodel = SnapshotDb.createEmpty(iModelPath, { rootSubject: { name: "test-imodel" } });
       await imodel.importSchemas(schemaPaths);
       imodel.saveChanges();
+      // eslint-disable-next-line deprecation/deprecation
       imodel.nativeDb.exportSchemas(exportDir);
       imodel.close();
       await IModelHost.shutdown();
@@ -115,6 +116,7 @@ describe("Import and validate schemas in bis-schemas repository", async () => {
       }
 
       imodel.saveChanges();
+      // eslint-disable-next-line deprecation/deprecation
       imodel.nativeDb.exportSchemas(exportDir);
       imodel.close();
       await IModelHost.shutdown();
