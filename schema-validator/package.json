@@ -56,7 +56,7 @@
   "peerDependencies": {
     "@itwin/ecschema-metadata": "4.9.0-dev.20",
     "@itwin/ecschema-editing": "4.9.0-dev.20",
-    "@itwin/ecschema-locaters": "4.8.0-dev.8"
+    "@itwin/ecschema-locaters": "4.9.0-dev.20"
   },
   "dependencies": {
     "@bentley/bis-rules": "0.2.182",
