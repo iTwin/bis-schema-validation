@@ -27,15 +27,15 @@
     "copy:test-assets": "cpx \"./src/test/assets/**/*\" ./lib/test/assets"
   },
   "dependencies": {
-    "@itwin/ecschema-locaters": "4.9.0-dev.20",
-    "@itwin/ecschema-metadata": "4.9.0-dev.20",
-    "@itwin/ecschema-editing": "4.9.0-dev.20",
+    "@itwin/ecschema-locaters": "4.10.0-dev.29",
+    "@itwin/ecschema-metadata": "4.10.0-dev.29",
+    "@itwin/ecschema-editing": "4.10.0-dev.29",
     "@itwin/oidc-signin-tool": "^4.3.5",
-    "@itwin/core-bentley": "4.9.0-dev.20",
-    "@itwin/core-geometry": "4.9.0-dev.20",
-    "@itwin/core-backend": "4.9.0-dev.20",
-    "@itwin/core-quantity": "4.9.0-dev.20",
-    "@itwin/core-common": "4.9.0-dev.20",
+    "@itwin/core-bentley": "4.10.0-dev.29",
+    "@itwin/core-geometry": "4.10.0-dev.29",
+    "@itwin/core-backend": "4.10.0-dev.29",
+    "@itwin/core-quantity": "4.10.0-dev.29",
+    "@itwin/core-common": "4.10.0-dev.29",
     "@itwin/imodels-access-backend": "^5.2.2",
     "@itwin/imodels-client-authoring": "^5.8.2",
     "@bentley/schema-comparer": "0.2.184",
@@ -49,15 +49,15 @@
   },
   "devDependencies": {
     "@itwin/eslint-plugin": "^4.0.2",
-    "@itwin/build-tools": "4.9.0-dev.20",
+    "@itwin/build-tools": "4.10.0-dev.29",
     "@types/node": "~18.16.20",
     "@types/chai": "4.3.1",
     "@types/mocha": "^10.0.6",
     "cpx2": "^3.0.0",
-    "typescript": "~5.0.2",
+    "typescript": "~5.3.3",
     "chai": "^4.3.10",
     "mocha": "^10.2.0",
     "nyc": "^15.1.0",
-    "eslint": "^8.44.0"
+    "eslint": "^8.56.0"
   }
 }
