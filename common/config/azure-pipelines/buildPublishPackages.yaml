@@ -1,3 +1,5 @@
+name: bis-schema-validation-$(Date:yyyy.MM.dd)$(Rev:.r)
+
 trigger: none
 
 resources:
