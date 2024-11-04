@@ -30,7 +30,7 @@
     "@itwin/ecschema-locaters": "4.10.0-dev.29",
     "@itwin/ecschema-metadata": "4.10.0-dev.29",
     "@itwin/ecschema-editing": "4.10.0-dev.29",
-    "@itwin/oidc-signin-tool": "^4.3.5",
+    "@itwin/oidc-signin-tool": "^4.3.7",
     "@itwin/core-bentley": "4.10.0-dev.29",
     "@itwin/core-geometry": "4.10.0-dev.29",
     "@itwin/core-backend": "4.10.0-dev.29",
