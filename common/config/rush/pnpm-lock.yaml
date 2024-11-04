@@ -14,7 +14,7 @@ specifiers:
   '@itwin/eslint-plugin': ^4.0.2
   '@itwin/imodels-access-backend': ^5.2.2
   '@itwin/imodels-client-authoring': ^5.8.2
-  '@itwin/oidc-signin-tool': ^4.3.5
+  '@itwin/oidc-signin-tool': ^4.3.7
   '@rush-temp/bis-rules': file:./projects/bis-rules.tgz
   '@rush-temp/imodel-schema-validator': file:./projects/imodel-schema-validator.tgz
   '@rush-temp/native-schema-locater': file:./projects/native-schema-locater.tgz
@@ -61,7 +61,7 @@ dependencies:
   '@itwin/eslint-plugin': 4.1.1_i5mjvfngumxzwidmpndpzgh75i
   '@itwin/imodels-access-backend': 5.2.3_deekmn2262fraiuhcoz5m5ea5q
   '@itwin/imodels-client-authoring': 5.9.0
-  '@itwin/oidc-signin-tool': 4.3.6_cx4vbxnpgl2me7boyqio6x7kd4
+  '@itwin/oidc-signin-tool': 4.3.7_cx4vbxnpgl2me7boyqio6x7kd4
   '@rush-temp/bis-rules': file:projects/bis-rules.tgz_yp7pchj4jk53s7kz5cwfcgcfii
   '@rush-temp/imodel-schema-validator': file:projects/imodel-schema-validator.tgz
   '@rush-temp/native-schema-locater': file:projects/native-schema-locater.tgz
@@ -847,8 +847,8 @@ packages:
       - debug
     dev: false
 
-  /@itwin/oidc-signin-tool/4.3.6_cx4vbxnpgl2me7boyqio6x7kd4:
-    resolution: {integrity: sha512-DUOZNzrueGkz9qoAGAjDnQGrArMsHaHdaG2Tyvp6F9GsgjeAn1YYW+PfnIokm/ihjK7eFURznPEtKzORO4olXw==}
+  /@itwin/oidc-signin-tool/4.3.7_cx4vbxnpgl2me7boyqio6x7kd4:
+    resolution: {integrity: sha512-II5l7FxpgLQUbrzvCQfuul3uq3boH6XZwyb57BsgF6uvjSekAuvAVo2CkR5vlx57sWtM+thsEwiZ4xUMPe7Cmw==}
     requiresBuild: true
     peerDependencies:
       '@itwin/core-bentley': ^3.3.0 || ^4.0.0
@@ -6157,7 +6157,7 @@ packages:
     dev: false
 
   file:projects/bis-rules.tgz_yp7pchj4jk53s7kz5cwfcgcfii:
-    resolution: {integrity: sha512-SOPwzpo7a/vACFt4druX4JlpcHDhghcWy5pus/eWKnB27jCIjZoBpl6RykOwZo67ZEbegno7HnUGAsMiNRQ8Mg==, tarball: file:projects/bis-rules.tgz}
+    resolution: {integrity: sha512-r5vFuclSuQ1GXVzV9mTFaaj6LBnvR7xFnvRzGz/XvbMe38C4j2gCqS/oitf1xxBRDHlUfLqVWljaQPHDXMI3+g==, tarball: file:projects/bis-rules.tgz}
     id: file:projects/bis-rules.tgz
     name: '@rush-temp/bis-rules'
     version: 0.0.0
@@ -6194,7 +6194,7 @@ packages:
     dev: false
 
   file:projects/imodel-schema-validator.tgz:
-    resolution: {integrity: sha512-2u5XB9NV6M/Pila1up4XiFSHSuKU6iowiKSZ8ln0kWXLnwYBFSUFIv90SYOMrxi79sYD3nrcPVK1eSnHKGhq4w==, tarball: file:projects/imodel-schema-validator.tgz}
+    resolution: {integrity: sha512-/7SocGfM46PsJrJpiByHRdviaxDu4Arsbc7uv0RaKFMmMBSA8d0sBwQLQ7gJBbFh/Cqs8LHE52sUdVYC5r3LMQ==, tarball: file:projects/imodel-schema-validator.tgz}
     name: '@rush-temp/imodel-schema-validator'
     version: 0.0.0
     dependencies:
@@ -6210,7 +6210,7 @@ packages:
       '@itwin/eslint-plugin': 4.1.1_i5mjvfngumxzwidmpndpzgh75i
       '@itwin/imodels-access-backend': 5.2.3_deekmn2262fraiuhcoz5m5ea5q
       '@itwin/imodels-client-authoring': 5.9.0
-      '@itwin/oidc-signin-tool': 4.3.6_cx4vbxnpgl2me7boyqio6x7kd4
+      '@itwin/oidc-signin-tool': 4.3.7_cx4vbxnpgl2me7boyqio6x7kd4
       '@types/chai': 4.3.1
       '@types/mocha': 10.0.9
       '@types/node': 18.16.20
@@ -6238,7 +6238,7 @@ packages:
     dev: false
 
   file:projects/native-schema-locater.tgz:
-    resolution: {integrity: sha512-q7D96nhQEu95GzC1zFhKB2kTWxAK4yDS/Ge/hWIeKkW2LQ4fX5m71bIc21Rxcst1vpRR5BhXjjRKXY2J+4fsOg==, tarball: file:projects/native-schema-locater.tgz}
+    resolution: {integrity: sha512-ynpNWanwVYMCtLFdKttWkJIEQ0enstiCwtKQJNHZYVzpMSTjcEOt/iWw9ytU4D/F/o/eMLgiCXFuGgTBV7NroQ==, tarball: file:projects/native-schema-locater.tgz}
     name: '@rush-temp/native-schema-locater'
     version: 0.0.0
     dependencies:
@@ -6284,7 +6284,7 @@ packages:
     dev: false
 
   file:projects/schema-comparer.tgz:
-    resolution: {integrity: sha512-OtqnXknTQPTjpy88JYIeTx4yC+GZsxPNb1O6QwyESwDUvB+t1g1IG7UZ2Yq/gsXrp6WejxMgx7364Q1qufRDzQ==, tarball: file:projects/schema-comparer.tgz}
+    resolution: {integrity: sha512-uljx7lqdD5IU7+97CM0dr1QHrufnvycBngevpklw3snCJEmjF7mJfMg5qIzc4ZS4u42/XSlAstqODABjnaw1sQ==, tarball: file:projects/schema-comparer.tgz}
     name: '@rush-temp/schema-comparer'
     version: 0.0.0
     dependencies:
@@ -6333,7 +6333,7 @@ packages:
     dev: false
 
   file:projects/schema-roundtrip.tgz:
-    resolution: {integrity: sha512-YBCk/cDROQz0YLznNARXi/J+gUvmJAUOvs1QtYCCIG7K/WISvcZXOVLlhSTXMda//4QVS/Zn6QYavnJddnyzHw==, tarball: file:projects/schema-roundtrip.tgz}
+    resolution: {integrity: sha512-h6rPo8SzIsb0KklH9aNqw7NGO2imXfLtspN31Dm9BNrBlfa2DPRTLnYYotveebAOR5oyWwaJpjIVqwd5OBRUnA==, tarball: file:projects/schema-roundtrip.tgz}
     name: '@rush-temp/schema-roundtrip'
     version: 0.0.0
     dependencies:
@@ -6380,7 +6380,7 @@ packages:
     dev: false
 
   file:projects/schema-validator.tgz:
-    resolution: {integrity: sha512-IU1R3XPpjvDMTns472S99UUcjiXM7XXQOsCRivjT2sRPI6XJssAydI4QVHE4OaAr9hDekZlEAYoBK22bdHU6nQ==, tarball: file:projects/schema-validator.tgz}
+    resolution: {integrity: sha512-UfJAq/7IPX6GyQsSipAV9NiKV1PptxPpkL1Ueu8UcthxEvcKzctKwhA2JDstZUFesKaGnUbIpUyf+wa6SO5Pag==, tarball: file:projects/schema-validator.tgz}
     name: '@rush-temp/schema-validator'
     version: 0.0.0
     dependencies:
