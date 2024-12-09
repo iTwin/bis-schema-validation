@@ -289,7 +289,7 @@ export async function getResults(results: IModelValidationResult[], baseSchemaRe
   reporter.displayAllValidationsResults(results, baseSchemaRefDir);
 
   // Adding a 2-second delay to address the logging issue on build pipeline
-  await new Promise(resolve => setTimeout(resolve, 2000));
+  await new Promise((resolve) => setTimeout(resolve, 2000));
   if (reporter.diffChanged === 0 && reporter.diffErrors === 0 && reporter.validFailed === 0 &&
     reporter.approvalFailed === 0) {
     console.log("All validations passed successfully.");
