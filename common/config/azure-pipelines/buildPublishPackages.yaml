@@ -8,6 +8,7 @@ resources:
       type: github
       endpoint: BisSchemasGitHub
       name: iTwin/bis-schemas
+      ref: refs/heads/test-logs
 
 stages:
 - stage: build
