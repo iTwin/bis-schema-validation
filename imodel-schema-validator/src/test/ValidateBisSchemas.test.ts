@@ -79,7 +79,7 @@ describe("Import and validate schemas in bis-schemas repository", async () => {
     await getResults(results, bisSchemaRepo, outputLogs);
   });
 
-  it.skip("Import WIP version of all schemas from bis-schemas repository into an iModel and perform BIS-rules validation.", async () => {
+  it("Import WIP version of all schemas from bis-schemas repository into an iModel and perform BIS-rules validation.", async () => {
 
     Logger.initializeToConsole();
     Logger.setLevelDefault(LogLevel.Error);

@@ -8,7 +8,6 @@ resources:
       type: github
       endpoint: BisSchemasGitHub
       name: iTwin/bis-schemas
-      ref: refs/heads/test-logs
 
 stages:
 - stage: build
@@ -37,9 +36,9 @@ stages:
       - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js install
         displayName: Rush install
         workingDirectory: $(Build.SourcesDirectory)/bis-schema-validation
-      # - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js audit
-      #   displayName: Rush audit
-      #   workingDirectory: $(Build.SourcesDirectory)/bis-schema-validation
+      - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js audit
+        displayName: Rush audit
+        workingDirectory: $(Build.SourcesDirectory)/bis-schema-validation
       - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js clean
         displayName: Rush clean
         workingDirectory: $(Build.SourcesDirectory)/bis-schema-validation
