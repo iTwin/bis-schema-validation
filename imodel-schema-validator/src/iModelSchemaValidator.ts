@@ -287,10 +287,14 @@ export function getResults(results: IModelValidationResult[], baseSchemaRefDir: 
   const reporter = new Reporter();
   reporter.logAllValidationsResults(results, baseSchemaRefDir, output);
   reporter.displayAllValidationsResults(results, baseSchemaRefDir);
-  if (reporter.diffChanged === 0 && reporter.diffErrors === 0 && reporter.validFailed === 0 &&
-    reporter.approvalFailed === 0) {
-    console.log("All validations passed successfully.");
-  } else {
-    throw Error("Failing the tool because a validation has failed.");
-  }
+
+  // Adding a 2-second delay to address the pipeline's display logging issue
+  setTimeout(() => {
+    if (reporter.diffChanged === 0 && reporter.diffErrors === 0 && reporter.validFailed === 0 &&
+      reporter.approvalFailed === 0) {
+      console.log("All validations passed successfully.");
+    } else {
+      throw Error("Failing the tool because a validation has failed.");
+    }
+  }, 2000);
 }
