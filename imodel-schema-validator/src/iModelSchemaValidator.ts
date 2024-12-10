@@ -282,11 +282,12 @@ async function generateSchemaDirectoryLists(schemaDirectory: any) {
  * @param results Array containing the IModelValidationResult
  * @param baseSchemaRefDir: Path of bis-schemas root directory
  * @param output The directory where output logs will go.
+ * @param skipApproval Skip the approval validation
  */
-export async function getResults(results: IModelValidationResult[], baseSchemaRefDir: string, output: string) {
+export async function getResults(results: IModelValidationResult[], baseSchemaRefDir: string, output: string, skipApproval: boolean = false) {
   const reporter = new Reporter();
-  reporter.logAllValidationsResults(results, baseSchemaRefDir, output);
-  reporter.displayAllValidationsResults(results, baseSchemaRefDir);
+  reporter.logAllValidationsResults(results, baseSchemaRefDir, output, skipApproval);
+  reporter.displayAllValidationsResults(results, baseSchemaRefDir, skipApproval);
 
   // Adding a 2-second delay to address the logging issue on build pipeline
   await new Promise((resolve) => setTimeout(resolve, 2000));

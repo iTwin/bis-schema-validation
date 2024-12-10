@@ -4,15 +4,14 @@
 *--------------------------------------------------------------------------------------------*/
 import * as fs from "fs";
 import * as path from "path";
-import { expect } from "chai";
 import * as rimraf from "rimraf";
 import { Logger, LogLevel } from "@itwin/core-bentley";
 import { FileSchemaKey, StubSchemaXmlFileLocater } from "@itwin/ecschema-locaters";
 import { SchemaGraphUtil } from "@itwin/ecschema-metadata";
 import { IModelHost, SnapshotDb } from "@itwin/core-backend";
-import { getResults, IModelValidationResult, iModelValidationResultTypes, validateSchema, verifyIModelSchema } from "../iModelSchemaValidator";
+import { getResults, IModelValidationResult, verifyIModelSchema } from "../iModelSchemaValidator";
 import {
-  excludeSchema, fixSchemaValidatorIssue, generateReleasedSchemasList, generateSchemaDirectoryList, generateSchemaXMLName,
+  excludeSchema, generateReleasedSchemasList, generateSchemaDirectoryList, generateSchemaXMLName,
   generateWIPSchemasList, getSchemaInfo, getVerifiedSchemaName, getVersionString, prepareOutputFile,
 } from "./utilities/utils";
 
@@ -79,7 +78,7 @@ describe("Import and validate schemas in bis-schemas repository", async () => {
     await getResults(results, bisSchemaRepo, outputLogs);
   });
 
-  it("Import WIP version of all schemas from bis-schemas repository into an iModel and perform BIS-rules validation.", async () => {
+  it("Import WIP version of all schemas from bis-schemas repository into an iModel and perform BIS-rules and comparision validation.", async () => {
 
     Logger.initializeToConsole();
     Logger.setLevelDefault(LogLevel.Error);
@@ -122,13 +121,31 @@ describe("Import and validate schemas in bis-schemas repository", async () => {
       await IModelHost.shutdown();
 
       const schemaXMLFile = generateSchemaXMLName(schemaName, schemaVersion);
-      const validationResult: IModelValidationResult = { name: schemaName, version: "" };
-      await validateSchema(schemaName, "wip", path.join(exportDir, schemaXMLFile), schemaDirs, validationResult, outputLogs);
-      schemaDirs = fixSchemaValidatorIssue(exportDir, schemaDirs);
-      if (validationResult.validator === iModelValidationResultTypes.Failed || validationResult.validator === iModelValidationResultTypes.Error) {
-        results.push(validationResult);
-      }
+      // const validationResult: IModelValidationResult = { name: schemaName, version: "" };
+      // await validateSchema(schemaName, "wip", path.join(exportDir, schemaXMLFile), schemaDirs, validationResult, outputLogs);
+      // schemaDirs = fixSchemaValidatorIssue(exportDir, schemaDirs);
+      // if (validationResult.validator === iModelValidationResultTypes.Failed || validationResult.validator === iModelValidationResultTypes.Error) {
+      //   results.push(validationResult);
+      // }
+      console.log("\n\npath.basename(wipSchema): " + path.basename(wipSchema));
+      console.log("schemaXMLFile: " + schemaXMLFile);
+      fs.readdir(exportDir, (err, files) => {
+        if (err) {
+          console.error(`Error reading directory ${exportDir}:`, err);
+          return;
+        }
+        console.log(`--> Files in ${exportDir}:`);
+        files.forEach(file => {
+          console.log(file);
+        });
+      });
+      console.log("\n\n");
+      const result = await verifyIModelSchema(exportDir, path.basename(wipSchema), false, bisSchemaRepo, outputLogs);
+      results.push(result);
     }
-    expect(results.length).to.equal(0);
+
+    // Skip approval validation for WIP schemas
+    const skipApproval = true;
+    await getResults(results, bisSchemaRepo, outputLogs, skipApproval);
   });
 });

@@ -236,7 +236,7 @@ export class Reporter {
    * @param baseSchemaRefDir: It is the root of bis-schemas directory.
    * @param outputDir: Path of output directory.
    */
-  public logAllValidationsResults(results: IModelValidationResult[], baseSchemaRefDir: string, outputDir: string) {
+  public logAllValidationsResults(results: IModelValidationResult[], baseSchemaRefDir: string, outputDir: string, skipApproval: boolean = false) {
     const launchCodes = this._launchCodesProvider.getSchemaInventory(baseSchemaRefDir);
     outputDir = this.allValidationLogsDir(outputDir);
     const filePath = path.join(outputDir, "AllValidationsResults.logs");
@@ -246,7 +246,9 @@ export class Reporter {
       fs.writeSync(fd, `\n> ${item.name}.${item.version}\n`);
       this.logSchemaValidatorResult(item, fd);
       this.logSchemaComparerResult(item, fd);
-      this.logApprovalValidationResult(item, fd, launchCodes);
+      if (!skipApproval) {
+        this.logApprovalValidationResult(item, fd, launchCodes);
+      }
     }
     fs.writeSync(fd, "\n\n------------------ SUMMARY -----------------\n");
     fs.writeSync(fd, `BIS Rule Violations:               ${this.validFailed}\n`);
@@ -256,8 +258,10 @@ export class Reporter {
     fs.writeSync(fd, `Differences Skipped:               ${this._diffSkipped}\n`);
     fs.writeSync(fd, `Differences Errors:                ${this.diffErrors}\n`);
     fs.writeSync(fd, `Differences Warnings:              ${this._diffWarnings}\n`);
-    fs.writeSync(fd, `Approval and Verification Failed:  ${this.approvalFailed}\n`);
-    fs.writeSync(fd, `Approval and Verification Skipped: ${this._approvalSkipped}\n`);
+    if (!skipApproval) {
+      fs.writeSync(fd, `Approval and Verification Failed:  ${this.approvalFailed}\n`);
+      fs.writeSync(fd, `Approval and Verification Skipped: ${this._approvalSkipped}\n`);
+    }
     fs.writeSync(fd, "--------------------------------------------");
   }
 
@@ -267,14 +271,16 @@ export class Reporter {
    * @param baseSchemaRefDir: It is the root of bis-schemas directory.
    * @param outputDir: Path of output directory.
    */
-  public displayAllValidationsResults(results: IModelValidationResult[], baseSchemaRefDir: string) {
+  public displayAllValidationsResults(results: IModelValidationResult[], baseSchemaRefDir: string, skipApproval: boolean = false) {
     const launchCodes = this._launchCodesProvider.getSchemaInventory(baseSchemaRefDir);
     console.log("\niModel schemas:");
     for (const item of results) {
       console.log("\n> %s.%s", item.name, item.version);
       this.displaySchemaValidatorResult(item);
       this.displaySchemaComparerResult(item);
-      this.displayApprovalValidationResult(item, launchCodes);
+      if (!skipApproval) {
+        this.displayApprovalValidationResult(item, launchCodes);
+      }
     }
     console.log("\n\n------------------ SUMMARY -----------------");
     console.log("BIS Rule Violations:               ", this.validFailed);
@@ -284,8 +290,10 @@ export class Reporter {
     console.log("Differences Skipped:               ", this._diffSkipped);
     console.log("Differences Errors:                ", this.diffErrors);
     console.log("Differences Warnings:              ", this._diffWarnings);
-    console.log("Approval and Verification Failed:  ", this.approvalFailed);
-    console.log("Approval and Verification Skipped: ", this._approvalSkipped);
+    if (!skipApproval) {
+      console.log("Approval and Verification Failed:  ", this.approvalFailed);
+      console.log("Approval and Verification Skipped: ", this._approvalSkipped);
+    }
     console.log("--------------------------------------------");
   }
 }
