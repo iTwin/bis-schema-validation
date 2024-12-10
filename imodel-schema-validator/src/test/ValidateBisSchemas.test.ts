@@ -135,7 +135,7 @@ describe("Import and validate schemas in bis-schemas repository", async () => {
           return;
         }
         console.log(`--> Files in ${exportDir}:`);
-        files.forEach(file => {
+        files.forEach((file) => {
           console.log(file);
         });
       });
