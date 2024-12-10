@@ -140,7 +140,7 @@ describe("Import and validate schemas in bis-schemas repository", async () => {
         });
       });
       console.log("\n\n");
-      const result = await verifyIModelSchema(exportDir, path.basename(wipSchema), false, bisSchemaRepo, outputLogs);
+      const result = await verifyIModelSchema(exportDir, schemaXMLFile, false, bisSchemaRepo, outputLogs);
       results.push(result);
     }
 
