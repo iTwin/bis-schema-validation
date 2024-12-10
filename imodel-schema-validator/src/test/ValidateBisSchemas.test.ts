@@ -76,7 +76,7 @@ describe("Import and validate schemas in bis-schemas repository", async () => {
       results.push(result);
     }
 
-    getResults(results, bisSchemaRepo, outputLogs);
+    await getResults(results, bisSchemaRepo, outputLogs);
   });
 
   it("Import WIP version of all schemas from bis-schemas repository into an iModel and perform BIS-rules validation.", async () => {
