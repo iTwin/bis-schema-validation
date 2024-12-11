@@ -28,7 +28,7 @@
     "url": "http://www.bentley.com"
   },
   "devDependencies": {
-    "@itwin/build-tools": "4.10.0-dev.29",
+    "@itwin/build-tools": "4.10.0-dev.38",
     "@itwin/eslint-plugin": "^4.0.2",
     "@itwin/ecschema-metadata": "4.10.0-dev.29",
     "@types/chai": "4.3.1",
