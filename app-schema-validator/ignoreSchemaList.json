@@ -1,0 +1,135 @@
+[
+  {
+    "name": "ChangedElements",
+    "versions": [
+      "01.00.00"
+    ],
+    "reason": "EC2 schema from imodel-native repository"
+  },
+  {
+    "name": "ECDbChange",
+    "versions": [
+      "01.00.01"
+    ],
+    "reason": "EC2 schema from imodel-native repository"
+  },
+  {
+    "name": "USCustomaryUnitSystemDefaults",
+    "versions": [
+      "01.00"
+    ],
+    "reason": "EC2 schema from imodel-native repository"
+  },
+  {
+    "name": "Unit_Attributes",
+    "versions": [
+      "01.00"
+    ],
+    "reason": "EC2 schema from imodel-native repository"
+  },
+  {
+    "name": "Units_Schema",
+    "versions": [
+      "01.00"
+    ],
+    "reason": "EC2 schema from imodel-native repository"
+  },
+  {
+    "name": "SIUnitSystemDefaults",
+    "versions": [
+      "01.00"
+    ],
+    "reason": "EC2 schema from imodel-native repository"
+  },
+  {
+    "name": "rdl_customAttributes",
+    "versions": [
+      "01.00"
+    ],
+    "reason": "EC2 schema from imodel-native repository"
+  },
+  {
+    "name": "KindOfQuantity_Schema",
+    "versions": [
+      "01.01"
+    ],
+    "reason": "EC2 schema from imodel-native repository"
+  },
+  {
+    "name": "iip_mdb_customAttributes",
+    "versions": [
+      "01.00"
+    ],
+    "reason": "EC2 schema from imodel-native repository"
+  },
+  {
+    "name": "EditorCustomAttributes",
+    "versions": [
+      "01.03"
+    ],
+    "reason": "EC2 schema from imodel-native repository"
+  },
+  {
+    "name": "Dimension_Schema",
+    "versions": [
+      "01.00"
+    ],
+    "reason": "EC2 schema from imodel-native repository"
+  },
+  {
+    "name": "Bentley_Standard_CustomAttributes",
+    "versions": [
+      "01.14"
+    ],
+    "reason": "EC2 schema from imodel-native repository"
+  },
+  {
+    "name": "Bentley_Standard_Classes",
+    "versions": [
+      "01.01"
+    ],
+    "reason": "EC2 schema from imodel-native repository"
+  },
+  {
+    "name": "Bentley_ECSchemaMap",
+    "versions": [
+      "01.00"
+    ],
+    "reason": "EC2 schema from imodel-native repository"
+  },
+  {
+    "name": "Bentley_Common_Classes",
+    "versions": [
+      "01.01"
+    ],
+    "reason": "EC2 schema from imodel-native repository"
+  },
+  {
+    "name": "MetaSchema_V3Conversion",
+    "versions": [
+      "02.04"
+    ],
+    "reason": "EC2 schema from imodel-native repository"
+  },
+  {
+    "name": "ECDbMap",
+    "versions": [
+      "01.00"
+    ],
+    "reason": "EC2 schema from imodel-native repository"
+  },
+  {
+    "name": "IModelChange",
+    "versions": [
+      "02.00.00"
+    ],
+    "reason": "It is not inserted into the iModel"
+  },
+  {
+    "name": "SchemaLocalizationCustomAttributes",
+    "versions": [
+      "01.00.00"
+    ],
+    "reason": "This schema version 01.00.00 is released but not approved"
+  }
+]

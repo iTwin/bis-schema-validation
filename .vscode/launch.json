@@ -73,6 +73,20 @@
       "outputCapture": "std"
     },
     {
+      "name": "Run verify-app-schemas Tests",
+      "cwd": "${workspaceFolder}/verify-app-schemas",
+      "type": "pwa-node",
+      "request": "launch",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "test"
+      ],
+      "outFiles": [
+        "${workspaceFolder}/verify-app-schemas/lib/**/*.js"
+      ],
+      "outputCapture": "std"
+    },
+    {
       "type": "node",
       "request": "launch",
       "name": "Run SchemaValidationRunner",

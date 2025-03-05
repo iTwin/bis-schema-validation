@@ -15,6 +15,7 @@ specifiers:
   '@itwin/imodels-access-backend': ^5.2.2
   '@itwin/imodels-client-authoring': ^5.8.2
   '@itwin/oidc-signin-tool': ^4.3.5
+  '@rush-temp/app-schema-validator': file:./projects/app-schema-validator.tgz
   '@rush-temp/bis-rules': file:./projects/bis-rules.tgz
   '@rush-temp/imodel-schema-validator': file:./projects/imodel-schema-validator.tgz
   '@rush-temp/native-schema-locater': file:./projects/native-schema-locater.tgz
@@ -62,6 +63,7 @@ dependencies:
   '@itwin/imodels-access-backend': 5.2.3_deekmn2262fraiuhcoz5m5ea5q
   '@itwin/imodels-client-authoring': 5.9.0
   '@itwin/oidc-signin-tool': 4.4.0_cx4vbxnpgl2me7boyqio6x7kd4
+  '@rush-temp/app-schema-validator': file:projects/app-schema-validator.tgz
   '@rush-temp/bis-rules': file:projects/bis-rules.tgz_yp7pchj4jk53s7kz5cwfcgcfii
   '@rush-temp/imodel-schema-validator': file:projects/imodel-schema-validator.tgz
   '@rush-temp/native-schema-locater': file:projects/native-schema-locater.tgz
@@ -6175,6 +6177,50 @@ packages:
     engines: {node: '>=10'}
     dev: false
 
+  file:projects/app-schema-validator.tgz:
+    resolution: {integrity: sha512-+66f4JSPaZ5/bhnk+932pWz/FZCkbYTX9Hn85dagjO1mflGITwWxBXXlC+h0AWAFdOrbDAWvphrZ+pSLqvPBdQ==, tarball: file:projects/app-schema-validator.tgz}
+    name: '@rush-temp/app-schema-validator'
+    version: 0.0.0
+    dependencies:
+      '@itwin/build-tools': 4.10.0-dev.38_@types+node@18.16.20
+      '@itwin/core-backend': 4.10.0-dev.29_qe2lljyvopjlwtg4c4x2dih6la
+      '@itwin/core-bentley': 4.10.0-dev.29
+      '@itwin/core-common': 4.10.0-dev.29_cx4vbxnpgl2me7boyqio6x7kd4
+      '@itwin/core-geometry': 4.10.0-dev.29
+      '@itwin/core-quantity': 4.10.0-dev.29_mo2ymofu45i3u64kmtqgjmj65m
+      '@itwin/ecschema-editing': 4.10.0-dev.29_zq65lzbnjovpfqzt7qgkhmdvja
+      '@itwin/ecschema-locaters': 4.10.0-dev.29_uw76nwwaqcl6gfjnsvobbnjyte
+      '@itwin/ecschema-metadata': 4.10.0-dev.29_m3facaqgy5ltlnnfyryk32if5u
+      '@itwin/eslint-plugin': 4.1.1_i5mjvfngumxzwidmpndpzgh75i
+      '@itwin/imodels-access-backend': 5.2.3_deekmn2262fraiuhcoz5m5ea5q
+      '@itwin/imodels-client-authoring': 5.9.0
+      '@itwin/oidc-signin-tool': 4.4.0_cx4vbxnpgl2me7boyqio6x7kd4
+      '@types/chai': 4.3.1
+      '@types/mocha': 10.0.10
+      '@types/node': 18.16.20
+      chai: 4.5.0
+      chalk: 2.4.2
+      commander: 2.20.3
+      cpx2: 3.0.2
+      eslint: 8.57.1
+      httpntlm: 1.8.13
+      js-sha1: 0.6.0
+      mocha: 10.8.2
+      nyc: 15.1.0
+      readdirp: 3.6.0
+      rimraf: 3.0.2
+      typescript: 5.3.3
+    transitivePeerDependencies:
+      - '@opentelemetry/api'
+      - bufferutil
+      - debug
+      - electron
+      - inversify
+      - reflect-metadata
+      - supports-color
+      - utf-8-validate
+    dev: false
+
   file:projects/bis-rules.tgz_yp7pchj4jk53s7kz5cwfcgcfii:
     resolution: {integrity: sha512-0mz3o3ZcgkFC2rSDjPFLjXHuBCyqkJDKUMd2jhQmnZS5YpOFPRclX282M9dOwdI6M7XfDMluLPZTu6TwHjQKsg==, tarball: file:projects/bis-rules.tgz}
     id: file:projects/bis-rules.tgz
@@ -6213,7 +6259,7 @@ packages:
     dev: false
 
   file:projects/imodel-schema-validator.tgz:
-    resolution: {integrity: sha512-Wprvf63PpruLAsjeAMfjx4HBaig0yEDnI4y+Vn+5MIEhcHucqd4OekkWgc4EG4ehwaZLkQx8rrxq1v8vxdtYkg==, tarball: file:projects/imodel-schema-validator.tgz}
+    resolution: {integrity: sha512-MF+onLWVNPKadN6EwciWtIvpQAs6nR22QMc8r0Nf9jATmk+bswOoeLbJf6U3Itzgk1gz+ymxEnFqeH+i3NAJpQ==, tarball: file:projects/imodel-schema-validator.tgz}
     name: '@rush-temp/imodel-schema-validator'
     version: 0.0.0
     dependencies:
@@ -6303,7 +6349,7 @@ packages:
     dev: false
 
   file:projects/schema-comparer.tgz:
-    resolution: {integrity: sha512-HAOAgO/ItJ2/9de2tOcIzil3Tfjf07QoFK6EwJrq9pZNw82+uDIxp1W11G21GctyeOGbdl3Q2yyKOok7Q/8i+g==, tarball: file:projects/schema-comparer.tgz}
+    resolution: {integrity: sha512-txzqEQm1jQJbiTG8V2ZbYn2w8VTasVOsZ76z3iin1EPmQNY7g/NntU9n2pXSOabCWJCxk2sbNp1x8cFImGZKqg==, tarball: file:projects/schema-comparer.tgz}
     name: '@rush-temp/schema-comparer'
     version: 0.0.0
     dependencies:
@@ -6352,7 +6398,7 @@ packages:
     dev: false
 
   file:projects/schema-roundtrip.tgz:
-    resolution: {integrity: sha512-GZWCrZcyrGHlEhJTS5cRqLjNkE7wgRDEMVWm9+4p1Wi5RI9JmwTmDGVOa8R1ZPLo5DPnoCTjRu+Y1PnKdqlgmg==, tarball: file:projects/schema-roundtrip.tgz}
+    resolution: {integrity: sha512-/bSyfhcN1IP6ZAkSk0vqrI9l036bsOTtQWXG8iesBL2sk0+dm3LryqGpiBHUanSEVRvLtM4xQ7otx60bzX0DjA==, tarball: file:projects/schema-roundtrip.tgz}
     name: '@rush-temp/schema-roundtrip'
     version: 0.0.0
     dependencies:
@@ -6399,7 +6445,7 @@ packages:
     dev: false
 
   file:projects/schema-validator.tgz:
-    resolution: {integrity: sha512-edB+pgnjGqaH81KMZvd/n2eCYDNui0kmXyaI+9jCT6yJzYrib4aRg7F7fLYXcJUjWMnkMxf1NYaV0h79N9pF1Q==, tarball: file:projects/schema-validator.tgz}
+    resolution: {integrity: sha512-v3Tv+rzRBVDGfqrwbafI8E6KIO5UhmrDLrFa7eLPnjHHYTLMzbhxtm3qUbnEcnXyCsQC80Sn32U3zXf9bKPrWg==, tarball: file:projects/schema-validator.tgz}
     name: '@rush-temp/schema-validator'
     version: 0.0.0
     dependencies:
