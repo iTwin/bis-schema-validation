@@ -11,7 +11,7 @@ const verifyIModelSchemas = require("./AppSchemaValidator").verifyAppSchemas;
 
 const program = new commander.Command("App-Schema-Validator NPM CLI");
 program.option("--verifyAppSchemas");
-program.option("-i, --installerDir <required>", "Path to the directory where application installer was extracted.");
+program.option("-i, --installerDir <required>", "Path to the extracted installer.");
 program.option("-b, --baseSchemaRefDir <required>", "Root directory of all released schemas (root of BisSchemas repo).");
 program.option("-o, --output <required>", "Path where output files will be generated.");
 
@@ -21,10 +21,9 @@ program.parse(process.argv);
  * Validates the command line inputs for verifyAppSchemas function
  */
 async function Main() {
-  console.log(process.argv.length);
   if (process.argv.length != 9) {
     console.log("usage : index.js --verifyAppSchemas");
-    console.log("   -i, --installerDir                      :Path to the directory where application installer was extracted.");
+    console.log("   -i, --installerDir                      :Path to the extracted installer.");
     console.log("   -b, --baseSchemaRefDir                  :Root directory of all released schemas (root of BisSchemas repo).");
     console.log("   -o, --output                            :Path where output files will be generated.");
     throw new Error("Missing from required arguments and their values.");
@@ -46,7 +45,7 @@ async function Main() {
   }
 
   try {
-    await verifyIModelSchemas(program.installerDir, false, program.baseSchemaRefDir, program.output);
+    await verifyAppSchemas(program.installerDir, program.baseSchemaRefDir, program.output);
     process.exit(0);
   } catch (err) {
     console.log(err);
