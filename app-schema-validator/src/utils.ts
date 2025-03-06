@@ -19,18 +19,6 @@ export async function generateSchemaDirectoryLists(schemaDirectory: string): Pro
 }
 
 /**
- * Find directories where schema files are present
- * @param appDirectory Directory to search for schema files
- * @returns Array of paths where schema files are found
- */
-export async function findAllSchemaPaths(appDirectory: string): Promise<string[]> {
-  // Skip schemas from platform based licensing-addon e.g licensing-win32-x64
-  const filter: any = { fileFilter: "*.ecschema.xml", directoryFilter: ["!.vscode", "!licensing-*"] };
-  const schemaPaths = (await readdirp.promise(appDirectory, filter)).map((entry) => path.dirname(entry.fullPath));
-  return Array.from(new Set(schemaPaths).keys());
-}
-
-/**
  * Provides a list of schemas to exclude from validation
  */
 export async function getExcludeSchemaList() {
