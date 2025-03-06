@@ -1,6 +1,6 @@
 {
   "name": "@bentley/app-schema-validator",
-  "description": "This tool validates schemas present in an app's installer.",
+  "description": "This tool validates schemas present in an application's installer",
   "main": "./lib/AppSchemaValidator.js",
   "repository": {
     "type": "git",

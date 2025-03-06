@@ -36,7 +36,7 @@ export async function getExcludeSchemaList() {
 
 /**
  * Checks if a schema should be excluded from validation
- * @param schemaFle Schema xml file
+ * @param schemaFle Schema file
  * @param excludeList List of schemas to exclude
  * @returns True if schema should be excluded, false otherwise
  */

@@ -37,19 +37,20 @@ describe("AppSchemaValidator Tests", async () => {
     expect(results[1].comparer).to.equals(0);
   });
 
-  it("Apply validations, App contains a wip schema", async () => {
+  it("Apply validations, App contains released and wip schemas", async () => {
 
     const installerDir = path.resolve(path.normalize(__dirname + "/assets/app2"));
     const results = await verifyAppSchemas(installerDir, bisSchemaRepo, outputDir);
 
     expect(results.length).to.equals(2);
 
+    // Released version of AecUnits schema
     expect(results[0].name).to.equals("AecUnits");
     expect(results[0].version).to.equals("01.00.01");
     expect(results[0].validator).to.equals(0);
     expect(results[0].comparer).to.equals(0);
 
-    // LinearReferencing is a WIP schema
+    // WIP version of LinearReferencing schema
     expect(results[1].name).to.equals("LinearReferencing");
     expect(results[1].version).to.equals("02.00.04");
     expect(results[1].validator).to.equals(0);
@@ -80,7 +81,7 @@ describe("AppSchemaValidator Tests", async () => {
     const installerDir = path.resolve(path.normalize(__dirname + "/assets/app1"));
     const schemaDir1 = path.resolve(path.normalize(__dirname + "/assets/app1/dist/resources/schemas"));
     const schemaDir2 = path.resolve(path.normalize(__dirname + "/assets/app1/dist/resources/other"));
-    const appSchemaDirs = await generateAppSchemaDirectoryList(installerDir)
+    const appSchemaDirs = await generateAppSchemaDirectoryList(installerDir);
 
     expect(appSchemaDirs.length).to.equals(2);
     expect(appSchemaDirs[0]).to.equals(schemaDir1);
@@ -92,7 +93,7 @@ describe("AppSchemaValidator Tests", async () => {
     const installerDir = path.resolve(path.normalize(__dirname + "/assets/app3"));
     const schemaDir1 = path.resolve(path.normalize(__dirname + "/assets/app3/dist/resources/schemas"));
     const schemaDir2 = path.resolve(path.normalize(__dirname + "/assets/app3/dist/resources/other"));
-    const appSchemaDirs = await generateAppSchemaDirectoryList(installerDir)
+    const appSchemaDirs = await generateAppSchemaDirectoryList(installerDir);
 
     expect(appSchemaDirs.length).to.equals(2);
     expect(appSchemaDirs[0]).to.equals(schemaDir1);

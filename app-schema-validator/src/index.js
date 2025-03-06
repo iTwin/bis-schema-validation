@@ -12,7 +12,7 @@ const verifyAppSchemas = require("./AppSchemaValidator").verifyAppSchemas;
 
 const program = new commander.Command("App-Schema-Validator NPM CLI");
 program.option("-i, --installerDir <required>", "Path to the extracted installer.");
-program.option("-b, --baseSchemaRefDir <required>", "Root directory of all released schemas (root of BisSchemas repo).");
+program.option("-b, --baseSchemaRefDir <required>", "Root directory of all released schemas (root of bis-schemas repo).");
 program.option("-o, --output <required>", "Path where output files will be generated.");
 
 program.parse(process.argv);
@@ -21,7 +21,7 @@ async function validate() {
   if (process.argv.length != 8) {
     console.log("usage : index.js");
     console.log("   -i, --installerDir                      :Path to the extracted installer.");
-    console.log("   -b, --baseSchemaRefDir                  :Root directory of all released schemas (root of BisSchemas repo).");
+    console.log("   -b, --baseSchemaRefDir                  :Root directory of all released schemas (root of bis-schemas repo).");
     console.log("   -o, --output                            :Path where output files will be generated.");
     throw new Error("Missing from required arguments and their values.");
   }
@@ -56,6 +56,3 @@ validate().then()
     console.error(error);
     process.exit(1);
   });
-
-
-

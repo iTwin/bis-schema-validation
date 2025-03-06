@@ -11,7 +11,7 @@ import { Reporter } from "@bentley/imodel-schema-validator/lib/Reporter";
 import { SchemaKey } from "@itwin/ecschema-metadata";
 import { StubSchemaXmlFileLocater } from "@itwin/ecschema-locaters";
 import { generateSchemaDirectoryLists, getExcludeSchemaList, shouldExcludeSchema } from "./utils";
-import { compareSchema, isDynamicSchema, IModelValidationResult, iModelValidationResultTypes, validateSchema } from "@bentley/imodel-schema-validator";
+import { compareSchema, IModelValidationResult, iModelValidationResultTypes, isDynamicSchema, validateSchema } from "@bentley/imodel-schema-validator";
 
 /**
  * Verifies an App Schemas
@@ -23,7 +23,7 @@ import { compareSchema, isDynamicSchema, IModelValidationResult, iModelValidatio
 export async function verifyAppSchemas(appDirectory: string, baseSchemaRefDir: string, output: string) {
   const results: IModelValidationResult[] = [];
   const releasedSchemaDirectories = await generateSchemaDirectoryLists(baseSchemaRefDir);
-  const appSchemaDirs = await generateAppSchemaDirectoryList(appDirectory)
+  const appSchemaDirs = await generateAppSchemaDirectoryList(appDirectory);
   const excludeSchemas = await getExcludeSchemaList();
 
   for (const appSchemaDir of appSchemaDirs) {
@@ -41,7 +41,6 @@ export async function verifyAppSchemas(appDirectory: string, baseSchemaRefDir: s
   }
   return results;
 }
-
 
 /**
  * Apply all validations

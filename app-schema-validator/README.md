@@ -2,7 +2,7 @@
 
 Copyright © Bentley Systems, Incorporated. All rights reserved. See LICENSE.md for license terms and full copyright notice.
 
-The purpose of this NPM CLI tool is to validate the schemas present within an applications installer. It locate the schemas present in the extracted installer and perform the validations against them.
+The purpose of this NPM CLI tool is to validate the schemas present within an application installer. It locates the schemas present in the extracted installer and perform the validations.
 
 ## Getting Started
 
