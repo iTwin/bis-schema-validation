@@ -22,8 +22,6 @@ npm install -g @bentley/app-schema-validator
 
 Following are the arguments required:
 
-- **--verifyAppSchemas**
-
 - **-i, --installerDir**: Path to the extracted installer.
 
 - **-b, --baseSchemaRefDir**: Root directory of all released schemas (root of BisSchemas repo).
@@ -35,7 +33,7 @@ For help use the '**-h**' option.
 #### Sample Command:
 
 ```sh
-app-schema-validator --verifyAppSchemas -i D:\\\\dir1\\\\extracted\\app -b D:\\\\dir1\\\\bis-schemas -o D:\\\\dir1\\\\output
+app-schema-validator -i D:\\\\dir1\\\\extracted\\app -b D:\\\\dir1\\\\bis-schemas -o D:\\\\dir1\\\\output
 ```
 
 ### Updating to newer version
