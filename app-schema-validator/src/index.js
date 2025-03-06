@@ -7,6 +7,7 @@
 
 const fs = require("fs");
 const commander = require("commander");
+const getResults = require("@bentley/imodel-schema-validator").getResults;
 const verifyAppSchemas = require("./AppSchemaValidator").verifyAppSchemas;
 
 const program = new commander.Command("App-Schema-Validator NPM CLI");
@@ -41,7 +42,8 @@ async function validate() {
   }
 
   try {
-    await verifyAppSchemas(program.installerDir, program.baseSchemaRefDir, program.output);
+    const results = await verifyAppSchemas(program.installerDir, program.baseSchemaRefDir, program.output);
+    await getResults(results, program.baseSchemaRefDir, program.output);
     process.exit(0);
   } catch (err) {
     console.log(err);
