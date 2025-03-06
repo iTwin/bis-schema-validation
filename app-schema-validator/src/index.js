@@ -20,7 +20,7 @@ program.parse(process.argv);
  * Validates the command line inputs for verifyAppSchemas function
  */
 async function Main() {
-  if (process.argv.length != 9) {
+  if (process.argv.length != 8) {
     console.log("usage : index.js");
     console.log("   -i, --installerDir                      :Path to the extracted installer.");
     console.log("   -b, --baseSchemaRefDir                  :Root directory of all released schemas (root of BisSchemas repo).");
