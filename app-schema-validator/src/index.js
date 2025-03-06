@@ -16,10 +16,7 @@ program.option("-o, --output <required>", "Path where output files will be gener
 
 program.parse(process.argv);
 
-/**
- * Validates the command line inputs for verifyAppSchemas function
- */
-async function Main() {
+async function validate() {
   if (process.argv.length != 8) {
     console.log("usage : index.js");
     console.log("   -i, --installerDir                      :Path to the extracted installer.");
@@ -52,7 +49,7 @@ async function Main() {
   }
 }
 
-Main().then()
+validate().then()
   .catch((error) => {
     console.error(error);
     process.exit(1);
