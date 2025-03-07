@@ -19,7 +19,31 @@ describe("AppSchemaValidator Tests", async () => {
     }
   });
 
-  it("Apply validations, App is using all released schemas", async () => {
+  it("App don't have licensing module, schema directory list has relavent paths.", async () => {
+    // app1 don't have licensing module
+    const installerDir = path.resolve(path.normalize(__dirname + "/assets/app1"));
+    const schemaDir1 = path.resolve(path.normalize(__dirname + "/assets/app1/dist/resources/schemas"));
+    const schemaDir2 = path.resolve(path.normalize(__dirname + "/assets/app1/dist/resources/other"));
+    const appSchemaDirs = await generateAppSchemaDirectoryList(installerDir);
+
+    expect(appSchemaDirs.length).to.equals(2);
+    expect(appSchemaDirs[0]).to.equals(schemaDir1);
+    expect(appSchemaDirs[1]).to.equals(schemaDir2);
+  });
+
+  it("App has licensing module, schema directory list exclude it.", async () => {
+    // app3 contains the licensing module directory containing SchemaA
+    const installerDir = path.resolve(path.normalize(__dirname + "/assets/app3"));
+    const schemaDir1 = path.resolve(path.normalize(__dirname + "/assets/app3/dist/resources/schemas"));
+    const schemaDir2 = path.resolve(path.normalize(__dirname + "/assets/app3/dist/resources/other"));
+    const appSchemaDirs = await generateAppSchemaDirectoryList(installerDir);
+
+    expect(appSchemaDirs.length).to.equals(2);
+    expect(appSchemaDirs[0]).to.equals(schemaDir1);
+    expect(appSchemaDirs[1]).to.equals(schemaDir2);
+  });
+
+  it("App has all released schemas, validations are successful.", async () => {
 
     const installerDir = path.resolve(path.normalize(__dirname + "/assets/app1"));
     const results = await verifyAppSchemas(installerDir, bisSchemaRepo, outputDir);
@@ -37,7 +61,7 @@ describe("AppSchemaValidator Tests", async () => {
     expect(results[1].comparer).to.equals(0);
   });
 
-  it("Apply validations, App contains released and wip schemas", async () => {
+  it("App contains mix of released and wip schemas, comparision failed for wip schema.", async () => {
 
     const installerDir = path.resolve(path.normalize(__dirname + "/assets/app2"));
     const results = await verifyAppSchemas(installerDir, bisSchemaRepo, outputDir);
@@ -50,17 +74,17 @@ describe("AppSchemaValidator Tests", async () => {
     expect(results[0].validator).to.equals(0);
     expect(results[0].comparer).to.equals(0);
 
-    // WIP version of LinearReferencing schema
+    // Wip version of LinearReferencing schema
     expect(results[1].name).to.equals("LinearReferencing");
     expect(results[1].version).to.equals("02.00.04");
     expect(results[1].validator).to.equals(0);
     expect(results[1].comparer).to.equals(5);
   });
 
-  it("Apply validations, App contains some schemas that need to be ignored", async () => {
+  it("App contains ec2 schema and licensing module, validations are ignored for them.", async () => {
 
-    // app contains iip_mdb_customAttributes.01.00 ec2 schema
-    // app contains SchemaA from licensing module
+    // app3 contains iip_mdb_customAttributes.01.00 ec2 schema
+    // app3 contains SchemaA from licensing module
     const installerDir = path.resolve(path.normalize(__dirname + "/assets/app3"));
     const results = await verifyAppSchemas(installerDir, bisSchemaRepo, outputDir);
 
@@ -76,28 +100,4 @@ describe("AppSchemaValidator Tests", async () => {
     expect(results[1].validator).to.equals(0);
     expect(results[1].comparer).to.equals(0);
   });
-
-  it("App Schemas Directories, when don't have licensing module", async () => {
-    const installerDir = path.resolve(path.normalize(__dirname + "/assets/app1"));
-    const schemaDir1 = path.resolve(path.normalize(__dirname + "/assets/app1/dist/resources/schemas"));
-    const schemaDir2 = path.resolve(path.normalize(__dirname + "/assets/app1/dist/resources/other"));
-    const appSchemaDirs = await generateAppSchemaDirectoryList(installerDir);
-
-    expect(appSchemaDirs.length).to.equals(2);
-    expect(appSchemaDirs[0]).to.equals(schemaDir1);
-    expect(appSchemaDirs[1]).to.equals(schemaDir2);
-  });
-
-  it("App Schemas Directories, when app has licensing module exclude it", async () => {
-    // app3 contains the licensing module directory containing SchemaA
-    const installerDir = path.resolve(path.normalize(__dirname + "/assets/app3"));
-    const schemaDir1 = path.resolve(path.normalize(__dirname + "/assets/app3/dist/resources/schemas"));
-    const schemaDir2 = path.resolve(path.normalize(__dirname + "/assets/app3/dist/resources/other"));
-    const appSchemaDirs = await generateAppSchemaDirectoryList(installerDir);
-
-    expect(appSchemaDirs.length).to.equals(2);
-    expect(appSchemaDirs[0]).to.equals(schemaDir1);
-    expect(appSchemaDirs[1]).to.equals(schemaDir2);
-  });
-
 });
