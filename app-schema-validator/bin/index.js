@@ -8,7 +8,7 @@
 const fs = require("fs");
 const commander = require("commander");
 const getResults = require("@bentley/imodel-schema-validator").getResults;
-const verifyAppSchemas = require("./AppSchemaValidator").verifyAppSchemas;
+const verifyAppSchemas = require("../lib/AppSchemaValidator").verifyAppSchemas;
 
 const program = new commander.Command("App-Schema-Validator NPM CLI");
 program.option("-i, --installerDir <required>", "Path to the extracted installer.");

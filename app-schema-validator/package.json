@@ -13,7 +13,7 @@
   },
   "version": "0.2.190",
   "bin": {
-    "app-schema-validator": "./lib/index.js"
+    "app-schema-validator": "./bin/index.js"
   },
   "scripts": {
     "build": "tsc 1>&2 && npm run copy:assets && npm run copy:test-assets",
@@ -21,7 +21,7 @@
     "test": "mocha --timeout=999999999 --check-leaks --global _playwrightInstance",
     "cover": "nyc npm -s test",
     "clean": "rimraf lib",
-    "copy:assets": "cpx ./src/index.js ./lib && cpx ./ignoreSchemaList.json ./lib",
+    "copy:assets": "cpx ./ignoreSchemaList.json ./lib",
     "copy:test-assets": "cpx \"./src/test/assets/**/*\" ./lib/test/assets"
   },
   "dependencies": {
