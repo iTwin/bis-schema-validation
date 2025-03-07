@@ -37,7 +37,7 @@ async function validate() {
   }
 
   if (!fs.existsSync(program.baseSchemaRefDir)) {
-    const error = "baseSchemaRefDir: " + program.baseSchemaRefDir + " is incorrect.";
+    const error = "The baseSchemaRefDir do not exist: " + program.baseSchemaRefDir;
     throw new Error(error);
   }
 
