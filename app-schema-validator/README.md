@@ -24,7 +24,7 @@ Following are the arguments required:
 
 - **-i, --installerDir**: Path to the extracted installer.
 
-- **-b, --baseSchemaRefDir**: Root directory of all released schemas (root of BisSchemas repo).
+- **-b, --baseSchemaRefDir**: Root directory of all released schemas (root of bis-schemas repo).
 
 - **-o, --output**: The path where output files will be generated.
 

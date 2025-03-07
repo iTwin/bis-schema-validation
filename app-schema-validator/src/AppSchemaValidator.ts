@@ -7,7 +7,7 @@ import * as fs from "fs";
 import * as path from "path";
 import * as chalk from "chalk";
 import * as readdirp from "readdirp";
-import { Reporter } from "@bentley/imodel-schema-validator/lib/Reporter";
+import { Reporter } from "@bentley/imodel-schema-validator/src/Reporter";
 import { SchemaKey } from "@itwin/ecschema-metadata";
 import { StubSchemaXmlFileLocater } from "@itwin/ecschema-locaters";
 import { generateSchemaDirectoryLists, getExcludeSchemaList, shouldExcludeSchema } from "./utils";
@@ -51,7 +51,7 @@ export async function verifyAppSchemas(appDirectory: string, baseSchemaRefDir: s
  * @param output Path to the output directory
  * @returns Validation result of a schema
  */
-export async function applyValidations(schemaDir: string, schemaFile: string, appSchemaDirs: string[], releasedSchemaDirectories: string[], output: string): Promise<IModelValidationResult> {
+async function applyValidations(schemaDir: string, schemaFile: string, appSchemaDirs: string[], releasedSchemaDirectories: string[], output: string): Promise<IModelValidationResult> {
   const appSchemaPath = path.join(schemaDir, schemaFile);
   const appSchemaKey = await getSchemaInfo(appSchemaPath);
   const name = appSchemaKey.name;
