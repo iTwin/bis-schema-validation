@@ -19,7 +19,7 @@ describe("AppSchemaValidator Tests", async () => {
     }
   });
 
-  it("App don't have licensing module, schema directory list has relavent paths.", async () => {
+  it("App don't have licensing module, schema directory list has relevant paths.", async () => {
     // app1 don't have licensing module
     const installerDir = path.resolve(path.normalize(__dirname + "/assets/app1"));
     const schemaDir1 = path.resolve(path.normalize(__dirname + "/assets/app1/dist/resources/schemas"));
