@@ -42,6 +42,12 @@
       "projectFolder": "imodel-schema-validator",
       "shouldPublish": true,
       "versionPolicyName": "bsv-versions"
+    },
+    {
+      "packageName": "@bentley/app-schema-validator",
+      "projectFolder": "app-schema-validator",
+      "shouldPublish": true,
+      "versionPolicyName": "bsv-versions"
     }
   ]
 }
