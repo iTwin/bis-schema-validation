@@ -9,8 +9,8 @@ const commander = require("commander");
 const fs = require("fs");
 const path = require("path");
 const rimraf = require("rimraf");
-const IModelProvider = require("./IModelProvider").IModelProvider;
-const verifyIModelSchemas = require("./iModelSchemaValidator").verifyIModelSchemas;
+const IModelProvider = require("../lib/IModelProvider").IModelProvider;
+const verifyIModelSchemas = require("../lib/iModelSchemaValidator").verifyIModelSchemas;
 
 const program = new commander.Command("iModel-Schema-Validator NPM CLI");
 program.option("--verifyIModelSchemas");

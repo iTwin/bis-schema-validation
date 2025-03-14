@@ -1,0 +1,14 @@
+# start off ignoring everything, and then add back only the files we want
+*
+!bin/**/*.js
+!lib/**/*.d.ts
+!lib/**/*.js
+!public/**
+!package.json
+!lib/**/*.json
+!*.md
+src/
+test/
+lib/test/
+.nyc_output/
+.rush/

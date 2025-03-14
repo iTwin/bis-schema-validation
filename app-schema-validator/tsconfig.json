@@ -1,0 +1,10 @@
+{
+  "extends": "./node_modules/@itwin/build-tools/tsconfig-base.json",
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "outDir": "./lib",
+  },
+  "include": [
+    "src/**/*.ts"
+  ]
+}

@@ -13,17 +13,16 @@
   },
   "version": "0.2.190",
   "bin": {
-    "imodel-schema-validator": "./lib/index.js"
+    "imodel-schema-validator": "./bin/index.js"
   },
   "scripts": {
-    "build": "tsc 1>&2 && npm run copy:assets && npm run copy:test-assets",
+    "build": "tsc 1>&2 && npm run copy:test-assets",
     "lint": "eslint -f visualstudio \"./src/**/*.ts\" 1>&2",
     "test": "mocha --timeout=999999999 --check-leaks --global _playwrightInstance",
     "tests:ValidateReleasedBisSchemas": "betools test --grep \"Import latest released version of all schemas in bis-schemas repository into an iModel and perform all validations.\" --timeout=999999999",
     "tests:ValidateWIPBisSchemas": "betools test --grep \"Import WIP version of all schemas from bis-schemas repository into an iModel and perform BIS-rules validation.\" --timeout=999999999",
     "cover": "nyc npm -s test",
     "clean": "rimraf lib",
-    "copy:assets": "cpx ./src/index.js ./lib",
     "copy:test-assets": "cpx \"./src/test/assets/**/*\" ./lib/test/assets"
   },
   "dependencies": {
