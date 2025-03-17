@@ -2,6 +2,7 @@
   {
     "module_name": "axios",
     "severity": "HIGH",
-    "from": "@itwin/core-backend" // https://github.com/advisories/GHSA-jr5f-v2jv-69x6
+    "from": "@itwin/core-backend",
+    "description": "itwinjs-core has ignored it for now: https://github.com/iTwin/itwinjs-core/blob/97c5147c898c4de106c3f6f3ac467a360062a5b2/common/config/rush/pnpm-config.json#L27"
   }
 ]
