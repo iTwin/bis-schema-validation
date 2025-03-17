@@ -1,1 +1,7 @@
-[]
+[
+  {
+    "module_name": "axios",
+    "severity": "HIGH",
+    "from": "@itwin/core-backend" // https://github.com/advisories/GHSA-jr5f-v2jv-69x6
+  }
+]
