@@ -25,8 +25,8 @@
     "copy:test-assets": "cpx \"./src/test/assets/**/*\" ./lib/test/assets"
   },
   "dependencies": {
-    "@itwin/ecschema-locaters": "4.10.0-dev.29",
-    "@itwin/ecschema-metadata": "4.10.0-dev.29",
+    "@itwin/ecschema-locaters": "4.10.10",
+    "@itwin/ecschema-metadata": "4.10.10",
     "@bentley/imodel-schema-validator": "0.2.191",
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@itwin/eslint-plugin": "^4.0.2",
-    "@itwin/build-tools": "4.10.0-dev.38",
+    "@itwin/build-tools": "4.10.10",
     "@types/node": "~18.16.20",
     "@types/chai": "4.3.1",
     "@types/mocha": "^10.0.6",

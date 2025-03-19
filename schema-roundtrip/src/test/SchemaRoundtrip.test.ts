@@ -142,7 +142,7 @@ describe("SchemaRoundTrip Tests", () => {
     expect(results[0].resultType).to.equal(RoundTripResultType.Message);
     expect(results[0].resultText).to.equal("Schema Round Trip Results");
     expect(results[1].resultType).to.equal(RoundTripResultType.Error);
-    expect(results[1].resultText).to.equal(`An error occurred retrieving the schema 'BadSchema.01.01.01': The Schema BadSchema has an unsupported namespace 'http://www.bentley.com/schemas/Bentley.ECXML.3.1'.`);
+    expect(results[1].resultText).to.equal(`An error occurred retrieving the schema 'BadSchema.01.01.01': The Schema 'BadSchema' has an unsupported ECVersion and cannot be loaded.`);
   });
 
   it("serialization fails, results contain error", async () => {
