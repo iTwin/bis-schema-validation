@@ -12,3 +12,5 @@ test/
 lib/test/
 .nyc_output/
 .rush/
+media/
+SETUP-IN-RELEASE.md
