@@ -11,7 +11,7 @@
     "name": "Bentley Systems, Inc.",
     "url": "http://www.bentley.com"
   },
-  "version": "0.2.193",
+  "version": "0.2.194",
   "bin": {
     "app-schema-validator": "./bin/index.js"
   },
@@ -27,7 +27,7 @@
   "dependencies": {
     "@itwin/ecschema-locaters": "4.10.10",
     "@itwin/ecschema-metadata": "4.10.10",
-    "@bentley/imodel-schema-validator": "0.2.193",
+    "@bentley/imodel-schema-validator": "0.2.194",
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
     "readdirp": "^3.0.0",
