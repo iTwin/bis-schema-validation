@@ -65,7 +65,7 @@ describe("SchemaDeserializer", () => {
     const schemaPath = path.join(assetsDir, "BadRefSchema.ecschema.xml");
     const context = new EC.SchemaContext();
 
-    await expect(deserializer.deserializeXmlFile(schemaPath, context, [refDir])).to.be.rejectedWith(EC.ECObjectsError, "Unable to locate referenced schema: DoesNotExist.1.1.1");
+    await expect(deserializer.deserializeXmlFile(schemaPath, context, [refDir])).to.be.rejectedWith(EC.ECSchemaError, "Unable to locate referenced schema: DoesNotExist.1.1.1");
   });
 
   it("Schema XML has no version, throws.", async () => {
@@ -73,7 +73,7 @@ describe("SchemaDeserializer", () => {
     const schemaPath = path.join(assetsDir, "SchemaNoVersion.ecschema.xml");
     const context = new EC.SchemaContext();
 
-    await expect(deserializer.deserializeXmlFile(schemaPath, context, [refDir])).to.be.rejectedWith(EC.ECObjectsError, "Could not find the ECSchema 'schemaName' or 'version' tag in the given file.");
+    await expect(deserializer.deserializeXmlFile(schemaPath, context, [refDir])).to.be.rejectedWith(EC.ECSchemaError, "Could not find the ECSchema 'schemaName' or 'version' tag in the given file.");
   });
 
   it("Non-existent schema, throws.", async () => {
@@ -81,7 +81,7 @@ describe("SchemaDeserializer", () => {
     const schemaPath = path.join(assetsDir, "DoesNotExist.ecschema.xml");
     const context = new EC.SchemaContext();
 
-    await expect(deserializer.deserializeXmlFile(schemaPath, context, [refDir])).to.be.rejectedWith(EC.ECObjectsError, `Unable to locate schema XML file at ${schemaPath}`);
+    await expect(deserializer.deserializeXmlFile(schemaPath, context, [refDir])).to.be.rejectedWith(EC.ECSchemaError, `Unable to locate schema XML file at ${schemaPath}`);
   });
 
   it("Should successfully parse BisCore schema", async () => {
@@ -344,7 +344,7 @@ describe("SchemaJsonFileDeserializer", () => {
     const schemaPath = path.join(assetsDir, "DoesNotExist.ecschema.json");
     const context = new EC.SchemaContext();
 
-    await expect(deserializer.deserializeJsonFile(schemaPath, context, [refDir])).to.be.rejectedWith(EC.ECObjectsError, `Unable to locate schema JSON file at ${schemaPath}`);
+    await expect(deserializer.deserializeJsonFile(schemaPath, context, [refDir])).to.be.rejectedWith(EC.ECSchemaError, `Unable to locate schema JSON file at ${schemaPath}`);
   });
 
   it("Non-existent reference schema, throws.", async () => {
@@ -352,7 +352,7 @@ describe("SchemaJsonFileDeserializer", () => {
     const schemaPath = path.join(assetsDir, "BadRefSchema.ecschema.json");
     const context = new EC.SchemaContext();
 
-    await expect(deserializer.deserializeJsonFile(schemaPath, context, [refDir])).to.be.rejectedWith(EC.ECObjectsError, "Could not locate the referenced schema, DoesNotExist.01.00.00, of BadRefSchema");
+    await expect(deserializer.deserializeJsonFile(schemaPath, context, [refDir])).to.be.rejectedWith(EC.ECSchemaError, "Could not locate the referenced schema, DoesNotExist.01.00.00, of BadRefSchema");
   });
 
   it("Schema contains bad JSON, throws.", async () => {
@@ -360,6 +360,6 @@ describe("SchemaJsonFileDeserializer", () => {
     const schemaPath = path.join(assetsDir, "BadJson.ecschema.json");
     const context = new EC.SchemaContext();
 
-    await expect(deserializer.deserializeJsonFile(schemaPath, context, [refDir])).to.be.rejectedWith(EC.ECObjectsError);
+    await expect(deserializer.deserializeJsonFile(schemaPath, context, [refDir])).to.be.rejectedWith(EC.ECSchemaError);
   });
 });

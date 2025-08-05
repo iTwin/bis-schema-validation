@@ -184,7 +184,7 @@ describe("Schema Rule Tests", () => {
     class TestClass extends EntityClass {
       constructor(schema: Schema, name: string, label: string) {
         super(schema, name);
-        this._label = label;
+        (this as any)._label = label;
       }
     }
 

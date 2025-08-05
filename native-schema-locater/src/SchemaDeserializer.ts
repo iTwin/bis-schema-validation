@@ -33,7 +33,7 @@ export class SchemaDeserializer {
     try {
       const schema = locater.loadSchemaFromFile(schemaFilePath, schemaContext);
       if (!schema)
-        throw new EC.ECObjectsError(EC.ECObjectsStatus.UnableToLocateSchema, `Unable to locate schema XML file at ${schemaFilePath}`);
+        throw new EC.ECSchemaError(EC.ECSchemaStatus.UnableToLocateSchema, `Unable to locate schema XML file at ${schemaFilePath}`);
 
       return schema;
     } finally {
@@ -51,7 +51,7 @@ export class SchemaDeserializer {
   public async deserializeJsonFile(schemaFilePath: string, context: EC.SchemaContext, referencePaths?: string[]): Promise<EC.Schema> {
     // If the schema file doesn't exist, throw an error
     if (!fs.existsSync(schemaFilePath))
-      throw new EC.ECObjectsError(EC.ECObjectsStatus.UnableToLocateSchema, "Unable to locate schema JSON file at " + schemaFilePath);
+      throw new EC.ECSchemaError(EC.ECSchemaStatus.UnableToLocateSchema, "Unable to locate schema JSON file at " + schemaFilePath);
 
     // add locater to the context
     if (!referencePaths)
@@ -68,7 +68,7 @@ export class SchemaDeserializer {
     try {
       schemaJson = JSON.parse(schemaString);
     } catch (e: any) {
-      throw new EC.ECObjectsError(EC.ECObjectsStatus.InvalidECJson, e.message);
+      throw new EC.ECSchemaError(EC.ECSchemaStatus.InvalidECJson, e.message);
     }
     return EC.Schema.fromJson(schemaJson, context);
   }

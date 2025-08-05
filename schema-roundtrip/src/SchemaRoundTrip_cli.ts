@@ -26,7 +26,7 @@ if (process.argv.length === 0)
 
 if (!program.input || !program.output) {
   // tslint:disable-next-line:no-console
-  console.log(chalk.default.red("Invalid input. For help use the '-h' option."));
+  console.log(chalk.red("Invalid input. For help use the '-h' option."));
   process.exit(1);
 }
 
@@ -41,20 +41,20 @@ async function roundTrip() {
       switch (line.resultType) {
         case RoundTripResultType.Delta:
           // tslint:disable-next-line:no-console
-          console.log(chalk.default.yellow(line.resultText));
+          console.log(chalk.yellow(line.resultText));
           break;
         case RoundTripResultType.Error:
           // tslint:disable-next-line:no-console
-          console.log(chalk.default.red(line.resultText));
+          console.log(chalk.red(line.resultText));
           break;
         default:
           // tslint:disable-next-line:no-console
-          console.log(chalk.default.green(line.resultText));
+          console.log(chalk.green(line.resultText));
       }
     }
   } catch (err: any) {
     // tslint:disable-next-line:no-console
-    console.log(chalk.default.red("An error occurred during round trip: " + err.message));
+    console.log(chalk.red("An error occurred during round trip: " + err.message));
     process.exit(1);
   }
 }

@@ -153,22 +153,22 @@ export class Reporter {
   private displaySchemaValidatorResult(result: IModelValidationResult) {
     switch (result.validator) {
       case iModelValidationResultTypes.Passed:
-        console.log("   > Schema validation against BIS rules           ", chalk.default.green("<passed>"));
+        console.log("   > Schema validation against BIS rules           ", chalk.green("<passed>"));
         break;
       case iModelValidationResultTypes.Failed:
-        console.log("   > Schema validation against BIS rules           ", chalk.default.red("<failed>"));
+        console.log("   > Schema validation against BIS rules           ", chalk.red("<failed>"));
         console.log("       BIS validation FAILED. See log for errors. (search for \"BEGIN VALIDATION AND DIFFERENCE AUDIT: %s.%s\")", result.name, result.version);
         break;
       case iModelValidationResultTypes.Error:
-        console.log("   > Schema validation against BIS rules           ", chalk.default.red("<failed>"));
+        console.log("   > Schema validation against BIS rules           ", chalk.red("<failed>"));
         console.log("       An error occurred during the BIS validation audit. See log for errors. (search for \"BEGIN VALIDATION AND DIFFERENCE AUDIT: %s.%s\")", result.name, result.version);
         break;
       case iModelValidationResultTypes.Skipped:
-        console.log("   > Schema validation against BIS rules           ", chalk.default.yellow("<skipped>"));
+        console.log("   > Schema validation against BIS rules           ", chalk.yellow("<skipped>"));
         console.log("       Standard schemas are not supported by this tool. (search for \"BEGIN VALIDATION AND DIFFERENCE AUDIT: %s.%s\")", result.name, result.version);
         break;
       default:
-        console.log("   > Schema validation against BIS rules           ", chalk.default.red("<failed>"));
+        console.log("   > Schema validation against BIS rules           ", chalk.red("<failed>"));
         console.log("       Failed to perform the validation audit for: %s.%s\")", result.name, result.version);
     }
   }
@@ -180,30 +180,30 @@ export class Reporter {
   private displaySchemaComparerResult(result: IModelValidationResult) {
     switch (result.comparer) {
       case iModelValidationResultTypes.Passed:
-        console.log("   > Schema content verification                   ", chalk.default.green("<passed>"));
+        console.log("   > Schema content verification                   ", chalk.green("<passed>"));
         break;
       case iModelValidationResultTypes.Failed:
-        console.log("   > Schema content verification                   ", chalk.default.red("<failed>"));
+        console.log("   > Schema content verification                   ", chalk.red("<failed>"));
         console.log("       Schema has changes with released one. See log for diff. (search for \"BEGIN VALIDATION AND DIFFERENCE AUDIT: %s.%s\")", result.name, result.version);
         break;
       case iModelValidationResultTypes.ReferenceDifferenceWarning:
-        console.log("   > Schema content verification                   ", chalk.default.red("<warning>"));
+        console.log("   > Schema content verification                   ", chalk.red("<warning>"));
         console.log("       Schema has reference only differences with released one. See log for diff. (search for \"BEGIN VALIDATION AND DIFFERENCE AUDIT: %s.%s\")", result.name, result.version);
         break;
       case iModelValidationResultTypes.Error:
-        console.log("   > Schema content verification                   ", chalk.default.red("<failed>"));
+        console.log("   > Schema content verification                   ", chalk.red("<failed>"));
         console.log("       An error occurred during the difference audit. See log for errors. (search for \"BEGIN VALIDATION AND DIFFERENCE AUDIT: %s.%s\")", result.name, result.version);
         break;
       case iModelValidationResultTypes.Skipped:
-        console.log("   > Schema content verification                   ", chalk.default.yellow("<skipped>"));
+        console.log("   > Schema content verification                   ", chalk.yellow("<skipped>"));
         console.log("       Skipped difference audit. See log for errors. (search for \"BEGIN VALIDATION AND DIFFERENCE AUDIT: %s.%s\")", result.name, result.version);
         break;
       case iModelValidationResultTypes.NotFound:
-        console.log("   > Schema content verification                   ", chalk.default.red("<failed>"));
+        console.log("   > Schema content verification                   ", chalk.red("<failed>"));
         console.log("       Failed to perform the difference audit. There is no released schema for: %s.%s\")", result.name, result.version);
         break;
       default:
-        console.log("   > Schema content verification                   ", chalk.default.red("<failed>"));
+        console.log("   > Schema content verification                   ", chalk.red("<failed>"));
         console.log("       Failed to perform the difference audit for: %s.%s\")", result.name, result.version);
     }
   }
@@ -216,16 +216,16 @@ export class Reporter {
   private displayApprovalValidationResult(result: IModelValidationResult, launchCodes: any) {
     // skip checking against approvals, if the schema is dynamic schema
     if (result.approval === iModelValidationResultTypes.Skipped) {
-      console.log("   > Released schema is approved and verified      ", chalk.default.yellow("<skipped>"));
+      console.log("   > Released schema is approved and verified      ", chalk.yellow("<skipped>"));
       console.log("       Approvals validation is skipped intentionally for dynamic schemas");
     } else {
       const schemaInfo = this._launchCodesProvider.findSchemaInfo(result.name, result.version, launchCodes);
       const approvalResult = this._launchCodesProvider.checkApprovalAndVerification(result.name, schemaInfo.schemaIndex, schemaInfo.inventorySchema, launchCodes);
 
       if (approvalResult) {
-        console.log("   > Released schema is approved and verified      ", chalk.default.green("<passed>"));
+        console.log("   > Released schema is approved and verified      ", chalk.green("<passed>"));
       } else {
-        console.log("   > Released schema is approved and verified      ", chalk.default.red("<failed>"));
+        console.log("   > Released schema is approved and verified      ", chalk.red("<failed>"));
       }
     }
   }

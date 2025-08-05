@@ -896,7 +896,7 @@ describe("SchemaCompareReporter Tests", () => {
     it("Format unit removed, correct message reported", async () => {
       const schemaItem = new Format(schemaA, "TestItem");
       const unit = new Unit(schemaA, "TestUnit");
-      const diag = new SchemaCompareDiagnostics.FormatUnitMissing(schemaItem, [unit]);
+      const diag = new SchemaCompareDiagnostics.FormatUnitMissing(schemaItem, [unit, "test"]);
       const changes = new SchemaChanges(schemaA);
       changes.addDiagnostic(diag);
       const reporter = new TestSchemaCompareReporter(schemaA, schemaB);
@@ -908,13 +908,13 @@ describe("SchemaCompareReporter Tests", () => {
       expect(reporterSpy.calledWithExactly("!\t\tFormat(TestItem)", undefined)).to.be.true;
       expect(reporterSpy.calledWithExactly("!\t\t\tUnits", undefined)).to.be.true;
       const change = changes.formatChanges.get("TestItem")!.formatUnitChanges.get("TestSchema.TestUnit")!.formatUnitChanges[0];
-      expect(reporterSpy.calledWithExactly("-\t\t\t\tUnit: TestSchema.TestUnit", change)).to.be.true;
+      expect(reporterSpy.calledWithExactly("-\t\t\t\tUnit: TestSchema.TestUnit, label: test", change)).to.be.true;
     });
 
     it("Format unit added, correct message reported", async () => {
       const schemaItem = new Format(schemaB, "TestItem");
       const unit = new Unit(schemaB, "TestUnit");
-      const diag = new SchemaCompareDiagnostics.FormatUnitMissing(schemaItem, [unit]);
+      const diag = new SchemaCompareDiagnostics.FormatUnitMissing(schemaItem, [unit, "test"]);
       const changes = new SchemaChanges(schemaA);
       changes.addDiagnostic(diag);
       const reporter = new TestSchemaCompareReporter(schemaA, schemaB);
@@ -926,7 +926,7 @@ describe("SchemaCompareReporter Tests", () => {
       expect(reporterSpy.calledWithExactly("!\t\tFormat(TestItem)", undefined)).to.be.true;
       expect(reporterSpy.calledWithExactly("!\t\t\tUnits", undefined)).to.be.true;
       const change = changes.formatChanges.get("TestItem")!.formatUnitChanges.get("TestSchema.TestUnit")!.formatUnitChanges[0];
-      expect(reporterSpy.calledWithExactly("+\t\t\t\tUnit: TestSchema.TestUnit", change)).to.be.true;
+      expect(reporterSpy.calledWithExactly("+\t\t\t\tUnit: TestSchema.TestUnit, label: test", change)).to.be.true;
     });
 
     it("Format unit label override property value change, correct message reported", async () => {

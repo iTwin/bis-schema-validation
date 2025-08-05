@@ -66,7 +66,7 @@ describe("KindOfQuantity Rule Tests", () => {
         ],
       };
       schema = await Schema.fromJson(createSchemaJson(koqProps), context);
-      const testKoq = await schema.getItem<KindOfQuantity>(koqProps.name) as KindOfQuantity;
+      const testKoq = await schema.getItem(koqProps.name, KindOfQuantity) as KindOfQuantity;
 
       const result = await iterableToArray(Rules.koqMustUseSIUnitForPersistenceUnit(testKoq));
       expect(result.length).to.equal(1);
@@ -84,7 +84,7 @@ describe("KindOfQuantity Rule Tests", () => {
         persistenceUnit: "Units.COEFFICIENT",
       };
       schema = await Schema.fromJson(createSchemaJson(koqProps), context);
-      const testKoq = await schema.getItem<KindOfQuantity>(koqProps.name) as KindOfQuantity;
+      const testKoq = await schema.getItem(koqProps.name, KindOfQuantity) as KindOfQuantity;
 
       const result = await iterableToArray(Rules.koqMustUseSIUnitForPersistenceUnit(testKoq));
       expect(result.length).to.equal(0, "Rule should have passed because we made a special case for COEFFICIENT unit");
@@ -97,7 +97,7 @@ describe("KindOfQuantity Rule Tests", () => {
         persistenceUnit: "Units.ONE",
       };
       schema = await Schema.fromJson(createSchemaJson(koqProps), context);
-      const testKoq = await schema.getItem<KindOfQuantity>(koqProps.name) as KindOfQuantity;
+      const testKoq = await schema.getItem(koqProps.name, KindOfQuantity) as KindOfQuantity;
 
       const result = await iterableToArray(Rules.koqMustUseSIUnitForPersistenceUnit(testKoq));
       expect(result.length).to.equal(1);
@@ -117,7 +117,7 @@ describe("KindOfQuantity Rule Tests", () => {
         ],
       };
       schema = await Schema.fromJson(createSchemaJson(koqProps), context);
-      const testKoq = await schema.getItem<KindOfQuantity>(koqProps.name) as KindOfQuantity;
+      const testKoq = await schema.getItem(koqProps.name, KindOfQuantity) as KindOfQuantity;
 
       const result = await iterableToArray(Rules.koqMustUseSIUnitForPersistenceUnit(testKoq));
       expect(result.length).to.equal(0, "Rule should have passed because we made a special case for unitless ratios");
@@ -133,7 +133,7 @@ describe("KindOfQuantity Rule Tests", () => {
         ],
       };
       schema = await Schema.fromJson(createSchemaJson(koqProps), context);
-      const testKoq = await schema.getItem<KindOfQuantity>(koqProps.name) as KindOfQuantity;
+      const testKoq = await schema.getItem(koqProps.name, KindOfQuantity) as KindOfQuantity;
 
       const result = await iterableToArray(Rules.koqMustUseSIUnitForPersistenceUnit(testKoq));
       expect(result.length).to.equal(1);
@@ -151,7 +151,7 @@ describe("KindOfQuantity Rule Tests", () => {
         persistenceUnit: "Units.MONETARY_UNIT",
       };
       schema = await Schema.fromJson(createSchemaJson(koqProps), context);
-      const testKoq = await schema.getItem<KindOfQuantity>(koqProps.name) as KindOfQuantity;
+      const testKoq = await schema.getItem(koqProps.name, KindOfQuantity) as KindOfQuantity;
 
       const result = await iterableToArray(Rules.koqMustUseSIUnitForPersistenceUnit(testKoq));
       expect(result.length).to.equal(1);
@@ -169,7 +169,7 @@ describe("KindOfQuantity Rule Tests", () => {
         persistenceUnit: "Units.US_DOLLAR",
       };
       schema = await Schema.fromJson(createSchemaJson(koqProps), context);
-      const testKoq = await schema.getItem<KindOfQuantity>(koqProps.name) as KindOfQuantity;
+      const testKoq = await schema.getItem(koqProps.name, KindOfQuantity) as KindOfQuantity;
 
       const result = await iterableToArray(Rules.koqMustUseSIUnitForPersistenceUnit(testKoq));
       expect(result.length).to.equal(1);
@@ -190,7 +190,7 @@ describe("KindOfQuantity Rule Tests", () => {
         ],
       };
       schema = await Schema.fromJson(createSchemaJson(koqProps), context);
-      const testKoq = await schema.getItem<KindOfQuantity>(koqProps.name) as KindOfQuantity;
+      const testKoq = await schema.getItem(koqProps.name, KindOfQuantity) as KindOfQuantity;
       const result = await iterableToArray(Rules.koqMustUseSIUnitForPersistenceUnit(testKoq));
 
       expect(result.length).to.equal(0, "Rule should have passed.");
@@ -212,7 +212,7 @@ describe("KindOfQuantity Rule Tests", () => {
         ],
       };
       schema = await Schema.fromJson(createSchemaJson(koqProps), context);
-      const testKoq = await schema.getItem<KindOfQuantity>(koqProps.name) as KindOfQuantity;
+      const testKoq = await schema.getItem(koqProps.name, KindOfQuantity) as KindOfQuantity;
 
       const result = await iterableToArray(Rules.koqDuplicatePresentationFormat(testKoq));
 
@@ -241,7 +241,7 @@ describe("KindOfQuantity Rule Tests", () => {
         ],
       };
       schema = await Schema.fromJson(createSchemaJson(koqProps), context);
-      const testKoq = await schema.getItem<KindOfQuantity>(koqProps.name) as KindOfQuantity;
+      const testKoq = await schema.getItem(koqProps.name, KindOfQuantity) as KindOfQuantity;
       const result = await iterableToArray(Rules.koqDuplicatePresentationFormat(testKoq));
 
       expect(result.length).to.equal(0);
@@ -286,7 +286,7 @@ describe("KindOfQuantity Rule Tests", () => {
       context = new SchemaContext();
       context.addLocater(new TestSchemaLocater());
       schema = await Schema.fromJson(schemaJson, context);
-      let testKoq = await schema.getItem<KindOfQuantity>(koqProps.name) as KindOfQuantity;
+      let testKoq = await schema.getItem(koqProps.name, KindOfQuantity) as KindOfQuantity;
 
       let result = await iterableToArray(Rules.koqDuplicatePresentationFormat(testKoq));
       expect(result.length).to.equal(0);
@@ -296,7 +296,7 @@ describe("KindOfQuantity Rule Tests", () => {
       context = new SchemaContext();
       context.addLocater(new TestSchemaLocater());
       schema = await Schema.fromJson(schemaJson, context);
-      testKoq = await schema.getItem<KindOfQuantity>(koqProps.name) as KindOfQuantity;
+      testKoq = await schema.getItem(koqProps.name, KindOfQuantity) as KindOfQuantity;
 
       result = await iterableToArray(Rules.koqDuplicatePresentationFormat(testKoq));
       expect(result.length).to.equal(0);
@@ -308,7 +308,7 @@ describe("KindOfQuantity Rule Tests", () => {
         context = new SchemaContext();
         context.addLocater(new TestSchemaLocater());
         schema = await Schema.fromJson(schemaJson, context);
-        testKoq = await schema.getItem<KindOfQuantity>(koqProps.name) as KindOfQuantity;
+        testKoq = await schema.getItem(koqProps.name, KindOfQuantity) as KindOfQuantity;
 
         result = await iterableToArray(Rules.koqDuplicatePresentationFormat(testKoq));
         expect(result.length).to.equal(1);

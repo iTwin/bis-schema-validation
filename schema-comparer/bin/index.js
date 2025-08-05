@@ -39,7 +39,7 @@ if (process.argv.length === 0) program.help();
 
 if (!program.input) {
   // tslint:disable-next-line:no-console
-  console.log(chalk.default.red("Invalid input. For help use the '-h' option."));
+  console.log(chalk.red("Invalid input. For help use the '-h' option."));
   process.exit(1);
 }
 
@@ -54,20 +54,20 @@ async function compare() {
       switch (line.resultType) {
         case ComparisonResultType.Delta:
           // tslint:disable-next-line:no-console
-          console.log(chalk.default.yellow(line.resultText));
+          console.log(chalk.yellow(line.resultText));
           break;
         case ComparisonResultType.Error:
           // tslint:disable-next-line:no-console
-          console.log(chalk.default.red(line.resultText));
+          console.log(chalk.red(line.resultText));
           break;
         default:
           // tslint:disable-next-line:no-console
-          console.log(chalk.default.green(line.resultText));
+          console.log(chalk.green(line.resultText));
       }
     }
   } catch (err) {
     // tslint:disable-next-line:no-console
-    console.log(chalk.default.red("An error occurred during comparison: " + err.message));
+    console.log(chalk.red("An error occurred during comparison: " + err.message));
     process.exit(1);
   }
 }

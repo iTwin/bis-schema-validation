@@ -159,8 +159,7 @@ export class IModelProvider {
 
       fs.mkdirSync(exportDir, { recursive: true });
 
-      // eslint-disable-next-line deprecation/deprecation
-      iModel.nativeDb.exportSchemas(exportDir);
+      iModel.exportSchemas(exportDir);
     } finally {
       iModel.close();
       await BriefcaseManager.deleteBriefcaseFiles(iModelFilePath);

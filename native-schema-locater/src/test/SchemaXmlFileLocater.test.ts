@@ -11,7 +11,6 @@ import * as fs from "fs";
 import * as EC from "@itwin/ecschema-metadata";
 import { ECSchemaXmlContext, IModelHost } from "@itwin/core-backend";
 import { SchemaXmlFileLocater } from "../SchemaXmlFileLocater";
-import { SchemaFileLocater } from "@itwin/ecschema-locaters";
 
 use(chaiAsPromised);
 
@@ -33,7 +32,7 @@ describe("SchemaXmlFileLocater.test", () => {
     const schemaPath = path.join(assetsDir, "SchemaNoVersion.ecschema.xml");
     const schemaString = fs.readFileSync(schemaPath, "utf8");
 
-    expect(() => nativeLocater.getSchemaKey(schemaString)).to.throw(EC.ECObjectsError, "Could not find the ECSchema 'schemaName' or 'version' tag in the given file.");
+    expect(() => nativeLocater.getSchemaKey(schemaString)).to.throw(EC.ECSchemaError, "Could not find the ECSchema 'schemaName' or 'version' tag in the given file.");
   });
 
   it("Schema XML has EC v2 version, getSchemaKey returns valid SchemaKey.", async () => {
@@ -57,7 +56,7 @@ describe("SchemaXmlFileLocater.test", () => {
     nativeLocater.addSchemaSearchPath(assetsDir);
     const context = new EC.SchemaContext();
     const schemaKey = new EC.SchemaKey("SchemaA", 1, 1, 1);
-    sinon.stub(SchemaFileLocater.prototype, "fileExistsSync").returns(false);
+    (nativeLocater as any).fileExistsSync = () => false;
 
     expect(nativeLocater.getSchemaSync(schemaKey, EC.SchemaMatchType.Exact, context)).to.be.undefined;
   });
@@ -85,7 +84,7 @@ describe("SchemaXmlFileLocater.test", () => {
     nativeLocater.addSchemaSearchPath(assetsDir);
     const context = new EC.SchemaContext();
     const schemaKey = new EC.SchemaKey("SchemaA", 1, 1, 1);
-    sinon.stub(SchemaFileLocater.prototype, "readUtf8FileToStringSync").returns(undefined);
+    (nativeLocater as any).readUtf8FileToStringSync = () => undefined;
 
     expect(nativeLocater.getSchemaSync(schemaKey, EC.SchemaMatchType.Exact, context)).to.be.undefined;
   });
@@ -132,8 +131,8 @@ describe("SchemaXmlFileLocater.test", () => {
     });
 
     it("should throw for an incomplete version string", () => {
-      expect(() => SchemaXmlFileLocater.fromECv2String("")).to.throw(EC.ECObjectsError, "The read version is missing from version string, ");
-      expect(() => SchemaXmlFileLocater.fromECv2String("10")).to.throw(EC.ECObjectsError, "The minor version is missing from version string, 10");
+      expect(() => SchemaXmlFileLocater.fromECv2String("")).to.throw(EC.ECSchemaError, "The read version is missing from version string, ");
+      expect(() => SchemaXmlFileLocater.fromECv2String("10")).to.throw(EC.ECSchemaError, "The minor version is missing from version string, 10");
     });
   });
 });
