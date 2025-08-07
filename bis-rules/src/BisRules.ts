@@ -515,7 +515,7 @@ export async function* mixinsCannotOverrideInheritedProperties(mixin: EC.Mixin):
     return;
 
   const baseClass = await mixin.baseClass;
-  const allBaseProperties = Array.from(baseClass.getPropertiesSync(true));
+  const allBaseProperties = [...await baseClass.getProperties(false)];
   if (!allBaseProperties || allBaseProperties.length === 0)
     return;
 
