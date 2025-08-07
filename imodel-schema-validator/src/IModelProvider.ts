@@ -92,7 +92,7 @@ export class IModelProvider {
    */
   public static async getIModelId(accessToken: AccessToken, iTwinId: string, iModelName: string): Promise<string | undefined> {
     const iModelListParams: GetIModelListParams = {
-      authorization: AccessTokenAdapter.toAuthorizationCallback(() => Promise.resolve(accessToken)),
+      authorization: AccessTokenAdapter.toAuthorizationCallback(async () => accessToken),
       urlParams: {
         iTwinId,
         name: iModelName,
