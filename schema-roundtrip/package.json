@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@itwin/eslint-plugin": "^4.0.2",
-    "@itwin/build-tools": "5.0.3",
+    "@itwin/build-tools": "5.0.4",
     "@types/chai": "4.3.1",
     "@types/chai-as-promised": "^7",
     "@types/fs-extra": "^5.0.4",
@@ -53,16 +53,16 @@
     "eslint": "^8.56.0"
   },
   "peerDependencies": {
-    "@itwin/ecschema-metadata": "5.0.3",
-    "@itwin/ecschema-locaters": "5.0.3"
+    "@itwin/ecschema-metadata": "5.0.4",
+    "@itwin/ecschema-locaters": "5.0.4"
   },
   "dependencies": {
-    "@itwin/core-bentley": "5.0.3",
-    "@itwin/core-geometry": "5.0.3",
-    "@itwin/core-backend": "5.0.3",
-    "@itwin/core-quantity": "5.0.3",
-    "@itwin/core-common": "5.0.3",
-    "@itwin/core-i18n": "5.0.3",
+    "@itwin/core-bentley": "5.0.4",
+    "@itwin/core-geometry": "5.0.4",
+    "@itwin/core-backend": "5.0.4",
+    "@itwin/core-quantity": "5.0.4",
+    "@itwin/core-common": "5.0.4",
+    "@itwin/core-i18n": "5.0.4",
     "@itwin/imodels-access-backend": "^5.2.2",
     "@bentley/schema-comparer": "1.0.0",
     "chalk": "^3.0.0",
