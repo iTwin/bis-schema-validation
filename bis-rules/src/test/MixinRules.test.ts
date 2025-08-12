@@ -23,7 +23,7 @@ describe("Mixin Rule Tests", () => {
 
       const mixin = new Mixin(schema, "TestMixin") as ECClass;
       await (mixin as MutableClass).createPrimitiveProperty("TestProperty", PrimitiveType.Integer);
-      mixin.baseClass = new DelayedPromiseWithProps(baseMixin.key, async () => baseMixin) as LazyLoadedSchemaItem<Mixin>;
+      await (mixin as MutableClass).setBaseClass(new DelayedPromiseWithProps(baseMixin.key, async () => baseMixin) as unknown as LazyLoadedSchemaItem<Mixin>);
 
       const result = Rules.mixinsCannotOverrideInheritedProperties(mixin as Mixin);
 
@@ -45,11 +45,11 @@ describe("Mixin Rule Tests", () => {
       await (baseMixin as MutableClass).createPrimitiveProperty("TestProperty", PrimitiveType.String);
 
       const childMixin = new Mixin(schema, "ChildMixin") as ECClass;
-      childMixin.baseClass = new DelayedPromiseWithProps(baseMixin.key, async () => baseMixin) as LazyLoadedSchemaItem<Mixin>;
+      await (childMixin as MutableClass).setBaseClass(new DelayedPromiseWithProps(baseMixin.key, async () => baseMixin) as unknown as LazyLoadedSchemaItem<Mixin>);
 
       const grandChildMixin = new Mixin(schema, "GrandChildMixin") as ECClass;
       await (grandChildMixin as MutableClass).createPrimitiveProperty("TestProperty", PrimitiveType.Integer);
-      grandChildMixin.baseClass = new DelayedPromiseWithProps(childMixin.key, async () => childMixin) as LazyLoadedSchemaItem<Mixin>;
+      await (grandChildMixin as MutableClass).setBaseClass(new DelayedPromiseWithProps(childMixin.key, async () => childMixin) as unknown as LazyLoadedSchemaItem<Mixin>);
 
       const result = Rules.mixinsCannotOverrideInheritedProperties(grandChildMixin as Mixin);
 
@@ -82,7 +82,7 @@ describe("Mixin Rule Tests", () => {
 
       const mixin = new Mixin(schema, "TestMixin") as ECClass;
       await (mixin as MutableClass).createPrimitiveProperty("TestIntProperty", PrimitiveType.Integer);
-      mixin.baseClass = new DelayedPromiseWithProps(baseMixin.key, async () => baseMixin) as LazyLoadedSchemaItem<Mixin>;
+      await (mixin as ECClass as MutableClass).setBaseClass(new DelayedPromiseWithProps(baseMixin.key, async () => baseMixin) as unknown as LazyLoadedSchemaItem<Mixin>);
 
       const result = Rules.mixinsCannotOverrideInheritedProperties(mixin as Mixin);
 
