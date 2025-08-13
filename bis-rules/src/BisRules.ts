@@ -510,7 +510,7 @@ export async function* schemaShouldNotUseDeprecatedSchema(schema: EC.Schema): As
  * BIS Rule: A Mixin class cannot override inherited properties.
  */
 export async function* mixinsCannotOverrideInheritedProperties(mixin: EC.Mixin): AsyncIterable<SchemaItemDiagnostic<EC.Mixin, any[]>> {
-  const mixinProperties = [...mixin.getPropertiesSync(true)];
+  const mixinProperties = [...await mixin.getProperties(true)];
   if (mixinProperties.length === 0 || undefined === mixin.baseClass)
     return;
 
@@ -726,7 +726,7 @@ export async function* bisModelSubClassesCannotDefineProperties(entity: EC.Entit
   if (!isModel)
     return;
 
-  const properties = [...entity.getPropertiesSync(true)];
+  const properties = [...await entity.getProperties(true)];
   if (properties.length === 0)
     return;
 
@@ -995,7 +995,7 @@ export async function* noAdditionalLinkTableRelationships(relationshipClass: EC.
   if (await relationshipClass.is("ElementRefersToElements", "BisCore") || await relationshipClass.is("ElementDrivesElement", "BisCore"))
     return;
 
-  const properties = [...relationshipClass.getPropertiesSync(true)];
+  const properties = [... await relationshipClass.getProperties(true)];
   if (properties.length !== 0) {
     for (const _ of properties) {
       yield new Diagnostics.NoAdditionalLinkTableRelationships(relationshipClass, [relationshipClass.fullName]);
@@ -1117,7 +1117,7 @@ export async function* propertyMustNotUseCustomHandledPropertyRestriction(proper
 
 /** BIS Rule: Properties within the same class and category cannot have the same display label. */
 export async function* multiplePropertiesInClassWithSameLabel(ecClass: EC.AnyClass): AsyncIterable<ClassDiagnostic<any[]>> {
-  const properties = [...ecClass.getPropertiesSync(true)];
+  const properties = [...await ecClass.getProperties(true)];
   if (properties.length === 0)
     return;
 
@@ -1202,7 +1202,7 @@ export async function* classShouldNotHaveDeprecatedProperty(ecClass: EC.AnyClass
   if (ecClass.customAttributes && ecClass.customAttributes.has(deprecatedFullName))
     return;
 
-  const properties = [...ecClass.getPropertiesSync(true)];
+  const properties = [...await ecClass.getProperties(true)];
   if (properties.length === 0)
     return;
 
@@ -1217,7 +1217,7 @@ export async function* classShouldNotHavePropertyOfDeprecatedStructClass(ecClass
   if (ecClass.customAttributes && ecClass.customAttributes.has(deprecatedFullName))
     return;
 
-  const properties = [...ecClass.getPropertiesSync(true)];
+  const properties = [...await ecClass.getProperties(true)];
   if (properties.length === 0)
     return;
 
