@@ -42,86 +42,108 @@ describe("Rule Suppression Tests", () => {
     it("koqMustUseSIUnitForPersistenceUnit is suppressed for uses of MONETARY_UNIT related units in KOQs defined in the CifUnits schema.", async () => {
       const schemaPath = path.join(koqAssetsDir, "CifUnits.ecschema.xml");
       const testSchema = await deserializer.deserializeXmlFile(schemaPath, new SchemaContext(), [assetDeserializationDir]);
-      let koq = await testSchema.getItem("COST_PER_UNITVOLUME", KindOfQuantity) as KindOfQuantity;
-      let diag = new BisRules.Diagnostics.KOQMustUseSIUnitForPersistenceUnit(koq, [koq.fullName, "Units.SI"]);
+      let koq = await testSchema.getItem("COST_PER_UNITVOLUME", KindOfQuantity);
+      expect(koq).to.not.be.undefined;
 
-      let result = await ruleSuppressionSet.koqMustUseSIUnitForPersistenceUnit(diag, koq);
-      expect(result, koq.fullName).to.be.true;
+      let diag = new BisRules.Diagnostics.KOQMustUseSIUnitForPersistenceUnit(koq!, [koq!.fullName, "Units.SI"]);
 
-      koq = await testSchema.getItem("CURRENCY", KindOfQuantity) as KindOfQuantity;
-      diag = new BisRules.Diagnostics.KOQMustUseSIUnitForPersistenceUnit(koq, [koq.fullName, "Units.SI"]);
+      let result = await ruleSuppressionSet.koqMustUseSIUnitForPersistenceUnit(diag, koq!);
+      expect(result, koq!.fullName).to.be.true;
 
-      result = await ruleSuppressionSet.koqMustUseSIUnitForPersistenceUnit(diag, koq);
-      expect(result, koq.fullName).to.be.true;
+      koq = await testSchema.getItem("CURRENCY", KindOfQuantity);
+      expect(koq).to.not.be.undefined;
 
-      koq = await testSchema.getItem("CURRENCY_PER_ENERGY", KindOfQuantity) as KindOfQuantity;
-      diag = new BisRules.Diagnostics.KOQMustUseSIUnitForPersistenceUnit(koq, [koq.fullName, "Units.SI"]);
+      diag = new BisRules.Diagnostics.KOQMustUseSIUnitForPersistenceUnit(koq!, [koq!.fullName, "Units.SI"]);
 
-      result = await ruleSuppressionSet.koqMustUseSIUnitForPersistenceUnit(diag, koq);
-      expect(result, koq.fullName).to.be.true;
+      result = await ruleSuppressionSet.koqMustUseSIUnitForPersistenceUnit(diag, koq!);
+      expect(result, koq!.fullName).to.be.true;
 
-      koq = await testSchema.getItem("CURRENCY_PER_POWER", KindOfQuantity) as KindOfQuantity;
-      diag = new BisRules.Diagnostics.KOQMustUseSIUnitForPersistenceUnit(koq, [koq.fullName, "Units.SI"]);
+      koq = await testSchema.getItem("CURRENCY_PER_ENERGY", KindOfQuantity);
+      expect(koq).to.not.be.undefined;
 
-      result = await ruleSuppressionSet.koqMustUseSIUnitForPersistenceUnit(diag, koq);
-      expect(result, koq.fullName).to.be.true;
+      diag = new BisRules.Diagnostics.KOQMustUseSIUnitForPersistenceUnit(koq!, [koq!.fullName, "Units.SI"]);
+
+      result = await ruleSuppressionSet.koqMustUseSIUnitForPersistenceUnit(diag, koq!);
+      expect(result, koq!.fullName).to.be.true;
+
+      koq = await testSchema.getItem("CURRENCY_PER_POWER", KindOfQuantity);
+      expect(koq).to.not.be.undefined;
+
+      diag = new BisRules.Diagnostics.KOQMustUseSIUnitForPersistenceUnit(koq!, [koq!.fullName, "Units.SI"]);
+
+      result = await ruleSuppressionSet.koqMustUseSIUnitForPersistenceUnit(diag, koq!);
+      expect(result, koq!.fullName).to.be.true;
     });
 
     it("koqMustUseSIUnitForPersistenceUnit is not suppressed for uses of MONETARY_UNIT related units in KOQs defined in schemas not named CifUnits.", async () => {
       const schemaPath = path.join(koqAssetsDir, "CifUnitsNo.ecschema.xml");
       const testSchema = await deserializer.deserializeXmlFile(schemaPath, new SchemaContext(), [assetDeserializationDir]);
-      let koq = await testSchema.getItem("COST_PER_UNITVOLUME", KindOfQuantity) as KindOfQuantity;
-      let diag = new BisRules.Diagnostics.KOQMustUseSIUnitForPersistenceUnit(koq, [koq.fullName, "Units.SI"]);
+      let koq = await testSchema.getItem("COST_PER_UNITVOLUME", KindOfQuantity);
+      expect(koq).to.not.be.undefined;
 
-      let result = await ruleSuppressionSet.koqMustUseSIUnitForPersistenceUnit(diag, koq);
-      expect(result, koq.fullName).to.be.false;
+      let diag = new BisRules.Diagnostics.KOQMustUseSIUnitForPersistenceUnit(koq!, [koq!.fullName, "Units.SI"]);
 
-      koq = await testSchema.getItem("CURRENCY", KindOfQuantity) as KindOfQuantity;
-      diag = new BisRules.Diagnostics.KOQMustUseSIUnitForPersistenceUnit(koq, [koq.fullName, "Units.SI"]);
+      let result = await ruleSuppressionSet.koqMustUseSIUnitForPersistenceUnit(diag, koq!);
+      expect(result, koq!.fullName).to.be.false;
 
-      result = await ruleSuppressionSet.koqMustUseSIUnitForPersistenceUnit(diag, koq);
-      expect(result, koq.fullName).to.be.false;
+      koq = await testSchema.getItem("CURRENCY", KindOfQuantity);
+      expect(koq).to.not.be.undefined;
 
-      koq = await testSchema.getItem("CURRENCY_PER_ENERGY", KindOfQuantity) as KindOfQuantity;
-      diag = new BisRules.Diagnostics.KOQMustUseSIUnitForPersistenceUnit(koq, [koq.fullName, "Units.SI"]);
+      diag = new BisRules.Diagnostics.KOQMustUseSIUnitForPersistenceUnit(koq!, [koq!.fullName, "Units.SI"]);
 
-      result = await ruleSuppressionSet.koqMustUseSIUnitForPersistenceUnit(diag, koq);
-      expect(result, koq.fullName).to.be.false;
+      result = await ruleSuppressionSet.koqMustUseSIUnitForPersistenceUnit(diag, koq!);
+      expect(result, koq!.fullName).to.be.false;
 
-      koq = await testSchema.getItem("CURRENCY_PER_POWER", KindOfQuantity) as KindOfQuantity;
-      diag = new BisRules.Diagnostics.KOQMustUseSIUnitForPersistenceUnit(koq, [koq.fullName, "Units.SI"]);
+      koq = await testSchema.getItem("CURRENCY_PER_ENERGY", KindOfQuantity);
+      expect(koq).to.not.be.undefined;
 
-      result = await ruleSuppressionSet.koqMustUseSIUnitForPersistenceUnit(diag, koq);
-      expect(result, koq.fullName).to.be.false;
+      diag = new BisRules.Diagnostics.KOQMustUseSIUnitForPersistenceUnit(koq!, [koq!.fullName, "Units.SI"]);
+
+      result = await ruleSuppressionSet.koqMustUseSIUnitForPersistenceUnit(diag, koq!);
+      expect(result, koq!.fullName).to.be.false;
+
+      koq = await testSchema.getItem("CURRENCY_PER_POWER", KindOfQuantity);
+      expect(koq).to.not.be.undefined;
+
+      diag = new BisRules.Diagnostics.KOQMustUseSIUnitForPersistenceUnit(koq!, [koq!.fullName, "Units.SI"]);
+
+      result = await ruleSuppressionSet.koqMustUseSIUnitForPersistenceUnit(diag, koq!);
+      expect(result, koq!.fullName).to.be.false;
     });
 
     it("koqDuplicatePresentationFormat is suppressed for KindOfQuantity named 'ONE' in schemas named ProcessFunctional or ProcessPhysical.", async () => {
       const schemaPath = path.join(koqAssetsDir, "ProcessFunctional.ecschema.xml");
       const testSchema = await deserializer.deserializeXmlFile(schemaPath, new SchemaContext(), [assetDeserializationDir]);
-      const koq = await testSchema.getItem("ONE", KindOfQuantity) as KindOfQuantity;
-      const diag = new BisRules.Diagnostics.KOQDuplicatePresentationFormat(koq, [koq.fullName, "TestFormat"]);
+      const koq = await testSchema.getItem("ONE", KindOfQuantity);
+      expect(koq).to.not.be.undefined;
 
-      const result = await ruleSuppressionSet.koqDuplicatePresentationFormat(diag, koq);
+      const diag = new BisRules.Diagnostics.KOQDuplicatePresentationFormat(koq!, [koq!.fullName, "TestFormat"]);
+
+      const result = await ruleSuppressionSet.koqDuplicatePresentationFormat(diag, koq!);
       expect(result).to.be.true;
     });
 
     it("koqDuplicatePresentationFormat is not suppressed for KindOfQuantity named 'ONE' in schemas not named ProcessFunctional or ProcessPhysical.", async () => {
       const schemaPath = path.join(koqAssetsDir, "BadNameSchema.ecschema.xml");
       const testSchema = await deserializer.deserializeXmlFile(schemaPath, new SchemaContext(), [assetDeserializationDir]);
-      const koq = await testSchema.getItem("ONE", KindOfQuantity) as KindOfQuantity;
-      const diag = new BisRules.Diagnostics.KOQDuplicatePresentationFormat(koq, [koq.fullName, "TestFormat"]);
+      const koq = await testSchema.getItem("ONE", KindOfQuantity);
+      expect(koq).to.not.be.undefined;
 
-      const result = await ruleSuppressionSet.koqDuplicatePresentationFormat(diag, koq);
+      const diag = new BisRules.Diagnostics.KOQDuplicatePresentationFormat(koq!, [koq!.fullName, "TestFormat"]);
+
+      const result = await ruleSuppressionSet.koqDuplicatePresentationFormat(diag, koq!);
       expect(result).to.be.false;
     });
 
     it("koqDuplicatePresentationFormat is not suppressed for KindOfQuantity not named 'ONE' in schemas named ProcessFunctional or ProcessPhysical.", async () => {
       const schemaPath = path.join(koqAssetsDir, "ProcessPhysical.ecschema.xml");
       const testSchema = await deserializer.deserializeXmlFile(schemaPath, new SchemaContext(), [assetDeserializationDir]);
-      const koq = await testSchema.getItem("THREE", KindOfQuantity) as KindOfQuantity;
-      const diag = new BisRules.Diagnostics.KOQDuplicatePresentationFormat(koq, [koq.fullName, "TestFormat"]);
+      const koq = await testSchema.getItem("THREE", KindOfQuantity);
+      expect(koq).to.not.be.undefined;
 
-      const result = await ruleSuppressionSet.koqDuplicatePresentationFormat(diag, koq);
+      const diag = new BisRules.Diagnostics.KOQDuplicatePresentationFormat(koq!, [koq!.fullName, "TestFormat"]);
+
+      const result = await ruleSuppressionSet.koqDuplicatePresentationFormat(diag, koq!);
       expect(result).to.be.false;
     });
   });
@@ -141,20 +163,24 @@ describe("Rule Suppression Tests", () => {
     it("embeddingRelationshipsMustNotHaveHasInName is suppressed for schema named ProcessFunctional.", async () => {
       const schemaPath = path.join(relAssetsDir, "ProcessFunctional.ecschema.xml");
       const testSchema = await deserializer.deserializeXmlFile(schemaPath, new SchemaContext(), [assetDeserializationDir]);
-      const relationshipClass = await testSchema.getItem("hasString", RelationshipClass) as RelationshipClass;
-      const diag = new BisRules.Diagnostics.EmbeddingRelationshipsMustNotHaveHasInName(relationshipClass, [relationshipClass.fullName]);
+      const relationshipClass = await testSchema.getItem("hasString", RelationshipClass);
+      expect(relationshipClass).to.not.be.undefined;
 
-      const result = await ruleSuppressionSet.embeddingRelationshipsMustNotHaveHasInName(diag, relationshipClass);
+      const diag = new BisRules.Diagnostics.EmbeddingRelationshipsMustNotHaveHasInName(relationshipClass!, [relationshipClass!.fullName]);
+
+      const result = await ruleSuppressionSet.embeddingRelationshipsMustNotHaveHasInName(diag, relationshipClass!);
       expect(result).to.be.true;
     });
 
     it("embeddingRelationshipsMustNotHaveHasInName is not suppressed for schema not named ProcessFunctional, ProcessPhysical, or starting with SP3D.", async () => {
       const schemaPath = path.join(relAssetsDir, "BadNameSchema.ecschema.xml");
       const testSchema = await deserializer.deserializeXmlFile(schemaPath, new SchemaContext(), [assetDeserializationDir]);
-      const relationshipClass = await testSchema.getItem("hasString", RelationshipClass) as RelationshipClass;
-      const diag = new BisRules.Diagnostics.EmbeddingRelationshipsMustNotHaveHasInName(relationshipClass, [relationshipClass.fullName]);
+      const relationshipClass = await testSchema.getItem("hasString", RelationshipClass);
+      expect(relationshipClass).to.not.be.undefined;
 
-      const result = await ruleSuppressionSet.embeddingRelationshipsMustNotHaveHasInName(diag, relationshipClass);
+      const diag = new BisRules.Diagnostics.EmbeddingRelationshipsMustNotHaveHasInName(relationshipClass!, [relationshipClass!.fullName]);
+
+      const result = await ruleSuppressionSet.embeddingRelationshipsMustNotHaveHasInName(diag, relationshipClass!);
       expect(result).to.be.false;
     });
   });
