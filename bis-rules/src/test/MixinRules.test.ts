@@ -5,7 +5,7 @@
 
 import { expect } from "chai";
 import * as Rules from "../BisRules";
-import { DelayedPromiseWithProps, ECClass, LazyLoadedSchemaItem, Mixin, PrimitiveType, Schema, SchemaContext } from "@itwin/ecschema-metadata";
+import { DelayedPromiseWithProps, ECClass, ECSchemaNamespaceUris, LazyLoadedSchemaItem, Mixin, PrimitiveType, Schema, SchemaContext } from "@itwin/ecschema-metadata";
 import { MutableClass } from "@itwin/ecschema-metadata/lib/cjs/Metadata/Class";
 import { DiagnosticCategory, DiagnosticType } from "@itwin/ecschema-editing";
 
@@ -41,24 +41,59 @@ describe("Mixin Rule Tests", () => {
     });
 
     it("Property overridden in grandchild class, rule violated.", async () => {
-      const baseMixin = new Mixin(schema, "BaseMixin") as ECClass;
-      await (baseMixin as MutableClass).createPrimitiveProperty("TestProperty", PrimitiveType.String);
 
-      const childMixin = new Mixin(schema, "ChildMixin") as ECClass;
-      await (childMixin as MutableClass).setBaseClass(new DelayedPromiseWithProps(baseMixin.key, async () => baseMixin) as unknown as LazyLoadedSchemaItem<Mixin>);
+      const schemaJson = {
+        $schema: ECSchemaNamespaceUris.SCHEMAURL3_2_JSON,
+        name: "TestSchema",
+        version: "01.00.00",
+        alias: "ts",
+        items: {
+          TestEntity: {
+            schemaItemType: "EntityClass",
+          },
+          BaseMixin: {
+            schemaItemType: "Mixin",
+            appliesTo: "TestSchema.TestEntity",
+            properties: [
+              {
+                name: "TestProperty",
+                type: "PrimitiveProperty",
+                typeName: "string",
+              },
+            ],
+          },
+          ChildMixin: {
+            schemaItemType: "Mixin",
+            appliesTo: "TestSchema.TestEntity",
+            baseClass: "TestSchema.BaseMixin",
+          },
+          GrandChildMixin: {
+            schemaItemType: "Mixin",
+            appliesTo: "TestSchema.TestEntity",
+            baseClass: "TestSchema.ChildMixin",
+            properties: [
+              {
+                name: "TestProperty",
+                type: "PrimitiveProperty",
+                typeName: "int",
+              },
+            ],
+          },
+        },
+      };
 
-      const grandChildMixin = new Mixin(schema, "GrandChildMixin") as ECClass;
-      await (grandChildMixin as MutableClass).createPrimitiveProperty("TestProperty", PrimitiveType.Integer);
-      await (grandChildMixin as MutableClass).setBaseClass(new DelayedPromiseWithProps(childMixin.key, async () => childMixin) as unknown as LazyLoadedSchemaItem<Mixin>);
+      const testSchema = await Schema.fromJson(schemaJson, new SchemaContext());
+      const grandChildMixin = await testSchema.getMixin("GrandChildMixin");
+      expect(grandChildMixin).to.not.be.undefined;
 
-      const result = Rules.mixinsCannotOverrideInheritedProperties(grandChildMixin as Mixin);
+      const result = Rules.mixinsCannotOverrideInheritedProperties(grandChildMixin!);
 
       let resultHasEntries = false;
       for await (const diagnostic of result!) {
         resultHasEntries = true;
         expect(diagnostic).to.not.be.undefined;
         expect(diagnostic!.ecDefinition).to.equal(grandChildMixin);
-        expect(diagnostic!.messageArgs).to.eql([grandChildMixin.fullName, "TestProperty"]);
+        expect(diagnostic!.messageArgs).to.eql([grandChildMixin!.fullName, "TestProperty"]);
         expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
         expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.MixinsCannotOverrideInheritedProperties);
         expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
