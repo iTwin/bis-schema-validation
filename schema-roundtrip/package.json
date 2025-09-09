@@ -63,7 +63,7 @@
     "@itwin/core-quantity": "5.2.0-dev.19",
     "@itwin/core-common": "5.2.0-dev.19",
     "@itwin/core-i18n": "5.2.0-dev.19",
-    "@itwin/imodels-access-backend": "^5.2.2",
+    "@itwin/imodels-access-backend": "6.0.1",
     "@bentley/schema-comparer": "1.0.1",
     "chalk": "^3.0.0",
     "commander": "^2.19.0",
