@@ -5,6 +5,7 @@
 
 import { expect } from "chai";
 import * as Rules from "../BisRules";
+import { MutableClass } from "@itwin/ecschema-metadata/lib/cjs/Metadata/Class";
 import { DelayedPromiseWithProps, ECClass, LazyLoadedSchemaItem, Schema, SchemaContext, StructClass } from "@itwin/ecschema-metadata";
 import { DiagnosticCategory, DiagnosticType } from "@itwin/ecschema-editing";
 
@@ -19,7 +20,7 @@ describe("StructClass Rule Tests", () => {
     it("Struct has base class, rule violated.", async () => {
       const baseStruct = new StructClass(schema, "BaseStruct");
       const struct = new StructClass(schema, "TestStruct");
-      struct.baseClass = new DelayedPromiseWithProps(baseStruct.key, async () => baseStruct) as LazyLoadedSchemaItem<ECClass>;
+      await (struct as ECClass as MutableClass).setBaseClass(new DelayedPromiseWithProps(baseStruct.key, async () => baseStruct) as LazyLoadedSchemaItem<ECClass>);
 
       const result = Rules.structsCannotHaveBaseClasses(struct);
 

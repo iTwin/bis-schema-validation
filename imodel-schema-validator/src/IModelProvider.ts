@@ -92,7 +92,7 @@ export class IModelProvider {
    */
   public static async getIModelId(accessToken: AccessToken, iTwinId: string, iModelName: string): Promise<string | undefined> {
     const iModelListParams: GetIModelListParams = {
-      authorization: AccessTokenAdapter.toAuthorizationCallback(accessToken),
+      authorization: AccessTokenAdapter.toAuthorizationCallback(async () => accessToken),
       urlParams: {
         iTwinId,
         name: iModelName,
@@ -159,8 +159,7 @@ export class IModelProvider {
 
       fs.mkdirSync(exportDir, { recursive: true });
 
-      // eslint-disable-next-line deprecation/deprecation
-      iModel.nativeDb.exportSchemas(exportDir);
+      iModel.exportSchemas(exportDir);
     } finally {
       iModel.close();
       await BriefcaseManager.deleteBriefcaseFiles(iModelFilePath);

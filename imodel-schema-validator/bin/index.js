@@ -46,7 +46,7 @@ async function validateInput() {
 
   if (!program.userName || !program.password || !program.projectId || !program.iModelName ||
     !program.baseSchemaRefDir || !program.environment || !program.output || !program.imjs_uri) {
-    console.log(chalk.default.red("Invalid input. For help use the '-h' option."));
+    console.log(chalk.red("Invalid input. For help use the '-h' option."));
     process.exit(1);
   }
 

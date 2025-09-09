@@ -10,138 +10,138 @@ resources:
       name: iTwin/bis-schemas
 
 stages:
-- stage: build
-  displayName: Build
-  jobs:
-  - job: build_packages
+  - stage: build
     displayName: Build
-    pool:
-      vmImage: windows-latest
+    jobs:
+      - job: build_packages
+        displayName: Build
+        pool:
+          vmImage: windows-latest
 
-    workspace:
-      clean: all
-    steps:
-      - checkout: self
-        clean: all
-      - checkout: bis-schemas
-      - task: NodeTool@0
-        displayName: 'Install Node 20.x'
-        inputs:
-          versionSpec: 20.x
-          checkLatest: true
+        workspace:
+          clean: all
+        steps:
+          - checkout: self
+            clean: all
+          - checkout: bis-schemas
+          - task: NodeTool@0
+            displayName: "Install Node 22.x"
+            inputs:
+              versionSpec: 22.x
+              checkLatest: true
 
-      - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js check
-        displayName: Rush check
-        workingDirectory: $(Build.SourcesDirectory)/bis-schema-validation
-      - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js install
-        displayName: Rush install
-        workingDirectory: $(Build.SourcesDirectory)/bis-schema-validation
-      - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js audit
-        displayName: Rush audit
-        workingDirectory: $(Build.SourcesDirectory)/bis-schema-validation
-      - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js clean
-        displayName: Rush clean
-        workingDirectory: $(Build.SourcesDirectory)/bis-schema-validation
-      - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js lint
-        displayName: Rush lint
-        workingDirectory: $(Build.SourcesDirectory)/bis-schema-validation
-      - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js build
-        displayName: Rush build
-        workingDirectory: $(Build.SourcesDirectory)/bis-schema-validation
-      - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js cover -v
-        displayName: Rush cover
-        workingDirectory: $(Build.SourcesDirectory)/bis-schema-validation
-        env:
-          oidcUserName: $(oidcUserName)
-          oidcPassword: $(oidcPassword)
+          - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js check
+            displayName: Rush check
+            workingDirectory: $(Build.SourcesDirectory)/bis-schema-validation
+          - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js install
+            displayName: Rush install
+            workingDirectory: $(Build.SourcesDirectory)/bis-schema-validation
+          - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js audit
+            displayName: Rush audit
+            workingDirectory: $(Build.SourcesDirectory)/bis-schema-validation
+          - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js clean
+            displayName: Rush clean
+            workingDirectory: $(Build.SourcesDirectory)/bis-schema-validation
+          - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js lint
+            displayName: Rush lint
+            workingDirectory: $(Build.SourcesDirectory)/bis-schema-validation
+          - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js build -v
+            displayName: Rush build
+            workingDirectory: $(Build.SourcesDirectory)/bis-schema-validation
+          - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js cover -v
+            displayName: Rush cover
+            workingDirectory: $(Build.SourcesDirectory)/bis-schema-validation
+            env:
+              oidcUserName: $(oidcUserName)
+              oidcPassword: $(oidcPassword)
 
-      - task: PublishCodeCoverageResults@1
-        displayName: Publish bis-rules code coverage
-        inputs:
-          codeCoverageTool: Cobertura
-          summaryFileLocation: '$(System.DefaultWorkingDirectory)/bis-schema-validation/bis-rules/lib/test/coverage/cobertura-coverage.xml'
-          reportDirectory: '$(System.DefaultWorkingDirectory)/bis-schema-validation/bis-rules/lib/test/coverage/lcov-report'
+          - task: PublishCodeCoverageResults@1
+            displayName: Publish bis-rules code coverage
+            inputs:
+              codeCoverageTool: Cobertura
+              summaryFileLocation: "$(System.DefaultWorkingDirectory)/bis-schema-validation/bis-rules/lib/test/coverage/cobertura-coverage.xml"
+              reportDirectory: "$(System.DefaultWorkingDirectory)/bis-schema-validation/bis-rules/lib/test/coverage/lcov-report"
 
-      - task: PublishCodeCoverageResults@1
-        displayName: Publish schema-validator code coverage
-        inputs:
-          codeCoverageTool: Cobertura
-          summaryFileLocation: '$(Build.SourcesDirectory)/bis-schema-validation/schema-validator/lib/test/coverage/cobertura-coverage.xml'
-          reportDirectory: '$(Build.Repository.LocalPath)/bis-schema-validation/schema-validator/lib/test/coverage/lcov-report'
+          - task: PublishCodeCoverageResults@1
+            displayName: Publish schema-validator code coverage
+            inputs:
+              codeCoverageTool: Cobertura
+              summaryFileLocation: "$(Build.SourcesDirectory)/bis-schema-validation/schema-validator/lib/test/coverage/cobertura-coverage.xml"
+              reportDirectory: "$(Build.Repository.LocalPath)/bis-schema-validation/schema-validator/lib/test/coverage/lcov-report"
 
-      - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js publish --publish --pack --include-all
-        displayName: 'rush publish pack'
-        condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual', 'BuildCompletion'))
-        workingDirectory: $(Build.SourcesDirectory)/bis-schema-validation
-      - task: PythonScript@0
-        displayName: 'Gather packages for release'
-        inputs:
-          scriptSource: inline
-          script: |
-            import sys, os, glob, re, subprocess
-            import shutil
+          - script: node $(System.DefaultWorkingDirectory)/bis-schema-validation/common/scripts/install-run-rush.js publish --publish --pack --include-all
+            displayName: "rush publish pack"
+            condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual', 'BuildCompletion'))
+            workingDirectory: $(Build.SourcesDirectory)/bis-schema-validation
+          - task: PythonScript@0
+            displayName: "Gather packages for release"
+            inputs:
+              scriptSource: inline
+              script: |
+                import sys, os, glob, re, subprocess
+                import shutil
 
-            artifactStagingDir = os.path.realpath(sys.argv[1])
-            sourcesDirectory = os.path.realpath(sys.argv[2])
+                artifactStagingDir = os.path.realpath(sys.argv[1])
+                sourcesDirectory = os.path.realpath(sys.argv[2])
 
-            ## Setup
-            stagingDir = os.path.join(artifactStagingDir, "bis-schema-tools", "packages")
-            os.makedirs(stagingDir)
+                ## Setup
+                stagingDir = os.path.join(artifactStagingDir, "bis-schema-tools", "packages")
+                os.makedirs(stagingDir)
 
-            packageDir = os.path.join(sourcesDirectory, "common", "temp", "artifacts", "packages")
-            print ("packageDir = " + packageDir)
+                packageDir = os.path.join(sourcesDirectory, "common", "temp", "artifacts", "packages")
+                print ("packageDir = " + packageDir)
 
-            artifactPaths = glob.glob(os.path.join(packageDir, "*.tgz"))
+                artifactPaths = glob.glob(os.path.join(packageDir, "*.tgz"))
 
-            packagesToPublish = False
-            for artifact in artifactPaths:
-              baseName = os.path.basename(artifact)
-              print ("")
-              print ("Checking package: '" + baseName + "'...")
+                packagesToPublish = False
+                for artifact in artifactPaths:
+                  baseName = os.path.basename(artifact)
+                  print ("")
+                  print ("Checking package: '" + baseName + "'...")
 
-              localVer = re.search(r'(\d\.\d.*).tgz', baseName)
-              localVer = localVer.group(1)
+                  localVer = re.search(r'(\d\.\d.*).tgz', baseName)
+                  localVer = localVer.group(1)
 
-              packageName = baseName[:(len(baseName) - len(localVer) - 5)]
-              packageName = "@" + packageName.replace("-", "/", 1)
+                  packageName = baseName[:(len(baseName) - len(localVer) - 5)]
+                  packageName = "@" + packageName.replace("-", "/", 1)
 
-              command = "npm view " + packageName + "@" + localVer + " version"
-              proc = subprocess.Popen(command, stdin = subprocess.PIPE, stdout = subprocess.PIPE, shell=True)
+                  command = "npm view " + packageName + "@" + localVer + " version"
+                  proc = subprocess.Popen(command, stdin = subprocess.PIPE, stdout = subprocess.PIPE, shell=True)
 
-              # We are going to assume if a version is provided back from the above call, that this version exists
-              # on the server.  Otherwise, it returns an empty string.
-              serverVer = proc.communicate()[0]
+                  # We are going to assume if a version is provided back from the above call, that this version exists
+                  # on the server.  Otherwise, it returns an empty string.
+                  serverVer = proc.communicate()[0]
 
-              if proc.returncode != 0:
-                packagesToPublish = True
-                print ("The package does not yet exist.  Copying " + packageName + " to staging area.")
-                shutil.copy(artifact, stagingDir)
-                continue
+                  if proc.returncode != 0:
+                    packagesToPublish = True
+                    print ("The package does not yet exist.  Copying " + packageName + " to staging area.")
+                    shutil.copy(artifact, stagingDir)
+                    continue
 
-              if 0 != len(serverVer):
-                print ("The version already exists.  Skipping...")
-                continue
+                  if 0 != len(serverVer):
+                    print ("The version already exists.  Skipping...")
+                    continue
 
-              packagesToPublish = True
-              print ("Local version is newer than on the server.  Copying package " + packageName + " to staging area.")
-              shutil.copy(artifact, stagingDir)
+                  packagesToPublish = True
+                  print ("Local version is newer than on the server.  Copying package " + packageName + " to staging area.")
+                  shutil.copy(artifact, stagingDir)
 
-            if packagesToPublish:
-              print ("There are packages to publish.")
-              print ("##vso[build.addbuildtag]package-release")
-            else:
-              print ("All packages are up-to-date.")
+                if packagesToPublish:
+                  print ("There are packages to publish.")
+                  print ("##vso[build.addbuildtag]package-release")
+                else:
+                  print ("All packages are up-to-date.")
 
-          arguments: '$(Build.ArtifactStagingDirectory) $(Build.SourcesDirectory)/bis-schema-validation'
-        condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual', 'BuildCompletion'))
-      - script: |
-          dir $(Build.ArtifactStagingDirectory)\bis-schema-tools\packages
-          dir $(Build.ArtifactStagingDirectory)\
-          dir $(Build.ArtifactStagingDirectory)\bis-schema-tools\
-        condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual', 'BuildCompletion'))
-      - task: PublishPipelineArtifact@1
-        displayName: 'Publish Artifact: packages'
-        inputs:
-          targetPath: '$(Build.ArtifactStagingDirectory)/bis-schema-tools/packages'
-          artifact: packages
-        condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual', 'BuildCompletion'))
+              arguments: "$(Build.ArtifactStagingDirectory) $(Build.SourcesDirectory)/bis-schema-validation"
+            condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual', 'BuildCompletion'))
+          - script: |
+              dir $(Build.ArtifactStagingDirectory)\bis-schema-tools\packages
+              dir $(Build.ArtifactStagingDirectory)\
+              dir $(Build.ArtifactStagingDirectory)\bis-schema-tools\
+            condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual', 'BuildCompletion'))
+          - task: PublishPipelineArtifact@1
+            displayName: "Publish Artifact: packages"
+            inputs:
+              targetPath: "$(Build.ArtifactStagingDirectory)/bis-schema-tools/packages"
+              artifact: packages
+            condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual', 'BuildCompletion'))

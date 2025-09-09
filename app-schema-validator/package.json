@@ -11,7 +11,7 @@
     "name": "Bentley Systems, Inc.",
     "url": "http://www.bentley.com"
   },
-  "version": "0.2.195",
+  "version": "1.0.0",
   "bin": {
     "app-schema-validator": "./bin/index.js"
   },
@@ -25,25 +25,25 @@
     "copy:test-assets": "cpx \"./src/test/assets/**/*\" ./lib/test/assets"
   },
   "dependencies": {
-    "@itwin/ecschema-locaters": "4.10.10",
-    "@itwin/ecschema-metadata": "4.10.10",
-    "@bentley/imodel-schema-validator": "0.2.195",
-    "chalk": "^2.4.1",
+    "@itwin/ecschema-locaters": "5.2.0-dev.19",
+    "@itwin/ecschema-metadata": "5.2.0-dev.19",
+    "@bentley/imodel-schema-validator": "1.0.0",
+    "chalk": "^3.0.0",
     "commander": "^2.19.0",
     "readdirp": "^3.0.0",
-    "rimraf": "^3.0.2"
+    "rimraf": "^6.0.1"
   },
   "devDependencies": {
     "@itwin/eslint-plugin": "^4.0.2",
-    "@itwin/build-tools": "4.10.10",
-    "@types/node": "~18.16.20",
+    "@itwin/build-tools": "5.2.0-dev.19",
+    "@types/node": "~20.17.0",
     "@types/chai": "4.3.1",
     "@types/mocha": "^10.0.6",
-    "cpx2": "^3.0.0",
-    "typescript": "~5.3.3",
+    "cpx2": "^8.0.0",
+    "typescript": "~5.6.2",
     "chai": "^4.3.10",
-    "mocha": "^10.2.0",
-    "nyc": "^15.1.0",
+    "mocha": "^11.1.0",
+    "nyc": "^17.1.0",
     "eslint": "^8.56.0"
   }
 }

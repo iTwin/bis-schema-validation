@@ -183,7 +183,7 @@ describe("Class Rule Tests", () => {
       };
       const testSchema = await Schema.fromJson(schemaJson, schemaContext);
 
-      const testEntity = await testSchema.getItem<AnyClass>("TestEntity");
+      const testEntity = await testSchema.getItem("TestEntity", EntityClass);
       expect(testEntity !== undefined, "TestEntity should be within TestSchema").to.be.true;
       expect(testEntity!.schema.name === schemaName, "TestEntity should be within TestSchema").to.be.true;
       expect(testEntity!.customAttributes!.has("BisCore.ClassHasHandler"), "TestEntity should be within TestSchema").to.be.true;
@@ -266,7 +266,7 @@ describe("Class Rule Tests", () => {
       };
       schemaJson = JSON.parse(JSON.stringify(schemaJson).replace("TestClassName", className));
       const testSchema = await Schema.fromJson(schemaJson, schemaContext);
-      const testEntity = await testSchema.getItem<AnyClass>(className);
+      const testEntity = await testSchema.getItem(className, EntityClass);
       expect(testEntity !== undefined, `${className} should be within TestSchema`).to.be.true;
       expect(testEntity!.schema.name === schemaName, `${className} schema name should be TestSchema`).to.be.true;
       expect(testEntity!.customAttributes!.has("BisCore.ClassHasHandler"), `${className} should have BisCore.ClassHasHandler custom attribute`).to.be.true;
@@ -330,7 +330,7 @@ describe("Class Rule Tests", () => {
 
       const testEntity = await mutableSchema.createEntityClass("TestEntity");
       const testClassMutable = testEntity as ECClass as MutableClass;
-      testClassMutable.baseClass = new DelayedPromiseWithProps(deprecatedClass.key, async () => deprecatedClass) as LazyLoadedSchemaItem<EntityClass>;
+      await testClassMutable.setBaseClass(new DelayedPromiseWithProps(deprecatedClass.key, async () => deprecatedClass) as LazyLoadedSchemaItem<EntityClass>);
       testClassMutable.addCustomAttribute({ className: "CoreCustomAttributes.Deprecated" });
 
       const result = Rules.classShouldNotDerivedFromDeprecatedClass(testEntity);
@@ -353,7 +353,7 @@ describe("Class Rule Tests", () => {
 
       const normalEntity = await mutableSchema.createEntityClass("Entity");
       const normalEntityMutable = normalEntity as MutableEntityClass;
-      normalEntityMutable.baseClass = new DelayedPromiseWithProps(deprecatedClass.key, async () => deprecatedClass) as LazyLoadedSchemaItem<EntityClass>;
+      await (normalEntityMutable as ECClass as MutableClass).setBaseClass(new DelayedPromiseWithProps(deprecatedClass.key, async () => deprecatedClass) as LazyLoadedSchemaItem<EntityClass>);
       normalEntityMutable.addMixin(deprecatedMixin);
 
       const result = Rules.classShouldNotDerivedFromDeprecatedClass(normalEntity);
@@ -380,7 +380,7 @@ describe("Class Rule Tests", () => {
 
       const normalRel = await mutableSchema.createRelationshipClass("NormalRelationship");
       const normalMutable = normalRel as ECClass as MutableClass;
-      normalMutable.baseClass = new DelayedPromiseWithProps(deprecatedRel.key, async () => deprecatedRel) as LazyLoadedSchemaItem<RelationshipClass>;
+      await normalMutable.setBaseClass(new DelayedPromiseWithProps(deprecatedRel.key, async () => deprecatedRel) as LazyLoadedSchemaItem<RelationshipClass>);
 
       const result = Rules.classShouldNotDerivedFromDeprecatedClass(normalRel);
       let resultHasEntries = false;
@@ -406,7 +406,7 @@ describe("Class Rule Tests", () => {
 
       const indirectDeprecatedClass = await mutableSchema.createEntityClass("IndirectDeprecatedEntity");
       const indirectDeprecatedMutable = indirectDeprecatedClass as ECClass as MutableClass;
-      indirectDeprecatedMutable.baseClass = new DelayedPromiseWithProps(deprecatedClass.key, async () => deprecatedClass) as LazyLoadedSchemaItem<EntityClass>;
+      await indirectDeprecatedMutable.setBaseClass(new DelayedPromiseWithProps(deprecatedClass.key, async () => deprecatedClass) as LazyLoadedSchemaItem<EntityClass>);
 
       const deprecatedMixin = await mutableSchema.createMixinClass("DeprecatedMixin");
       const deprecatedMixinMutable = deprecatedMixin as ECClass as MutableClass;
@@ -414,11 +414,11 @@ describe("Class Rule Tests", () => {
 
       const indirectDeprecatedMixin = await mutableSchema.createMixinClass("IndirectDeprecatedMixin");
       const indirectDeprecatedMixinMutable = indirectDeprecatedMixin as ECClass as MutableClass;
-      indirectDeprecatedMixinMutable.baseClass = new DelayedPromiseWithProps(deprecatedMixin.key, async () => deprecatedMixin) as LazyLoadedSchemaItem<Mixin>;
+      await indirectDeprecatedMixinMutable.setBaseClass(new DelayedPromiseWithProps(deprecatedMixin.key, async () => deprecatedMixin) as LazyLoadedSchemaItem<Mixin>);
 
       const normalEntity = await mutableSchema.createEntityClass("Entity");
       const normalEntityMutable = normalEntity as MutableEntityClass;
-      normalEntityMutable.baseClass = new DelayedPromiseWithProps(indirectDeprecatedClass.key, async () => deprecatedClass) as LazyLoadedSchemaItem<EntityClass>;
+      await (normalEntityMutable as ECClass as MutableClass).setBaseClass(new DelayedPromiseWithProps(indirectDeprecatedClass.key, async () => deprecatedClass) as LazyLoadedSchemaItem<EntityClass>);
       normalEntityMutable.addMixin(indirectDeprecatedMixin);
 
       const result = Rules.classShouldNotDerivedFromDeprecatedClass(normalEntity);
@@ -441,7 +441,7 @@ describe("Class Rule Tests", () => {
 
       const base = await mutableSchema.createEntityClass("BaseEntity");
       const normalEntity = await mutableSchema.createEntityClass("Entity");
-      normalEntity.baseClass = new DelayedPromiseWithProps(base.key, async () => base) as LazyLoadedSchemaItem<EntityClass>;
+      await (normalEntity as ECClass as MutableClass).setBaseClass(new DelayedPromiseWithProps(base.key, async () => base) as LazyLoadedSchemaItem<EntityClass>);
 
       const result = Rules.classShouldNotDerivedFromDeprecatedClass(normalEntity);
       for await (const _diagnostic of result) {

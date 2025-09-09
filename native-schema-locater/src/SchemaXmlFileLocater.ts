@@ -9,7 +9,7 @@ import { ECSchemaXmlContext, NativeLoggerCategory } from "@itwin/core-backend";
 import { Logger, LogLevel } from "@itwin/core-bentley";
 import { FileSchemaKey, SchemaFileLocater } from "@itwin/ecschema-locaters";
 import {
-  ECObjectsError, ECObjectsStatus, ECVersion, ISchemaLocater, Schema, SchemaContext,
+  ECSchemaError, ECSchemaStatus, ECVersion, ISchemaLocater, Schema, SchemaContext,
   SchemaGraphUtil, SchemaInfo, SchemaKey, SchemaMatchType, SchemaReadHelper, XmlParser,
 } from "@itwin/ecschema-metadata";
 
@@ -149,7 +149,7 @@ export class SchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLo
   public getSchemaKey(schemaXml: string): SchemaKey {
     const match = schemaXml.match(/<ECSchema.*schemaName="(?<name>\w+)".*version="(?<version>[\d|\.]+)"/) as any;
     if (!match || !match.groups.name || !match.groups.version) {
-      throw new ECObjectsError(ECObjectsStatus.InvalidSchemaXML, `Could not find the ECSchema 'schemaName' or 'version' tag in the given file.`);
+      throw new ECSchemaError(ECSchemaStatus.InvalidSchemaXML, `Could not find the ECSchema 'schemaName' or 'version' tag in the given file.`);
     }
 
     let ecVersion: ECVersion;
@@ -171,10 +171,10 @@ export class SchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLo
     const [read, minor] = versionString.split(".");
 
     if (!read)
-      throw new ECObjectsError(ECObjectsStatus.InvalidECVersion, `The read version is missing from version string, ${versionString}`);
+      throw new ECSchemaError(ECSchemaStatus.InvalidECVersion, `The read version is missing from version string, ${versionString}`);
 
     if (!minor)
-      throw new ECObjectsError(ECObjectsStatus.InvalidECVersion, `The minor version is missing from version string, ${versionString}`);
+      throw new ECSchemaError(ECSchemaStatus.InvalidECVersion, `The minor version is missing from version string, ${versionString}`);
 
     return new ECVersion(+read, 0, +minor);
   }
@@ -232,7 +232,7 @@ export class SchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLo
         Schema.fromJsonSync(schemaJson, context);
       } catch (err: any) {
         if (err.message === "ReferencedSchemaNotFound")
-          throw new ECObjectsError(ECObjectsStatus.UnableToLocateSchema, `Unable to load schema '${parentSchema.name}'. A referenced schema could not be found.`);
+          throw new ECSchemaError(ECSchemaStatus.UnableToLocateSchema, `Unable to load schema '${parentSchema.name}'. A referenced schema could not be found.`);
         throw (err);
       }
     }
@@ -345,7 +345,7 @@ class StubSchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLocat
   public getSchemaKey(schemaXml: string): SchemaKey {
     const match = schemaXml.match(/<ECSchema.*schemaName="(?<name>\w+)".*version="(?<version>[\d|\.]+)"/) as any;
     if (!match || !match.groups.name || !match.groups.version) {
-      throw new ECObjectsError(ECObjectsStatus.InvalidSchemaXML, `Could not find the ECSchema 'schemaName' or 'version' tag in the given file.`);
+      throw new ECSchemaError(ECSchemaStatus.InvalidSchemaXML, `Could not find the ECSchema 'schemaName' or 'version' tag in the given file.`);
     }
 
     let ecVersion: ECVersion;
@@ -379,7 +379,7 @@ class StubSchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLocat
     for (const key of refKeys) {
       const refSchema = context ? context.getSchemaSync(key, refMatchType) : undefined;
       if (!refSchema)
-        throw new ECObjectsError(ECObjectsStatus.UnableToLocateSchema, `Unable to locate referenced schema: ${key.name}.${key.readVersion}.${key.writeVersion}.${key.minorVersion}`);
+        throw new ECSchemaError(ECSchemaStatus.UnableToLocateSchema, `Unable to locate referenced schema: ${key.name}.${key.readVersion}.${key.writeVersion}.${key.minorVersion}`);
 
       schema.references.push(refSchema);
     }
@@ -393,7 +393,7 @@ class StubSchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLocat
     const file = xmlSchemaKey.schemaText;
 
     if (!file)
-      throw new ECObjectsError(ECObjectsStatus.UnableToLocateSchema, `Could not locate the schema file, ${xmlSchemaKey.fileName}, for the schema ${xmlSchemaKey.name}`);
+      throw new ECSchemaError(ECSchemaStatus.UnableToLocateSchema, `Could not locate the schema file, ${xmlSchemaKey.fileName}, for the schema ${xmlSchemaKey.name}`);
 
     const data = file.toString().replace(/(\s*)<!--.*?-->/g, ""); // ignore any comments in the XML file when getting the array of SchemaKeys
 
@@ -406,7 +406,7 @@ class StubSchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLocat
       const name = match.match(/name="(.+?)"/);
       const versionMatch = match.match(/version="(.+?)"/);
       if (!name || name.length !== 2 || !versionMatch || versionMatch.length !== 2)
-        throw new ECObjectsError(ECObjectsStatus.InvalidSchemaXML, `Invalid ECSchemaReference xml encountered in the schema file`);
+        throw new ECSchemaError(ECSchemaStatus.InvalidSchemaXML, `Invalid ECSchemaReference xml encountered in the schema file`);
 
       // write version maybe missing, so insert "0"
       let versionString = versionMatch[1];
@@ -437,7 +437,7 @@ class StubSchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLocat
     }
 
     if (!match || !match.groups.alias) {
-      throw new ECObjectsError(ECObjectsStatus.InvalidSchemaXML, `Could not find the ECSchema 'alias' tag in the given file.`);
+      throw new ECSchemaError(ECSchemaStatus.InvalidSchemaXML, `Could not find the ECSchema 'alias' tag in the given file.`);
     }
 
     return match.groups.alias;

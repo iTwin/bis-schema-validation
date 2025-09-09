@@ -9,7 +9,7 @@ import {
   createSchemaItemDiagnosticClass, DiagnosticCategory, IRuleSet, PropertyDiagnostic,
   SchemaDiagnostic, SchemaItemDiagnostic,
 } from "@itwin/ecschema-editing";
-import { ECClassModifier } from "@itwin/ecschema-metadata";
+import { ECClass, ECClassModifier } from "@itwin/ecschema-metadata";
 
 const bisCoreName = "BisCore";
 const bisModelName = "Model";
@@ -473,7 +473,7 @@ export async function* schemaClassDisplayLabelMustBeUnique(schema: EC.Schema): A
     return;
 
   const existingLabels = new Map<string, EC.ECClass>();
-  for (const ecClass of schema.getClasses()) {
+  for (const ecClass of schema.getItems(ECClass)) {
     if (undefined === ecClass.label)
       continue;
 
@@ -510,15 +510,16 @@ export async function* schemaShouldNotUseDeprecatedSchema(schema: EC.Schema): As
  * BIS Rule: A Mixin class cannot override inherited properties.
  */
 export async function* mixinsCannotOverrideInheritedProperties(mixin: EC.Mixin): AsyncIterable<SchemaItemDiagnostic<EC.Mixin, any[]>> {
-  if (undefined === mixin.properties || undefined === mixin.baseClass)
+  const mixinProperties = Array.from(await mixin.getProperties(true));
+  if (mixinProperties.length === 0 || undefined === mixin.baseClass)
     return;
 
   const baseClass = await mixin.baseClass;
-  const allBaseProperties = await baseClass.getProperties();
+  const allBaseProperties = Array.from(await baseClass.getProperties(false));
   if (!allBaseProperties || allBaseProperties.length === 0)
     return;
 
-  for (const property of mixin.properties) {
+  for (const property of mixinProperties) {
     if (allBaseProperties.some((x) => x.name === property.name))
       yield new Diagnostics.MixinsCannotOverrideInheritedProperties(mixin, [mixin.fullName, property.name]);
   }
@@ -592,7 +593,7 @@ export async function* entityClassMayNotInheritSameProperty(entity: EC.EntityCla
 export async function* elementMultiAspectMustHaveCorrespondingRelationship(entity: EC.EntityClass): AsyncIterable<SchemaItemDiagnostic<EC.EntityClass, any[]>> {
   const context = entity.schema.context;
   if (!context)
-    throw new EC.ECObjectsError(EC.ECObjectsStatus.SchemaContextUndefined, `Schema context is undefined for schema ${entity.schema.fullName}.`);
+    throw new EC.ECSchemaError(EC.ECSchemaStatus.SchemaContextUndefined, `Schema context is undefined for schema ${entity.schema.fullName}.`);
 
   const attributes = entity.schema.customAttributes;
   if (attributes !== undefined && attributes.has("CoreCustomAttributes.DynamicSchema"))
@@ -604,7 +605,7 @@ export async function* elementMultiAspectMustHaveCorrespondingRelationship(entit
   if (!await entity.is(elementMultiAspectName, bisCoreName))
     return;
 
-  let relationships = Array.from(entity.schema.getClasses());
+  let relationships = Array.from(entity.schema.getItems(ECClass));
   relationships = relationships.filter((c) => c.schemaItemType === EC.SchemaItemType.RelationshipClass);
   if (relationships.length === 0) {
     yield new Diagnostics.ElementMultiAspectMustHaveCorrespondingRelationship(entity, [entity.fullName]);
@@ -629,7 +630,7 @@ export async function* elementMultiAspectMustHaveCorrespondingRelationship(entit
 export async function* elementUniqueAspectMustHaveCorrespondingRelationship(entity: EC.EntityClass): AsyncIterable<SchemaItemDiagnostic<EC.EntityClass, any[]>> {
   const context = entity.schema.context;
   if (!context)
-    throw new EC.ECObjectsError(EC.ECObjectsStatus.SchemaContextUndefined, `Schema context is undefined for schema ${entity.schema.fullName}.`);
+    throw new EC.ECSchemaError(EC.ECSchemaStatus.SchemaContextUndefined, `Schema context is undefined for schema ${entity.schema.fullName}.`);
 
   if (entity.modifier === ECClassModifier.Abstract)
     return;
@@ -642,7 +643,7 @@ export async function* elementUniqueAspectMustHaveCorrespondingRelationship(enti
   if (!await entity.is(elementUniqueAspectName, bisCoreName))
     return;
 
-  let relationships = Array.from(entity.schema.getClasses());
+  let relationships = Array.from(entity.schema.getItems(ECClass));
   relationships = relationships.filter((c) => c.schemaItemType === EC.SchemaItemType.RelationshipClass);
   if (relationships.length === 0) {
     yield new Diagnostics.ElementUniqueAspectMustHaveCorrespondingRelationship(entity, [entity.fullName]);
@@ -666,7 +667,7 @@ export async function* elementUniqueAspectMustHaveCorrespondingRelationship(enti
 export async function* entityClassesCannotDeriveFromIParentElementAndISubModeledElement(entity: EC.EntityClass): AsyncIterable<SchemaItemDiagnostic<EC.EntityClass, any[]>> {
   const context = entity.schema.context;
   if (!context)
-    throw new EC.ECObjectsError(EC.ECObjectsStatus.SchemaContextUndefined, `Schema context is undefined for schema ${entity.schema.fullName}.`);
+    throw new EC.ECSchemaError(EC.ECSchemaStatus.SchemaContextUndefined, `Schema context is undefined for schema ${entity.schema.fullName}.`);
 
   if (await entity.is(iParentElementName, bisCoreName) && await entity.is(iSubModeledElementName, bisCoreName))
     yield new Diagnostics.EntityClassesCannotDeriveFromIParentElementAndISubModeledElement(entity, [entity.fullName]);
@@ -682,7 +683,7 @@ export async function* entityClassesCannotDeriveFromModelClasses(entity: EC.Enti
 
   const context = entity.schema.context;
   if (!context)
-    throw new EC.ECObjectsError(EC.ECObjectsStatus.SchemaContextUndefined, `Schema context is undefined for schema ${entity.schema.fullName}.`);
+    throw new EC.ECSchemaError(EC.ECSchemaStatus.SchemaContextUndefined, `Schema context is undefined for schema ${entity.schema.fullName}.`);
 
   const bisCore = await context.getSchema(new EC.SchemaKey(bisCoreName));
   if (!bisCore || !entity.baseClass || entity.baseClass.schemaName !== bisCoreName)
@@ -694,7 +695,7 @@ export async function* entityClassesCannotDeriveFromModelClasses(entity: EC.Enti
   for (const modelName of modelNames) {
     const modelClass = await bisCore.getItem(modelName);
     if (!modelClass)
-      throw new EC.ECObjectsError(EC.ECObjectsStatus.ClassNotFound, `Class ${modelName} could not be found.`);
+      throw new EC.ECSchemaError(EC.ECSchemaStatus.ClassNotFound, `Class ${modelName} could not be found.`);
 
     const isModel = await entity.is(modelClass as EC.ECClass);
     if (isModel)
@@ -711,7 +712,7 @@ export async function* bisModelSubClassesCannotDefineProperties(entity: EC.Entit
 
   const context = entity.schema.context;
   if (!context)
-    throw new EC.ECObjectsError(EC.ECObjectsStatus.SchemaContextUndefined, `Schema context is undefined for schema ${entity.schema.fullName}.`);
+    throw new EC.ECSchemaError(EC.ECSchemaStatus.SchemaContextUndefined, `Schema context is undefined for schema ${entity.schema.fullName}.`);
 
   const bisCore = await context.getSchema(new EC.SchemaKey(bisCoreName));
   if (!bisCore || !entity.baseClass || entity.baseClass.schemaName !== bisCoreName)
@@ -719,16 +720,17 @@ export async function* bisModelSubClassesCannotDefineProperties(entity: EC.Entit
 
   const modelClass = await bisCore.getItem(bisModelName);
   if (!modelClass)
-    throw new EC.ECObjectsError(EC.ECObjectsStatus.ClassNotFound, `Class ${bisModelName} could not be found.`);
+    throw new EC.ECSchemaError(EC.ECSchemaStatus.ClassNotFound, `Class ${bisModelName} could not be found.`);
 
   const isModel = await entity.is(modelClass as EC.ECClass);
   if (!isModel)
     return;
 
-  if (undefined === entity.properties)
+  const properties = Array.from(await entity.getProperties(true));
+  if (properties.length === 0)
     return;
 
-  for (const _ of entity.properties) {
+  for (const _ of properties) {
     yield new Diagnostics.BisModelSubClassesCannotDefineProperties(entity, [entity.fullName]);
     break;
   }
@@ -799,7 +801,7 @@ export async function* relationshipTargetMultiplicityUpperBoundRestriction(relat
 export async function* relationshipElementAspectContraintRestriction(relationshipClass: EC.RelationshipClass): AsyncIterable<SchemaItemDiagnostic<EC.RelationshipClass, any[]>> {
   const context = relationshipClass.schema.context;
   if (!context)
-    throw new EC.ECObjectsError(EC.ECObjectsStatus.SchemaContextUndefined, `Schema context is undefined for schema ${relationshipClass.schema.fullName}.`);
+    throw new EC.ECSchemaError(EC.ECSchemaStatus.SchemaContextUndefined, `Schema context is undefined for schema ${relationshipClass.schema.fullName}.`);
 
   if (await relationshipClass.is(elementOwnsUniqueAspectName, bisCoreName) || await relationshipClass.is(elementOwnsMultiAspectsName, bisCoreName))
     return;
@@ -993,8 +995,9 @@ export async function* noAdditionalLinkTableRelationships(relationshipClass: EC.
   if (await relationshipClass.is("ElementRefersToElements", "BisCore") || await relationshipClass.is("ElementDrivesElement", "BisCore"))
     return;
 
-  if (relationshipClass.properties) {
-    for (const _ of relationshipClass.properties) {
+  const properties = Array.from(await relationshipClass.getProperties(true));
+  if (properties.length !== 0) {
+    for (const _ of properties) {
       yield new Diagnostics.NoAdditionalLinkTableRelationships(relationshipClass, [relationshipClass.fullName]);
       break;
     }
@@ -1114,7 +1117,8 @@ export async function* propertyMustNotUseCustomHandledPropertyRestriction(proper
 
 /** BIS Rule: Properties within the same class and category cannot have the same display label. */
 export async function* multiplePropertiesInClassWithSameLabel(ecClass: EC.AnyClass): AsyncIterable<ClassDiagnostic<any[]>> {
-  if (!ecClass.properties)
+  const properties = Array.from(await ecClass.getProperties(true));
+  if (properties.length === 0)
     return;
 
   // Dynamic schema can have matching display labels
@@ -1122,7 +1126,7 @@ export async function* multiplePropertiesInClassWithSameLabel(ecClass: EC.AnyCla
     return;
 
   const visitedProperties: EC.Property[] = [];
-  for (const property of ecClass.properties) {
+  for (const property of properties) {
     const label = property.label;
     if (!label)
       continue;
@@ -1198,10 +1202,11 @@ export async function* classShouldNotHaveDeprecatedProperty(ecClass: EC.AnyClass
   if (ecClass.customAttributes && ecClass.customAttributes.has(deprecatedFullName))
     return;
 
-  if (!ecClass.properties)
+  const properties = Array.from(await ecClass.getProperties(true));
+  if (properties.length === 0)
     return;
 
-  for (const property of ecClass.properties) {
+  for (const property of properties) {
     if (property.customAttributes && property.customAttributes.has(deprecatedFullName))
       yield new Diagnostics.ClassShouldNotHaveDeprecatedProperty(ecClass, [ecClass.fullName, property.name], DiagnosticCategory.Warning);
   }
@@ -1212,10 +1217,11 @@ export async function* classShouldNotHavePropertyOfDeprecatedStructClass(ecClass
   if (ecClass.customAttributes && ecClass.customAttributes.has(deprecatedFullName))
     return;
 
-  if (!ecClass.properties)
+  const properties = Array.from(await ecClass.getProperties(true));
+  if (properties.length === 0)
     return;
 
-  for (const property of ecClass.properties) {
+  for (const property of properties) {
     if (property.customAttributes && property.customAttributes.has(deprecatedFullName))
       continue;
 

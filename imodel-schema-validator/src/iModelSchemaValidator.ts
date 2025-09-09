@@ -89,7 +89,7 @@ async function applyValidations(iModelSchemaDir: string, iModelSchemaFile: strin
 
   // find out if a schema is dynamic or not
   if (isDynamicSchema(iModelSchemaPath) && (!checkReleaseDynamicSchema)) {
-    console.log(chalk.default.grey(`Skipping difference audit for ", ${name} ${version}.
+    console.log(chalk.grey(`Skipping difference audit for ", ${name} ${version}.
     The schema is a dynamic schema and released versions of dynamic schemas are not saved.`));
     Reporter.writeToLogFile(name, version, `Skipping difference audit for ${name}.${version}.
     The schema is a dynamic schema and released versions of dynamic schemas are not saved.\n`, output);
@@ -108,11 +108,11 @@ async function applyValidations(iModelSchemaDir: string, iModelSchemaFile: strin
 
     if (!releasedSchemaPath) {
       if (isDynamicSchema(iModelSchemaPath)) {
-        console.log(chalk.default.grey("Skipping difference audit for ", name, version, ". No released schema found."));
+        console.log(chalk.grey("Skipping difference audit for ", name, version, ". No released schema found."));
         Reporter.writeToLogFile(name, version, `Skipping difference audit for ${name}.${version}. No released schema found.\n`, output);
         validationResult.comparer = iModelValidationResultTypes.Skipped; // skip if no released schema found in case of dynamic schemas
       } else {
-        console.log(chalk.default.grey("Skipping difference audit for ", name, version, ". No released schema found."));
+        console.log(chalk.grey("Skipping difference audit for ", name, version, ". No released schema found."));
         Reporter.writeToLogFile(name, version, `Skipping difference audit for ${name}.${version}. No released schema found.\n`, output);
         validationResult.comparer = iModelValidationResultTypes.NotFound; // fail if no released schema found
       }
@@ -161,7 +161,7 @@ export async function validateSchema(schemaName: string, version: string, imodel
     for (const line of validatorResult) {
       switch (line.resultType) {
         case ValidationResultType.RuleViolation:
-          console.log(chalk.default.yellow(line.resultText));
+          console.log(chalk.yellow(line.resultText));
           Reporter.writeToLogFile(schemaName, version, line.resultText + "\n", output);
           // Allow warnings to be skipped
           if (ruleViolationError(line.resultText)) {
@@ -169,7 +169,7 @@ export async function validateSchema(schemaName: string, version: string, imodel
           }
           break;
         case ValidationResultType.Error:
-          console.log(chalk.default.red(line.resultText));
+          console.log(chalk.red(line.resultText));
           Reporter.writeToLogFile(schemaName, version, line.resultText + "\n", output);
           // skip the validation for the schemas which are not supported
           if (line.resultText.toLowerCase().includes("standard schemas are not supported by this tool")) {
@@ -179,13 +179,13 @@ export async function validateSchema(schemaName: string, version: string, imodel
           }
           break;
         default:
-          console.log(chalk.default.green(line.resultText));
+          console.log(chalk.green(line.resultText));
           Reporter.writeToLogFile(schemaName, version, line.resultText + "\n", output);
           validationResult.validator = iModelValidationResultTypes.Passed;
       }
     }
   } catch (error: any) {
-    console.log(chalk.default.red("An error occurred during validation: " + error.message));
+    console.log(chalk.red("An error occurred during validation: " + error.message));
     Reporter.writeToLogFile(schemaName, version, "An error occurred during validation: " + error.message + "\n", output);
     validationResult.validator = iModelValidationResultTypes.Error;
   }
@@ -206,29 +206,29 @@ export async function compareSchema(schemaName: string, version: string, imodelS
           if (referenceDifference(line)) {
             if (!deltaExists)
               validationResult.comparer = iModelValidationResultTypes.ReferenceDifferenceWarning;
-            console.log(chalk.default.yellow(line.resultText));
+            console.log(chalk.yellow(line.resultText));
             Reporter.writeToLogFile(schemaName, version, line.resultText + "\n", output);
             break;
           }
           if (line.compareCode)
             deltaExists = true;
           validationResult.comparer = iModelValidationResultTypes.Failed;
-          console.log(chalk.default.yellow(line.resultText));
+          console.log(chalk.yellow(line.resultText));
           Reporter.writeToLogFile(schemaName, version, line.resultText + "\n", output);
           break;
         case ComparisonResultType.Error:
-          console.log(chalk.default.red(line.resultText));
+          console.log(chalk.red(line.resultText));
           Reporter.writeToLogFile(schemaName, version, line.resultText + "\n", output);
           validationResult.comparer = iModelValidationResultTypes.Error;
           break;
         default:
-          console.log(chalk.default.green(line.resultText));
+          console.log(chalk.green(line.resultText));
           Reporter.writeToLogFile(schemaName, version, line.resultText + "\n", output);
           validationResult.comparer = iModelValidationResultTypes.Passed;
       }
     }
   } catch (err: any) {
-    console.log(chalk.default.red("An error occurred during comparison: " + err.message));
+    console.log(chalk.red("An error occurred during comparison: " + err.message));
     Reporter.writeToLogFile(schemaName, version, "An error occurred during comparison: " + err.message + "\n", output);
     validationResult.comparer = iModelValidationResultTypes.Error;
   }
