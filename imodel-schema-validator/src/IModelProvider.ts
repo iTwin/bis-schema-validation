@@ -39,7 +39,7 @@ export class IModelProvider {
   public static async setupHost(env: string, briefcaseDir: string) {
     const iModelHostConfiguration = new IModelHostConfiguration();
     iModelHostConfiguration.cacheDir = briefcaseDir;
-    const cloudStorage = await createDefaultClientStorage();
+    const cloudStorage = createDefaultClientStorage();
 
     if (env === "DEV") {
       this._regionCode = 103;
@@ -54,7 +54,7 @@ export class IModelProvider {
 
     this._client = new IModelsClient({
       api: { baseUrl: `https://${process.env.IMJS_URL_PREFIX}api.bentley.com/imodels` },
-      cloudStorage
+      cloudStorage,
     });
 
     iModelHostConfiguration.hubAccess = new BackendIModelsAccess(this._client);
