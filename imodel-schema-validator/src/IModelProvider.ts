@@ -4,8 +4,11 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { BriefcaseDb, BriefcaseManager, IModelHost, IModelHostConfiguration, RequestNewBriefcaseArg } from "@itwin/core-backend";
-import { GetIModelListParams, IModelsClient, toArray } from "@itwin/imodels-client-authoring";
-import { AccessTokenAdapter, BackendIModelsAccess } from "@itwin/imodels-access-backend";
+import { IModelsClient } from "@itwin/imodels-client-authoring";
+import { createDefaultClientStorage } from "@itwin/imodels-access-backend/lib/cjs/DefaultClientStorage";
+import { GetIModelListParams, toArray } from "@itwin/imodels-client-management";
+import { BackendIModelsAccess } from "@itwin/imodels-access-backend";
+import { AccessTokenAdapter } from "@itwin/imodels-access-common";
 import { getTestAccessToken, TestUserCredentials } from "@itwin/oidc-signin-tool";
 import { IModelVersionProps } from "@itwin/core-common";
 import { AccessToken } from "@itwin/core-bentley";
@@ -36,6 +39,7 @@ export class IModelProvider {
   public static async setupHost(env: string, briefcaseDir: string) {
     const iModelHostConfiguration = new IModelHostConfiguration();
     iModelHostConfiguration.cacheDir = briefcaseDir;
+    const cloudStorage = createDefaultClientStorage();
 
     if (env === "DEV") {
       this._regionCode = 103;
@@ -48,7 +52,11 @@ export class IModelProvider {
       process.env.IMJS_URL_PREFIX = "";
     }
 
-    this._client = new IModelsClient({ api: { baseUrl: `https://${process.env.IMJS_URL_PREFIX}api.bentley.com/imodels` } });
+    this._client = new IModelsClient({
+      api: { baseUrl: `https://${process.env.IMJS_URL_PREFIX}api.bentley.com/imodels` },
+      cloudStorage,
+    });
+
     iModelHostConfiguration.hubAccess = new BackendIModelsAccess(this._client);
     await IModelHost.startup(iModelHostConfiguration);
   }

@@ -57,7 +57,7 @@
   "dependencies": {
     "@itwin/core-bentley": "5.2.0-dev.19",
     "@itwin/core-geometry": "5.2.0-dev.19",
-    "@itwin/imodels-access-backend": "^5.2.2",
+    "@itwin/imodels-access-backend": "6.0.1",
     "@itwin/core-backend": "5.2.0-dev.19",
     "@itwin/core-quantity": "5.2.0-dev.19",
     "@itwin/core-common": "5.2.0-dev.19",
