@@ -46,7 +46,13 @@ importers:
       '@itwin/imodels-access-backend':
         specifier: 6.0.1
         version: 6.0.1(@itwin/core-backend@5.2.0-dev.19(@itwin/core-bentley@5.2.0-dev.19)(@itwin/core-common@5.2.0-dev.19(@itwin/core-bentley@5.2.0-dev.19)(@itwin/core-geometry@5.2.0-dev.19))(@itwin/core-geometry@5.2.0-dev.19)(@itwin/ecschema-metadata@5.2.0-dev.19(@itwin/core-bentley@5.2.0-dev.19)(@itwin/core-quantity@5.2.0-dev.19(@itwin/core-bentley@5.2.0-dev.19))))(@itwin/core-bentley@5.2.0-dev.19)(@itwin/core-common@5.2.0-dev.19(@itwin/core-bentley@5.2.0-dev.19)(@itwin/core-geometry@5.2.0-dev.19))
+      '@itwin/imodels-access-common':
+        specifier: 6.0.1
+        version: 6.0.1(@itwin/core-bentley@5.2.0-dev.19)(@itwin/imodels-client-management@6.0.1)
       '@itwin/imodels-client-authoring':
+        specifier: 6.0.1
+        version: 6.0.1
+      '@itwin/imodels-client-management':
         specifier: 6.0.1
         version: 6.0.1
       '@itwin/oidc-signin-tool':
@@ -655,7 +661,7 @@ packages:
     version: 0.0.0
 
   '@rush-temp/imodel-schema-validator@file:projects/imodel-schema-validator.tgz':
-    resolution: {integrity: sha512-iqlnf7fSbmv0QPHnLE9SwuLZZuqZ1P0xAHPx9xJ6UB1RWXXNGVy2MrYQ2mvUR9+obx1N2OGJK8UC14imTVIw7A==, tarball: file:projects/imodel-schema-validator.tgz}
+    resolution: {integrity: sha512-CzZ+BU0rCIhroOAr/Dc4OsElHabcqmiTTR68d2zWrClQulAo+XTf9kVzD+b7b5UFJuLCCo0il8Bobt1rUixHdw==, tarball: file:projects/imodel-schema-validator.tgz}
     version: 0.0.0
 
   '@rush-temp/native-schema-locater@file:projects/native-schema-locater.tgz':
@@ -4424,7 +4430,9 @@ snapshots:
       '@itwin/ecschema-metadata': 5.2.0-dev.19(@itwin/core-bentley@5.2.0-dev.19)(@itwin/core-quantity@5.2.0-dev.19(@itwin/core-bentley@5.2.0-dev.19))
       '@itwin/eslint-plugin': 4.1.1(eslint@8.57.1)(typescript@5.6.3)
       '@itwin/imodels-access-backend': 6.0.1(@itwin/core-backend@5.2.0-dev.19(@itwin/core-bentley@5.2.0-dev.19)(@itwin/core-common@5.2.0-dev.19(@itwin/core-bentley@5.2.0-dev.19)(@itwin/core-geometry@5.2.0-dev.19))(@itwin/core-geometry@5.2.0-dev.19)(@itwin/ecschema-metadata@5.2.0-dev.19(@itwin/core-bentley@5.2.0-dev.19)(@itwin/core-quantity@5.2.0-dev.19(@itwin/core-bentley@5.2.0-dev.19))))(@itwin/core-bentley@5.2.0-dev.19)(@itwin/core-common@5.2.0-dev.19(@itwin/core-bentley@5.2.0-dev.19)(@itwin/core-geometry@5.2.0-dev.19))
+      '@itwin/imodels-access-common': 6.0.1(@itwin/core-bentley@5.2.0-dev.19)(@itwin/imodels-client-management@6.0.1)
       '@itwin/imodels-client-authoring': 6.0.1
+      '@itwin/imodels-client-management': 6.0.1
       '@itwin/oidc-signin-tool': 4.4.1(@itwin/core-bentley@5.2.0-dev.19)(@itwin/core-geometry@5.2.0-dev.19)
       '@types/chai': 4.3.1
       '@types/mocha': 10.0.10
