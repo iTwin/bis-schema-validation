@@ -144,4 +144,4 @@ stages:
             inputs:
               targetPath: "$(Build.ArtifactStagingDirectory)/bis-schema-tools/packages"
               artifact: packages
-            condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual', 'BuildCompletion'))
+            # condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'Schedule', 'Manual', 'BuildCompletion'))
