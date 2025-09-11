@@ -27,7 +27,7 @@ async function validate() {
   }
 
   if (!program.installerDir || !program.baseSchemaRefDir || !program.output) {
-    console.log(chalk.default.red("Invalid input. For help use the '-h' option."));
+    console.log(chalk.red("Invalid input. For help use the '-h' option."));
     process.exit(1);
   }
 

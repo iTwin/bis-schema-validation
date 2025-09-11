@@ -5,7 +5,8 @@
 
 import { expect } from "chai";
 import * as Rules from "../BisRules";
-import { CustomAttributeClass, DelayedPromiseWithProps, LazyLoadedSchemaItem, Schema, SchemaContext } from "@itwin/ecschema-metadata";
+import { MutableClass } from "@itwin/ecschema-metadata/lib/cjs/Metadata/Class";
+import { CustomAttributeClass, DelayedPromiseWithProps, ECClass, LazyLoadedSchemaItem, Schema, SchemaContext } from "@itwin/ecschema-metadata";
 import { DiagnosticCategory, DiagnosticType } from "@itwin/ecschema-editing";
 
 describe("CustomAttributeClass Rule Tests", () => {
@@ -19,7 +20,7 @@ describe("CustomAttributeClass Rule Tests", () => {
     it("CustomAttributeClass has base class, rule violated.", async () => {
       const baseCA = new CustomAttributeClass(schema, "BaseStruct");
       const caClass = new CustomAttributeClass(schema, "TestStruct");
-      caClass.baseClass = new DelayedPromiseWithProps(baseCA.key, async () => baseCA) as LazyLoadedSchemaItem<CustomAttributeClass>;
+      await (caClass as ECClass as MutableClass).setBaseClass(new DelayedPromiseWithProps(baseCA.key, async () => baseCA) as LazyLoadedSchemaItem<CustomAttributeClass>);
 
       const result = Rules.customAttributeClassCannotHaveBaseClasses(caClass);
 

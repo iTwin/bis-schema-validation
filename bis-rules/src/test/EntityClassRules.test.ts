@@ -9,7 +9,7 @@ import { MutableSchema } from "@itwin/ecschema-metadata/lib/cjs/Metadata/Schema"
 import { MutableClass } from "@itwin/ecschema-metadata/lib/cjs/Metadata/Class";
 import { MutableEntityClass } from "@itwin/ecschema-metadata/lib/cjs/Metadata/EntityClass";
 import * as Rules from "../BisRules";
-import { DelayedPromiseWithProps, ECClass, ECClassModifier, ECObjectsError, ECObjectsStatus, EntityClass, LazyLoadedSchemaItem, Mixin, PrimitiveType, Schema, SchemaContext } from "@itwin/ecschema-metadata";
+import { DelayedPromiseWithProps, ECClass, ECClassModifier, ECSchemaError, ECSchemaStatus, EntityClass, LazyLoadedSchemaItem, Mixin, PrimitiveType, Schema, SchemaContext } from "@itwin/ecschema-metadata";
 import { DiagnosticCategory, DiagnosticType } from "@itwin/ecschema-editing";
 import { BisTestHelper } from "./utils/BisTestHelper";
 
@@ -69,7 +69,7 @@ describe("EntityClass Rule Tests", () => {
     it("EntityClass does not derived from BIS hierarchy, rule violated.", async () => {
       const baseEntity = new EntityClass(testSchema, "BaseEntity");
       const childEntity = new EntityClass(testSchema, "TestEntity");
-      childEntity.baseClass = new DelayedPromiseWithProps(baseEntity.key, async () => baseEntity) as LazyLoadedSchemaItem<EntityClass>;
+      await (childEntity as ECClass as MutableClass).setBaseClass(new DelayedPromiseWithProps(baseEntity.key, async () => baseEntity) as LazyLoadedSchemaItem<EntityClass>);
 
       const result = Rules.entityClassMustDeriveFromBisHierarchy(childEntity);
 
@@ -89,7 +89,7 @@ describe("EntityClass Rule Tests", () => {
     it("Non-abstract EntityClass with QueryView custom attribute does not derive from BIS hierarchy, rule violated.", async () => {
       const entityClass = new EntityClass(testSchema, "TestEntity");
       const mutableClass = entityClass as ECClass as MutableClass;
-      (mutableClass).addCustomAttribute({ className: "ECDbMap.QueryView"});
+      (mutableClass).addCustomAttribute({ className: "ECDbMap.QueryView" });
 
       const result = Rules.entityClassMustDeriveFromBisHierarchy(entityClass);
 
@@ -109,7 +109,7 @@ describe("EntityClass Rule Tests", () => {
     it("Abstract EntityClass with QueryView custom attribute does not derive from BIS base class, rule passes.", async () => {
       const entityClass = new EntityClass(testSchema, "AbstractEntity", ECClassModifier.Abstract);
       const mutableClass = entityClass as ECClass as MutableClass;
-      (mutableClass).addCustomAttribute({ className: "ECDbMap.QueryView"});
+      (mutableClass).addCustomAttribute({ className: "ECDbMap.QueryView" });
       const result = Rules.entityClassMustDeriveFromBisHierarchy(entityClass);
 
       for await (const _diagnostic of result!) {
@@ -120,7 +120,7 @@ describe("EntityClass Rule Tests", () => {
     it("EntityClass does derive from BIS base class, rule passes.", async () => {
       const baseEntity = new EntityClass(bisCoreSchema, "BaseEntity");
       const childEntity = new EntityClass(testSchema, "ChildEntity");
-      childEntity.baseClass = new DelayedPromiseWithProps(baseEntity.key, async () => baseEntity) as LazyLoadedSchemaItem<EntityClass>;
+      await (childEntity as ECClass as MutableClass).setBaseClass(new DelayedPromiseWithProps(baseEntity.key, async () => baseEntity) as LazyLoadedSchemaItem<EntityClass>);
 
       const result = Rules.entityClassMustDeriveFromBisHierarchy(childEntity);
 
@@ -142,9 +142,9 @@ describe("EntityClass Rule Tests", () => {
     it("EntityClass does derive from BIS hierarchy, rule passes.", async () => {
       const baseEntity = new EntityClass(bisCoreSchema, "BaseEntity");
       const childEntity = new EntityClass(testSchema, "ChildEntity");
-      childEntity.baseClass = new DelayedPromiseWithProps(baseEntity.key, async () => baseEntity) as LazyLoadedSchemaItem<EntityClass>;
+      await (childEntity as ECClass as MutableClass).setBaseClass(new DelayedPromiseWithProps(baseEntity.key, async () => baseEntity) as LazyLoadedSchemaItem<EntityClass>);
       const grandChildEntity = new EntityClass(testSchema, "GrandChildEntity");
-      grandChildEntity.baseClass = new DelayedPromiseWithProps(childEntity.key, async () => childEntity) as LazyLoadedSchemaItem<EntityClass>;
+      await (grandChildEntity as ECClass as MutableClass).setBaseClass(new DelayedPromiseWithProps(childEntity.key, async () => childEntity) as LazyLoadedSchemaItem<EntityClass>);
 
       const result = Rules.entityClassMustDeriveFromBisHierarchy(grandChildEntity);
 
@@ -164,7 +164,7 @@ describe("EntityClass Rule Tests", () => {
 
       const childEntity = new EntityClass(testSchema, "TestEntity");
       await (childEntity as unknown as MutableClass).createPrimitiveProperty("TestProperty", PrimitiveType.Integer);
-      childEntity.baseClass = new DelayedPromiseWithProps(baseEntity.key, async () => baseEntity) as LazyLoadedSchemaItem<EntityClass>;
+      await (childEntity as ECClass as MutableClass).setBaseClass(new DelayedPromiseWithProps(baseEntity.key, async () => baseEntity) as unknown as LazyLoadedSchemaItem<EntityClass>);
       await (childEntity as MutableEntityClass).addMixin(mixin);
 
       const result = Rules.entityClassMayNotInheritSameProperty(childEntity);
@@ -218,7 +218,7 @@ describe("EntityClass Rule Tests", () => {
 
       const childEntity = new EntityClass(testSchema, "TestEntity");
       await (childEntity as unknown as MutableClass).createPrimitiveProperty("TestPropertyA", PrimitiveType.Integer);
-      childEntity.baseClass = new DelayedPromiseWithProps(baseEntity.key, async () => baseEntity) as LazyLoadedSchemaItem<EntityClass>;
+      await (childEntity as ECClass as MutableClass).setBaseClass(new DelayedPromiseWithProps(baseEntity.key, async () => baseEntity) as unknown as LazyLoadedSchemaItem<EntityClass>);
       await (childEntity as MutableEntityClass).addMixin(mixin);
 
       const result = Rules.entityClassMayNotInheritSameProperty(childEntity);
@@ -237,7 +237,7 @@ describe("EntityClass Rule Tests", () => {
 
       const childEntity = new EntityClass(testSchema, "TestEntity");
       await (childEntity as MutableEntityClass).addMixin(mixin);
-      childEntity.baseClass = new DelayedPromiseWithProps(baseEntity.key, async () => baseEntity) as LazyLoadedSchemaItem<EntityClass>;
+      await (childEntity as ECClass as MutableClass).setBaseClass(new DelayedPromiseWithProps(baseEntity.key, async () => baseEntity) as unknown as LazyLoadedSchemaItem<EntityClass>);
 
       const result = Rules.entityClassMayNotInheritSameProperty(childEntity);
 
@@ -250,7 +250,7 @@ describe("EntityClass Rule Tests", () => {
       const baseEntity = new EntityClass(testSchema, "BaseEntity") as ECClass;
       await (baseEntity as MutableClass).createPrimitiveProperty("TestPropertyA", PrimitiveType.Integer);
       const childEntity = new EntityClass(testSchema, "TestEntity");
-      childEntity.baseClass = new DelayedPromiseWithProps(baseEntity.key, async () => baseEntity) as LazyLoadedSchemaItem<EntityClass>;
+      await (childEntity as ECClass as MutableClass).setBaseClass(new DelayedPromiseWithProps(baseEntity.key, async () => baseEntity) as unknown as LazyLoadedSchemaItem<EntityClass>);
       const spy = sinon.spy(EntityClass.prototype, "getProperties");
 
       const result = Rules.entityClassMayNotInheritSameProperty(childEntity);
@@ -376,6 +376,7 @@ describe("EntityClass Rule Tests", () => {
         $schema: "https://dev.bentley.com/json_schemas/ec/32/ecschema",
         name: "TestSchema",
         version: "1.2.3",
+        alias: "ts",
         references: [
           {
             name: "BaseSchema",
@@ -1110,8 +1111,8 @@ describe("EntityClass Rule Tests", () => {
         error = e;
       }
 
-      expect(error).to.be.instanceOf(ECObjectsError);
-      expect(error.errorNumber).to.be.equal(ECObjectsStatus.ClassNotFound);
+      expect(error).to.be.instanceOf(ECSchemaError);
+      expect(error.errorNumber).to.be.equal(ECSchemaStatus.ClassNotFound);
       expect(error.message.includes("PhysicalModel")).to.be.true;
     });
 
@@ -1258,8 +1259,8 @@ describe("EntityClass Rule Tests", () => {
         error = e;
       }
 
-      expect(error).to.be.instanceOf(ECObjectsError);
-      expect(error.errorNumber).to.be.equal(ECObjectsStatus.ClassNotFound);
+      expect(error).to.be.instanceOf(ECSchemaError);
+      expect(error.errorNumber).to.be.equal(ECSchemaStatus.ClassNotFound);
       expect(error.message.includes("Model")).to.be.true;
     });
   });
@@ -1447,8 +1448,8 @@ describe("EntityClass Rule Tests", () => {
       const secondMixin = (await schema.getItem("Mixin2")) as Mixin;
       const mutableFirstMixin = firstMixin as ECClass as MutableClass;
       const mutableSecondMixin = secondMixin as ECClass as MutableClass;
-      mutableFirstMixin.baseClass = new DelayedPromiseWithProps(firstDeprecatedMixin.key, async () => firstDeprecatedMixin) as LazyLoadedSchemaItem<Mixin>;
-      mutableSecondMixin.baseClass = new DelayedPromiseWithProps(secondDeprecatedMixin.key, async () => secondDeprecatedMixin) as LazyLoadedSchemaItem<Mixin>;
+      await mutableFirstMixin.setBaseClass(new DelayedPromiseWithProps(firstDeprecatedMixin.key, async () => firstDeprecatedMixin) as LazyLoadedSchemaItem<Mixin>);
+      await mutableSecondMixin.setBaseClass(new DelayedPromiseWithProps(secondDeprecatedMixin.key, async () => secondDeprecatedMixin) as LazyLoadedSchemaItem<Mixin>);
 
       const mutableEntity = testEntity as MutableEntityClass;
       mutableEntity.addMixin(firstMixin);

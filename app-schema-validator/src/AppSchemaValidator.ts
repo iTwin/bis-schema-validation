@@ -64,7 +64,7 @@ async function applyValidations(schemaDir: string, schemaFile: string, appSchema
   releasedSchemaDirectories = fixReleasedSchemaDirectories(schemaDir, releasedSchemaDirectories);
 
   if (isDynamicSchema(appSchemaPath)) {
-    console.log(chalk.default.grey(`Skipping difference audit for ${name} ${version}.
+    console.log(chalk.grey(`Skipping difference audit for ${name} ${version}.
     The schema is a dynamic schema and released versions of dynamic schemas are not saved.`));
     Reporter.writeToLogFile(name, version, `Skipping difference audit for ${name}.${version}.
     The schema is a dynamic schema and released versions of dynamic schemas are not saved.\n`, output);
@@ -83,11 +83,11 @@ async function applyValidations(schemaDir: string, schemaFile: string, appSchema
 
     if (!releasedSchemaPath) {
       if (isDynamicSchema(appSchemaPath)) {
-        console.log(chalk.default.grey("Skipping difference audit for ", name, version, ". No released schema found."));
+        console.log(chalk.grey("Skipping difference audit for ", name, version, ". No released schema found."));
         Reporter.writeToLogFile(name, version, `Skipping difference audit for ${name}.${version}. No released schema found.\n`, output);
         validationResult.comparer = iModelValidationResultTypes.Skipped;
       } else {
-        console.log(chalk.default.grey("Skipping difference audit for ", name, version, ". No released schema found."));
+        console.log(chalk.grey("Skipping difference audit for ", name, version, ". No released schema found."));
         Reporter.writeToLogFile(name, version, `Skipping difference audit for ${name}.${version}. No released schema found.\n`, output);
         validationResult.comparer = iModelValidationResultTypes.NotFound;
       }

@@ -16,9 +16,9 @@ steps:
   - script: 'git checkout --track origin/master'
     displayName: 'Switching to master '
   - task: NodeTool@0
-    displayName: 'Install Node 20.x'
+    displayName: 'Install Node 22.x'
     inputs:
-      versionSpec: 20.x
+      versionSpec: 22.x
       checkLatest: true
 
   - script: node $(System.DefaultWorkingDirectory)/common/scripts/install-run-rush.js version --bump

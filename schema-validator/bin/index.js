@@ -29,7 +29,7 @@ if (process.argv.length === 0) program.help();
 
 if (!program.input) {
   // tslint:disable-next-line:no-console
-  console.log(chalk.default.red("Invalid input. For help use the '-h' option."));
+  console.log(chalk.red("Invalid input. For help use the '-h' option."));
   process.exit(1);
 }
 
@@ -44,20 +44,20 @@ async function validate() {
       switch (line.resultType) {
         case ValidationResultType.RuleViolation:
           // tslint:disable-next-line:no-console
-          console.log(chalk.default.yellow(line.resultText));
+          console.log(chalk.yellow(line.resultText));
           break;
         case ValidationResultType.Error:
           // tslint:disable-next-line:no-console
-          console.log(chalk.default.red(line.resultText));
+          console.log(chalk.red(line.resultText));
           break;
         default:
           // tslint:disable-next-line:no-console
-          console.log(chalk.default.green(line.resultText));
+          console.log(chalk.green(line.resultText));
       }
     }
   } catch (err) {
     // tslint:disable-next-line:no-console
-    console.log(chalk.default.red("An error occurred during validation: " + err.message));
+    console.log(chalk.red("An error occurred during validation: " + err.message));
     process.exit(1);
   }
 }
