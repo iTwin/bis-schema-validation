@@ -49,7 +49,7 @@ describe("SchemaValidater Tests", () => {
     expect(schemaB.fullName).to.equal("SchemaB");
   });
 
-  it.only("Missing vs empty description, no differences found, results are correct", async () => {
+  it("Missing vs empty description, no differences found, results are correct", async () => {
     const schemaOldPath = path.resolve(assetsDir, "SchemaWithNoDescription.ecschema.xml");
     const schemaNewPath = path.resolve(assetsDir, "SchemaWithEmptyDescription.ecschema.xml");
     const options = new CompareOptions(schemaOldPath, schemaNewPath, [referencesDir], [referencesDir]);
