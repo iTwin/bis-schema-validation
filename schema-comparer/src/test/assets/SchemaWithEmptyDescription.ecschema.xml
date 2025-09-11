@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ECSchema schemaName="ElementDrivesTest" alias="edt" version="01.00.00" xmlns="http://www.bentley.com/schemas/Bentley.ECXML.3.2">
+  <ECEntityClass typeName="DummySource" />
+  <ECEntityClass typeName="DummyTarget" />
+
+  <ECRelationshipClass typeName="ElementDrivesElementsLinearly" modifier="None" strength="referencing" strengthDirection="forward" description="">
+    <Source multiplicity="(0..1)" roleLabel="source" polymorphic="True">
+      <Class class="DummySource" />
+    </Source>
+    <Target multiplicity="(0..*)" roleLabel="target" polymorphic="True">
+      <Class class="DummyTarget" />
+    </Target>
+  </ECRelationshipClass>
+
+</ECSchema>

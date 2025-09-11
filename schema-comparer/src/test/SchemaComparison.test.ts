@@ -49,6 +49,19 @@ describe("SchemaValidater Tests", () => {
     expect(schemaB.fullName).to.equal("SchemaB");
   });
 
+  it("Missing vs empty description, no differences found, results are correct", async () => {
+    const schemaOldPath = path.resolve(assetsDir, "SchemaWithNoDescription.ecschema.xml");
+    const schemaNewPath = path.resolve(assetsDir, "SchemaWithEmptyDescription.ecschema.xml");
+    const options = new CompareOptions(schemaOldPath, schemaNewPath, [referencesDir], [referencesDir]);
+
+    const results = await SchemaComparison.compare(options);
+
+    expect(results[0].resultType).to.equal(ComparisonResultType.Message);
+    expect(results[0].resultText).to.equal("Schema Comparison Results");
+    expect(results[1].resultType).to.equal(ComparisonResultType.Message);
+    expect(results[1].resultText).to.equal(" Schema Comparison Succeeded. No differences found.");
+  });
+
   it("Compare two schema files, out directory specified, result file created correctly", async () => {
     const schemaAFile = path.resolve(assetsDir, "SchemaA.ecschema.xml");
     const schemaBFile = path.resolve(assetsDir, "SchemaA.ecschema.xml");
