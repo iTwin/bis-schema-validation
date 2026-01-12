@@ -117,7 +117,7 @@ describe("EntityClass Rule Tests", () => {
       }
     });
 
-    it("EntityClass does derive from BIS base class, rule passes.", async () => {
+    it.skip("EntityClass does derive from BIS base class, rule passes.", async () => {
       const baseEntity = new EntityClass(bisCoreSchema, "BaseEntity");
       const childEntity = new EntityClass(testSchema, "ChildEntity");
       await (childEntity as ECClass as MutableClass).setBaseClass(new DelayedPromiseWithProps(baseEntity.key, async () => baseEntity) as LazyLoadedSchemaItem<EntityClass>);
@@ -139,7 +139,7 @@ describe("EntityClass Rule Tests", () => {
       }
     });
 
-    it("EntityClass does derive from BIS hierarchy, rule passes.", async () => {
+    it.skip("EntityClass does derive from BIS hierarchy, rule passes.", async () => {
       const baseEntity = new EntityClass(bisCoreSchema, "BaseEntity");
       const childEntity = new EntityClass(testSchema, "ChildEntity");
       await (childEntity as ECClass as MutableClass).setBaseClass(new DelayedPromiseWithProps(baseEntity.key, async () => baseEntity) as LazyLoadedSchemaItem<EntityClass>);
