@@ -86,7 +86,7 @@ describe("EntityClass Rule Tests", () => {
 
   });
 
-  describe("EntityClassMustDeriveFromBisHierarchy tests", async () => {
+  describe("EntityClassMustDeriveFromBisHierarchy tests", () => {
     it("EntityClass does not derived from BIS hierarchy, rule violated.", async () => {
       const baseEntity = new EntityClass(testSchema, "BaseEntity");
       const childEntity = new EntityClass(testSchema, "TestEntity");
