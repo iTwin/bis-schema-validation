@@ -6,12 +6,12 @@
 import { BriefcaseDb, BriefcaseManager, IModelHost, IModelHostConfiguration, RequestNewBriefcaseArg } from "@itwin/core-backend";
 import { IModelsClient } from "@itwin/imodels-client-authoring";
 import { createDefaultClientStorage } from "@itwin/imodels-access-backend/lib/cjs/DefaultClientStorage";
-import { GetIModelListParams, toArray } from "@itwin/imodels-client-management";
+import { GetIModelListParams, IModelsErrorCode, IModelsErrorScope, MinimalIModel, toArray } from "@itwin/imodels-client-management";
 import { BackendIModelsAccess } from "@itwin/imodels-access-backend";
 import { AccessTokenAdapter } from "@itwin/imodels-access-common";
 import { getTestAccessToken, TestUserCredentials } from "@itwin/oidc-signin-tool";
 import { IModelVersionProps } from "@itwin/core-common";
-import { AccessToken } from "@itwin/core-bentley";
+import { AccessToken, ITwinError } from "@itwin/core-bentley";
 import * as rimraf from "rimraf";
 import * as path from "path";
 import * as fs from "fs";
@@ -100,14 +100,25 @@ export class IModelProvider {
    */
   public static async getIModelId(accessToken: AccessToken, iTwinId: string, iModelName: string): Promise<string | undefined> {
     const iModelListParams: GetIModelListParams = {
-      authorization: AccessTokenAdapter.toAuthorizationCallback(async () => accessToken),
+      authorization: async () => {
+        const [scheme, token] = accessToken.split(" ");
+        if (!scheme || !token)
+          ITwinError.throwError({
+            iTwinErrorId: {
+              key: IModelsErrorCode.InvalidIModelsRequest,
+              scope: IModelsErrorScope,
+            },
+            message: "Unsupported access token format",
+          });
+        return Promise.resolve({ scheme, token });
+      },
       urlParams: {
         iTwinId,
         name: iModelName,
       },
     };
 
-    const iModelsIterator = this._client.iModels.getMinimalList(iModelListParams);
+    const iModelsIterator: AsyncIterableIterator<MinimalIModel> = this._client.iModels.getMinimalList(iModelListParams);
     const iModels = await toArray(iModelsIterator);
     // eslint-disable-next-line @typescript-eslint/prefer-for-of
     for (let num = 0; num < iModels.length; num++) {

@@ -9,11 +9,12 @@ import { MutableSchema } from "@itwin/ecschema-metadata/lib/cjs/Metadata/Schema"
 import { MutableClass } from "@itwin/ecschema-metadata/lib/cjs/Metadata/Class";
 import { MutableEntityClass } from "@itwin/ecschema-metadata/lib/cjs/Metadata/EntityClass";
 import * as Rules from "../BisRules";
-import { DelayedPromiseWithProps, ECClass, ECClassModifier, ECSchemaError, ECSchemaStatus, EntityClass, LazyLoadedSchemaItem, Mixin, PrimitiveType, Schema, SchemaContext } from "@itwin/ecschema-metadata";
+import { DelayedPromiseWithProps, ECClass, ECClassModifier, ECSchemaError, ECSchemaNamespaceUris, ECSchemaStatus, EntityClass, LazyLoadedSchemaItem, Mixin, PrimitiveType, Schema, SchemaContext } from "@itwin/ecschema-metadata";
 import { DiagnosticCategory, DiagnosticType } from "@itwin/ecschema-editing";
 import { BisTestHelper } from "./utils/BisTestHelper";
 
 describe("EntityClass Rule Tests", () => {
+  let schemaContext: SchemaContext;
   let testSchema: Schema;
   let bisCoreSchema: Schema;
 
@@ -55,9 +56,29 @@ describe("EntityClass Rule Tests", () => {
   }
 
   beforeEach(async () => {
-    const context = new SchemaContext();
-    testSchema = new Schema(context, "TestSchema", "ts", 1, 0, 0);
-    bisCoreSchema = new Schema(context, "BisCore", "bc", 1, 0, 0);
+
+    const testSchemaJson = {
+      $schema: ECSchemaNamespaceUris.SCHEMAURL3_2_JSON,
+      name: "TestSchema",
+      version: "1.0.0",
+      alias: "ts",
+    };
+
+    const bisSchemaJson = {
+      $schema: ECSchemaNamespaceUris.SCHEMAURL3_2_JSON,
+      name: "BisCore",
+      version: "1.0.0",
+      alias: "bis",
+      references: [
+      ],
+      items: {
+        BaseEntity: { schemaItemType: "EntityClass" },
+      },
+    };
+
+    schemaContext = new SchemaContext();
+    bisCoreSchema = await Schema.fromJson(bisSchemaJson, schemaContext);
+    testSchema = await Schema.fromJson(testSchemaJson, schemaContext);
   });
 
   afterEach(() => {
@@ -65,7 +86,7 @@ describe("EntityClass Rule Tests", () => {
 
   });
 
-  describe("EntityClassMustDeriveFromBisHierarchy tests", () => {
+  describe("EntityClassMustDeriveFromBisHierarchy tests", async () => {
     it("EntityClass does not derived from BIS hierarchy, rule violated.", async () => {
       const baseEntity = new EntityClass(testSchema, "BaseEntity");
       const childEntity = new EntityClass(testSchema, "TestEntity");
@@ -118,11 +139,26 @@ describe("EntityClass Rule Tests", () => {
     });
 
     it("EntityClass does derive from BIS base class, rule passes.", async () => {
-      const baseEntity = new EntityClass(bisCoreSchema, "BaseEntity");
-      const childEntity = new EntityClass(testSchema, "ChildEntity");
-      await (childEntity as ECClass as MutableClass).setBaseClass(new DelayedPromiseWithProps(baseEntity.key, async () => baseEntity) as LazyLoadedSchemaItem<EntityClass>);
+      const schemaJson = {
+        $schema: ECSchemaNamespaceUris.SCHEMAURL3_2_JSON,
+        name: "SchemaA",
+        version: "1.0.0",
+        alias: "sa",
+        references: [
+          {
+            name: "BisCore",
+            version: "1.0.0",
+          },
+        ],
+        items: {
+          ChildEntity: { schemaItemType: "EntityClass", baseClass: "BisCore.BaseEntity" },
+        },
+      };
 
-      const result = Rules.entityClassMustDeriveFromBisHierarchy(childEntity);
+      const schema = await Schema.fromJson(schemaJson, schemaContext);
+      const childEntity = await schema.getEntityClass("ChildEntity");
+
+      const result = Rules.entityClassMustDeriveFromBisHierarchy(childEntity!);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -130,9 +166,9 @@ describe("EntityClass Rule Tests", () => {
     });
 
     it("EntityClass defined in BIS schema, rule passes.", async () => {
-      const entityClass = new EntityClass(bisCoreSchema, "BisEntity");
+      const entityClass = await bisCoreSchema.getEntityClass("BaseEntity");
 
-      const result = Rules.entityClassMustDeriveFromBisHierarchy(entityClass);
+      const result = Rules.entityClassMustDeriveFromBisHierarchy(entityClass!);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
@@ -140,13 +176,27 @@ describe("EntityClass Rule Tests", () => {
     });
 
     it("EntityClass does derive from BIS hierarchy, rule passes.", async () => {
-      const baseEntity = new EntityClass(bisCoreSchema, "BaseEntity");
-      const childEntity = new EntityClass(testSchema, "ChildEntity");
-      await (childEntity as ECClass as MutableClass).setBaseClass(new DelayedPromiseWithProps(baseEntity.key, async () => baseEntity) as LazyLoadedSchemaItem<EntityClass>);
-      const grandChildEntity = new EntityClass(testSchema, "GrandChildEntity");
-      await (grandChildEntity as ECClass as MutableClass).setBaseClass(new DelayedPromiseWithProps(childEntity.key, async () => childEntity) as LazyLoadedSchemaItem<EntityClass>);
+      const schemaJson = {
+        $schema: ECSchemaNamespaceUris.SCHEMAURL3_2_JSON,
+        name: "SchemaA",
+        version: "1.0.0",
+        alias: "sa",
+        references: [
+          {
+            name: "BisCore",
+            version: "1.0.0",
+          },
+        ],
+        items: {
+          ChildEntity: { schemaItemType: "EntityClass", baseClass: "BisCore.BaseEntity" },
+          GrandChildEntity: { schemaItemType: "EntityClass", baseClass: "TestSchema.ChildEntity" },
+        },
+      };
 
-      const result = Rules.entityClassMustDeriveFromBisHierarchy(grandChildEntity);
+      const schema = await Schema.fromJson(schemaJson, schemaContext);
+      const grandChildEntity = await schema.getEntityClass("GrandChildEntity");
+
+      const result = Rules.entityClassMustDeriveFromBisHierarchy(grandChildEntity!);
 
       for await (const _diagnostic of result!) {
         expect(false, "Rule should have passed").to.be.true;
