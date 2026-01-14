@@ -14,6 +14,7 @@ import { DiagnosticCategory, DiagnosticType } from "@itwin/ecschema-editing";
 import { BisTestHelper } from "./utils/BisTestHelper";
 
 describe("EntityClass Rule Tests", () => {
+  let schemaContext: SchemaContext;
   let testSchema: Schema;
   let bisCoreSchema: Schema;
 
@@ -55,7 +56,6 @@ describe("EntityClass Rule Tests", () => {
   }
 
   beforeEach(async () => {
-    const context = new SchemaContext();
 
     const testSchemaJson = {
       $schema: ECSchemaNamespaceUris.SCHEMAURL3_2_JSON,
@@ -76,8 +76,9 @@ describe("EntityClass Rule Tests", () => {
       },
     };
 
-    bisCoreSchema = await Schema.fromJson(bisSchemaJson, context);
-    testSchema = await Schema.fromJson(testSchemaJson, context);
+    schemaContext = new SchemaContext();
+    bisCoreSchema = await Schema.fromJson(bisSchemaJson, schemaContext);
+    testSchema = await Schema.fromJson(testSchemaJson, schemaContext);
   });
 
   afterEach(() => {
@@ -140,9 +141,9 @@ describe("EntityClass Rule Tests", () => {
     it("EntityClass does derive from BIS base class, rule passes.", async () => {
       const schemaJson = {
         $schema: ECSchemaNamespaceUris.SCHEMAURL3_2_JSON,
-        name: "TestSchema",
+        name: "SchemaA",
         version: "1.0.0",
-        alias: "ts",
+        alias: "sa",
         references: [
           {
             name: "BisCore",
@@ -154,7 +155,7 @@ describe("EntityClass Rule Tests", () => {
         },
       };
 
-      const schema = await Schema.fromJson(schemaJson, new SchemaContext());
+      const schema = await Schema.fromJson(schemaJson, schemaContext);
       const childEntity = await schema.getEntityClass("ChildEntity");
 
       const result = Rules.entityClassMustDeriveFromBisHierarchy(childEntity!);
@@ -177,9 +178,9 @@ describe("EntityClass Rule Tests", () => {
     it("EntityClass does derive from BIS hierarchy, rule passes.", async () => {
       const schemaJson = {
         $schema: ECSchemaNamespaceUris.SCHEMAURL3_2_JSON,
-        name: "TestSchema",
+        name: "SchemaA",
         version: "1.0.0",
-        alias: "ts",
+        alias: "sa",
         references: [
           {
             name: "BisCore",
@@ -188,11 +189,11 @@ describe("EntityClass Rule Tests", () => {
         ],
         items: {
           ChildEntity: { schemaItemType: "EntityClass", baseClass: "BisCore.BaseEntity" },
-          GrandChildEntity: { schemaItemType: "EntityClass", baseClass: "TestSchema.ChildEntity" },
+          GrandChildEntity: { schemaItemType: "EntityClass", baseClass: "SchemaA.ChildEntity" },
         },
       };
 
-      const schema = await Schema.fromJson(schemaJson, new SchemaContext());
+      const schema = await Schema.fromJson(schemaJson, schemaContext);
       const grandChildEntity = await schema.getEntityClass("GrandChildEntity");
 
       const result = Rules.entityClassMustDeriveFromBisHierarchy(grandChildEntity!);
