@@ -189,7 +189,7 @@ describe("EntityClass Rule Tests", () => {
         ],
         items: {
           ChildEntity: { schemaItemType: "EntityClass", baseClass: "BisCore.BaseEntity" },
-          GrandChildEntity: { schemaItemType: "EntityClass", baseClass: "TestSchema.ChildEntity" },
+          GrandChildEntity: { schemaItemType: "EntityClass", baseClass: "SchemaA.ChildEntity" },
         },
       };
 
