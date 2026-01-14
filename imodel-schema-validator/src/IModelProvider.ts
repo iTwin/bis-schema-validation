@@ -8,7 +8,6 @@ import { IModelsClient } from "@itwin/imodels-client-authoring";
 import { createDefaultClientStorage } from "@itwin/imodels-access-backend/lib/cjs/DefaultClientStorage";
 import { GetIModelListParams, IModelsErrorCode, IModelsErrorScope, MinimalIModel, toArray } from "@itwin/imodels-client-management";
 import { BackendIModelsAccess } from "@itwin/imodels-access-backend";
-import { AccessTokenAdapter } from "@itwin/imodels-access-common";
 import { getTestAccessToken, TestUserCredentials } from "@itwin/oidc-signin-tool";
 import { IModelVersionProps } from "@itwin/core-common";
 import { AccessToken, ITwinError } from "@itwin/core-bentley";
