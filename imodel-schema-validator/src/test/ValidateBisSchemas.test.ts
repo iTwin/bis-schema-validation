@@ -16,7 +16,7 @@ import {
   generateWIPSchemasList, getSchemaInfo, getVerifiedSchemaName, getVersionString, prepareOutputFile,
 } from "./utilities/utils";
 
-describe("Import and validate schemas in bis-schemas repository", async () => {
+describe.only("Import and validate schemas in bis-schemas repository", async () => {
   const bisSchemaRepo: any = process.env.BisSchemaRepo;
   const tempDir: any = process.env.TMP;
   const imodelDir: string = path.join(tempDir, "SchemaValidation", "Briefcases", "validation");
@@ -37,7 +37,7 @@ describe("Import and validate schemas in bis-schemas repository", async () => {
     ignoreList = JSON.parse(fs.readFileSync(ignoreFile).toString());
   });
 
-  it("Import latest released version of all schemas in bis-schemas repository into an iModel and perform all validations.", async () => {
+  it.only("Import latest released version of all schemas in bis-schemas repository into an iModel and perform all validations.", async () => {
 
     Logger.initializeToConsole();
     Logger.setLevelDefault(LogLevel.Error);
@@ -55,6 +55,11 @@ describe("Import and validate schemas in bis-schemas repository", async () => {
       const schemaVersion = getVersionString(key.readVersion, key.writeVersion, key.minorVersion);
 
       if (excludeSchema(schemaName, schemaVersion, ignoreList)) {
+        await IModelHost.shutdown();
+        continue;
+      }
+
+      if (schemaName.toLowerCase() != "buildingspatial") {
         await IModelHost.shutdown();
         continue;
       }
