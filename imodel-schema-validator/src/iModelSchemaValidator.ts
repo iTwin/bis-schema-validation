@@ -272,7 +272,10 @@ async function removeECSchemaReference(schemaFilePath: string, ecReferenceNames:
  * releasedDir contains all release directories
  */
 async function generateSchemaDirectoryLists(schemaDirectory: any): Promise<string[]> {
-  const filter: any = { fileFilter: "*.ecschema.xml", directoryFilter: ["!node_modules", "!.vscode"] };
+  const filter: any = {
+    fileFilter: (entry: any) => entry.basename.endsWith(".ecschema.xml"),
+    directoryFilter: (entry: any) => entry.basename !== "node_modules" && entry.basename !== ".vscode",
+  };
   const allSchemaDirs = (await readdirpPromise(schemaDirectory, filter)).map((schemaPath) => path.dirname(schemaPath.fullPath));
   return Array.from(new Set(allSchemaDirs.filter((schemaDir) => /released/i.test(schemaDir))).keys());
 }

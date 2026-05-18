@@ -44,7 +44,11 @@ export function prepareOutputFile(iModelDir: string, imodelName: string): string
  * @returns List of released schema directory paths
  */
 export async function generateSchemaDirectoryList(schemaDirectory: string): Promise<string[]> {
-  const filter = { fileFilter: "*.ecschema.xml", directoryFilter: ["!node_modules", "!.vscode", "!tools"] };
+  const excludeDirs = new Set(["node_modules", ".vscode", "tools"]);
+  const filter = {
+    fileFilter: (entry: any) => entry.basename.endsWith(".ecschema.xml"),
+    directoryFilter: (entry: any) => !excludeDirs.has(entry.basename),
+  };
   const allSchemaDirs = (await readdirpPromise(schemaDirectory, filter)).map((schemaPath) => path.dirname(schemaPath.fullPath));
   return Array.from(new Set(allSchemaDirs.filter((schemaDir) => /released/i.test(schemaDir))).keys());
 }
@@ -55,7 +59,11 @@ export async function generateSchemaDirectoryList(schemaDirectory: string): Prom
  * @returns List of schema paths with latest released versions
  */
 export async function generateReleasedSchemasList(schemaDirectory: string): Promise<string[]> {
-  const filter: any = { fileFilter: "*.ecschema.xml", directoryFilter: ["!node_modules", "!.vscode", "!tools", "!Deprecated"] };
+  const excludeDirs = new Set(["node_modules", ".vscode", "tools", "Deprecated"]);
+  const filter: any = {
+    fileFilter: (entry: any) => entry.basename.endsWith(".ecschema.xml"),
+    directoryFilter: (entry: any) => !excludeDirs.has(entry.basename),
+  };
   const allSchemaDirs = (await readdirpPromise(schemaDirectory, filter)).map((schemaPath) => schemaPath.fullPath);
   return findLatestReleasedVersion(Array.from(new Set(allSchemaDirs.filter((schemaDir) => /released/i.test(schemaDir))).keys()).sort());
 }
@@ -66,7 +74,11 @@ export async function generateReleasedSchemasList(schemaDirectory: string): Prom
  * @returns List of schema paths having WIP version
  */
 export async function generateWIPSchemasList(schemaDirectory: string): Promise<string[]> {
-  const filter: any = { fileFilter: "*.ecschema.xml", directoryFilter: ["!node_modules", "!.vscode", "!tools", "!docs", "!Deprecated", "!Released"] };
+  const excludeDirs = new Set(["node_modules", ".vscode", "tools", "docs", "Deprecated", "Released"]);
+  const filter: any = {
+    fileFilter: (entry: any) => entry.basename.endsWith(".ecschema.xml"),
+    directoryFilter: (entry: any) => !excludeDirs.has(entry.basename),
+  };
   const allSchemaDirs = (await readdirpPromise(schemaDirectory, filter)).map((schemaPath) => schemaPath.fullPath);
   return Array.from(new Set(allSchemaDirs.filter((schemaDir) => /.*\.ecschema\.xml/i.test(schemaDir))).keys());
 }
