@@ -67,6 +67,7 @@ describe("Import and validate schemas in bis-schemas repository", async () => {
       const iModelPath = prepareOutputFile(imodelDir, imodelName);
       const imodel = SnapshotDb.createEmpty(iModelPath, { rootSubject: { name: "test-imodel" } });
       await imodel.importSchemas(schemaPaths);
+      // eslint-disable-next-line @typescript-eslint/no-deprecated
       imodel.saveChanges();
       imodel.exportSchemas(exportDir);
       imodel.close();
@@ -110,10 +111,11 @@ describe("Import and validate schemas in bis-schemas repository", async () => {
       const imodel = SnapshotDb.createEmpty(iModelPath, { rootSubject: { name: "test-imodel" } });
       try {
         await imodel.importSchemas(schemaPaths);
-      } catch (error) {
-        throw new Error(`Failed to import schema ${wipSchema} because ${error}`);
+      } catch (error: any) {
+        throw new Error(`Failed to import schema ${wipSchema} because ${String(error)}`);
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-deprecated
       imodel.saveChanges();
       imodel.exportSchemas(exportDir);
       imodel.close();

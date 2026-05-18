@@ -40,7 +40,7 @@ export interface IModelValidationResult {
  * Verifies an iModel schema
  */
 export async function verifyIModelSchema(iModelSchemaDir: string, iModelSchemaFile: string, checkReleaseDynamicSchema: boolean, baseSchemaRefDir: string, output: string): Promise<IModelValidationResult> {
-  const releasedSchemaDirectories = await generateSchemaDirectoryLists(baseSchemaRefDir) as string[];
+  const releasedSchemaDirectories = await generateSchemaDirectoryLists(baseSchemaRefDir);
   const validationResult = await applyValidations(iModelSchemaDir, iModelSchemaFile, releasedSchemaDirectories, checkReleaseDynamicSchema, output);
   return validationResult;
 }
@@ -51,7 +51,7 @@ export async function verifyIModelSchema(iModelSchemaDir: string, iModelSchemaFi
 export async function verifyIModelSchemas(iModelSchemaDir: string, checkReleaseDynamicSchema: boolean, baseSchemaRefDir: string, output: string) {
 
   const results: IModelValidationResult[] = [];
-  const releasedSchemaDirectories = await generateSchemaDirectoryLists(baseSchemaRefDir) as string[];
+  const releasedSchemaDirectories = await generateSchemaDirectoryLists(baseSchemaRefDir);
 
   for (const iModelSchemaFile of fs.readdirSync(iModelSchemaDir)) {
     const validationResult = await applyValidations(iModelSchemaDir, iModelSchemaFile, releasedSchemaDirectories, checkReleaseDynamicSchema, output);
