@@ -132,7 +132,11 @@ function fixReleasedSchemaDirectories(appSchemaDir: string, releasedSchemaDirect
  */
 export async function generateAppSchemaDirectoryList(appDirectory: string): Promise<string[]> {
   // Skip schemas from platform based licensing-addon e.g licensing-win32-x64
-  const filter: any = { fileFilter: "*.ecschema.xml", directoryFilter: ["!.vscode", "!licensing-*"] };
-  const schemaPaths = (await readdirpPromise(appDirectory, filter)).map((entry) => path.dirname(entry.fullPath));
+  const filter: any = {
+    fileFilter: (entry: any) => entry.basename.endsWith(".ecschema.xml"),
+    directoryFilter: (entry: any) => entry.basename !== ".vscode" && !entry.basename.startsWith("licensing-"),
+  };
+  const entries = await readdirpPromise(appDirectory, filter);
+  const schemaPaths = entries.map((entry) => path.dirname(entry.fullPath));
   return Array.from(new Set(schemaPaths).keys());
 }
