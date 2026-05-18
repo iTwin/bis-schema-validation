@@ -28,9 +28,7 @@ describe("Class Rule Tests", () => {
       await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty", PrimitiveType.String);
       const prop1 = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty1", PrimitiveType.String);
       const prop2 = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty2", PrimitiveType.String);
-      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       prop1!["_label"] = "TestLabel";
-      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       prop2!["_label"] = "TestLabel";
 
       const result = Rules.multiplePropertiesInClassWithSameLabel(testClass);
@@ -53,13 +51,9 @@ describe("Class Rule Tests", () => {
       const prop1 = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty1", PrimitiveType.String);
       const prop2 = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty2", PrimitiveType.String);
       const category = new PropertyCategory(schema, "TestCategory");
-      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       prop1!["_label"] = "TestLabel";
-      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       prop2!["_label"] = "TestLabel";
-      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       prop1!["_category"] = new DelayedPromiseWithProps(category.key, async () => category) as LazyLoadedSchemaItem<PropertyCategory>;
-      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       prop2!["_category"] = new DelayedPromiseWithProps(category.key, async () => category) as LazyLoadedSchemaItem<PropertyCategory>;
 
       const result = Rules.multiplePropertiesInClassWithSameLabel(testClass);
@@ -82,9 +76,7 @@ describe("Class Rule Tests", () => {
       await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty", PrimitiveType.String);
       const prop1 = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty1", PrimitiveType.String);
       const prop2 = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty2", PrimitiveType.String);
-      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       prop1!["_label"] = "TestLabel";
-      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       prop2!["_label"] = "TestLabel";
 
       const result = Rules.multiplePropertiesInClassWithSameLabel(testClass);
@@ -101,13 +93,9 @@ describe("Class Rule Tests", () => {
       const category1 = new PropertyCategory(schema, "TestCategory1");
       const category2 = new PropertyCategory(schema, "TestCategory2");
 
-      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       prop1!["_label"] = "TestLabel";
-      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       prop2!["_label"] = "TestLabel";
-      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       prop1!["_category"] = new DelayedPromiseWithProps(category1.key, async () => category1) as LazyLoadedSchemaItem<PropertyCategory>;
-      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       prop2!["_category"] = new DelayedPromiseWithProps(category2.key, async () => category2) as LazyLoadedSchemaItem<PropertyCategory>;
 
       const result = Rules.multiplePropertiesInClassWithSameLabel(testClass);
@@ -122,13 +110,9 @@ describe("Class Rule Tests", () => {
       const prop1 = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty1", PrimitiveType.String);
       const prop2 = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty2", PrimitiveType.String);
       const category = new PropertyCategory(schema, "TestCategory");
-      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       prop1!["_label"] = "TestLabel1";
-      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       prop2!["_label"] = "TestLabel2";
-      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       prop1!["_category"] = new DelayedPromiseWithProps(category.key, async () => category) as LazyLoadedSchemaItem<PropertyCategory>;
-      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       prop2!["_category"] = new DelayedPromiseWithProps(category.key, async () => category) as LazyLoadedSchemaItem<PropertyCategory>;
 
       const result = Rules.multiplePropertiesInClassWithSameLabel(testClass);

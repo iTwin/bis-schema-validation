@@ -54,7 +54,6 @@ describe("Property Rule Tests", () => {
   describe("PropertyHasInvalidExtendedType tests", () => {
     it("Property has invalid extendedType, rule violated.", async () => {
       const property = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty", PrimitiveType.Long);
-      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       property!["_extendedTypeName"] = "UnsupportedTypeName";
 
       const result = Rules.propertyHasInvalidExtendedType(property);
@@ -74,7 +73,6 @@ describe("Property Rule Tests", () => {
 
     it("Property has BeGuid extendedType, rule passes.", async () => {
       const property = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty", PrimitiveType.String);
-      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       property!["_extendedTypeName"] = "BeGuid";
 
       const result = Rules.propertyHasInvalidExtendedType(property);
@@ -86,7 +84,6 @@ describe("Property Rule Tests", () => {
 
     it("Property has GeometryStream extendedType, rule passes.", async () => {
       const property = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty", PrimitiveType.String);
-      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       property!["_extendedTypeName"] = "GeometryStream";
 
       const result = Rules.propertyHasInvalidExtendedType(property);
@@ -98,7 +95,6 @@ describe("Property Rule Tests", () => {
 
     it("Property has Json extendedType, rule passes.", async () => {
       const property = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty", PrimitiveType.String);
-      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       property!["_extendedTypeName"] = "Json";
 
       const result = Rules.propertyHasInvalidExtendedType(property);
@@ -110,7 +106,6 @@ describe("Property Rule Tests", () => {
 
     it("Property has URI extendedType, rule passes.", async () => {
       const property = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty", PrimitiveType.String);
-      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       property!["_extendedTypeName"] = "URI";
 
       const result = Rules.propertyHasInvalidExtendedType(property);
@@ -126,7 +121,6 @@ describe("Property Rule Tests", () => {
       const property = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty", PrimitiveType.String);
       const propertyCAMap = new Map<string, CustomAttribute>();
       propertyCAMap.set("CustomHandledProperty", { className: "CustomHandledProperty" });
-      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       property!["_customAttributes"] = propertyCAMap;
 
       const result = Rules.propertyMustNotUseCustomHandledPropertyRestriction(property);
@@ -150,9 +144,7 @@ describe("Property Rule Tests", () => {
       propertyCAMap.set("CustomHandledProperty", { className: "CustomHandledProperty" });
       const classCAMap = new Map<string, CustomAttribute>();
       classCAMap.set("ClassHasHandler", { className: "ClassHasHandler" });
-      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       property!["_customAttributes"] = propertyCAMap;
-      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       testClass!["_customAttributes"] = classCAMap;
 
       const result = Rules.propertyMustNotUseCustomHandledPropertyRestriction(property);
@@ -166,7 +158,6 @@ describe("Property Rule Tests", () => {
       const property = await (testClass as ECClass as MutableClass).createPrimitiveProperty("TestProperty", PrimitiveType.String);
       const propertyCAMap = new Map<string, CustomAttribute>();
       propertyCAMap.set("TestAttribute", { className: "TestAttribute" });
-      /* eslint-disable-next-line  @typescript-eslint/dot-notation */
       property!["_customAttributes"] = propertyCAMap;
 
       const result = Rules.propertyMustNotUseCustomHandledPropertyRestriction(property);

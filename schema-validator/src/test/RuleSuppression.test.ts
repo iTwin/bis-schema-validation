@@ -6,7 +6,6 @@
 import * as path from "path";
 import * as utils from "./utilities/utils";
 import { SchemaDeserializer } from "@bentley/native-schema-locater";
-// eslint-disable-next-line sort-imports
 import { AnyClass, ECClass, ECVersion, KindOfQuantity, PrimitiveType, RelationshipClass, Schema, SchemaContext, SchemaKey } from "@itwin/ecschema-metadata";
 import { Diagnostics as ECDiagnostics } from "@itwin/ecschema-editing";
 import { MutableClass } from "@itwin/ecschema-metadata/lib/cjs/Metadata/Class";
