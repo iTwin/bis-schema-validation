@@ -10,8 +10,43 @@
     "from": "@itwin/core-backend"
   },
   {
+    "module_name": "path-to-regexp",
+    "severity": "HIGH",
+    "from": "@itwin/oidc-signin-tool"
+  },
+  {
+    "module_name": "lodash",
+    "severity": "HIGH",
+    "from": "@itwin/oidc-signin-tool"
+  },
+  {
+    "module_name": "protobufjs",
+    "severity": "CRITICAL",
+    "from": "@itwin/imodels-access-backend"
+  },
+  {
+    "module_name": "protobuf.js",
+    "severity": "HIGH",
+    "from": "@itwin/imodels-access-backend"
+  },
+  {
     "module_name": "minimatch",
     "severity": "HIGH",
     "from": "@itwin/build-tools"
+  },
+  {
+    "module_name": "flatted",
+    "severity": "HIGH",
+    "from": "eslint"
+  },
+  {
+    "module_name": "Prototype",
+    "severity": "HIGH",
+    "from": "eslint"
+  },
+  {
+    "module_name": "Picomatch",
+    "severity": "HIGH",
+    "from": "eslint"
   }
 ]
