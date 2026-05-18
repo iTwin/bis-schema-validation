@@ -5,8 +5,8 @@
 
 import * as fs from "fs";
 import * as path from "path";
-import * as chalk from "chalk";
-import * as readdirp from "readdirp";
+import chalk from "chalk";
+import { readdirpPromise } from "readdirp";
 import { Reporter } from "./Reporter";
 import { SchemaCompareCodes } from "@itwin/ecschema-editing";
 import { SchemaValidator, ValidationOptions, ValidationResultType } from "@bentley/schema-validator";
@@ -40,7 +40,7 @@ export interface IModelValidationResult {
  * Verifies an iModel schema
  */
 export async function verifyIModelSchema(iModelSchemaDir: string, iModelSchemaFile: string, checkReleaseDynamicSchema: boolean, baseSchemaRefDir: string, output: string): Promise<IModelValidationResult> {
-  const releasedSchemaDirectories = await generateSchemaDirectoryLists(baseSchemaRefDir);
+  const releasedSchemaDirectories = await generateSchemaDirectoryLists(baseSchemaRefDir) as string[];
   const validationResult = await applyValidations(iModelSchemaDir, iModelSchemaFile, releasedSchemaDirectories, checkReleaseDynamicSchema, output);
   return validationResult;
 }
@@ -51,7 +51,7 @@ export async function verifyIModelSchema(iModelSchemaDir: string, iModelSchemaFi
 export async function verifyIModelSchemas(iModelSchemaDir: string, checkReleaseDynamicSchema: boolean, baseSchemaRefDir: string, output: string) {
 
   const results: IModelValidationResult[] = [];
-  const releasedSchemaDirectories = await generateSchemaDirectoryLists(baseSchemaRefDir);
+  const releasedSchemaDirectories = await generateSchemaDirectoryLists(baseSchemaRefDir) as string[];
 
   for (const iModelSchemaFile of fs.readdirSync(iModelSchemaDir)) {
     const validationResult = await applyValidations(iModelSchemaDir, iModelSchemaFile, releasedSchemaDirectories, checkReleaseDynamicSchema, output);
@@ -271,9 +271,9 @@ async function removeECSchemaReference(schemaFilePath: string, ecReferenceNames:
  * unreleasedDirs contains all non-release directories
  * releasedDir contains all release directories
  */
-async function generateSchemaDirectoryLists(schemaDirectory: any) {
+async function generateSchemaDirectoryLists(schemaDirectory: any): Promise<string[]> {
   const filter: any = { fileFilter: "*.ecschema.xml", directoryFilter: ["!node_modules", "!.vscode"] };
-  const allSchemaDirs = (await readdirp.promise(schemaDirectory, filter)).map((schemaPath) => path.dirname(schemaPath.fullPath));
+  const allSchemaDirs = (await readdirpPromise(schemaDirectory, filter)).map((schemaPath) => path.dirname(schemaPath.fullPath));
   return Array.from(new Set(allSchemaDirs.filter((schemaDir) => /released/i.test(schemaDir))).keys());
 }
 

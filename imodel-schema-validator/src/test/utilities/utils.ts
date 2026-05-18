@@ -6,7 +6,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as rimraf from "rimraf";
-import * as readdirp from "readdirp";
+import { readdirpPromise } from "readdirp";
 import { SchemaKey } from "@itwin/ecschema-metadata";
 import { StubSchemaXmlFileLocater } from "@itwin/ecschema-locaters";
 
@@ -17,7 +17,7 @@ import { StubSchemaXmlFileLocater } from "@itwin/ecschema-locaters";
  * @param fileName Name of bim file
  * @returns Path of bim file
  */
-export function prepareOutputFile(iModelDir: string, imodelName): string {
+export function prepareOutputFile(iModelDir: string, imodelName: string): string {
   const outputDir = path.join(iModelDir, imodelName);
   const exportSchemaDir = path.join(outputDir, "exported");
   const wipLogs = path.join(outputDir, "logs", "wip");
@@ -43,9 +43,9 @@ export function prepareOutputFile(iModelDir: string, imodelName): string {
  * @param schemaDirectory Root directory path of bis-schemas
  * @returns List of released schema directory paths
  */
-export async function generateSchemaDirectoryList(schemaDirectory: string) {
+export async function generateSchemaDirectoryList(schemaDirectory: string): Promise<string[]> {
   const filter = { fileFilter: "*.ecschema.xml", directoryFilter: ["!node_modules", "!.vscode", "!tools"] };
-  const allSchemaDirs = (await readdirp.promise(schemaDirectory, filter)).map((schemaPath) => path.dirname(schemaPath.fullPath));
+  const allSchemaDirs = (await readdirpPromise(schemaDirectory, filter)).map((schemaPath) => path.dirname(schemaPath.fullPath));
   return Array.from(new Set(allSchemaDirs.filter((schemaDir) => /released/i.test(schemaDir))).keys());
 }
 
@@ -54,9 +54,9 @@ export async function generateSchemaDirectoryList(schemaDirectory: string) {
  * @param schemaDirectory Root directory path of bis-schemas
  * @returns List of schema paths with latest released versions
  */
-export async function generateReleasedSchemasList(schemaDirectory: string) {
+export async function generateReleasedSchemasList(schemaDirectory: string): Promise<string[]> {
   const filter: any = { fileFilter: "*.ecschema.xml", directoryFilter: ["!node_modules", "!.vscode", "!tools", "!Deprecated"] };
-  const allSchemaDirs = (await readdirp.promise(schemaDirectory, filter)).map((schemaPath) => schemaPath.fullPath);
+  const allSchemaDirs = (await readdirpPromise(schemaDirectory, filter)).map((schemaPath) => schemaPath.fullPath);
   return findLatestReleasedVersion(Array.from(new Set(allSchemaDirs.filter((schemaDir) => /released/i.test(schemaDir))).keys()).sort());
 }
 
@@ -65,9 +65,9 @@ export async function generateReleasedSchemasList(schemaDirectory: string) {
  * @param schemaDirectory Root directory path of bis-schemas
  * @returns List of schema paths having WIP version
  */
-export async function generateWIPSchemasList(schemaDirectory: string) {
+export async function generateWIPSchemasList(schemaDirectory: string): Promise<string[]> {
   const filter: any = { fileFilter: "*.ecschema.xml", directoryFilter: ["!node_modules", "!.vscode", "!tools", "!docs", "!Deprecated", "!Released"] };
-  const allSchemaDirs = (await readdirp.promise(schemaDirectory, filter)).map((schemaPath) => schemaPath.fullPath);
+  const allSchemaDirs = (await readdirpPromise(schemaDirectory, filter)).map((schemaPath) => schemaPath.fullPath);
   return Array.from(new Set(allSchemaDirs.filter((schemaDir) => /.*\.ecschema\.xml/i.test(schemaDir))).keys());
 }
 
@@ -140,7 +140,7 @@ export function getSchemaNameFromFileName(schemaFilePath: string): string {
  * @param schemaFilePath Complete path to schema XML file
  * @returns Schema name
  */
-export function getVerifiedSchemaName(schemaKeyName: string, schemaFilePath): string {
+export function getVerifiedSchemaName(schemaKeyName: string, schemaFilePath: string): string {
   const xmlFileName = getSchemaNameFromFileName(schemaFilePath);
   if (schemaKeyName !== xmlFileName) {
     console.log("schemaName is different in XML content (" + schemaKeyName + ") from XML file name (" + xmlFileName + ").");
@@ -156,7 +156,7 @@ export function getVerifiedSchemaName(schemaKeyName: string, schemaFilePath): st
  * @param excludeList List of schemas present in ignoreSchemaList.json
  * @returns Boolean based upon the decision
  */
-export function excludeSchema(schemaName, schemaVersion, excludeList) {
+export function excludeSchema(schemaName: string, schemaVersion: string, excludeList: any[]): boolean {
   if (!excludeList)
     return false;
 

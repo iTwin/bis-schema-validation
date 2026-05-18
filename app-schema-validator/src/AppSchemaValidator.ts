@@ -5,8 +5,8 @@
 
 import * as fs from "fs";
 import * as path from "path";
-import * as chalk from "chalk";
-import * as readdirp from "readdirp";
+import chalk from "chalk";
+import { readdirpPromise } from "readdirp";
 import { Reporter } from "@bentley/imodel-schema-validator/lib/Reporter";
 import { SchemaKey } from "@itwin/ecschema-metadata";
 import { StubSchemaXmlFileLocater } from "@itwin/ecschema-locaters";
@@ -133,6 +133,6 @@ function fixReleasedSchemaDirectories(appSchemaDir: string, releasedSchemaDirect
 export async function generateAppSchemaDirectoryList(appDirectory: string): Promise<string[]> {
   // Skip schemas from platform based licensing-addon e.g licensing-win32-x64
   const filter: any = { fileFilter: "*.ecschema.xml", directoryFilter: ["!.vscode", "!licensing-*"] };
-  const schemaPaths = (await readdirp.promise(appDirectory, filter)).map((entry) => path.dirname(entry.fullPath));
+  const schemaPaths = (await readdirpPromise(appDirectory, filter)).map((entry) => path.dirname(entry.fullPath));
   return Array.from(new Set(schemaPaths).keys());
 }

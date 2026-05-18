@@ -173,6 +173,7 @@ export class SchemaRoundTrip {
       if (!stat.isFile()) {
         return false;
       }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
       return false;
     }
