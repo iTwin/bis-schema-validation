@@ -25,7 +25,7 @@
     "from": "@itwin/imodels-access-backend"
   },
   {
-    "module_name": "protobuf.js",
+    "module_name": "protobufjs",
     "severity": "HIGH",
     "from": "@itwin/imodels-access-backend"
   },
@@ -45,8 +45,13 @@
     "from": "eslint"
   },
   {
-    "module_name": "Picomatch",
+    "module_name": "picomatch",
     "severity": "HIGH",
     "from": "eslint"
+  },
+  {
+    "module_name": "serialize-javascript",
+    "severity": "HIGH",
+    "from": "mocha"
   }
 ]
