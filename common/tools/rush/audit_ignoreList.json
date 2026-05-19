@@ -5,6 +5,11 @@
     "from": "@itwin/core-backend"
   },
   {
+    "module_name": "multiparty",
+    "severity": "HIGH",
+    "from": "@itwin/core-backend"
+  },
+  {
     "module_name": "fast-xml-parser",
     "severity": "CRITICAL",
     "from": "@itwin/core-backend"
