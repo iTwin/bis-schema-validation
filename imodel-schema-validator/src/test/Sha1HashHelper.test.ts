@@ -24,11 +24,7 @@ describe("LaunchCodesProvider Tests", async () => {
 
   it("Sha1 Generation Failure, Tool fails to generate the Sha1 Hash", async () => {
     const schemaBFile = path.resolve(path.normalize(__dirname + "/assets/"), "SchemaB.ecschema.xml");
-    let sha1;
-    try {
-      sha1 = IModelHost.computeSchemaChecksum({ schemaXmlPath: schemaBFile, referencePaths: [], exactMatch: true });
-    } catch (error) { }
-    expect(sha1).to.equal(undefined);
+    expect(() => IModelHost.computeSchemaChecksum({ schemaXmlPath: schemaBFile, referencePaths: [], exactMatch: true })).to.throw();
   });
 
   it("Sha1 Generation, Generate Sha1 Hash for a schema have references of not exact match", async () => {

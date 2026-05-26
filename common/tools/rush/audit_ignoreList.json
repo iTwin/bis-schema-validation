@@ -1,1 +1,62 @@
-[]
+[
+  {
+    "module_name": "fast-xml-parser",
+    "severity": "HIGH",
+    "from": "@itwin/core-backend"
+  },
+  {
+    "module_name": "multiparty",
+    "severity": "HIGH",
+    "from": "@itwin/core-backend"
+  },
+  {
+    "module_name": "fast-xml-parser",
+    "severity": "CRITICAL",
+    "from": "@itwin/core-backend"
+  },
+  {
+    "module_name": "path-to-regexp",
+    "severity": "HIGH",
+    "from": "@itwin/oidc-signin-tool"
+  },
+  {
+    "module_name": "lodash",
+    "severity": "HIGH",
+    "from": "@itwin/oidc-signin-tool"
+  },
+  {
+    "module_name": "protobufjs",
+    "severity": "CRITICAL",
+    "from": "@itwin/imodels-access-backend"
+  },
+  {
+    "module_name": "protobufjs",
+    "severity": "HIGH",
+    "from": "@itwin/imodels-access-backend"
+  },
+  {
+    "module_name": "minimatch",
+    "severity": "HIGH",
+    "from": "@itwin/build-tools"
+  },
+  {
+    "module_name": "flatted",
+    "severity": "HIGH",
+    "from": "eslint"
+  },
+  {
+    "module_name": "Prototype",
+    "severity": "HIGH",
+    "from": "eslint"
+  },
+  {
+    "module_name": "picomatch",
+    "severity": "HIGH",
+    "from": "eslint"
+  },
+  {
+    "module_name": "serialize-javascript",
+    "severity": "HIGH",
+    "from": "mocha"
+  }
+]

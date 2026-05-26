@@ -67,7 +67,6 @@ export class SchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLo
     if (0 === candidates.length)
       return undefined;
 
-    // eslint-disable-next-line @typescript-eslint/unbound-method
     const maxCandidate = candidates.sort(this.compareSchemaKeyByVersion)[candidates.length - 1];
     const schemaPath = maxCandidate.fileName;
 
@@ -316,7 +315,6 @@ class StubSchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLocat
     if (0 === candidates.length)
       return undefined;
 
-    // eslint-disable-next-line @typescript-eslint/unbound-method
     const maxCandidate = candidates.sort(this.compareSchemaKeyByVersion)[candidates.length - 1];
     const schemaPath = maxCandidate.fileName;
 

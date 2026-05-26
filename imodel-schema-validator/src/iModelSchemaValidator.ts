@@ -5,8 +5,8 @@
 
 import * as fs from "fs";
 import * as path from "path";
-import * as chalk from "chalk";
-import * as readdirp from "readdirp";
+import chalk from "chalk";
+import { readdirpPromise } from "readdirp";
 import { Reporter } from "./Reporter";
 import { SchemaCompareCodes } from "@itwin/ecschema-editing";
 import { SchemaValidator, ValidationOptions, ValidationResultType } from "@bentley/schema-validator";
@@ -271,9 +271,12 @@ async function removeECSchemaReference(schemaFilePath: string, ecReferenceNames:
  * unreleasedDirs contains all non-release directories
  * releasedDir contains all release directories
  */
-async function generateSchemaDirectoryLists(schemaDirectory: any) {
-  const filter: any = { fileFilter: "*.ecschema.xml", directoryFilter: ["!node_modules", "!.vscode"] };
-  const allSchemaDirs = (await readdirp.promise(schemaDirectory, filter)).map((schemaPath) => path.dirname(schemaPath.fullPath));
+async function generateSchemaDirectoryLists(schemaDirectory: any): Promise<string[]> {
+  const filter: any = {
+    fileFilter: (entry: any) => entry.basename.endsWith(".ecschema.xml"),
+    directoryFilter: (entry: any) => entry.basename !== "node_modules" && entry.basename !== ".vscode",
+  };
+  const allSchemaDirs = (await readdirpPromise(schemaDirectory, filter)).map((schemaPath) => path.dirname(schemaPath.fullPath));
   return Array.from(new Set(allSchemaDirs.filter((schemaDir) => /released/i.test(schemaDir))).keys());
 }
 

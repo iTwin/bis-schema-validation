@@ -5,7 +5,7 @@
 
 import * as fs from "fs";
 import * as path from "path";
-import * as readdirp from "readdirp";
+import { readdirpPromise } from "readdirp";
 
 /**
  * Find released schemas directories
@@ -13,8 +13,13 @@ import * as readdirp from "readdirp";
  * @returns Array containing released schemas directories
  */
 export async function generateSchemaDirectoryLists(schemaDirectory: string): Promise<string[]> {
-  const filter: any = { fileFilter: "*.ecschema.xml", directoryFilter: ["!node_modules", "!.vscode", "!tools"] };
-  const allSchemaDirs = (await readdirp.promise(schemaDirectory, filter)).map((schemaPath) => path.dirname(schemaPath.fullPath));
+  const excludeDirs = new Set(["node_modules", ".vscode", "tools"]);
+  const filter: any = {
+    fileFilter: (entry: any) => entry.basename.endsWith(".ecschema.xml"),
+    directoryFilter: (entry: any) => !excludeDirs.has(entry.basename),
+  };
+  const entries = await readdirpPromise(schemaDirectory, filter);
+  const allSchemaDirs = entries.map((schemaPath) => path.dirname(schemaPath.fullPath));
   return Array.from(new Set(allSchemaDirs.filter((schemaDir) => /released/i.test(schemaDir))).keys());
 }
 

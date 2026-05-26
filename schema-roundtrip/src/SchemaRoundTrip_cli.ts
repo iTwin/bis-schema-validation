@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import * as commander from "commander";
-import * as chalk from "chalk";
+import chalk from "chalk";
 
 import { RoundTripOptions, RoundTripResultType, SchemaRoundTrip } from "./SchemaRoundTrip";
 
@@ -21,10 +21,12 @@ program.option("-c, --compare [optional flag]", "Indicates if the resultant seri
 
 program.parse(process.argv);
 
+const options = program.opts();
+
 if (process.argv.length === 0)
   program.help();
 
-if (!program.input || !program.output) {
+if (!options.input || !options.output) {
   // tslint:disable-next-line:no-console
   console.log(chalk.red("Invalid input. For help use the '-h' option."));
   process.exit(1);
@@ -35,8 +37,8 @@ console.log("\nPerforming schema round trip...");
 
 async function roundTrip() {
   try {
-    const options = new RoundTripOptions(program.input, program.ref, program.output, program.compare);
-    const results = await SchemaRoundTrip.roundTripSchema(options);
+    const roundTripOptions = new RoundTripOptions(options.input, options.ref, options.output, options.compare);
+    const results = await SchemaRoundTrip.roundTripSchema(roundTripOptions);
     for (const line of results) {
       switch (line.resultType) {
         case RoundTripResultType.Delta:
