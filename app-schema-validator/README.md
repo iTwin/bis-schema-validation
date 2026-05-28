@@ -8,7 +8,7 @@ The purpose of this NPM CLI tool is to validate the schemas present within an ap
 
 ### Prerequisites
 
-- [Node](https://nodejs.org/en/): an installation of the latest security patch of Node 20. The Node installation also includes the **npm** package manager.
+- [Node](https://nodejs.org/en/): an installation of the latest security patch of Node 22. The Node installation also includes the **npm** package manager.
 
 ### Installation
 
