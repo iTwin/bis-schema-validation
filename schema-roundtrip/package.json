@@ -2,7 +2,7 @@
   "name": "@bentley/schema-roundtrip",
   "description": "Command line tool de-serializes and re-serializes a schmema with optional comparison.",
   "license": "MIT",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "bin": {
     "schema-roundtrip": "./lib/index.js"
   },
@@ -63,7 +63,7 @@
     "@itwin/core-common": "5.11.0-dev.5",
     "@itwin/core-i18n": "5.11.0-dev.5",
     "@itwin/imodels-access-backend": "6.1.1",
-    "@bentley/schema-comparer": "1.0.10",
+    "@bentley/schema-comparer": "1.0.11",
     "chalk": "^5.6.2",
     "commander": "^14.0.3",
     "fs-extra": "^7.0.1",
