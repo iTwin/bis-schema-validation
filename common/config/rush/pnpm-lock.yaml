@@ -11,44 +11,44 @@ importers:
   .:
     dependencies:
       '@itwin/build-tools':
-        specifier: 5.11.0-dev.5
-        version: 5.11.0-dev.5(@types/node@20.17.58)
+        specifier: 5.11.0-dev.15
+        version: 5.11.0-dev.15(@types/node@20.17.58)(mocha@11.7.6)
       '@itwin/core-backend':
-        specifier: 5.11.0-dev.5
-        version: 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-common@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-geometry@5.11.0-dev.5))(@itwin/core-geometry@5.11.0-dev.5)(@itwin/ecschema-metadata@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)))
+        specifier: 5.11.0-dev.15
+        version: 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-common@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-geometry@5.11.0-dev.15))(@itwin/core-geometry@5.11.0-dev.15)(@itwin/ecschema-metadata@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)))
       '@itwin/core-bentley':
-        specifier: 5.11.0-dev.5
-        version: 5.11.0-dev.5
+        specifier: 5.11.0-dev.15
+        version: 5.11.0-dev.15
       '@itwin/core-common':
-        specifier: 5.11.0-dev.5
-        version: 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-geometry@5.11.0-dev.5)
+        specifier: 5.11.0-dev.15
+        version: 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-geometry@5.11.0-dev.15)
       '@itwin/core-geometry':
-        specifier: 5.11.0-dev.5
-        version: 5.11.0-dev.5
+        specifier: 5.11.0-dev.15
+        version: 5.11.0-dev.15
       '@itwin/core-i18n':
-        specifier: 5.11.0-dev.5
-        version: 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)
+        specifier: 5.11.0-dev.15
+        version: 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)
       '@itwin/core-quantity':
-        specifier: 5.11.0-dev.5
-        version: 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)
+        specifier: 5.11.0-dev.15
+        version: 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)
       '@itwin/ecschema-editing':
-        specifier: 5.11.0-dev.5
-        version: 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5))(@itwin/ecschema-metadata@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)))
+        specifier: 5.11.0-dev.15
+        version: 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15))(@itwin/ecschema-metadata@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)))
       '@itwin/ecschema-locaters':
-        specifier: 5.11.0-dev.5
-        version: 5.11.0-dev.5(@itwin/ecschema-metadata@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)))
+        specifier: 5.11.0-dev.15
+        version: 5.11.0-dev.15(@itwin/ecschema-metadata@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)))
       '@itwin/ecschema-metadata':
-        specifier: 5.11.0-dev.5
-        version: 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5))
+        specifier: 5.11.0-dev.15
+        version: 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15))
       '@itwin/eslint-plugin':
         specifier: ^6.1.0
         version: 6.1.0(eslint@9.39.4)(typescript@5.6.3)
       '@itwin/imodels-access-backend':
         specifier: 6.1.1
-        version: 6.1.1(@itwin/core-backend@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-common@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-geometry@5.11.0-dev.5))(@itwin/core-geometry@5.11.0-dev.5)(@itwin/ecschema-metadata@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5))))(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-common@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-geometry@5.11.0-dev.5))
+        version: 6.1.1(@itwin/core-backend@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-common@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-geometry@5.11.0-dev.15))(@itwin/core-geometry@5.11.0-dev.15)(@itwin/ecschema-metadata@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15))))(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-common@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-geometry@5.11.0-dev.15))
       '@itwin/imodels-access-common':
         specifier: 6.1.1
-        version: 6.1.1(@itwin/core-bentley@5.11.0-dev.5)(@itwin/imodels-client-management@6.2.0)
+        version: 6.1.1(@itwin/core-bentley@5.11.0-dev.15)(@itwin/imodels-client-management@6.2.0)
       '@itwin/imodels-client-authoring':
         specifier: 6.2.0
         version: 6.2.0
@@ -57,13 +57,13 @@ importers:
         version: 6.2.0
       '@itwin/oidc-signin-tool':
         specifier: ^5.1.3
-        version: 5.1.3(@itwin/core-bentley@5.11.0-dev.5)
+        version: 5.1.3(@itwin/core-bentley@5.11.0-dev.15)
       '@rush-temp/app-schema-validator':
         specifier: file:./projects/app-schema-validator.tgz
-        version: file:projects/app-schema-validator.tgz(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5))
+        version: file:projects/app-schema-validator.tgz(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15))
       '@rush-temp/bis-rules':
         specifier: file:./projects/bis-rules.tgz
-        version: file:projects/bis-rules.tgz(@itwin/core-common@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-geometry@5.11.0-dev.5))(@itwin/core-geometry@5.11.0-dev.5)(@types/node@20.17.58)
+        version: file:projects/bis-rules.tgz(@itwin/core-common@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-geometry@5.11.0-dev.15))(@itwin/core-geometry@5.11.0-dev.15)(@types/node@20.17.58)
       '@rush-temp/imodel-schema-validator':
         specifier: file:./projects/imodel-schema-validator.tgz
         version: file:projects/imodel-schema-validator.tgz
@@ -178,8 +178,8 @@ packages:
     resolution: {integrity: sha512-YKWi9YuCU04B55h25cnOYZHxXYtEvQEbKST5vqRga7hWY9ydd3FZHdeQF8pyh+acWZvppw13M/LMGx0LABUVMA==}
     engines: {node: '>=18.0.0'}
 
-  '@azure/core-rest-pipeline@1.23.0':
-    resolution: {integrity: sha512-Evs1INHo+jUjwHi1T6SG6Ua/LHOQBCLuKEEE6efIpt4ZOoNonaT1kP32GoOcdNDbfqsD2445CPri3MubBy5DEQ==}
+  '@azure/core-rest-pipeline@1.24.0':
+    resolution: {integrity: sha512-PpLsoDQ3AMmKZ0VU+0GrmqMxgp/sExjlVm4R+nLWngeoEGAzOIPVifaxKGU5gMv+nWELUoHfvrolWD+ZS/nFJg==}
     engines: {node: '>=20.0.0'}
 
   '@azure/core-tracing@1.3.1':
@@ -198,12 +198,12 @@ packages:
     resolution: {integrity: sha512-fCqPIfOcLE+CGqGPd66c8bZpwAji98tZ4JI9i/mlTNTlsIWslCfpg48s/ypyLxZTump5sypjrKn2/kY7q8oAbA==}
     engines: {node: '>=20.0.0'}
 
-  '@azure/storage-blob@12.31.0':
-    resolution: {integrity: sha512-DBgNv10aCSxopt92DkTDD0o9xScXeBqPKGmR50FPZQaEcH4JLQ+GEOGEDv19V5BMkB7kxr+m4h6il/cCDPvmHg==}
+  '@azure/storage-blob@12.32.0':
+    resolution: {integrity: sha512-80LzSNnFQye2LCCBFghAJS6jJQJ7N4bfgZ6qDMgVGRtugZ7TLDKQZ2hczMigmZH3jAcMRdma/IygsC5+0gT7Tw==}
     engines: {node: '>=20.0.0'}
 
-  '@azure/storage-common@12.4.0':
-    resolution: {integrity: sha512-kNhJKMxQb374KOVt63CZnGIpDcrKNzJeyANLJymxE9mCJSdRGzb+Iv9oSIiCj6tNMLypr530b9ObOiA/5OvwOg==}
+  '@azure/storage-common@12.4.1':
+    resolution: {integrity: sha512-t14unw/WofGDUi7TKJrsyXyPsN+NLgRm7hMaq0llxNmTIzt7f257+6LE6FKIJPh88zLj6M7LPvzve0fEYg/L3A==}
     engines: {node: '>=20.0.0'}
 
   '@babel/code-frame@7.29.7':
@@ -277,8 +277,8 @@ packages:
     resolution: {integrity: sha512-4zBIxpPzowiZpusoFkyGVwakdRJUyuH5PxQ/PrqghfdFWWasvnCdPfQXHrenDai+gyLARulZjZowCOj6fjT4pA==}
     engines: {node: '>=6.9.0'}
 
-  '@bentley/imodeljs-native@5.11.2':
-    resolution: {integrity: sha512-l5KdCONOCoBdaqPp+OmO/wjxYfSeFSa+l5rlGc6fdICx8C8pNof675gE4MKLiw+cT32B9iPxOzpDZrz5Fl5mcw==}
+  '@bentley/imodeljs-native@5.11.10':
+    resolution: {integrity: sha512-8h2QRyR40k7ehTMCeVnAcqHcCsZFoZZeyDXZCc1jwqSSKycz6jBVV/2+uGZEa2n9R+WPugDaSW7Ahs2esm2u9g==}
 
   '@es-joy/jsdoccomment@0.52.0':
     resolution: {integrity: sha512-BXuN7BII+8AyNtn57euU2Yxo9yA/KUDNzrpXyi3pfqKmBhhysR6ZWOebFh3vyPoqA3/j1SOvGgucElMGwlXing==}
@@ -341,8 +341,8 @@ packages:
     resolution: {integrity: sha512-mcWlgt6FHD31FEWLxXh2cVmX03zCDOoz8oxC9Uxfddni9VVBFOJR8AiYkisWPGsUhQt9a5PY5n5Yh36KLZCntg==}
     engines: {node: '>=18'}
 
-  '@google-cloud/storage@7.19.0':
-    resolution: {integrity: sha512-n2FjE7NAOYyshogdc7KQOl/VZb4sneqPjWouSyia9CMDdMhRX5+RIbqalNmC7LOLzuLAN89VlF2HvG8na9G+zQ==}
+  '@google-cloud/storage@7.21.0':
+    resolution: {integrity: sha512-l+IFTkd+6Y5LoAuXyYCKNAKtw/Ci+rAMqgdTB1jv4iZiLhw0rtq+0qjIRbBizXkNzEFmXiXUW0H7sZQQvk1ffA==}
     engines: {node: '>=14'}
 
   '@grpc/grpc-js@1.14.4':
@@ -386,12 +386,17 @@ packages:
     resolution: {integrity: sha512-+Sg6GCR/wy1oSmQDFq4LQDAhm3ETKnorxN+y5nbLULOR3P0c14f2Wurzj3/xqPXtasLFfHd5iRFQ7AJt4KH2cw==}
     engines: {node: '>=8'}
 
-  '@itwin/build-tools@5.11.0-dev.5':
-    resolution: {integrity: sha512-A+J820XzwDRaGyQjPBDDWymtNQrdDR3bwhk3V0Y2vSwrpoEz8t03gz5lbo0LqI8bWVtpuqZy9Gz+8pC4iVxe/A==}
+  '@itwin/build-tools@5.11.0-dev.15':
+    resolution: {integrity: sha512-lRtkgCzkEJGB98dqscQqOyxeihs/LXHEU6AKvLfebX3X7AsYeF2Z4TCDqTA764yk5aENUcr3ql4LcstxNDbvig==}
     hasBin: true
+    peerDependencies:
+      mocha: ^11.1.0
+    peerDependenciesMeta:
+      mocha:
+        optional: true
 
-  '@itwin/certa@5.10.0':
-    resolution: {integrity: sha512-LIbnl7uprikW/U971C/R/Lxl5lYsIXbOKe9SJgy+NgKKkCHzxPIBcgF8xya+uF3vgd9SIkqhiQXdtNm5VtHlHA==}
+  '@itwin/certa@5.10.3':
+    resolution: {integrity: sha512-sUxDT95mQMq2CaICNJICoDNkA34wQ3kRNKrEzOOXxSREJL34V1sNCrHKirASZWr2F+8X42eN30ozdj1Rtf2GtA==}
     hasBin: true
     peerDependencies:
       electron: ^35.0.0 || ^36.0.0 || ^37.0.0 || ^38.0.0 || ^39.0.0 || ^40.0.0 || ^41.0.0 || ^42.0.0
@@ -399,8 +404,8 @@ packages:
       electron:
         optional: true
 
-  '@itwin/cloud-agnostic-core@3.1.1':
-    resolution: {integrity: sha512-G+iJrbrbcA0fPpl1Z8e5Srl/8E7omXDAiBBDujnhnF43PHxjK9kWBS7ZTFqn5qzGIbmoX7FPe2w7HefA+NToEg==}
+  '@itwin/cloud-agnostic-core@3.1.2':
+    resolution: {integrity: sha512-+Bzwq3wS2AjGeIoKH1utuFu9H2W2S1u8CZCBpprFhzSzVKJJ1sWLymwhIBiNqO7Mrk9GVICPApQ5+gryD70Esg==}
     peerDependencies:
       inversify: ^7.5.2
       reflect-metadata: ^0.2.2
@@ -410,58 +415,58 @@ packages:
       reflect-metadata:
         optional: true
 
-  '@itwin/core-backend@5.11.0-dev.5':
-    resolution: {integrity: sha512-jdKtuI+hOcvwpEf7aJn9Q5RJv9WVBeBWV/BGWUNaxz0oGnvRseb6YcGgIW9zxRg9yb3B8dHwx9GIpMyqMQTJbA==}
+  '@itwin/core-backend@5.11.0-dev.15':
+    resolution: {integrity: sha512-UI+JrMrJWf57mBvAuvADEEg9msTxupR1LfJ1c9HXror7MYZ224g+SC+9k4evP+GcbXckEs+BCORsUIq9q+B7OA==}
     engines: {node: ^20.0.0 || ^22.0.0 || ^24.0.0}
     peerDependencies:
-      '@itwin/core-bentley': 5.11.0-dev.5
-      '@itwin/core-common': 5.11.0-dev.5
-      '@itwin/core-geometry': 5.11.0-dev.5
-      '@itwin/ecschema-metadata': 5.11.0-dev.5
+      '@itwin/core-bentley': 5.11.0-dev.15
+      '@itwin/core-common': 5.11.0-dev.15
+      '@itwin/core-geometry': 5.11.0-dev.15
+      '@itwin/ecschema-metadata': 5.11.0-dev.15
       '@opentelemetry/api': ^1.0.4
     peerDependenciesMeta:
       '@opentelemetry/api':
         optional: true
 
-  '@itwin/core-bentley@5.11.0-dev.5':
-    resolution: {integrity: sha512-jbTejgJsYTm72CPJQiX5tc2kJas/KaRZafaVFlWASQs3TpIkRaVNQdFc5+x3pRt/w5qjg2BHWLJr+mZZ1TzL+Q==}
+  '@itwin/core-bentley@5.11.0-dev.15':
+    resolution: {integrity: sha512-pPeGJDEBIv7+ORAUJ//3VSfS69Hu4YVXMXg5caeYUVddV37vnsxPDoRmQhLsFltbLgBL01qH8jZMXL5BsTwQKQ==}
 
-  '@itwin/core-common@5.11.0-dev.5':
-    resolution: {integrity: sha512-KUaYFkfWy2l6dKV7YGvwufIgd8IaNp6girYNB1wwO6GMuFd7lNo02eIHo218qUuLpdm4mqevnKm7eviQ5xx4vw==}
+  '@itwin/core-common@5.11.0-dev.15':
+    resolution: {integrity: sha512-a9LaqKm2H140iWZToXeray3/BdbSD+vskwD9oaaVt2uqdZhOYIo0UTauJGSLRgbPEFE6m+GJ+0w2hAWltw1S0A==}
     peerDependencies:
-      '@itwin/core-bentley': 5.11.0-dev.5
-      '@itwin/core-geometry': 5.11.0-dev.5
+      '@itwin/core-bentley': 5.11.0-dev.15
+      '@itwin/core-geometry': 5.11.0-dev.15
 
-  '@itwin/core-geometry@5.11.0-dev.5':
-    resolution: {integrity: sha512-AWqEWBA/s2u5ZHuN+7cImGkkOFGTL16zDkDg9qp5dcUhQKy3dcRZOWFWkhdMeuLm+3fgx0bJRpnjpyDjOpCkpw==}
+  '@itwin/core-geometry@5.11.0-dev.15':
+    resolution: {integrity: sha512-xispMKyy1Flis9b9WUySOlrOnX7zaEYOx/dmbPI787xQ0Zp5FhRNGCg+k5ID3z2zE2GfiwOc96P5bK/5vl1WeA==}
 
-  '@itwin/core-i18n@5.11.0-dev.5':
-    resolution: {integrity: sha512-lGo+vB/YIAl00KasZKHILO3WoyKQxdAy7c3sBNpIiFQDZUccrG2HmF4t1Ompc0EYelOmwhJqmrI/GysNb2wOpA==}
+  '@itwin/core-i18n@5.11.0-dev.15':
+    resolution: {integrity: sha512-rK3/y2von8qX6o5b6pANlQrmt84362+11smVLY56AT+8HGTGnP/6Z25Tm7yr3rPVytH7ZzOPVZZTeHI6fnN9XA==}
     peerDependencies:
-      '@itwin/core-bentley': 5.11.0-dev.5
+      '@itwin/core-bentley': 5.11.0-dev.15
 
-  '@itwin/core-quantity@5.11.0-dev.5':
-    resolution: {integrity: sha512-HRwZ1gyf307ZLwvE7fKTQXakLtot02q1maptpJLj43FxF94rIu6uj5BDy8oxQUxz5TMXoMNkFBdyOjarNekB4w==}
+  '@itwin/core-quantity@5.11.0-dev.15':
+    resolution: {integrity: sha512-ErJ+CVrTp01M5JTzX+xcGBKvS18aiSG2BMzXcz9jBKhveVL6HgN4fCoNFKSI7TIveHsX5eYPTYCmNcrQYwEhvw==}
     peerDependencies:
-      '@itwin/core-bentley': 5.11.0-dev.5
+      '@itwin/core-bentley': 5.11.0-dev.15
 
-  '@itwin/ecschema-editing@5.11.0-dev.5':
-    resolution: {integrity: sha512-mHEVawyjs5t31Bb0KxCNNJCkbpfse5fES+pMsbRtAT8rrBUuGpfeyNVoYjRQfxA+HJHfXRkwXb2xiZuooEIoYg==}
+  '@itwin/ecschema-editing@5.11.0-dev.15':
+    resolution: {integrity: sha512-HOBEpPwvO+ohjdhYrUNV7qq5GIjnDsS74W0d2m9nSrh3OwNiD0yaxtroxAN2FZvk1SJSuOKNTDdI5vyX6VYv8g==}
     peerDependencies:
-      '@itwin/core-bentley': 5.11.0-dev.5
-      '@itwin/core-quantity': 5.11.0-dev.5
-      '@itwin/ecschema-metadata': 5.11.0-dev.5
+      '@itwin/core-bentley': 5.11.0-dev.15
+      '@itwin/core-quantity': 5.11.0-dev.15
+      '@itwin/ecschema-metadata': 5.11.0-dev.15
 
-  '@itwin/ecschema-locaters@5.11.0-dev.5':
-    resolution: {integrity: sha512-jfsXac1ahwxMj32oOn5EzH+MFovI8IDo0BpNmmxbDUS5WmvqK3AaK3PNlJd5RczK3vEYuvJZLxhnoGaBEriiyg==}
+  '@itwin/ecschema-locaters@5.11.0-dev.15':
+    resolution: {integrity: sha512-Dt6JIaJ3qFo8hPS7H5pFfSBtKjBFMQnWGGtxc4QJf/tumP954owS1swKRpGeJ3Ms13T8o/2XCS42GAIfb2qL/g==}
     peerDependencies:
-      '@itwin/ecschema-metadata': 5.11.0-dev.5
+      '@itwin/ecschema-metadata': 5.11.0-dev.15
 
-  '@itwin/ecschema-metadata@5.11.0-dev.5':
-    resolution: {integrity: sha512-Pj0M4mYkhZs9jjGYmLoG4TaMlbhpN1gd5hE98XL+jl93JE/T8oL0C6Z56ypJsyzpiql3jXQ1JkgZtn6u6Aus1A==}
+  '@itwin/ecschema-metadata@5.11.0-dev.15':
+    resolution: {integrity: sha512-JRy4khkrsyiGRiqZOL3bl2uVG2NTl+KnNKXTvEJCSgOqSs1eDyUpsW04KYgrwTqW7dPasWGIKSSMgu6Jw0AMdg==}
     peerDependencies:
-      '@itwin/core-bentley': 5.11.0-dev.5
-      '@itwin/core-quantity': 5.11.0-dev.5
+      '@itwin/core-bentley': 5.11.0-dev.15
+      '@itwin/core-quantity': 5.11.0-dev.15
 
   '@itwin/eslint-plugin@6.1.0':
     resolution: {integrity: sha512-4HDfTmenGSQfL8o8Cr1tKavF2ZQsKEjF31e8pZUPv4QMUZCTr5Gt+lALNLPO4huRJo9e5rasUB/vq0MCBD0t4Q==}
@@ -490,8 +495,8 @@ packages:
   '@itwin/imodels-client-management@6.2.0':
     resolution: {integrity: sha512-9d5dC1T2x7jraTEhaEC4lK2Z4cs/1ikXyUtVQDWTpEkrmRspFKnJiWM1KlztyJVZNN0uZE3gflGddpCu41twNw==}
 
-  '@itwin/object-storage-azure@3.1.1':
-    resolution: {integrity: sha512-Y0L4XIEwejvxvJFZeKGoO1/hvDvMx2THLXRtOo1fR7lApAq0opC7ae+xLFBTXNvCQ67fYszXabSgAd/iqZcEZw==}
+  '@itwin/object-storage-azure@3.1.2':
+    resolution: {integrity: sha512-KL4HNVJIOQQL1HY3QRQjWjUz3qt3mhZkCn8BGNBv+oe8PAHz35SQ7e+hvUQCK7e0r8lEKaz63Vm55eDgIac5Iw==}
     peerDependencies:
       inversify: ^7.5.2
       reflect-metadata: ^0.2.2
@@ -501,8 +506,8 @@ packages:
       reflect-metadata:
         optional: true
 
-  '@itwin/object-storage-core@3.1.1':
-    resolution: {integrity: sha512-xlffHd6ZHZZiqUckUyut9ifGJQcB02Gzg04p8Jj4+aHn3X3eEKT7Ebtmn4AL9jsogGFXCJfoW8cF+EojpnlW8A==}
+  '@itwin/object-storage-core@3.1.2':
+    resolution: {integrity: sha512-TTXdCXF1OEQJ7YB8ZIMSFRd82JfKQPgljg5IiZhdffBEeBr/IkmW7W8HROFq0+J5eG+ye+M3uKwS/VWKrQFZ0w==}
     peerDependencies:
       inversify: ^7.5.2
       reflect-metadata: ^0.2.2
@@ -512,8 +517,8 @@ packages:
       reflect-metadata:
         optional: true
 
-  '@itwin/object-storage-google@3.1.1':
-    resolution: {integrity: sha512-ppht6uS33uIrHarh15P/LbfGFPPitzi5mO9h93Zj9+GEd8VWFoWa6lNIqk+O3SJB1aZJSgMrkher7hTDVjlzQg==}
+  '@itwin/object-storage-google@3.1.2':
+    resolution: {integrity: sha512-NGgTxOwW2t9AS7gPBBaDZik33y36SXA8iPz8tIvqpjMU45JGlWJYvf9+zVGWLrfwC1VtQtOCUe6X6ratNMivJg==}
     peerDependencies:
       inversify: ^7.5.2
       reflect-metadata: ^0.2.2
@@ -555,8 +560,8 @@ packages:
   '@microsoft/api-extractor-model@7.33.8':
     resolution: {integrity: sha512-aIcoQggPyer3B6Ze3usz0YWC/oBwUHfRH5ETUsr+oT2BRA6SfTJl7IKPcPZkX4UR+PohowzW4uMxsvjrn8vm+w==}
 
-  '@microsoft/api-extractor@7.58.7':
-    resolution: {integrity: sha512-yK6OycD46gIzLRpj6ueVUWPk1ACSpkN1LBo05gY1qPTylbWyUCanXfH7+VgkI5LJrJoRSQR5F04XuCffCXLOBw==}
+  '@microsoft/api-extractor@7.58.9':
+    resolution: {integrity: sha512-S2UF4yza5GoxCmf7hJQNxJNZN9ltOVuOQv8Dy+Z21aol5ERoBNMdWcQHm4MJMPPItW4H/4rZD906iaf4mUojJA==}
     hasBin: true
 
   '@microsoft/tsdoc-config@0.18.1':
@@ -565,8 +570,8 @@ packages:
   '@microsoft/tsdoc@0.16.0':
     resolution: {integrity: sha512-xgAyonlVVS+q7Vc7qLW0UrJU7rSFcETRWsqdXZtjzRU8dF+6CkozTK4V4y1LwOX7j8r/vHphjDeMeGI4tNGeGA==}
 
-  '@nodable/entities@2.1.1':
-    resolution: {integrity: sha512-Pig3HxDIoMgjdEH8OCf/dkcTmLFjJRjWuq8jSnklu284/TKOPibSRERmOykiwmyXTtv61mP+44f3GMx0tLAyjg==}
+  '@nodable/entities@2.2.0':
+    resolution: {integrity: sha512-9uGyhaQavEUMC8AIddIjau4NsnsXhou+j5sBAGojCM1oxmQpVKTWR/9JxABD6UAv12vpIms55fPZKFQEhG6uBg==}
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -607,9 +612,6 @@ packages:
   '@protobufjs/float@1.0.2':
     resolution: {integrity: sha512-Ddb+kVXlXst9d+R9PfTIxh1EdNkgoRe5tOX6t01f1lYWOvJnSPDBlG241QLzcyPdoNTsblLUdujGSE4RzrTZGQ==}
 
-  '@protobufjs/inquire@1.1.2':
-    resolution: {integrity: sha512-pa0vFRuws4wkvaXKK1uXZMAwAX4/t8ANaJo45iw/oQHNQ9q5xUzwgFmVJGXiga2BeN+zpX7Vf9vmsiIa2J+MUw==}
-
   '@protobufjs/path@1.1.2':
     resolution: {integrity: sha512-6JOcJ5Tm08dOHAbdR3GrvP+yUUfkjG5ePsHYczMFLq3ZmMkAD98cDgcT2iA1lJ9NVwFd4tH/iSSoe44YWkltEA==}
 
@@ -623,31 +625,31 @@ packages:
     resolution: {integrity: sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==}
 
   '@rush-temp/app-schema-validator@file:projects/app-schema-validator.tgz':
-    resolution: {integrity: sha512-zshkWWqOcYwq9J/T/eQEOYcazq8Zcxp/EvqXRrQQjrjEkA0oeEHcSzzZi+/cX9w2IAkMlAnMXXGXGPUcrHAZrw==, tarball: file:projects/app-schema-validator.tgz}
+    resolution: {integrity: sha512-UF2AGxwRnJUriusq/FtYgGAlhcy16YJ4xbKy7S0pi32x8PAasih6zfeZ3mEH/v+D4E02XP8SqLhs5EejD2ASeA==, tarball: file:projects/app-schema-validator.tgz}
     version: 0.0.0
 
   '@rush-temp/bis-rules@file:projects/bis-rules.tgz':
-    resolution: {integrity: sha512-xzdlNsH275YUc15rDDlGEINHYLrVWsepWCQAO9FTcwSCowKXVxgXvJw5a2SNF6U4atMoJRXdMp7BwD2QxpCD6w==, tarball: file:projects/bis-rules.tgz}
+    resolution: {integrity: sha512-iHXbPAl+YApO1xQaGVlpfeXl/76X7pzMOJQlyr+ofh6N+W9SZSA3QQ1peUwRSXm6QXkPBnaCllO2NHbV1yGk+Q==, tarball: file:projects/bis-rules.tgz}
     version: 0.0.0
 
   '@rush-temp/imodel-schema-validator@file:projects/imodel-schema-validator.tgz':
-    resolution: {integrity: sha512-+4+zLEhWxGeBxQ+XhWDt0gH9mEEK+htG7QQz8BjxGYD+bFugzJ+FDHfJTlvuNQTo5ZkhMSMvlxrWsglUw8cYTA==, tarball: file:projects/imodel-schema-validator.tgz}
+    resolution: {integrity: sha512-h3hD0vwInxBwJ28ZzG7IPttDB9HTu58uI4HpeZHSY0n3B9dQtenThEwFp1UZPLmeflXb4zCYLAYw1/FEg0mGlw==, tarball: file:projects/imodel-schema-validator.tgz}
     version: 0.0.0
 
   '@rush-temp/native-schema-locater@file:projects/native-schema-locater.tgz':
-    resolution: {integrity: sha512-aMNT0qca7kN6Gdqs5MrJXvVgOlyvI4ozul8ITV44snFJnzG7ecXan85GzJHq5mM3DkMPS2vSvkNDntfoIYjytw==, tarball: file:projects/native-schema-locater.tgz}
+    resolution: {integrity: sha512-k1YrtAjwyL2hu2Hn3/x7vJMWRAdl+bFbLgq+VvK87CWyTOcw2Bj6k/I6Ug7F9IQOMxpdM9MKKNpmaak4BZbx/w==, tarball: file:projects/native-schema-locater.tgz}
     version: 0.0.0
 
   '@rush-temp/schema-comparer@file:projects/schema-comparer.tgz':
-    resolution: {integrity: sha512-kdwLQ4g4/Tbf3oPySVm9nwP84taErZ3DKnoobgTfa7WEU0bT0K6OvNHdjxCrfCwvC+LeS4JgRLTSucqGrPNhXA==, tarball: file:projects/schema-comparer.tgz}
+    resolution: {integrity: sha512-pBALRvx1gft5NGZq1dmTt5X6UyTeuXD9b5dOyc4i2qRPKkGyhmhtMINGWR/7z9JIS85atGRNefb5pBc9+bSdSw==, tarball: file:projects/schema-comparer.tgz}
     version: 0.0.0
 
   '@rush-temp/schema-roundtrip@file:projects/schema-roundtrip.tgz':
-    resolution: {integrity: sha512-d+mWZiIlYF5q1/ybsg2Qrv3IFeQoMP21aCGMJnz90IwHfYDyWKJG6ZBsQ5+KncWKqltJIMHFo7HwPMBDvDI/eQ==, tarball: file:projects/schema-roundtrip.tgz}
+    resolution: {integrity: sha512-B23JRHsdbYmQwPAracyVj3KEhM62AQUSYTYNFS0UeoipEHrjpA86rSE7OBIAho/P6SEAcVBtRofoL//MWMZUsQ==, tarball: file:projects/schema-roundtrip.tgz}
     version: 0.0.0
 
   '@rush-temp/schema-validator@file:projects/schema-validator.tgz':
-    resolution: {integrity: sha512-4GnoHUJi6zOmB7djDiT2AK4RcZznxqRsmF/uQPsmFWKA/Eh689T4GrITqYPRBZw7tHUbYgUsGfWp4FGxB6zuwQ==, tarball: file:projects/schema-validator.tgz}
+    resolution: {integrity: sha512-5orCVDhW+eTHH4YG+d4L04nYADv9qJQ9+qdfi/MDOtFGjMUUtUk2767fC5DNByyCXODQ5EDObRIPbtgVGSxcCQ==, tarball: file:projects/schema-validator.tgz}
     version: 0.0.0
 
   '@rushstack/node-core-library@5.23.1':
@@ -677,8 +679,8 @@ packages:
       '@types/node':
         optional: true
 
-  '@rushstack/ts-command-line@5.3.9':
-    resolution: {integrity: sha512-GIHqU+sRGQ3LGWAZu1O+9Yh++qwtyNIIGuNbcWHJjBTm2qRez0cwINUHZ+pQLR8UuzZDcMajrDaNbUYoaL/XtQ==}
+  '@rushstack/ts-command-line@5.3.10':
+    resolution: {integrity: sha512-fwI076HYknC0IrMXdY6UmjDv+PH7NHhNJX3/pY2UblSE5XrXgndXZPiOe/6ZtuFpn6DvVDVNhtkIzQ+Qu/MhVQ==}
 
   '@shikijs/engine-oniguruma@3.23.0':
     resolution: {integrity: sha512-1nWINwKXxKKLqPibT5f4pAFLej9oZzQTsby8942OTlsJzOBZ0MWKiwzMsd+jhzu8YPCHAswGnnN1YtQfirL35g==}
@@ -779,63 +781,63 @@ packages:
   '@types/unist@3.0.3':
     resolution: {integrity: sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==}
 
-  '@typescript-eslint/eslint-plugin@8.60.1':
-    resolution: {integrity: sha512-JQ4S5GB0tfjO8BuJ4fcX+HodkzJjYBV+7OJ+wLygaX7OGQ7FudyHL4NSCA6ob+w3Yn+5MkKIozOwQhXeM7opVg==}
+  '@typescript-eslint/eslint-plugin@8.62.0':
+    resolution: {integrity: sha512-o+mpz7EYiMzXoySXiKmzlabIvTVqUuK5yLrAedRPRDA0IpPFMUV1IXt6OqljIxX/kumN6EjUYp41Hqelh6p/Dw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
-      '@typescript-eslint/parser': ^8.60.1
+      '@typescript-eslint/parser': ^8.62.0
       eslint: ^8.57.0 || ^9.0.0 || ^10.0.0
       typescript: '>=4.8.4 <6.1.0'
 
-  '@typescript-eslint/parser@8.60.1':
-    resolution: {integrity: sha512-A0M6ua6H252bVjPvvtSgl2QA4+ET9S5Mtkb2GDyTxIhH/C4qDItT7RQNO5PhMC6NXGYXOR9dIalcDDgBKT7oFA==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-    peerDependencies:
-      eslint: ^8.57.0 || ^9.0.0 || ^10.0.0
-      typescript: '>=4.8.4 <6.1.0'
-
-  '@typescript-eslint/project-service@8.60.1':
-    resolution: {integrity: sha512-eXkTH2bxmXlqD1RnOPmLZ9ZM9D3VwSx04JOwBnP9RQ+yUA5a2Mu7SfW8uaV2Aon53NJzZlZYuX7tn91Izf+xaw==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-    peerDependencies:
-      typescript: '>=4.8.4 <6.1.0'
-
-  '@typescript-eslint/scope-manager@8.60.1':
-    resolution: {integrity: sha512-gvI5OQoptnxQnchOirukCuQ55svJSTuD/4k5+pC267xyBtYry748R9/c3tYUzb/iE6RZfllRz2lVulLCHkTm4w==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-
-  '@typescript-eslint/tsconfig-utils@8.60.1':
-    resolution: {integrity: sha512-nh8w4qAteiKuZu3pSSzG/yGKpw0OlkrKnzFmbVRenKaD4qc+7i1GrmZaLVkr8rk4uipiPGMOW4YsM6WmKZ5CvA==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-    peerDependencies:
-      typescript: '>=4.8.4 <6.1.0'
-
-  '@typescript-eslint/type-utils@8.60.1':
-    resolution: {integrity: sha512-sdwTrpjosW7ANQYJ39ZBF1ZyEMEGVB2UsikrserVM/30a/F1dTLnu9bGxEdosugyu5caigjLrR2qiD11asjI1A==}
+  '@typescript-eslint/parser@8.62.0':
+    resolution: {integrity: sha512-dzHeT2gySzZtLDsuqxU9AkYgIsQoHAHtRBpOqM+Ofzx1Bwrd2RcCjQJ+6iQbsHOIR6NS33bF2W1k3blN1zLDrA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: ^8.57.0 || ^9.0.0 || ^10.0.0
       typescript: '>=4.8.4 <6.1.0'
 
-  '@typescript-eslint/types@8.60.1':
-    resolution: {integrity: sha512-4h0tY8ppCkdCzcrl2YM5M3my0xsE1Tf8om3owEu5oPWmXwkKRmk0j0LGDzYBGUcAlesEbxBhazqu/K4cu3Ug7w==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-
-  '@typescript-eslint/typescript-estree@8.60.1':
-    resolution: {integrity: sha512-alpRkfG8hlVE5kdJW2GkfgDgXxold3e8e4l6EnmhRmRLbekgAPCCGDVD++sABy9FcgPFroq+uFcCSM1vR57Cew==}
+  '@typescript-eslint/project-service@8.62.0':
+    resolution: {integrity: sha512-wexnCqiTg7BOGtbLDftYpRWlmLq4xfoMd7BKFR6Y75sZS3QmRKLdN3yWLhmIYgqMmP/OXWpj3H8odkb5nGURCQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       typescript: '>=4.8.4 <6.1.0'
 
-  '@typescript-eslint/utils@8.60.1':
-    resolution: {integrity: sha512-h2MPBLoNtjc3qZWfY3Tl51yPorQ2McHn8pJfcMNTcIvrrZrr90Ykffit0yjrPFWQcRcUxzH20+6OcVdW4yHtUg==}
+  '@typescript-eslint/scope-manager@8.62.0':
+    resolution: {integrity: sha512-1lX38kNxXIRb8mEc3lbq5mdHq1Pf2+U0nFU65KfT18mtPxxl0fvjuEE92mHuXPuCtElJhOrddOpyMlM3Z0umEA==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@typescript-eslint/tsconfig-utils@8.62.0':
+    resolution: {integrity: sha512-y2GAdB6ykaXUvuspbYnizQc4oDDz0Tz/Yc7iWrXf9mx8vm/L/0vLHCe0tS2boG96Zy+DivnVDQ9ZUEWoHqqx1g==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    peerDependencies:
+      typescript: '>=4.8.4 <6.1.0'
+
+  '@typescript-eslint/type-utils@8.62.0':
+    resolution: {integrity: sha512-+g5O3j0w2ldzC86Pv6fvbO/xhAonbJFIdf/MKQ1d30gndlsVzUOE83ldfSE15Qrl9fhFjK6AovHs5Wpp6vx86w==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: ^8.57.0 || ^9.0.0 || ^10.0.0
       typescript: '>=4.8.4 <6.1.0'
 
-  '@typescript-eslint/visitor-keys@8.60.1':
-    resolution: {integrity: sha512-EbGRQg4FhrmwLodl+t3JNAnXHWVr9Vp+Zl1QBZVPY4ByfkzIT8cX3K6QWODHtkIZqqJVEWvhHSx3v5PDHsaQag==}
+  '@typescript-eslint/types@8.62.0':
+    resolution: {integrity: sha512-KvAclkktORPvM54TgLgA4z9HIV1M8zOgw9ZVNXl9f/8dLYfXYX1wkMXP7qmabpijQRV5bHJLOmoyGQbLMaUYeg==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@typescript-eslint/typescript-estree@8.62.0':
+    resolution: {integrity: sha512-+hVbNxtW64pIcZWDPGbyaKF7vp2IBTVY5ma1blwwksrjdsbdqqEKvJWMGbBofei4F6Dovx1M0RJgoFeNu2279A==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    peerDependencies:
+      typescript: '>=4.8.4 <6.1.0'
+
+  '@typescript-eslint/utils@8.62.0':
+    resolution: {integrity: sha512-82r66fi9zYwZ+mTq3vKgwjbZ1PVk/DJzrXFLpG6RnBbdvH8TEGVHIs9H4d2drhkOzf0syZuD/OZvvlu6GDbP4g==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    peerDependencies:
+      eslint: ^8.57.0 || ^9.0.0 || ^10.0.0
+      typescript: '>=4.8.4 <6.1.0'
+
+  '@typescript-eslint/visitor-keys@8.62.0':
+    resolution: {integrity: sha512-CY3uyFSRbcQv3nnSv8S0+lDftMVz6P963PoRlxrV7ew/Md564g9ut60PYzdLM5qW4jFn93GBF+Soi90ISAN+GQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   '@typespec/ts-http-runtime@0.3.6':
@@ -862,8 +864,8 @@ packages:
     peerDependencies:
       acorn: ^6.0.0 || ^7.0.0 || ^8.0.0
 
-  acorn@8.16.0:
-    resolution: {integrity: sha512-UVJyE9MttOsBQIDKw1skb9nAwQuR5wuGD3+82K6JgJlm/Y+KI92oNsMNGZCYdDsVtRHSak0pcV5Dno5+4jh9sw==}
+  acorn@8.17.0:
+    resolution: {integrity: sha512-xRQbDb9BnwDafYNn6Vwl839DYVjqXYb1XVGtWAZ1kcDc6iwAL4hg3B1dZlRiuENFeO2H53gFG3in621AdERVAg==}
     engines: {node: '>=0.4.0'}
     hasBin: true
 
@@ -915,6 +917,9 @@ packages:
   ansi-styles@6.2.3:
     resolution: {integrity: sha512-4Dj6M28JB+oAH8kFkTLUo+a2jwOFkuqb3yucU0CANcRRUbxS0cP0nZYCGjcc3BNXwRIsUVmDGgzawme7zvJHvg==}
     engines: {node: '>=12'}
+
+  anynum@1.0.1:
+    resolution: {integrity: sha512-N6//FLET/tXYNM/F6ABca1oH6fWB+KlTt909Le28WMDBk8oaT4vY17DCrwg2MvmuqUKt3Ni4N5dGJ/EoBgcO6A==}
 
   append-transform@2.0.0:
     resolution: {integrity: sha512-7yeyCEurROLQJFv5Xj4lEGTy0borxepjFv1g22oAdqFu//SrAlDl1O1Nxx15SH1RoliUml6p8dwJW9jvZughhg==}
@@ -1004,12 +1009,12 @@ packages:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
     engines: {node: '>= 0.4'}
 
-  axe-core@4.12.0:
-    resolution: {integrity: sha512-FTavr/7Ba0IptwGOPxnQvdyW2tAsdLBMTBXz7rKH6xJ2skpyxpBxyHkDdBs4lf69yRqYpkqCdfhnwS8YULGOmg==}
+  axe-core@4.12.1:
+    resolution: {integrity: sha512-s7iGf5GaVMxEG0ENN9x+xTr7GFZCb1ZP/1uATUpCEK2X78nDB3RwbtFCo9pGAf9ru+VwoQ464DkaLEeRM08wJA==}
     engines: {node: '>=4'}
 
-  axios@1.17.0:
-    resolution: {integrity: sha512-J8SwNxprqqpbfenehxWYXE7CW+wM1BB4w3+N+g+/Wx40xM4rsLrfPmHHxSWIxJLYDgSY/HqlFPIYb2/S3rxafw==}
+  axios@1.18.1:
+    resolution: {integrity: sha512-3nTvFlvpn9Zu/RkHUqtc7/+al4UpRW5az71ap5zccp6e8RAYEzhMTecX8Dz1wWDYrPpUoB1HAQEGEAEvUr7S9g==}
 
   axobject-query@4.1.0:
     resolution: {integrity: sha512-qIj0G9wZbMGNLjLmg1PT6v2mE9AH2zlnADJD/2tC6E00hgmhUOfEB6greHPAfLRSufHqROIUTkw6E+M3lH0PTQ==}
@@ -1029,8 +1034,8 @@ packages:
   base64-js@1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
 
-  baseline-browser-mapping@2.10.33:
-    resolution: {integrity: sha512-bA6+tcSLpz2tIEdDXZPpPTIuxBcC4+w6SieaYyfigIa4h8GlFxbA17v22Vx3JUtuZQj9SgOsnbK+aTBzyDyEuw==}
+  baseline-browser-mapping@2.10.38:
+    resolution: {integrity: sha512-31/02mVB4yuQU6adKk5SlY6m+mxDwUq5KZkyYgnLrrKl7TEm1+3PyDtDBz2kOv/wxZz41GHsvV1A/u6RmiyBvw==}
     engines: {node: '>=6.0.0'}
     hasBin: true
 
@@ -1058,8 +1063,8 @@ packages:
   browser-stdout@1.3.1:
     resolution: {integrity: sha512-qhAVI1+Av2X7qelOfAIYwXONood6XlZE/fXaBSmW/T5SzLAmCgzi+eiWE7fUvbHaeNBQH13UftjpXxsfLkMpgw==}
 
-  browserslist@4.28.2:
-    resolution: {integrity: sha512-48xSriZYYg+8qXna9kwqjIVzuQxi+KYWp2+5nCYnYKPTr0LvD89Jqk2Or5ogxz0NUMfIjhh2lIUX/LyX9B4oIg==}
+  browserslist@4.28.4:
+    resolution: {integrity: sha512-MTc8i/x9jBQd1iMw2CFGS+rwMa07eYjLR0CCTLDACl9xhxy+nIs3KeML/biicXtk9JrZ6dnnTatmc7ErPXIxqw==}
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
 
@@ -1109,8 +1114,8 @@ packages:
     resolution: {integrity: sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==}
     engines: {node: '>=10'}
 
-  caniuse-lite@1.0.30001793:
-    resolution: {integrity: sha512-iwSsYWaCOoh26cV8NwNRViHlrfUvYsHDfRVcbtmw0Kg6PJIZZXwMkj1442FYLBGkeUf1juAsU3DTfxW579mrPA==}
+  caniuse-lite@1.0.30001799:
+    resolution: {integrity: sha512-hG1bReV+OUU+MOqK4t/ZWI0tZOyz3rqS9XuhOUz1cIcbwBKjOyJEJuw9ER5JuNyqxNk8u/JUVbGibBOL1yrjFw==}
 
   canonical-path@1.0.0:
     resolution: {integrity: sha512-feylzsbDxi1gPZ1IjystzIQZagYYLvfKrSuygUCgf7z6x790VEzze5QEkdSV1U58RA7Hi0+v6fv4K54atOzATg==}
@@ -1360,8 +1365,8 @@ packages:
   ee-first@1.1.1:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
 
-  electron-to-chromium@1.5.368:
-    resolution: {integrity: sha512-7RckJJK4uESJF9PxvfMWd3TGqIiieUTG4HxnKaKuIpGbcr+r2ZEB3g2gAhCP3Fqm42vJSzLfgab9eva/C4/XVw==}
+  electron-to-chromium@1.5.377:
+    resolution: {integrity: sha512-cH1jZgJHoezfTnKfKwnScpHywTFVnJUNITDPREFdhNjiuD502+QFpG0Qk7G8jhsV/f+CEAFlIrzP1fT+IMb92g==}
 
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -1380,6 +1385,10 @@ packages:
     resolution: {integrity: sha512-V0hjH4dGPh9Ao5p0MoRY6BVqtwCjhz6vI5LT8AJ55H+4g9/4vbHx1I54fS0XuclLhDHArPQCiMjDxjaL8fPxhw==}
     engines: {node: '>=0.12'}
 
+  es-abstract-get@1.0.0:
+    resolution: {integrity: sha512-6PMWXpdhshVvFp+FoWYs1EvG1Nj0tvk0dZM+XcK0xMEM1czRVcP6ohqPWHy6qPagSpC8j4+p89WXlT+xXJs/fg==}
+    engines: {node: '>= 0.4'}
+
   es-abstract@1.24.2:
     resolution: {integrity: sha512-2FpH9Q5i2RRwyEP1AylXe6nYLR5OhaJTZwmlcP0dL/+JCbgg7yyEo/sEK6HeGZRf3dFpWwThaRHVApXSkW3xeg==}
     engines: {node: '>= 0.4'}
@@ -1392,8 +1401,8 @@ packages:
     resolution: {integrity: sha512-Zf5H2Kxt2xjTvbJvP2ZWLEICxA6j+hAmMzIlypy4xcBg1vKVnx89Wy0GbS+kf5cwCVFFzdCFh2XSCFNULS6csw==}
     engines: {node: '>= 0.4'}
 
-  es-iterator-helpers@1.3.2:
-    resolution: {integrity: sha512-HVLACW1TppGYjJ8H6/jqH/pqOtKRw6wMlrB23xfExmFWxFquAIWCmwoLsOyN96K4a5KbmOf5At9ZUO3GZbetAw==}
+  es-iterator-helpers@1.3.3:
+    resolution: {integrity: sha512-0PuBxFi+4uPanB97iDxCLWuHeYud2FALrw5HFZGtAF38UpJDbDC8frwp2cnDyae692CQ0dou60UwWfhgsa4U/g==}
     engines: {node: '>= 0.4'}
 
   es-object-atoms@1.1.2:
@@ -1408,8 +1417,8 @@ packages:
     resolution: {integrity: sha512-d9T8ucsEhh8Bi1woXCf+TIKDIROLG5WCkxg8geBCbvk22kzwC5G2OnXVMO6FUsvQlgUUXQ2itephWDLqDzbeCw==}
     engines: {node: '>= 0.4'}
 
-  es-to-primitive@1.3.0:
-    resolution: {integrity: sha512-w+5mJ3GuFL+NjVtJlvydShqE1eN3h3PbI7/5LAsYJP/2qtuMXjfL2LpHSRqo4b4eSF5K/DH1JXKUAHSB2UW50g==}
+  es-to-primitive@1.3.1:
+    resolution: {integrity: sha512-CxN9N56HYfd2m/acc/NOFrZQsN9kU4eh+2kk6A707Kz1krH8tKmfrs5RnftB8WNX80T0NS7vSQsDOlg23diR2g==}
     engines: {node: '>= 0.4'}
 
   es6-error@4.1.1:
@@ -1570,8 +1579,8 @@ packages:
   fast-xml-builder@1.2.0:
     resolution: {integrity: sha512-00aAWieqff+ZJhsXA4g1g7M8k+7AYoMUUHF+/zFb5U6Uv/P0Vl4QZo84/IcufzYalLuEj9928bXN9PbbFzMF0Q==}
 
-  fast-xml-parser@5.8.0:
-    resolution: {integrity: sha512-6bIM7fsJxeo3uXv7OncQYsBAMPJ7V16Slahl/6M98C/i2q+vB1+4a0MtrvYwDFEUrwDSbAmeLDRXsOBwrL7yAg==}
+  fast-xml-parser@5.9.3:
+    resolution: {integrity: sha512-brCNCeScma/kqa54J4PIDriSSSLssRkuYaUCpvHJulGc3HGI/xxKUCTDcYkAdqJsyb//ydpbxecjC3hB9+tb/g==}
     hasBin: true
 
   fastq@1.20.1:
@@ -1656,12 +1665,12 @@ packages:
     resolution: {integrity: sha512-yDYSgNMraqvnxiEXO4hi88+YZxaHC6QKzb5N84iRCTDeRO7ZALpir/lVmf/uXUhnwUr2O4HU8s/n6x+yNjQkHw==}
     engines: {node: '>= 14.17'}
 
-  form-data@2.5.5:
-    resolution: {integrity: sha512-jqdObeR2rxZZbPSGL+3VckHMYtu+f9//KXBsVny6JSX/pa38Fy+bGjuG8eW/H6USNQWhLi8Num++cU2yOCNz4A==}
+  form-data@2.5.6:
+    resolution: {integrity: sha512-Ogz/E85h9tlfJzpI6TuFpGcHZFhLrb9Gw8wq9v40CxSCPnv7ahKr6Xgtkn0KYCDQJ8DNn5VoMO8EXr9V5PadyA==}
     engines: {node: '>= 0.12'}
 
-  form-data@4.0.5:
-    resolution: {integrity: sha512-8RipRLol37bNs2bhoV67fiTEvdTrbMUYcFTiy3+wuuOnUog2QBHCZWXDRijWQfAkhBj2Uf5UnVaiWwA5vdd82w==}
+  form-data@4.0.6:
+    resolution: {integrity: sha512-vKatAh4SlVfgbv+YtmhiRjhEMJsYpsG1Y2rMQtR+SVSbytsSD1YGzDIcrAJmdFec88u/+VoGmxnl+80gL1tRCQ==}
     engines: {node: '>= 6'}
 
   formdata-polyfill@4.0.10:
@@ -1702,8 +1711,8 @@ packages:
   function-bind@1.1.2:
     resolution: {integrity: sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA==}
 
-  function.prototype.name@1.1.8:
-    resolution: {integrity: sha512-e5iwyodOHhbMr/yNrc7fDYG4qlbIvI5gajyzPnb5TCwyhjApznQh1BMFou9b30SevY43gCJKXycoCBjMbsuW0Q==}
+  function.prototype.name@1.2.0:
+    resolution: {integrity: sha512-jObKIik1P2QjPHP5nz5BaOtUlfgS0fWo8IUByNXkM+o+02sJOi94em77GwJKQSJ3gfPHdgzLNrHc1uokV4P/ew==}
     engines: {node: '>= 0.4'}
 
   functions-have-names@1.2.3:
@@ -2017,6 +2026,10 @@ packages:
     resolution: {integrity: sha512-PwwhEakHVKTdRNVOw+/Gyh0+MzlCl4R6qKvkhuvLtPMggI1WAHt9sOwZxQLSGpUaDnrdyDsomoRgNnCfKNSXXg==}
     engines: {node: '>= 0.4'}
 
+  is-document.all@1.0.0:
+    resolution: {integrity: sha512-+XSoyS05OdBbhFuELhgTCpFNHkpBOJqtsZfUFFpe5QTw+9Sjbh8zitxhQkYAo6wV7e1Vb8cAPvpCk9jGam/82g==}
+    engines: {node: '>= 0.4'}
+
   is-extglob@2.1.1:
     resolution: {integrity: sha512-SbKbANkN603Vi4jEZv49LeVJMn4yGwsbzZworEoyEiutsN3nJYdbO36zfhGJ6QEDpOZIFkDtnq5JRxmvl3jsoQ==}
     engines: {node: '>=0.10.0'}
@@ -2098,6 +2111,9 @@ packages:
   is-unicode-supported@0.1.0:
     resolution: {integrity: sha512-knxG2q4UC3u8stRGyAVJCOdxFmv5DZiRcdlIaAQXAbSfJya+OhopNotLQrstBhququ4ZpuKbDc/8S6mgXgPFPw==}
     engines: {node: '>=10'}
+
+  is-unsafe@1.0.1:
+    resolution: {integrity: sha512-CLK2+VdgERgD96EYm5lUQssZYlRg2tkZnbsxZoacmSiRxiFJ4Nk4SzjCl+Ur+v3kXIY9dTIdb3IH22y1mZ56LA==}
 
   is-weakmap@2.0.2:
     resolution: {integrity: sha512-K5pXYOm9wqY1RgjpL3YTkF39tni1XajUIkawTLUo9EZEVUFga5gSQJF8nNS7ZwJQ02y+1YCNYcMh+HIf1ZqE+w==}
@@ -2491,8 +2507,8 @@ packages:
     engines: {node: '>=10.5.0'}
     deprecated: Use your platform's native DOMException instead
 
-  node-exports-info@1.6.0:
-    resolution: {integrity: sha512-pyFS63ptit/P5WqUkt+UUfe+4oevH+bFeIiPPdfb0pFeYEu/1ELnJu5l+5EcTKYL5M7zaAa7S8ddywgXypqKCw==}
+  node-exports-info@1.6.2:
+    resolution: {integrity: sha512-kXs9Go0cah0qHVV2v389IXQLdLCeE1xfFtjOAF+iobu0OIoG1pje8At2vMHyaPMiPMnG/LWP50twML21eMcAag==}
     engines: {node: '>= 0.4'}
 
   node-fetch@2.7.0:
@@ -2512,8 +2528,8 @@ packages:
     resolution: {integrity: sha512-RM5oyBy45cLEoHqCeh+MNuFAxO0vTFBLskvQbOKnEE7YTTSN4tbN8QWDIPQ6L+WvKsB/qLEGpYe2ZZ9d4W9OIQ==}
     engines: {node: '>=8'}
 
-  node-releases@2.0.47:
-    resolution: {integrity: sha512-Uzmd6LXpouKo8EUK68IjH4+E01w/hXyV3R3g/geCJo+rXLNfh1xucB+LOzYEOQPSiUK3h/xZf0cQGcSsmyL2Og==}
+  node-releases@2.0.48:
+    resolution: {integrity: sha512-1uz8041X6LoI6ZSdZacM9lVY28vuzDlSKitnpbSNK0RfKoIJkX29NBPVEFXhnuSuEOA9Ww0xnPJ+ILWbGAv8DA==}
     engines: {node: '>=18'}
 
   normalize-url@8.1.1:
@@ -2646,8 +2662,8 @@ packages:
     resolution: {integrity: sha512-ak9Qy5Q7jYb2Wwcey5Fpvg2KoAc/ZIhLSLOSBmRmygPsGwkVVt0fZa0qrtMz+m6tJTAHfZQ8FnmB4MG4LWy7/w==}
     engines: {node: '>=8'}
 
-  path-expression-matcher@1.5.0:
-    resolution: {integrity: sha512-cbrerZV+6rvdQrrD+iGMcZFEiiSrbv9Tfdkvnusy6y0x0GKBXREFg/Y65GhIfm0tnLntThhzCnfKwp1WRjeCyQ==}
+  path-expression-matcher@1.6.1:
+    resolution: {integrity: sha512-h7bxdzhHk8Knyc4Tj+jMaa7fEEoUJy7p1qtbVgkYg1Uhpe5Np5VuGXCRZnkZvU+Q42M1vStt0ifa3ueykRJPmQ==}
     engines: {node: '>=14.0.0'}
 
   path-is-absolute@1.0.1:
@@ -2726,8 +2742,8 @@ packages:
     resolution: {integrity: sha512-E1sbAYg3aEbXrq0n1ojJkRHQJGE1kaE/O6GLA94y8rnJBfgvOPTOd1b9hOceQK1FFZI9qMh1vBERCyO2ifubcw==}
     engines: {node: '>=18'}
 
-  protobufjs@7.6.2:
-    resolution: {integrity: sha512-N9EiLovGEQOJSPF26Ij7qUGvahfEnq0eeYZ02aigIedkmz1qZSwjnP9SBITHJuF/6MYbIW4HDN8zdYjsjqJKXQ==}
+  protobufjs@7.6.4:
+    resolution: {integrity: sha512-RJJPTTpvFfHcWLkIa2JFWK4XvtSzS0yEWDmunqHXli1h3JlkbcQZXDZdcWxv+JK3Xsl5/UFDPZ0iGm7DAengYw==}
     engines: {node: '>=12.0.0'}
 
   protocols@2.0.2:
@@ -2902,8 +2918,8 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
-  semver@7.8.2:
-    resolution: {integrity: sha512-c8jsqUZm3omBOI66G90z1Dyw5z622G8oLG+omfsHBJf3CWQTlOcwOjvOG6wtiNfW6anKm/eA39LMwMtMez2TiQ==}
+  semver@7.8.5:
+    resolution: {integrity: sha512-Y7/KDsb8LjooZpwaqGyulO6DQlksgCncchHGk+sZIY4SBvUocMBEFH5Ur1fI4dV+Jvl0w6cjvucaIi40puRioA==}
     engines: {node: '>=10'}
     hasBin: true
 
@@ -2960,8 +2976,8 @@ packages:
     resolution: {integrity: sha512-WPS/HvHQTYnHisLo9McqBHOJk2FkHO/tlpvldyrnem4aeQp4hai3gythswg6p01oSoTl58rcpiFAjF2br2Ak2A==}
     engines: {node: '>= 0.4'}
 
-  side-channel@1.1.0:
-    resolution: {integrity: sha512-ZX99e6tRweoUXqR+VBrslhda51Nh5MTQwou5tnUDgbtyM0dBgmhEDtWGP/xbKn6hqfPRHujUNwz5fy/wbbhnpw==}
+  side-channel@1.1.1:
+    resolution: {integrity: sha512-6x6dK6zJdpTzF4sQeNYxwtvBzf6Eg4GtlesS94HOvTudUeyK2WXAaIfmDgsyslYrRBeFIlsi54AYsFGUuhmvrQ==}
     engines: {node: '>= 0.4'}
 
   signal-exit@3.0.7:
@@ -3043,12 +3059,12 @@ packages:
   string.prototype.repeat@1.0.0:
     resolution: {integrity: sha512-0u/TldDbKD8bFCQ/4f5+mNRrXwZ8hg2w7ZR8wa16e8z9XpePWl3eGEcUD0OXpEH/VJH/2G3gjUtR3ZOiBe2S/w==}
 
-  string.prototype.trim@1.2.10:
-    resolution: {integrity: sha512-Rs66F0P/1kedk5lyYyH9uBzuiI/kNRmwJAR9quK6VOtIpZ2G+hMZd+HQbbv25MgCA6gEffoMZYxlTod4WcdrKA==}
+  string.prototype.trim@1.2.11:
+    resolution: {integrity: sha512-PwvK7BU+CMTJGYQCTZb5RWXIML92lftJLhQz1tBzgKiqGxJaMlBAa48POXaNAC2s4y8jr3EFqrkF9+44neS46w==}
     engines: {node: '>= 0.4'}
 
-  string.prototype.trimend@1.0.9:
-    resolution: {integrity: sha512-G7Ok5C6E/j4SGfyLCloXTrngQIQU3PWtXGst3yM7Bea9FRURf1S42ZHlZZtsNque2FN2PoUhfZXYLNWwEr4dLQ==}
+  string.prototype.trimend@1.0.10:
+    resolution: {integrity: sha512-2+3aDAOmPTmuFwjDnmJG2ctEkQKVki7vOSqaxkv42Mowj1V6PnvuwFCRrR5lChUux1TBskPjfkeTOhqczDMxTw==}
     engines: {node: '>= 0.4'}
 
   string.prototype.trimstart@1.0.8:
@@ -3078,8 +3094,8 @@ packages:
     resolution: {integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==}
     engines: {node: '>=8'}
 
-  strnum@2.3.0:
-    resolution: {integrity: sha512-ums3KNd42PGyx5xaoVTO1mjU1bH3NpY4vsrVlnv9PNGqQj8wd7rJ6nEypLrJ7z5vxK5RP0yMLo6J/Gsm62DI5Q==}
+  strnum@2.4.1:
+    resolution: {integrity: sha512-M9eUSMT2dCB2cTNPG7UYj6KuK7RJR2SN2+yCV/fTW3xzTCS6EaGZ5pSMgDIjB7r8zSfTGk+dvvn9rTjpVS9Mwg==}
 
   stubs@3.0.0:
     resolution: {integrity: sha512-PdHt7hHUJKxvTCgbKX9C1V/ftOcjJQgz8BZwNfV5c4B6dcGqlpelTbJ999jBGZ2jYiPAwcX5dP6oBwVlBlUbxw==}
@@ -3299,8 +3315,8 @@ packages:
   which-module@2.0.1:
     resolution: {integrity: sha512-iBdZ57RDvnOR9AGBhML2vFZf7h8vmBjhoaZqODJBFWHVtKkDmKuHai3cx5PgVMrX5YDNp27AofYbAwctSS+vhQ==}
 
-  which-typed-array@1.1.21:
-    resolution: {integrity: sha512-zbRA8cVm6io/d5W8uIe2hblzN76/Wm3v/yiythQvr+dpBWeqhPSWIDNj4zOyHi4zKbMK6DN34Xsr9jPHJERAEw==}
+  which-typed-array@1.1.22:
+    resolution: {integrity: sha512-fvO4ExWMFsqyhG3AiPAObMuY1lxaqgYcxbc49CNdWDDECOJNgQyvsOWVwbZc+qf3rzRtxojBK+CMEv0Ld5CYpw==}
     engines: {node: '>= 0.4'}
 
   which@2.0.2:
@@ -3394,8 +3410,8 @@ packages:
     resolution: {integrity: sha512-aePbxDmcYW++PaqBsJ+HYUFwCdv4LVvdnhBy78E57PIor8/OVvhMrADFFEDh8DHDFRv/O9i3lPhsENjO7QX0+A==}
     engines: {node: '>=8'}
 
-  yargs@17.7.2:
-    resolution: {integrity: sha512-7dSzzRQ++CKnNI/krKnYRV7JKKPUXMEh61soaHKg9mrWEhzFWhFnxPxGl+69cD1Ou63C13NUPCnmIcrvqCuM6w==}
+  yargs@17.7.3:
+    resolution: {integrity: sha512-GZtjxm/J/4TSxuL3FNYjCmLktBTnIw/rVmKSIyKeYAZpmJB2ig9VauCC5xsa82GNKVKDAqpOn3KVzNt0zmrU0g==}
     engines: {node: '>=12'}
 
   yn@2.0.0:
@@ -3424,7 +3440,7 @@ snapshots:
     dependencies:
       '@azure/abort-controller': 2.1.2
       '@azure/core-auth': 1.10.1
-      '@azure/core-rest-pipeline': 1.23.0
+      '@azure/core-rest-pipeline': 1.24.0
       '@azure/core-tracing': 1.3.1
       '@azure/core-util': 1.13.1
       '@azure/logger': 1.3.0
@@ -3432,11 +3448,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@azure/core-http-compat@2.4.0(@azure/core-client@1.10.2)(@azure/core-rest-pipeline@1.23.0)':
+  '@azure/core-http-compat@2.4.0(@azure/core-client@1.10.2)(@azure/core-rest-pipeline@1.24.0)':
     dependencies:
       '@azure/abort-controller': 2.1.2
       '@azure/core-client': 1.10.2
-      '@azure/core-rest-pipeline': 1.23.0
+      '@azure/core-rest-pipeline': 1.24.0
 
   '@azure/core-lro@2.7.2':
     dependencies:
@@ -3451,7 +3467,7 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@azure/core-rest-pipeline@1.23.0':
+  '@azure/core-rest-pipeline@1.24.0':
     dependencies:
       '@azure/abort-controller': 2.1.2
       '@azure/core-auth': 1.10.1
@@ -3477,7 +3493,7 @@ snapshots:
 
   '@azure/core-xml@1.5.1':
     dependencies:
-      fast-xml-parser: 5.8.0
+      fast-xml-parser: 5.9.3
       tslib: 2.8.1
 
   '@azure/logger@1.3.0':
@@ -3487,31 +3503,31 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@azure/storage-blob@12.31.0':
+  '@azure/storage-blob@12.32.0':
     dependencies:
       '@azure/abort-controller': 2.1.2
       '@azure/core-auth': 1.10.1
       '@azure/core-client': 1.10.2
-      '@azure/core-http-compat': 2.4.0(@azure/core-client@1.10.2)(@azure/core-rest-pipeline@1.23.0)
+      '@azure/core-http-compat': 2.4.0(@azure/core-client@1.10.2)(@azure/core-rest-pipeline@1.24.0)
       '@azure/core-lro': 2.7.2
       '@azure/core-paging': 1.6.2
-      '@azure/core-rest-pipeline': 1.23.0
+      '@azure/core-rest-pipeline': 1.24.0
       '@azure/core-tracing': 1.3.1
       '@azure/core-util': 1.13.1
       '@azure/core-xml': 1.5.1
       '@azure/logger': 1.3.0
-      '@azure/storage-common': 12.4.0(@azure/core-client@1.10.2)
+      '@azure/storage-common': 12.4.1(@azure/core-client@1.10.2)
       events: 3.3.0
       tslib: 2.8.1
     transitivePeerDependencies:
       - supports-color
 
-  '@azure/storage-common@12.4.0(@azure/core-client@1.10.2)':
+  '@azure/storage-common@12.4.1(@azure/core-client@1.10.2)':
     dependencies:
       '@azure/abort-controller': 2.1.2
       '@azure/core-auth': 1.10.1
-      '@azure/core-http-compat': 2.4.0(@azure/core-client@1.10.2)(@azure/core-rest-pipeline@1.23.0)
-      '@azure/core-rest-pipeline': 1.23.0
+      '@azure/core-http-compat': 2.4.0(@azure/core-client@1.10.2)(@azure/core-rest-pipeline@1.24.0)
+      '@azure/core-rest-pipeline': 1.24.0
       '@azure/core-tracing': 1.3.1
       '@azure/core-util': 1.13.1
       '@azure/logger': 1.3.0
@@ -3561,7 +3577,7 @@ snapshots:
     dependencies:
       '@babel/compat-data': 7.29.7
       '@babel/helper-validator-option': 7.29.7
-      browserslist: 4.28.2
+      browserslist: 4.28.4
       lru-cache: 5.1.1
       semver: 6.3.1
 
@@ -3623,12 +3639,12 @@ snapshots:
       '@babel/helper-string-parser': 7.29.7
       '@babel/helper-validator-identifier': 7.29.7
 
-  '@bentley/imodeljs-native@5.11.2': {}
+  '@bentley/imodeljs-native@5.11.10': {}
 
   '@es-joy/jsdoccomment@0.52.0':
     dependencies:
       '@types/estree': 1.0.9
-      '@typescript-eslint/types': 8.60.1
+      '@typescript-eslint/types': 8.62.0
       comment-parser: 1.4.1
       esquery: 1.7.0
       jsdoc-type-pratt-parser: 4.1.0
@@ -3702,7 +3718,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@google-cloud/storage@7.19.0':
+  '@google-cloud/storage@7.21.0':
     dependencies:
       '@google-cloud/paginator': 5.0.2
       '@google-cloud/projectify': 4.0.0
@@ -3710,7 +3726,7 @@ snapshots:
       abort-controller: 3.0.0
       async-retry: 1.3.3
       duplexify: 4.1.3
-      fast-xml-parser: 5.8.0
+      fast-xml-parser: 5.9.3
       gaxios: 6.7.1
       google-auth-library: 9.15.1
       html-entities: 2.6.0
@@ -3718,7 +3734,6 @@ snapshots:
       p-limit: 3.1.0
       retry-request: 7.0.2
       teeny-request: 9.0.0
-      uuid: 8.3.2
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -3732,8 +3747,8 @@ snapshots:
     dependencies:
       lodash.camelcase: 4.3.0
       long: 5.3.2
-      protobufjs: 7.6.2
-      yargs: 17.7.2
+      protobufjs: 7.6.4
+      yargs: 17.7.3
 
   '@humanfs/core@0.19.2':
     dependencies:
@@ -3770,15 +3785,14 @@ snapshots:
 
   '@istanbuljs/schema@0.1.6': {}
 
-  '@itwin/build-tools@5.11.0-dev.5(@types/node@20.17.58)':
+  '@itwin/build-tools@5.11.0-dev.15(@types/node@20.17.58)(mocha@11.7.6)':
     dependencies:
-      '@microsoft/api-extractor': 7.58.7(@types/node@20.17.58)
+      '@microsoft/api-extractor': 7.58.9(@types/node@20.17.58)
       chalk: 3.0.0
       cpx2: 8.0.2
       cross-spawn: 7.0.6
       fs-extra: 8.1.0
       glob: 10.5.0
-      mocha: 11.7.6
       mocha-junit-reporter: 2.2.1(mocha@11.7.6)
       rimraf: 6.1.3
       tree-kill: 1.2.2
@@ -3786,12 +3800,14 @@ snapshots:
       typedoc-plugin-merge-modules: 7.0.0(typedoc@0.28.19(typescript@5.6.3))
       typescript: 5.6.3
       wtfnode: 0.9.4
-      yargs: 17.7.2
+      yargs: 17.7.3
+    optionalDependencies:
+      mocha: 11.7.6
     transitivePeerDependencies:
       - '@types/node'
       - supports-color
 
-  '@itwin/certa@5.10.0':
+  '@itwin/certa@5.10.3':
     dependencies:
       canonical-path: 1.0.0
       detect-port: 1.3.0
@@ -3801,25 +3817,25 @@ snapshots:
       mocha: 11.7.6
       playwright: 1.56.1
       source-map-support: 0.5.21
-      yargs: 17.7.2
+      yargs: 17.7.3
 
-  '@itwin/cloud-agnostic-core@3.1.1': {}
+  '@itwin/cloud-agnostic-core@3.1.2': {}
 
-  '@itwin/core-backend@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-common@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-geometry@5.11.0-dev.5))(@itwin/core-geometry@5.11.0-dev.5)(@itwin/ecschema-metadata@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)))':
+  '@itwin/core-backend@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-common@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-geometry@5.11.0-dev.15))(@itwin/core-geometry@5.11.0-dev.15)(@itwin/ecschema-metadata@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)))':
     dependencies:
-      '@azure/storage-blob': 12.31.0
-      '@bentley/imodeljs-native': 5.11.2
-      '@itwin/core-bentley': 5.11.0-dev.5
-      '@itwin/core-common': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-geometry@5.11.0-dev.5)
-      '@itwin/core-geometry': 5.11.0-dev.5
-      '@itwin/ecschema-metadata': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5))
-      '@itwin/object-storage-azure': 3.1.1
-      form-data: 4.0.5
+      '@azure/storage-blob': 12.32.0
+      '@bentley/imodeljs-native': 5.11.10
+      '@itwin/core-bentley': 5.11.0-dev.15
+      '@itwin/core-common': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-geometry@5.11.0-dev.15)
+      '@itwin/core-geometry': 5.11.0-dev.15
+      '@itwin/ecschema-metadata': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15))
+      '@itwin/object-storage-azure': 3.1.2
+      form-data: 4.0.6
       fs-extra: 8.1.0
       json5: 2.2.3
       linebreak: 1.1.0
       multiparty: 4.3.0
-      semver: 7.8.2
+      semver: 7.8.5
       touch: 3.1.1
       ws: 7.5.11
     transitivePeerDependencies:
@@ -3830,55 +3846,55 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@itwin/core-bentley@5.11.0-dev.5': {}
+  '@itwin/core-bentley@5.11.0-dev.15': {}
 
-  '@itwin/core-common@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-geometry@5.11.0-dev.5)':
+  '@itwin/core-common@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-geometry@5.11.0-dev.15)':
     dependencies:
-      '@itwin/core-bentley': 5.11.0-dev.5
-      '@itwin/core-geometry': 5.11.0-dev.5
+      '@itwin/core-bentley': 5.11.0-dev.15
+      '@itwin/core-geometry': 5.11.0-dev.15
       flatbuffers: 1.12.0
       js-base64: 3.7.8
 
-  '@itwin/core-geometry@5.11.0-dev.5':
+  '@itwin/core-geometry@5.11.0-dev.15':
     dependencies:
-      '@itwin/core-bentley': 5.11.0-dev.5
+      '@itwin/core-bentley': 5.11.0-dev.15
       flatbuffers: 1.12.0
 
-  '@itwin/core-i18n@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)':
+  '@itwin/core-i18n@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)':
     dependencies:
-      '@itwin/core-bentley': 5.11.0-dev.5
+      '@itwin/core-bentley': 5.11.0-dev.15
       i18next: 21.10.0
       i18next-browser-languagedetector: 6.1.8
       i18next-http-backend: 3.0.6
     transitivePeerDependencies:
       - encoding
 
-  '@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)':
+  '@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)':
     dependencies:
-      '@itwin/core-bentley': 5.11.0-dev.5
+      '@itwin/core-bentley': 5.11.0-dev.15
 
-  '@itwin/ecschema-editing@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5))(@itwin/ecschema-metadata@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)))':
+  '@itwin/ecschema-editing@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15))(@itwin/ecschema-metadata@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)))':
     dependencies:
-      '@itwin/core-bentley': 5.11.0-dev.5
-      '@itwin/core-quantity': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)
-      '@itwin/ecschema-metadata': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5))
+      '@itwin/core-bentley': 5.11.0-dev.15
+      '@itwin/core-quantity': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)
+      '@itwin/ecschema-metadata': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15))
 
-  '@itwin/ecschema-locaters@5.11.0-dev.5(@itwin/ecschema-metadata@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)))':
+  '@itwin/ecschema-locaters@5.11.0-dev.15(@itwin/ecschema-metadata@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)))':
     dependencies:
-      '@itwin/ecschema-metadata': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5))
+      '@itwin/ecschema-metadata': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15))
       '@xmldom/xmldom': 0.8.13
       fs-extra: 8.1.0
       glob: 10.5.0
 
-  '@itwin/ecschema-metadata@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5))':
+  '@itwin/ecschema-metadata@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15))':
     dependencies:
-      '@itwin/core-bentley': 5.11.0-dev.5
-      '@itwin/core-quantity': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)
+      '@itwin/core-bentley': 5.11.0-dev.15
+      '@itwin/core-quantity': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)
 
   '@itwin/eslint-plugin@6.1.0(eslint@9.39.4)(typescript@5.6.3)':
     dependencies:
-      '@typescript-eslint/eslint-plugin': 8.60.1(@typescript-eslint/parser@8.60.1(eslint@9.39.4)(typescript@5.6.3))(eslint@9.39.4)(typescript@5.6.3)
-      '@typescript-eslint/parser': 8.60.1(eslint@9.39.4)(typescript@5.6.3)
+      '@typescript-eslint/eslint-plugin': 8.62.0(@typescript-eslint/parser@8.62.0(eslint@9.39.4)(typescript@5.6.3))(eslint@9.39.4)(typescript@5.6.3)
+      '@typescript-eslint/parser': 8.62.0(eslint@9.39.4)(typescript@5.6.3)
       eslint: 9.39.4
       eslint-formatter-visualstudio: 8.40.0
       eslint-plugin-import: 2.32.0(eslint@9.39.4)
@@ -3894,18 +3910,18 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@itwin/imodels-access-backend@6.1.1(@itwin/core-backend@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-common@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-geometry@5.11.0-dev.5))(@itwin/core-geometry@5.11.0-dev.5)(@itwin/ecschema-metadata@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5))))(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-common@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-geometry@5.11.0-dev.5))':
+  '@itwin/imodels-access-backend@6.1.1(@itwin/core-backend@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-common@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-geometry@5.11.0-dev.15))(@itwin/core-geometry@5.11.0-dev.15)(@itwin/ecschema-metadata@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15))))(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-common@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-geometry@5.11.0-dev.15))':
     dependencies:
-      '@itwin/core-backend': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-common@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-geometry@5.11.0-dev.5))(@itwin/core-geometry@5.11.0-dev.5)(@itwin/ecschema-metadata@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)))
-      '@itwin/core-bentley': 5.11.0-dev.5
-      '@itwin/core-common': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-geometry@5.11.0-dev.5)
-      '@itwin/imodels-access-common': 6.1.1(@itwin/core-bentley@5.11.0-dev.5)(@itwin/imodels-client-management@6.2.0)
+      '@itwin/core-backend': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-common@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-geometry@5.11.0-dev.15))(@itwin/core-geometry@5.11.0-dev.15)(@itwin/ecschema-metadata@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)))
+      '@itwin/core-bentley': 5.11.0-dev.15
+      '@itwin/core-common': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-geometry@5.11.0-dev.15)
+      '@itwin/imodels-access-common': 6.1.1(@itwin/core-bentley@5.11.0-dev.15)(@itwin/imodels-client-management@6.2.0)
       '@itwin/imodels-client-authoring': 6.2.0
       '@itwin/imodels-client-management': 6.2.0
-      '@itwin/object-storage-azure': 3.1.1
-      '@itwin/object-storage-core': 3.1.1
-      '@itwin/object-storage-google': 3.1.1
-      axios: 1.17.0
+      '@itwin/object-storage-azure': 3.1.2
+      '@itwin/object-storage-core': 3.1.2
+      '@itwin/object-storage-google': 3.1.2
+      axios: 1.18.1
     transitivePeerDependencies:
       - debug
       - encoding
@@ -3913,15 +3929,15 @@ snapshots:
       - reflect-metadata
       - supports-color
 
-  '@itwin/imodels-access-common@6.1.1(@itwin/core-bentley@5.11.0-dev.5)(@itwin/imodels-client-management@6.2.0)':
+  '@itwin/imodels-access-common@6.1.1(@itwin/core-bentley@5.11.0-dev.15)(@itwin/imodels-client-management@6.2.0)':
     dependencies:
-      '@itwin/core-bentley': 5.11.0-dev.5
+      '@itwin/core-bentley': 5.11.0-dev.15
       '@itwin/imodels-client-management': 6.2.0
 
   '@itwin/imodels-client-authoring@6.2.0':
     dependencies:
       '@itwin/imodels-client-management': 6.2.0
-      '@itwin/object-storage-core': 3.1.1
+      '@itwin/object-storage-core': 3.1.2
     transitivePeerDependencies:
       - debug
       - inversify
@@ -3930,47 +3946,47 @@ snapshots:
 
   '@itwin/imodels-client-management@6.2.0':
     dependencies:
-      axios: 1.17.0
+      axios: 1.18.1
     transitivePeerDependencies:
       - debug
       - supports-color
 
-  '@itwin/object-storage-azure@3.1.1':
+  '@itwin/object-storage-azure@3.1.2':
     dependencies:
       '@azure/core-paging': 1.6.2
-      '@azure/storage-blob': 12.31.0
-      '@itwin/cloud-agnostic-core': 3.1.1
-      '@itwin/object-storage-core': 3.1.1
+      '@azure/storage-blob': 12.32.0
+      '@itwin/cloud-agnostic-core': 3.1.2
+      '@itwin/object-storage-core': 3.1.2
     transitivePeerDependencies:
       - debug
       - supports-color
 
-  '@itwin/object-storage-core@3.1.1':
+  '@itwin/object-storage-core@3.1.2':
     dependencies:
-      '@itwin/cloud-agnostic-core': 3.1.1
-      axios: 1.17.0
+      '@itwin/cloud-agnostic-core': 3.1.2
+      axios: 1.18.1
     transitivePeerDependencies:
       - debug
       - supports-color
 
-  '@itwin/object-storage-google@3.1.1':
+  '@itwin/object-storage-google@3.1.2':
     dependencies:
-      '@google-cloud/storage': 7.19.0
+      '@google-cloud/storage': 7.21.0
       '@google-cloud/storage-control': 0.5.0
-      '@itwin/cloud-agnostic-core': 3.1.1
-      '@itwin/object-storage-core': 3.1.1
-      axios: 1.17.0
+      '@itwin/cloud-agnostic-core': 3.1.2
+      '@itwin/object-storage-core': 3.1.2
+      axios: 1.18.1
       google-auth-library: 10.7.0
     transitivePeerDependencies:
       - debug
       - encoding
       - supports-color
 
-  '@itwin/oidc-signin-tool@5.1.3(@itwin/core-bentley@5.11.0-dev.5)':
+  '@itwin/oidc-signin-tool@5.1.3(@itwin/core-bentley@5.11.0-dev.15)':
     dependencies:
-      '@itwin/certa': 5.10.0
-      '@itwin/core-bentley': 5.11.0-dev.5
-      '@itwin/service-authorization': 2.1.1(@itwin/core-bentley@5.11.0-dev.5)
+      '@itwin/certa': 5.10.3
+      '@itwin/core-bentley': 5.11.0-dev.15
+      '@itwin/service-authorization': 2.1.1(@itwin/core-bentley@5.11.0-dev.15)
       '@playwright/test': 1.56.1
       dotenv: 10.0.0
       dotenv-expand: 12.0.3
@@ -3979,9 +3995,9 @@ snapshots:
       - electron
       - supports-color
 
-  '@itwin/service-authorization@2.1.1(@itwin/core-bentley@5.11.0-dev.5)':
+  '@itwin/service-authorization@2.1.1(@itwin/core-bentley@5.11.0-dev.15)':
     dependencies:
-      '@itwin/core-bentley': 5.11.0-dev.5
+      '@itwin/core-bentley': 5.11.0-dev.15
       got: 12.6.1
       jsonwebtoken: 9.0.3
       jwks-rsa: 3.2.2
@@ -4017,7 +4033,7 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
-  '@microsoft/api-extractor@7.58.7(@types/node@20.17.58)':
+  '@microsoft/api-extractor@7.58.9(@types/node@20.17.58)':
     dependencies:
       '@microsoft/api-extractor-model': 7.33.8(@types/node@20.17.58)
       '@microsoft/tsdoc': 0.16.0
@@ -4025,7 +4041,7 @@ snapshots:
       '@rushstack/node-core-library': 5.23.1(@types/node@20.17.58)
       '@rushstack/rig-package': 0.7.3
       '@rushstack/terminal': 0.24.0(@types/node@20.17.58)
-      '@rushstack/ts-command-line': 5.3.9(@types/node@20.17.58)
+      '@rushstack/ts-command-line': 5.3.10(@types/node@20.17.58)
       diff: 8.0.4
       minimatch: 10.2.3
       resolve: 1.22.12
@@ -4044,7 +4060,7 @@ snapshots:
 
   '@microsoft/tsdoc@0.16.0': {}
 
-  '@nodable/entities@2.1.1': {}
+  '@nodable/entities@2.2.0': {}
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
@@ -4079,8 +4095,6 @@ snapshots:
 
   '@protobufjs/float@1.0.2': {}
 
-  '@protobufjs/inquire@1.1.2': {}
-
   '@protobufjs/path@1.1.2': {}
 
   '@protobufjs/pool@1.1.0': {}
@@ -4089,11 +4103,11 @@ snapshots:
 
   '@rtsao/scc@1.1.0': {}
 
-  '@rush-temp/app-schema-validator@file:projects/app-schema-validator.tgz(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5))':
+  '@rush-temp/app-schema-validator@file:projects/app-schema-validator.tgz(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15))':
     dependencies:
-      '@itwin/build-tools': 5.11.0-dev.5(@types/node@20.17.58)
-      '@itwin/ecschema-locaters': 5.11.0-dev.5(@itwin/ecschema-metadata@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)))
-      '@itwin/ecschema-metadata': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5))
+      '@itwin/build-tools': 5.11.0-dev.15(@types/node@20.17.58)(mocha@11.7.6)
+      '@itwin/ecschema-locaters': 5.11.0-dev.15(@itwin/ecschema-metadata@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)))
+      '@itwin/ecschema-metadata': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15))
       '@itwin/eslint-plugin': 6.1.0(eslint@9.39.4)(typescript@5.6.3)
       '@types/chai': 4.3.1
       '@types/mocha': 10.0.10
@@ -4114,14 +4128,14 @@ snapshots:
       - jiti
       - supports-color
 
-  '@rush-temp/bis-rules@file:projects/bis-rules.tgz(@itwin/core-common@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-geometry@5.11.0-dev.5))(@itwin/core-geometry@5.11.0-dev.5)(@types/node@20.17.58)':
+  '@rush-temp/bis-rules@file:projects/bis-rules.tgz(@itwin/core-common@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-geometry@5.11.0-dev.15))(@itwin/core-geometry@5.11.0-dev.15)(@types/node@20.17.58)':
     dependencies:
-      '@itwin/build-tools': 5.11.0-dev.5(@types/node@20.17.58)
-      '@itwin/core-backend': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-common@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-geometry@5.11.0-dev.5))(@itwin/core-geometry@5.11.0-dev.5)(@itwin/ecschema-metadata@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)))
-      '@itwin/core-bentley': 5.11.0-dev.5
-      '@itwin/core-quantity': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)
-      '@itwin/ecschema-editing': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5))(@itwin/ecschema-metadata@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)))
-      '@itwin/ecschema-metadata': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5))
+      '@itwin/build-tools': 5.11.0-dev.15(@types/node@20.17.58)(mocha@11.7.6)
+      '@itwin/core-backend': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-common@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-geometry@5.11.0-dev.15))(@itwin/core-geometry@5.11.0-dev.15)(@itwin/ecschema-metadata@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)))
+      '@itwin/core-bentley': 5.11.0-dev.15
+      '@itwin/core-quantity': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)
+      '@itwin/ecschema-editing': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15))(@itwin/ecschema-metadata@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)))
+      '@itwin/ecschema-metadata': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15))
       '@itwin/eslint-plugin': 6.1.0(eslint@9.39.4)(typescript@5.6.3)
       '@types/chai': 4.3.1
       '@types/mocha': 10.0.10
@@ -4150,21 +4164,21 @@ snapshots:
 
   '@rush-temp/imodel-schema-validator@file:projects/imodel-schema-validator.tgz':
     dependencies:
-      '@itwin/build-tools': 5.11.0-dev.5(@types/node@20.17.58)
-      '@itwin/core-backend': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-common@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-geometry@5.11.0-dev.5))(@itwin/core-geometry@5.11.0-dev.5)(@itwin/ecschema-metadata@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)))
-      '@itwin/core-bentley': 5.11.0-dev.5
-      '@itwin/core-common': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-geometry@5.11.0-dev.5)
-      '@itwin/core-geometry': 5.11.0-dev.5
-      '@itwin/core-quantity': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)
-      '@itwin/ecschema-editing': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5))(@itwin/ecschema-metadata@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)))
-      '@itwin/ecschema-locaters': 5.11.0-dev.5(@itwin/ecschema-metadata@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)))
-      '@itwin/ecschema-metadata': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5))
+      '@itwin/build-tools': 5.11.0-dev.15(@types/node@20.17.58)(mocha@11.7.6)
+      '@itwin/core-backend': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-common@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-geometry@5.11.0-dev.15))(@itwin/core-geometry@5.11.0-dev.15)(@itwin/ecschema-metadata@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)))
+      '@itwin/core-bentley': 5.11.0-dev.15
+      '@itwin/core-common': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-geometry@5.11.0-dev.15)
+      '@itwin/core-geometry': 5.11.0-dev.15
+      '@itwin/core-quantity': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)
+      '@itwin/ecschema-editing': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15))(@itwin/ecschema-metadata@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)))
+      '@itwin/ecschema-locaters': 5.11.0-dev.15(@itwin/ecschema-metadata@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)))
+      '@itwin/ecschema-metadata': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15))
       '@itwin/eslint-plugin': 6.1.0(eslint@9.39.4)(typescript@5.6.3)
-      '@itwin/imodels-access-backend': 6.1.1(@itwin/core-backend@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-common@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-geometry@5.11.0-dev.5))(@itwin/core-geometry@5.11.0-dev.5)(@itwin/ecschema-metadata@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5))))(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-common@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-geometry@5.11.0-dev.5))
-      '@itwin/imodels-access-common': 6.1.1(@itwin/core-bentley@5.11.0-dev.5)(@itwin/imodels-client-management@6.2.0)
+      '@itwin/imodels-access-backend': 6.1.1(@itwin/core-backend@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-common@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-geometry@5.11.0-dev.15))(@itwin/core-geometry@5.11.0-dev.15)(@itwin/ecschema-metadata@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15))))(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-common@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-geometry@5.11.0-dev.15))
+      '@itwin/imodels-access-common': 6.1.1(@itwin/core-bentley@5.11.0-dev.15)(@itwin/imodels-client-management@6.2.0)
       '@itwin/imodels-client-authoring': 6.2.0
       '@itwin/imodels-client-management': 6.2.0
-      '@itwin/oidc-signin-tool': 5.1.3(@itwin/core-bentley@5.11.0-dev.5)
+      '@itwin/oidc-signin-tool': 5.1.3(@itwin/core-bentley@5.11.0-dev.15)
       '@types/chai': 4.3.1
       '@types/mocha': 10.0.10
       '@types/node': 20.17.58
@@ -4193,16 +4207,16 @@ snapshots:
 
   '@rush-temp/native-schema-locater@file:projects/native-schema-locater.tgz':
     dependencies:
-      '@itwin/build-tools': 5.11.0-dev.5(@types/node@20.17.58)
-      '@itwin/core-backend': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-common@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-geometry@5.11.0-dev.5))(@itwin/core-geometry@5.11.0-dev.5)(@itwin/ecschema-metadata@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)))
-      '@itwin/core-bentley': 5.11.0-dev.5
-      '@itwin/core-common': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-geometry@5.11.0-dev.5)
-      '@itwin/core-geometry': 5.11.0-dev.5
-      '@itwin/core-quantity': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)
-      '@itwin/ecschema-locaters': 5.11.0-dev.5(@itwin/ecschema-metadata@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)))
-      '@itwin/ecschema-metadata': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5))
+      '@itwin/build-tools': 5.11.0-dev.15(@types/node@20.17.58)(mocha@11.7.6)
+      '@itwin/core-backend': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-common@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-geometry@5.11.0-dev.15))(@itwin/core-geometry@5.11.0-dev.15)(@itwin/ecschema-metadata@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)))
+      '@itwin/core-bentley': 5.11.0-dev.15
+      '@itwin/core-common': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-geometry@5.11.0-dev.15)
+      '@itwin/core-geometry': 5.11.0-dev.15
+      '@itwin/core-quantity': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)
+      '@itwin/ecschema-locaters': 5.11.0-dev.15(@itwin/ecschema-metadata@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)))
+      '@itwin/ecschema-metadata': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15))
       '@itwin/eslint-plugin': 6.1.0(eslint@9.39.4)(typescript@5.6.3)
-      '@itwin/imodels-access-backend': 6.1.1(@itwin/core-backend@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-common@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-geometry@5.11.0-dev.5))(@itwin/core-geometry@5.11.0-dev.5)(@itwin/ecschema-metadata@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5))))(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-common@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-geometry@5.11.0-dev.5))
+      '@itwin/imodels-access-backend': 6.1.1(@itwin/core-backend@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-common@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-geometry@5.11.0-dev.15))(@itwin/core-geometry@5.11.0-dev.15)(@itwin/ecschema-metadata@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15))))(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-common@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-geometry@5.11.0-dev.15))
       '@types/chai': 4.3.1
       '@types/chai-as-promised': 7.1.8
       '@types/fs-extra': 5.1.0
@@ -4236,18 +4250,18 @@ snapshots:
 
   '@rush-temp/schema-comparer@file:projects/schema-comparer.tgz':
     dependencies:
-      '@itwin/build-tools': 5.11.0-dev.5(@types/node@20.17.58)
-      '@itwin/core-backend': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-common@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-geometry@5.11.0-dev.5))(@itwin/core-geometry@5.11.0-dev.5)(@itwin/ecschema-metadata@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)))
-      '@itwin/core-bentley': 5.11.0-dev.5
-      '@itwin/core-common': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-geometry@5.11.0-dev.5)
-      '@itwin/core-geometry': 5.11.0-dev.5
-      '@itwin/core-i18n': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)
-      '@itwin/core-quantity': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)
-      '@itwin/ecschema-editing': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5))(@itwin/ecschema-metadata@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)))
-      '@itwin/ecschema-locaters': 5.11.0-dev.5(@itwin/ecschema-metadata@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)))
-      '@itwin/ecschema-metadata': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5))
+      '@itwin/build-tools': 5.11.0-dev.15(@types/node@20.17.58)(mocha@11.7.6)
+      '@itwin/core-backend': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-common@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-geometry@5.11.0-dev.15))(@itwin/core-geometry@5.11.0-dev.15)(@itwin/ecschema-metadata@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)))
+      '@itwin/core-bentley': 5.11.0-dev.15
+      '@itwin/core-common': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-geometry@5.11.0-dev.15)
+      '@itwin/core-geometry': 5.11.0-dev.15
+      '@itwin/core-i18n': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)
+      '@itwin/core-quantity': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)
+      '@itwin/ecschema-editing': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15))(@itwin/ecschema-metadata@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)))
+      '@itwin/ecschema-locaters': 5.11.0-dev.15(@itwin/ecschema-metadata@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)))
+      '@itwin/ecschema-metadata': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15))
       '@itwin/eslint-plugin': 6.1.0(eslint@9.39.4)(typescript@5.6.3)
-      '@itwin/imodels-access-backend': 6.1.1(@itwin/core-backend@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-common@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-geometry@5.11.0-dev.5))(@itwin/core-geometry@5.11.0-dev.5)(@itwin/ecschema-metadata@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5))))(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-common@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-geometry@5.11.0-dev.5))
+      '@itwin/imodels-access-backend': 6.1.1(@itwin/core-backend@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-common@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-geometry@5.11.0-dev.15))(@itwin/core-geometry@5.11.0-dev.15)(@itwin/ecschema-metadata@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15))))(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-common@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-geometry@5.11.0-dev.15))
       '@types/chai': 4.3.1
       '@types/chai-as-promised': 7.1.8
       '@types/fs-extra': 5.1.0
@@ -4281,17 +4295,17 @@ snapshots:
 
   '@rush-temp/schema-roundtrip@file:projects/schema-roundtrip.tgz':
     dependencies:
-      '@itwin/build-tools': 5.11.0-dev.5(@types/node@20.17.58)
-      '@itwin/core-backend': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-common@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-geometry@5.11.0-dev.5))(@itwin/core-geometry@5.11.0-dev.5)(@itwin/ecschema-metadata@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)))
-      '@itwin/core-bentley': 5.11.0-dev.5
-      '@itwin/core-common': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-geometry@5.11.0-dev.5)
-      '@itwin/core-geometry': 5.11.0-dev.5
-      '@itwin/core-i18n': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)
-      '@itwin/core-quantity': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)
-      '@itwin/ecschema-locaters': 5.11.0-dev.5(@itwin/ecschema-metadata@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)))
-      '@itwin/ecschema-metadata': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5))
+      '@itwin/build-tools': 5.11.0-dev.15(@types/node@20.17.58)(mocha@11.7.6)
+      '@itwin/core-backend': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-common@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-geometry@5.11.0-dev.15))(@itwin/core-geometry@5.11.0-dev.15)(@itwin/ecschema-metadata@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)))
+      '@itwin/core-bentley': 5.11.0-dev.15
+      '@itwin/core-common': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-geometry@5.11.0-dev.15)
+      '@itwin/core-geometry': 5.11.0-dev.15
+      '@itwin/core-i18n': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)
+      '@itwin/core-quantity': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)
+      '@itwin/ecschema-locaters': 5.11.0-dev.15(@itwin/ecschema-metadata@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)))
+      '@itwin/ecschema-metadata': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15))
       '@itwin/eslint-plugin': 6.1.0(eslint@9.39.4)(typescript@5.6.3)
-      '@itwin/imodels-access-backend': 6.1.1(@itwin/core-backend@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-common@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-geometry@5.11.0-dev.5))(@itwin/core-geometry@5.11.0-dev.5)(@itwin/ecschema-metadata@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5))))(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-common@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-geometry@5.11.0-dev.5))
+      '@itwin/imodels-access-backend': 6.1.1(@itwin/core-backend@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-common@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-geometry@5.11.0-dev.15))(@itwin/core-geometry@5.11.0-dev.15)(@itwin/ecschema-metadata@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15))))(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-common@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-geometry@5.11.0-dev.15))
       '@types/chai': 4.3.1
       '@types/chai-as-promised': 7.1.8
       '@types/fs-extra': 5.1.0
@@ -4324,17 +4338,17 @@ snapshots:
 
   '@rush-temp/schema-validator@file:projects/schema-validator.tgz':
     dependencies:
-      '@itwin/build-tools': 5.11.0-dev.5(@types/node@20.17.58)
-      '@itwin/core-backend': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-common@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-geometry@5.11.0-dev.5))(@itwin/core-geometry@5.11.0-dev.5)(@itwin/ecschema-metadata@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)))
-      '@itwin/core-bentley': 5.11.0-dev.5
-      '@itwin/core-common': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-geometry@5.11.0-dev.5)
-      '@itwin/core-geometry': 5.11.0-dev.5
-      '@itwin/core-quantity': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)
-      '@itwin/ecschema-editing': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5))(@itwin/ecschema-metadata@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)))
-      '@itwin/ecschema-locaters': 5.11.0-dev.5(@itwin/ecschema-metadata@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)))
-      '@itwin/ecschema-metadata': 5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5))
+      '@itwin/build-tools': 5.11.0-dev.15(@types/node@20.17.58)(mocha@11.7.6)
+      '@itwin/core-backend': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-common@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-geometry@5.11.0-dev.15))(@itwin/core-geometry@5.11.0-dev.15)(@itwin/ecschema-metadata@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)))
+      '@itwin/core-bentley': 5.11.0-dev.15
+      '@itwin/core-common': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-geometry@5.11.0-dev.15)
+      '@itwin/core-geometry': 5.11.0-dev.15
+      '@itwin/core-quantity': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)
+      '@itwin/ecschema-editing': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15))(@itwin/ecschema-metadata@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)))
+      '@itwin/ecschema-locaters': 5.11.0-dev.15(@itwin/ecschema-metadata@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)))
+      '@itwin/ecschema-metadata': 5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15))
       '@itwin/eslint-plugin': 6.1.0(eslint@9.39.4)(typescript@5.6.3)
-      '@itwin/imodels-access-backend': 6.1.1(@itwin/core-backend@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-common@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-geometry@5.11.0-dev.5))(@itwin/core-geometry@5.11.0-dev.5)(@itwin/ecschema-metadata@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-quantity@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5))))(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-common@5.11.0-dev.5(@itwin/core-bentley@5.11.0-dev.5)(@itwin/core-geometry@5.11.0-dev.5))
+      '@itwin/imodels-access-backend': 6.1.1(@itwin/core-backend@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-common@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-geometry@5.11.0-dev.15))(@itwin/core-geometry@5.11.0-dev.15)(@itwin/ecschema-metadata@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-quantity@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15))))(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-common@5.11.0-dev.15(@itwin/core-bentley@5.11.0-dev.15)(@itwin/core-geometry@5.11.0-dev.15))
       '@types/chai': 4.3.1
       '@types/chai-as-promised': 7.1.8
       '@types/fs-extra': 5.1.0
@@ -4396,7 +4410,7 @@ snapshots:
     optionalDependencies:
       '@types/node': 20.17.58
 
-  '@rushstack/ts-command-line@5.3.9(@types/node@20.17.58)':
+  '@rushstack/ts-command-line@5.3.10(@types/node@20.17.58)':
     dependencies:
       '@rushstack/terminal': 0.24.0(@types/node@20.17.58)
       '@types/argparse': 1.0.38
@@ -4492,7 +4506,7 @@ snapshots:
       '@types/caseless': 0.12.5
       '@types/node': 20.17.58
       '@types/tough-cookie': 4.0.5
-      form-data: 2.5.5
+      form-data: 2.5.6
 
   '@types/sinon@17.0.4':
     dependencies:
@@ -4504,14 +4518,14 @@ snapshots:
 
   '@types/unist@3.0.3': {}
 
-  '@typescript-eslint/eslint-plugin@8.60.1(@typescript-eslint/parser@8.60.1(eslint@9.39.4)(typescript@5.6.3))(eslint@9.39.4)(typescript@5.6.3)':
+  '@typescript-eslint/eslint-plugin@8.62.0(@typescript-eslint/parser@8.62.0(eslint@9.39.4)(typescript@5.6.3))(eslint@9.39.4)(typescript@5.6.3)':
     dependencies:
       '@eslint-community/regexpp': 4.12.2
-      '@typescript-eslint/parser': 8.60.1(eslint@9.39.4)(typescript@5.6.3)
-      '@typescript-eslint/scope-manager': 8.60.1
-      '@typescript-eslint/type-utils': 8.60.1(eslint@9.39.4)(typescript@5.6.3)
-      '@typescript-eslint/utils': 8.60.1(eslint@9.39.4)(typescript@5.6.3)
-      '@typescript-eslint/visitor-keys': 8.60.1
+      '@typescript-eslint/parser': 8.62.0(eslint@9.39.4)(typescript@5.6.3)
+      '@typescript-eslint/scope-manager': 8.62.0
+      '@typescript-eslint/type-utils': 8.62.0(eslint@9.39.4)(typescript@5.6.3)
+      '@typescript-eslint/utils': 8.62.0(eslint@9.39.4)(typescript@5.6.3)
+      '@typescript-eslint/visitor-keys': 8.62.0
       eslint: 9.39.4
       ignore: 7.0.5
       natural-compare: 1.4.0
@@ -4520,41 +4534,41 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/parser@8.60.1(eslint@9.39.4)(typescript@5.6.3)':
+  '@typescript-eslint/parser@8.62.0(eslint@9.39.4)(typescript@5.6.3)':
     dependencies:
-      '@typescript-eslint/scope-manager': 8.60.1
-      '@typescript-eslint/types': 8.60.1
-      '@typescript-eslint/typescript-estree': 8.60.1(typescript@5.6.3)
-      '@typescript-eslint/visitor-keys': 8.60.1
+      '@typescript-eslint/scope-manager': 8.62.0
+      '@typescript-eslint/types': 8.62.0
+      '@typescript-eslint/typescript-estree': 8.62.0(typescript@5.6.3)
+      '@typescript-eslint/visitor-keys': 8.62.0
       debug: 4.4.3(supports-color@8.1.1)
       eslint: 9.39.4
       typescript: 5.6.3
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/project-service@8.60.1(typescript@5.6.3)':
+  '@typescript-eslint/project-service@8.62.0(typescript@5.6.3)':
     dependencies:
-      '@typescript-eslint/tsconfig-utils': 8.60.1(typescript@5.6.3)
-      '@typescript-eslint/types': 8.60.1
+      '@typescript-eslint/tsconfig-utils': 8.62.0(typescript@5.6.3)
+      '@typescript-eslint/types': 8.62.0
       debug: 4.4.3(supports-color@8.1.1)
       typescript: 5.6.3
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/scope-manager@8.60.1':
+  '@typescript-eslint/scope-manager@8.62.0':
     dependencies:
-      '@typescript-eslint/types': 8.60.1
-      '@typescript-eslint/visitor-keys': 8.60.1
+      '@typescript-eslint/types': 8.62.0
+      '@typescript-eslint/visitor-keys': 8.62.0
 
-  '@typescript-eslint/tsconfig-utils@8.60.1(typescript@5.6.3)':
+  '@typescript-eslint/tsconfig-utils@8.62.0(typescript@5.6.3)':
     dependencies:
       typescript: 5.6.3
 
-  '@typescript-eslint/type-utils@8.60.1(eslint@9.39.4)(typescript@5.6.3)':
+  '@typescript-eslint/type-utils@8.62.0(eslint@9.39.4)(typescript@5.6.3)':
     dependencies:
-      '@typescript-eslint/types': 8.60.1
-      '@typescript-eslint/typescript-estree': 8.60.1(typescript@5.6.3)
-      '@typescript-eslint/utils': 8.60.1(eslint@9.39.4)(typescript@5.6.3)
+      '@typescript-eslint/types': 8.62.0
+      '@typescript-eslint/typescript-estree': 8.62.0(typescript@5.6.3)
+      '@typescript-eslint/utils': 8.62.0(eslint@9.39.4)(typescript@5.6.3)
       debug: 4.4.3(supports-color@8.1.1)
       eslint: 9.39.4
       ts-api-utils: 2.5.0(typescript@5.6.3)
@@ -4562,37 +4576,37 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/types@8.60.1': {}
+  '@typescript-eslint/types@8.62.0': {}
 
-  '@typescript-eslint/typescript-estree@8.60.1(typescript@5.6.3)':
+  '@typescript-eslint/typescript-estree@8.62.0(typescript@5.6.3)':
     dependencies:
-      '@typescript-eslint/project-service': 8.60.1(typescript@5.6.3)
-      '@typescript-eslint/tsconfig-utils': 8.60.1(typescript@5.6.3)
-      '@typescript-eslint/types': 8.60.1
-      '@typescript-eslint/visitor-keys': 8.60.1
+      '@typescript-eslint/project-service': 8.62.0(typescript@5.6.3)
+      '@typescript-eslint/tsconfig-utils': 8.62.0(typescript@5.6.3)
+      '@typescript-eslint/types': 8.62.0
+      '@typescript-eslint/visitor-keys': 8.62.0
       debug: 4.4.3(supports-color@8.1.1)
       minimatch: 10.2.5
-      semver: 7.8.2
+      semver: 7.8.5
       tinyglobby: 0.2.17
       ts-api-utils: 2.5.0(typescript@5.6.3)
       typescript: 5.6.3
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/utils@8.60.1(eslint@9.39.4)(typescript@5.6.3)':
+  '@typescript-eslint/utils@8.62.0(eslint@9.39.4)(typescript@5.6.3)':
     dependencies:
       '@eslint-community/eslint-utils': 4.9.1(eslint@9.39.4)
-      '@typescript-eslint/scope-manager': 8.60.1
-      '@typescript-eslint/types': 8.60.1
-      '@typescript-eslint/typescript-estree': 8.60.1(typescript@5.6.3)
+      '@typescript-eslint/scope-manager': 8.62.0
+      '@typescript-eslint/types': 8.62.0
+      '@typescript-eslint/typescript-estree': 8.62.0(typescript@5.6.3)
       eslint: 9.39.4
       typescript: 5.6.3
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/visitor-keys@8.60.1':
+  '@typescript-eslint/visitor-keys@8.62.0':
     dependencies:
-      '@typescript-eslint/types': 8.60.1
+      '@typescript-eslint/types': 8.62.0
       eslint-visitor-keys: 5.0.1
 
   '@typespec/ts-http-runtime@0.3.6':
@@ -4616,11 +4630,11 @@ snapshots:
       mime-types: 2.1.35
       negotiator: 0.6.3
 
-  acorn-jsx@5.3.2(acorn@8.16.0):
+  acorn-jsx@5.3.2(acorn@8.17.0):
     dependencies:
-      acorn: 8.16.0
+      acorn: 8.17.0
 
-  acorn@8.16.0: {}
+  acorn@8.17.0: {}
 
   address@1.2.2: {}
 
@@ -4668,6 +4682,8 @@ snapshots:
       color-convert: 2.0.1
 
   ansi-styles@6.2.3: {}
+
+  anynum@1.0.1: {}
 
   append-transform@2.0.0:
     dependencies:
@@ -4776,12 +4792,12 @@ snapshots:
     dependencies:
       possible-typed-array-names: 1.1.0
 
-  axe-core@4.12.0: {}
+  axe-core@4.12.1: {}
 
-  axios@1.17.0:
+  axios@1.18.1:
     dependencies:
       follow-redirects: 1.16.0
-      form-data: 4.0.5
+      form-data: 4.0.6
       https-proxy-agent: 5.0.1
       proxy-from-env: 2.1.0
     transitivePeerDependencies:
@@ -4798,7 +4814,7 @@ snapshots:
 
   base64-js@1.5.1: {}
 
-  baseline-browser-mapping@2.10.33: {}
+  baseline-browser-mapping@2.10.38: {}
 
   bignumber.js@9.3.1: {}
 
@@ -4836,13 +4852,13 @@ snapshots:
 
   browser-stdout@1.3.1: {}
 
-  browserslist@4.28.2:
+  browserslist@4.28.4:
     dependencies:
-      baseline-browser-mapping: 2.10.33
-      caniuse-lite: 1.0.30001793
-      electron-to-chromium: 1.5.368
-      node-releases: 2.0.47
-      update-browserslist-db: 1.2.3(browserslist@4.28.2)
+      baseline-browser-mapping: 2.10.38
+      caniuse-lite: 1.0.30001799
+      electron-to-chromium: 1.5.377
+      node-releases: 2.0.48
+      update-browserslist-db: 1.2.3(browserslist@4.28.4)
 
   buffer-equal-constant-time@1.0.1: {}
 
@@ -4892,7 +4908,7 @@ snapshots:
 
   camelcase@6.3.0: {}
 
-  caniuse-lite@1.0.30001793: {}
+  caniuse-lite@1.0.30001799: {}
 
   canonical-path@1.0.0: {}
 
@@ -5131,7 +5147,7 @@ snapshots:
 
   ee-first@1.1.1: {}
 
-  electron-to-chromium@1.5.368: {}
+  electron-to-chromium@1.5.377: {}
 
   emoji-regex@8.0.0: {}
 
@@ -5144,6 +5160,13 @@ snapshots:
       once: 1.4.0
 
   entities@4.5.0: {}
+
+  es-abstract-get@1.0.0:
+    dependencies:
+      es-errors: 1.3.0
+      es-object-atoms: 1.1.2
+      is-callable: 1.2.7
+      object-inspect: 1.13.4
 
   es-abstract@1.24.2:
     dependencies:
@@ -5159,8 +5182,8 @@ snapshots:
       es-errors: 1.3.0
       es-object-atoms: 1.1.2
       es-set-tostringtag: 2.1.0
-      es-to-primitive: 1.3.0
-      function.prototype.name: 1.1.8
+      es-to-primitive: 1.3.1
+      function.prototype.name: 1.2.0
       get-intrinsic: 1.3.0
       get-proto: 1.0.1
       get-symbol-description: 1.1.0
@@ -5192,21 +5215,21 @@ snapshots:
       safe-regex-test: 1.1.0
       set-proto: 1.0.0
       stop-iteration-iterator: 1.1.0
-      string.prototype.trim: 1.2.10
-      string.prototype.trimend: 1.0.9
+      string.prototype.trim: 1.2.11
+      string.prototype.trimend: 1.0.10
       string.prototype.trimstart: 1.0.8
       typed-array-buffer: 1.0.3
       typed-array-byte-length: 1.0.3
       typed-array-byte-offset: 1.0.4
       typed-array-length: 1.0.8
       unbox-primitive: 1.1.0
-      which-typed-array: 1.1.21
+      which-typed-array: 1.1.22
 
   es-define-property@1.0.1: {}
 
   es-errors@1.3.0: {}
 
-  es-iterator-helpers@1.3.2:
+  es-iterator-helpers@1.3.3:
     dependencies:
       call-bind: 1.0.9
       call-bound: 1.0.4
@@ -5240,8 +5263,10 @@ snapshots:
     dependencies:
       hasown: 2.0.4
 
-  es-to-primitive@1.3.0:
+  es-to-primitive@1.3.1:
     dependencies:
+      es-abstract-get: 1.0.0
+      es-errors: 1.3.0
       is-callable: 1.2.7
       is-date-object: 1.1.0
       is-symbol: 1.1.1
@@ -5288,7 +5313,7 @@ snapshots:
       object.groupby: 1.0.3
       object.values: 1.2.1
       semver: 6.3.1
-      string.prototype.trimend: 1.0.9
+      string.prototype.trimend: 1.0.10
       tsconfig-paths: 3.15.0
 
   eslint-plugin-jam3@0.2.3:
@@ -5308,7 +5333,7 @@ snapshots:
       espree: 10.4.0
       esquery: 1.7.0
       parse-imports-exports: 0.2.4
-      semver: 7.8.2
+      semver: 7.8.5
       spdx-expression-parse: 4.0.0
     transitivePeerDependencies:
       - supports-color
@@ -5319,7 +5344,7 @@ snapshots:
       array-includes: 3.1.9
       array.prototype.flatmap: 1.3.3
       ast-types-flow: 0.0.8
-      axe-core: 4.12.0
+      axe-core: 4.12.1
       axobject-query: 4.1.0
       damerau-levenshtein: 1.0.8
       emoji-regex: 9.2.2
@@ -5347,7 +5372,7 @@ snapshots:
       array.prototype.flatmap: 1.3.3
       array.prototype.tosorted: 1.1.4
       doctrine: 2.1.0
-      es-iterator-helpers: 1.3.2
+      es-iterator-helpers: 1.3.3
       eslint: 9.39.4
       estraverse: 5.3.0
       hasown: 2.0.4
@@ -5414,8 +5439,8 @@ snapshots:
 
   espree@10.4.0:
     dependencies:
-      acorn: 8.16.0
-      acorn-jsx: 5.3.2(acorn@8.16.0)
+      acorn: 8.17.0
+      acorn-jsx: 5.3.2(acorn@8.17.0)
       eslint-visitor-keys: 4.2.1
 
   esprima@4.0.1: {}
@@ -5492,15 +5517,16 @@ snapshots:
 
   fast-xml-builder@1.2.0:
     dependencies:
-      path-expression-matcher: 1.5.0
+      path-expression-matcher: 1.6.1
       xml-naming: 0.1.0
 
-  fast-xml-parser@5.8.0:
+  fast-xml-parser@5.9.3:
     dependencies:
-      '@nodable/entities': 2.1.1
+      '@nodable/entities': 2.2.0
       fast-xml-builder: 1.2.0
-      path-expression-matcher: 1.5.0
-      strnum: 2.3.0
+      is-unsafe: 1.0.1
+      path-expression-matcher: 1.6.1
+      strnum: 2.4.1
       xml-naming: 0.1.0
 
   fastq@1.20.1:
@@ -5581,7 +5607,7 @@ snapshots:
 
   form-data-encoder@2.1.4: {}
 
-  form-data@2.5.5:
+  form-data@2.5.6:
     dependencies:
       asynckit: 0.4.0
       combined-stream: 1.0.8
@@ -5590,7 +5616,7 @@ snapshots:
       mime-types: 2.1.35
       safe-buffer: 5.2.1
 
-  form-data@4.0.5:
+  form-data@4.0.6:
     dependencies:
       asynckit: 0.4.0
       combined-stream: 1.0.8
@@ -5633,14 +5659,17 @@ snapshots:
 
   function-bind@1.1.2: {}
 
-  function.prototype.name@1.1.8:
+  function.prototype.name@1.2.0:
     dependencies:
       call-bind: 1.0.9
       call-bound: 1.0.4
-      define-properties: 1.2.1
+      es-define-property: 1.0.1
+      es-errors: 1.3.0
       functions-have-names: 1.2.3
+      has-property-descriptors: 1.0.2
       hasown: 2.0.4
       is-callable: 1.2.7
+      is-document.all: 1.0.0
 
   functions-have-names@1.2.3: {}
 
@@ -5839,7 +5868,7 @@ snapshots:
       node-fetch: 3.3.2
       object-hash: 3.0.0
       proto3-json-serializer: 3.0.4
-      protobufjs: 7.6.2
+      protobufjs: 7.6.4
       retry-request: 8.0.3
       rimraf: 5.0.10
     transitivePeerDependencies:
@@ -6013,7 +6042,7 @@ snapshots:
     dependencies:
       es-errors: 1.3.0
       hasown: 2.0.4
-      side-channel: 1.1.0
+      side-channel: 1.1.1
 
   ipaddr.js@1.9.1: {}
 
@@ -6058,6 +6087,10 @@ snapshots:
     dependencies:
       call-bound: 1.0.4
       has-tostringtag: 1.0.2
+
+  is-document.all@1.0.0:
+    dependencies:
+      call-bound: 1.0.4
 
   is-extglob@2.1.1: {}
 
@@ -6126,11 +6159,13 @@ snapshots:
 
   is-typed-array@1.1.15:
     dependencies:
-      which-typed-array: 1.1.21
+      which-typed-array: 1.1.22
 
   is-typedarray@1.0.0: {}
 
   is-unicode-supported@0.1.0: {}
+
+  is-unsafe@1.0.1: {}
 
   is-weakmap@2.0.2: {}
 
@@ -6161,7 +6196,7 @@ snapshots:
       '@babel/parser': 7.29.7
       '@istanbuljs/schema': 0.1.6
       istanbul-lib-coverage: 3.2.2
-      semver: 7.8.2
+      semver: 7.8.5
     transitivePeerDependencies:
       - supports-color
 
@@ -6272,7 +6307,7 @@ snapshots:
       lodash.isstring: 4.0.1
       lodash.once: 4.1.1
       ms: 2.1.3
-      semver: 7.8.2
+      semver: 7.8.5
 
   jsx-ast-utils@3.3.5:
     dependencies:
@@ -6408,7 +6443,7 @@ snapshots:
 
   make-dir@4.0.0:
     dependencies:
-      semver: 7.8.2
+      semver: 7.8.5
 
   make-error@1.3.6: {}
 
@@ -6515,7 +6550,7 @@ snapshots:
       strip-json-comments: 3.1.1
       supports-color: 8.1.1
       workerpool: 9.3.4
-      yargs: 17.7.2
+      yargs: 17.7.3
       yargs-parser: 21.1.1
       yargs-unparser: 2.0.0
 
@@ -6543,7 +6578,7 @@ snapshots:
 
   node-domexception@1.0.0: {}
 
-  node-exports-info@1.6.0:
+  node-exports-info@1.6.2:
     dependencies:
       array.prototype.flatmap: 1.3.3
       es-errors: 1.3.0
@@ -6564,7 +6599,7 @@ snapshots:
     dependencies:
       process-on-spawn: 1.1.0
 
-  node-releases@2.0.47: {}
+  node-releases@2.0.48: {}
 
   normalize-url@8.1.1: {}
 
@@ -6730,7 +6765,7 @@ snapshots:
 
   path-exists@4.0.0: {}
 
-  path-expression-matcher@1.5.0: {}
+  path-expression-matcher@1.6.1: {}
 
   path-is-absolute@1.0.1: {}
 
@@ -6790,9 +6825,9 @@ snapshots:
 
   proto3-json-serializer@3.0.4:
     dependencies:
-      protobufjs: 7.6.2
+      protobufjs: 7.6.4
 
-  protobufjs@7.6.2:
+  protobufjs@7.6.4:
     dependencies:
       '@protobufjs/aspromise': 1.1.2
       '@protobufjs/base64': 1.1.2
@@ -6800,7 +6835,6 @@ snapshots:
       '@protobufjs/eventemitter': 1.1.1
       '@protobufjs/fetch': 1.1.1
       '@protobufjs/float': 1.0.2
-      '@protobufjs/inquire': 1.1.2
       '@protobufjs/path': 1.1.2
       '@protobufjs/pool': 1.1.0
       '@protobufjs/utf8': 1.1.1
@@ -6822,7 +6856,7 @@ snapshots:
 
   qs@6.15.2:
     dependencies:
-      side-channel: 1.1.0
+      side-channel: 1.1.1
 
   queue-microtask@1.2.3: {}
 
@@ -6904,7 +6938,7 @@ snapshots:
     dependencies:
       es-errors: 1.3.0
       is-core-module: 2.16.2
-      node-exports-info: 1.6.0
+      node-exports-info: 1.6.2
       object-keys: 1.1.1
       path-parse: 1.0.7
       supports-preserve-symlinks-flag: 1.0.0
@@ -6977,7 +7011,7 @@ snapshots:
 
   semver@7.7.4: {}
 
-  semver@7.8.2: {}
+  semver@7.8.5: {}
 
   send@0.19.2:
     dependencies:
@@ -7060,7 +7094,7 @@ snapshots:
       object-inspect: 1.13.4
       side-channel-map: 1.0.1
 
-  side-channel@1.1.0:
+  side-channel@1.1.1:
     dependencies:
       es-errors: 1.3.0
       object-inspect: 1.13.4
@@ -7159,14 +7193,14 @@ snapshots:
       internal-slot: 1.1.0
       regexp.prototype.flags: 1.5.4
       set-function-name: 2.0.2
-      side-channel: 1.1.0
+      side-channel: 1.1.1
 
   string.prototype.repeat@1.0.0:
     dependencies:
       define-properties: 1.2.1
       es-abstract: 1.24.2
 
-  string.prototype.trim@1.2.10:
+  string.prototype.trim@1.2.11:
     dependencies:
       call-bind: 1.0.9
       call-bound: 1.0.4
@@ -7175,8 +7209,9 @@ snapshots:
       es-abstract: 1.24.2
       es-object-atoms: 1.1.2
       has-property-descriptors: 1.0.2
+      safe-regex-test: 1.1.0
 
-  string.prototype.trimend@1.0.9:
+  string.prototype.trimend@1.0.10:
     dependencies:
       call-bind: 1.0.9
       call-bound: 1.0.4
@@ -7207,7 +7242,9 @@ snapshots:
 
   strip-json-comments@3.1.1: {}
 
-  strnum@2.3.0: {}
+  strnum@2.4.1:
+    dependencies:
+      anynum: 1.0.1
 
   stubs@3.0.0: {}
 
@@ -7389,9 +7426,9 @@ snapshots:
 
   unpipe@1.0.0: {}
 
-  update-browserslist-db@1.2.3(browserslist@4.28.2):
+  update-browserslist-db@1.2.3(browserslist@4.28.4):
     dependencies:
-      browserslist: 4.28.2
+      browserslist: 4.28.4
       escalade: 3.2.0
       picocolors: 1.1.1
 
@@ -7429,7 +7466,7 @@ snapshots:
   which-builtin-type@1.2.1:
     dependencies:
       call-bound: 1.0.4
-      function.prototype.name: 1.1.8
+      function.prototype.name: 1.2.0
       has-tostringtag: 1.0.2
       is-async-function: 2.1.1
       is-date-object: 1.1.0
@@ -7440,7 +7477,7 @@ snapshots:
       isarray: 2.0.5
       which-boxed-primitive: 1.1.1
       which-collection: 1.0.2
-      which-typed-array: 1.1.21
+      which-typed-array: 1.1.22
 
   which-collection@1.0.2:
     dependencies:
@@ -7451,7 +7488,7 @@ snapshots:
 
   which-module@2.0.1: {}
 
-  which-typed-array@1.1.21:
+  which-typed-array@1.1.22:
     dependencies:
       available-typed-arrays: 1.0.7
       call-bind: 1.0.9
@@ -7552,7 +7589,7 @@ snapshots:
       y18n: 4.0.3
       yargs-parser: 18.1.3
 
-  yargs@17.7.2:
+  yargs@17.7.3:
     dependencies:
       cliui: 8.0.1
       escalade: 3.2.0
