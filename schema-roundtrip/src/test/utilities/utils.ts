@@ -10,15 +10,15 @@ import * as path from "path";
 declare const __dirname: string;
 
 export function getAssetsDir(): string {
-  return path.normalize(__dirname + "/../../../src/test/assets/");
+  return path.normalize(`${__dirname}/../../../src/test/assets/`);
 }
 
 export function getReferencesDir(): string {
-  return path.normalize(__dirname + "/../../../src/test/assets/references/");
+  return path.normalize(`${__dirname}/../../../src/test/assets/references/`);
 }
 
 export function getOutDir(): string {
-  const outputDir = path.normalize(__dirname + "/../../test/output/");
+  const outputDir = path.normalize(`${__dirname}/../../test/output/`);
   fs.ensureDirSync(outputDir);
   return outputDir;
 }

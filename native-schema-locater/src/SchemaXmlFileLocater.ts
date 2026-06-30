@@ -39,7 +39,7 @@ export class SchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLo
    * @param context The SchemaContext that will control the lifetime of the schema.
    */
   public async getSchema<T extends Schema>(key: SchemaKey, matchType: SchemaMatchType, context: SchemaContext): Promise<T | undefined> {
-    return this.getSchemaSync(key, matchType, context) as T;
+    return this.getSchemaSync<T>(key, matchType, context);
   }
 
   /**
@@ -278,7 +278,7 @@ class StubSchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLocat
    * @param context The SchemaContext that will control the lifetime of the schema.
    */
   public async getSchema<T extends Schema>(key: SchemaKey, matchType: SchemaMatchType, context: SchemaContext): Promise<T | undefined> {
-    return this.getSchemaSync(key, matchType, context) as T;
+    return this.getSchemaSync<T>(key, matchType, context);
   }
 
   /**

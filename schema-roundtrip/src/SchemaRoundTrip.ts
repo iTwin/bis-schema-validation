@@ -115,7 +115,7 @@ export class SchemaRoundTrip {
       results.push({ resultType: RoundTripResultType.Error, resultText: msg });
     }
 
-    const resultMsg = `Schema re-serialized successfully to ${path.resolve(options.outputDir, schema.name + ".ecschema.xml")}`;
+    const resultMsg = `Schema re-serialized successfully to ${path.resolve(options.outputDir, `${schema.name}.ecschema.xml`)}`;
     results.push({ resultType: RoundTripResultType.Message, resultText: resultMsg });
 
     // If we are not comparing the results to the original, return.
@@ -164,7 +164,7 @@ export class SchemaRoundTrip {
       return;
     }
 
-    return path.resolve(realDir, schema.name + ".ecschema.xml");
+    return path.resolve(realDir, `${schema.name}.ecschema.xml`);
   }
 
   private static async isValidPathToXmlSchema(schemaPath: string): Promise<boolean> {

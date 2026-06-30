@@ -12,13 +12,13 @@ import { compareSchema, IModelValidationResult, verifyIModelSchema } from "../iM
 describe("Reporter class tests.", () => {
 
   const bisSchemaRepo: any = process.env.BisSchemaRepo;
-  const references = path.normalize(__dirname + "/assets/references/");
+  const references = path.normalize(`${__dirname}/assets/references/`);
   const outputDir = path.normalize(__dirname);
   const reporter = new Reporter();
 
   it("Log comparison validation result.", async () => {
-    const schemaAFile = path.resolve(path.normalize(__dirname + "/assets/"), "SchemaA.ecschema.xml");
-    const schemaBFile = path.resolve(path.normalize(__dirname + "/assets/"), "SchemaB.ecschema.xml");
+    const schemaAFile = path.resolve(path.normalize(`${__dirname}/assets/`), "SchemaA.ecschema.xml");
+    const schemaBFile = path.resolve(path.normalize(`${__dirname}/assets/`), "SchemaB.ecschema.xml");
     const validationResult: IModelValidationResult = { name: "SchemaB", version: "01.01.01" };
     const output = path.join(outputDir, "wip");
 
@@ -37,7 +37,7 @@ describe("Reporter class tests.", () => {
   });
 
   it("Log all validation results.", async () => {
-    const exportDir = path.resolve(path.normalize(__dirname + "/assets/"));
+    const exportDir = path.resolve(path.normalize(`${__dirname}/assets/`));
     const output = path.join(outputDir, "wip");
 
     const result = await verifyIModelSchema(exportDir, "SchemaG.01.00.02.ecschema.xml", false, bisSchemaRepo, output);

@@ -6,7 +6,7 @@
 import * as path from "path";
 import * as utils from "./utilities/utils";
 import { SchemaDeserializer } from "@bentley/native-schema-locater";
-import { AnyClass, ECClass, ECVersion, KindOfQuantity, PrimitiveType, RelationshipClass, Schema, SchemaContext, SchemaKey } from "@itwin/ecschema-metadata";
+import { ECClass, ECVersion, KindOfQuantity, PrimitiveType, RelationshipClass, Schema, SchemaContext, SchemaKey } from "@itwin/ecschema-metadata";
 import { Diagnostics as ECDiagnostics } from "@itwin/ecschema-editing";
 import { MutableClass } from "@itwin/ecschema-metadata/lib/cjs/Metadata/Class";
 import { MutableSchema } from "@itwin/ecschema-metadata/lib/cjs/Metadata/Schema";
@@ -338,7 +338,7 @@ describe("Rule Suppression Tests", () => {
     it("Schema ProcessPhysical.01.01.01, rule not suppressed.", async () => {
       createSchema("ProcessPhysical", 1, 1, 1);
       const testClass = await mutableSchema.createEntityClass("PLANT_BASE_OBJECT");
-      const diag = new BisRules.Diagnostics.MultiplePropertiesInClassWithSameLabel(testClass as AnyClass, ["ProcessPhysical.PLANT_BASE_OBJECT", "DESIGN_STATE", "DesignState", "Design State"]);
+      const diag = new BisRules.Diagnostics.MultiplePropertiesInClassWithSameLabel(testClass, ["ProcessPhysical.PLANT_BASE_OBJECT", "DESIGN_STATE", "DesignState", "Design State"]);
 
       const result = await ruleSuppressionSet.multiplePropertiesInClassWithSameLabel(diag, testClass);
       expect(result).to.be.false;

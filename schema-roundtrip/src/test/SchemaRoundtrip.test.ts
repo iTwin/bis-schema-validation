@@ -21,7 +21,7 @@ describe("SchemaRoundTrip Tests", () => {
   const referencesDir = utils.getReferencesDir();
 
   beforeEach(async () => {
-    await fs.remove(outDir + "SchemaA.validation.log");
+    await fs.remove(`${outDir}SchemaA.validation.log`);
   });
 
   afterEach(async () => {

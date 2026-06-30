@@ -8,8 +8,6 @@ module.exports = [
   {
     files: ["**/*.ts"],
     rules: {
-      "prefer-template": "off",
-      "dot-notation": "off",
       "no-console": "off"
     }
   },

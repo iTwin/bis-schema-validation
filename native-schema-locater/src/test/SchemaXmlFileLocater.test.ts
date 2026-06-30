@@ -15,7 +15,7 @@ import { SchemaXmlFileLocater } from "../SchemaXmlFileLocater";
 use(chaiAsPromised);
 
 describe("SchemaXmlFileLocater.test", () => {
-  const assetsDir = path.normalize(__dirname + "/assets/");
+  const assetsDir = path.normalize(`${__dirname}/assets/`);
   const refDir = path.join(assetsDir, "references");
 
   beforeEach(async () => {

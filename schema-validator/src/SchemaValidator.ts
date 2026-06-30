@@ -139,7 +139,7 @@ export class SchemaValidator {
     const isJson = schemaPath.endsWith(".json");
     const fileName = path.basename(schemaPath);
     const schemaName = isJson ? fileName.replace(".ecschema.json", "") : fileName.replace(".ecschema.xml", "");
-    const headerText = schemaName + " Validation Results";
+    const headerText = `${schemaName} Validation Results`;
 
     let results: IValidationResult[] = [];
     results.push({ resultType: ValidationResultType.Message, resultText: headerText });
@@ -181,7 +181,7 @@ export class SchemaValidator {
     if (options.outputDir) {
       fileReporter = new FileDiagnosticReporter(outputFileName, options.outputDir);
       reporters.push(fileReporter);
-      fileReporter.start(schemaFullName + " Validation Results");
+      fileReporter.start(`${schemaFullName} Validation Results`);
     }
 
     const ruleSets = [ECRuleSet, BisRuleSet];
@@ -303,7 +303,7 @@ export class SchemaValidator {
 
   private static createValidationResults(diagnostics: string[], results: IValidationResult[]) {
     for (const diag of diagnostics) {
-      results.push({ resultType: ValidationResultType.RuleViolation, resultText: " " + diag });
+      results.push({ resultType: ValidationResultType.RuleViolation, resultText: ` ${diag}` });
     }
   }
 

@@ -12,7 +12,7 @@ import { SchemaDeserializer } from "../SchemaDeserializer";
 
 use(chaiAsPromised);
 
-const assetsDir = path.normalize(__dirname + "/assets/");
+const assetsDir = path.normalize(`${__dirname}/assets/`);
 
 describe("SchemaDeserializer", () => {
   const refDir = path.join(assetsDir, "references");

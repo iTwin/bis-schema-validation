@@ -9,7 +9,7 @@ import * as path from "path";
 
 describe("LaunchCodesProvider Tests", async () => {
 
-  const inventoryRepo = path.resolve(path.normalize(__dirname + "/assets/"));
+  const inventoryRepo = path.resolve(path.normalize(`${__dirname}/assets/`));
 
   it("Approved and Verified Schema, Check if a schema is approved and verified using schema inventory json", async () => {
     const launchCodesProvider: LaunchCodesProvider = new LaunchCodesProvider();
