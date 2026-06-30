@@ -78,14 +78,15 @@ describe("RelationshipClass Rule Tests", () => {
       const result = Rules.relationshipClassMustNotUseHoldingStrength(relationship);
 
       let resultHasEntries = false;
-      for await (const diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const diagnostic of result) {
         resultHasEntries = true;
         expect(diagnostic).to.not.be.undefined;
-        expect(diagnostic!.ecDefinition).to.equal(relationship);
-        expect(diagnostic!.messageArgs).to.eql([relationship.fullName]);
-        expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
-        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.RelationshipClassMustNotUseHoldingStrength);
-        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic.ecDefinition).to.equal(relationship);
+        expect(diagnostic.messageArgs).to.eql([relationship.fullName]);
+        expect(diagnostic.category).to.equal(DiagnosticCategory.Error);
+        expect(diagnostic.code).to.equal(Rules.DiagnosticCodes.RelationshipClassMustNotUseHoldingStrength);
+        expect(diagnostic.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -122,7 +123,8 @@ describe("RelationshipClass Rule Tests", () => {
 
       const result = Rules.relationshipClassMustNotUseHoldingStrength(relationship);
 
-      for await (const _diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
     });
@@ -162,14 +164,15 @@ describe("RelationshipClass Rule Tests", () => {
       const result = Rules.relationshipSourceMultiplicityUpperBoundRestriction(relationship);
 
       let resultHasEntries = false;
-      for await (const diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const diagnostic of result) {
         resultHasEntries = true;
         expect(diagnostic).to.not.be.undefined;
-        expect(diagnostic!.ecDefinition).to.equal(relationship);
-        expect(diagnostic!.messageArgs).to.eql([relationship.fullName]);
-        expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
-        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.RelationshipSourceMultiplicityUpperBoundRestriction);
-        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic.ecDefinition).to.equal(relationship);
+        expect(diagnostic.messageArgs).to.eql([relationship.fullName]);
+        expect(diagnostic.category).to.equal(DiagnosticCategory.Error);
+        expect(diagnostic.code).to.equal(Rules.DiagnosticCodes.RelationshipSourceMultiplicityUpperBoundRestriction);
+        expect(diagnostic.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -206,7 +209,8 @@ describe("RelationshipClass Rule Tests", () => {
 
       const result = Rules.relationshipSourceMultiplicityUpperBoundRestriction(relationship);
 
-      for await (const _diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
     });
@@ -243,7 +247,8 @@ describe("RelationshipClass Rule Tests", () => {
 
       const result = Rules.relationshipSourceMultiplicityUpperBoundRestriction(relationship);
 
-      for await (const _diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
     });
@@ -280,7 +285,8 @@ describe("RelationshipClass Rule Tests", () => {
 
       const result = Rules.relationshipSourceMultiplicityUpperBoundRestriction(relationship);
 
-      for await (const _diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
     });
@@ -320,14 +326,15 @@ describe("RelationshipClass Rule Tests", () => {
       const result = Rules.relationshipTargetMultiplicityUpperBoundRestriction(relationship);
 
       let resultHasEntries = false;
-      for await (const diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const diagnostic of result) {
         resultHasEntries = true;
         expect(diagnostic).to.not.be.undefined;
-        expect(diagnostic!.ecDefinition).to.equal(relationship);
-        expect(diagnostic!.messageArgs).to.eql([relationship.fullName]);
-        expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
-        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.RelationshipTargetMultiplicityUpperBoundRestriction);
-        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic.ecDefinition).to.equal(relationship);
+        expect(diagnostic.messageArgs).to.eql([relationship.fullName]);
+        expect(diagnostic.category).to.equal(DiagnosticCategory.Error);
+        expect(diagnostic.code).to.equal(Rules.DiagnosticCodes.RelationshipTargetMultiplicityUpperBoundRestriction);
+        expect(diagnostic.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -364,7 +371,8 @@ describe("RelationshipClass Rule Tests", () => {
 
       const result = Rules.relationshipTargetMultiplicityUpperBoundRestriction(relationship);
 
-      for await (const _diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
     });
@@ -401,7 +409,8 @@ describe("RelationshipClass Rule Tests", () => {
 
       const result = Rules.relationshipTargetMultiplicityUpperBoundRestriction(relationship);
 
-      for await (const _diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
     });
@@ -438,7 +447,8 @@ describe("RelationshipClass Rule Tests", () => {
 
       const result = Rules.relationshipTargetMultiplicityUpperBoundRestriction(relationship);
 
-      for await (const _diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
     });
@@ -482,14 +492,15 @@ describe("RelationshipClass Rule Tests", () => {
       const result = Rules.relationshipElementAspectContraintRestriction(relationship);
 
       let resultHasEntries = false;
-      for await (const diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const diagnostic of result) {
         resultHasEntries = true;
         expect(diagnostic).to.not.be.undefined;
-        expect(diagnostic!.ecDefinition).to.equal(relationship);
-        expect(diagnostic!.messageArgs).to.eql([relationship.fullName, "Target"]);
-        expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
-        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.RelationshipElementAspectContraintRestriction);
-        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic.ecDefinition).to.equal(relationship);
+        expect(diagnostic.messageArgs).to.eql([relationship.fullName, "Target"]);
+        expect(diagnostic.category).to.equal(DiagnosticCategory.Error);
+        expect(diagnostic.code).to.equal(Rules.DiagnosticCodes.RelationshipElementAspectContraintRestriction);
+        expect(diagnostic.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -531,7 +542,8 @@ describe("RelationshipClass Rule Tests", () => {
 
       const result = Rules.relationshipElementAspectContraintRestriction(relationship);
 
-      for await (const _diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
     });
@@ -573,7 +585,8 @@ describe("RelationshipClass Rule Tests", () => {
 
       const result = Rules.relationshipElementAspectContraintRestriction(relationship);
 
-      for await (const _diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
     });
@@ -614,7 +627,8 @@ describe("RelationshipClass Rule Tests", () => {
 
       const result = Rules.relationshipElementAspectContraintRestriction(relationship);
 
-      for await (const _diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
     });
@@ -655,7 +669,8 @@ describe("RelationshipClass Rule Tests", () => {
 
       const result = Rules.relationshipElementAspectContraintRestriction(relationship);
 
-      for await (const _diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
     });
@@ -697,14 +712,15 @@ describe("RelationshipClass Rule Tests", () => {
       const result = Rules.relationshipElementAspectContraintRestriction(relationship);
 
       let resultHasEntries = false;
-      for await (const diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const diagnostic of result) {
         resultHasEntries = true;
         expect(diagnostic).to.not.be.undefined;
-        expect(diagnostic!.ecDefinition).to.equal(relationship);
-        expect(diagnostic!.messageArgs).to.eql([relationship.fullName, "Source"]);
-        expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
-        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.RelationshipElementAspectContraintRestriction);
-        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic.ecDefinition).to.equal(relationship);
+        expect(diagnostic.messageArgs).to.eql([relationship.fullName, "Source"]);
+        expect(diagnostic.category).to.equal(DiagnosticCategory.Error);
+        expect(diagnostic.code).to.equal(Rules.DiagnosticCodes.RelationshipElementAspectContraintRestriction);
+        expect(diagnostic.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -745,7 +761,8 @@ describe("RelationshipClass Rule Tests", () => {
 
       const result = Rules.relationshipElementAspectContraintRestriction(relationship);
 
-      for await (const _diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
     });
@@ -780,14 +797,15 @@ describe("RelationshipClass Rule Tests", () => {
       const result = Rules.embeddingRelationshipsMustNotHaveHasInName(relationship);
 
       let resultHasEntries = false;
-      for await (const diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const diagnostic of result) {
         resultHasEntries = true;
         expect(diagnostic).to.not.be.undefined;
-        expect(diagnostic!.ecDefinition).to.equal(relationship);
-        expect(diagnostic!.messageArgs).to.eql([relationship.fullName]);
-        expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
-        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.EmbeddingRelationshipsMustNotHaveHasInName);
-        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic.ecDefinition).to.equal(relationship);
+        expect(diagnostic.messageArgs).to.eql([relationship.fullName]);
+        expect(diagnostic.category).to.equal(DiagnosticCategory.Error);
+        expect(diagnostic.code).to.equal(Rules.DiagnosticCodes.EmbeddingRelationshipsMustNotHaveHasInName);
+        expect(diagnostic.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -819,7 +837,8 @@ describe("RelationshipClass Rule Tests", () => {
 
       const result = Rules.embeddingRelationshipsMustNotHaveHasInName(relationship);
 
-      for await (const _diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
     });
@@ -851,7 +870,8 @@ describe("RelationshipClass Rule Tests", () => {
 
       const result = Rules.embeddingRelationshipsMustNotHaveHasInName(relationship);
 
-      for await (const _diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
     });
@@ -884,14 +904,15 @@ describe("RelationshipClass Rule Tests", () => {
       const result = Rules.embeddingRelationshipsMustNotHaveHasInName(relationship);
 
       let resultHasEntries = false;
-      for await (const diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const diagnostic of result) {
         resultHasEntries = true;
         expect(diagnostic).to.not.be.undefined;
-        expect(diagnostic!.ecDefinition).to.equal(relationship);
-        expect(diagnostic!.messageArgs).to.eql([relationship.fullName]);
-        expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
-        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.EmbeddingRelationshipsMustNotHaveHasInName);
-        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic.ecDefinition).to.equal(relationship);
+        expect(diagnostic.messageArgs).to.eql([relationship.fullName]);
+        expect(diagnostic.category).to.equal(DiagnosticCategory.Error);
+        expect(diagnostic.code).to.equal(Rules.DiagnosticCodes.EmbeddingRelationshipsMustNotHaveHasInName);
+        expect(diagnostic.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -923,7 +944,8 @@ describe("RelationshipClass Rule Tests", () => {
 
       const result = Rules.embeddingRelationshipsMustNotHaveHasInName(relationship);
 
-      for await (const _diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
     });
@@ -955,7 +977,8 @@ describe("RelationshipClass Rule Tests", () => {
 
       const result = Rules.embeddingRelationshipsMustNotHaveHasInName(relationship);
 
-      for await (const _diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
     });
@@ -1026,7 +1049,8 @@ describe("RelationshipClass Rule Tests", () => {
       const schema = await getTestSchema(schemaJson);
       const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
       const result = Rules.relationshipConstraintShouldNotUseDeprecatedConstraintClass(relationship);
-      for await (const _diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
     });
@@ -1105,18 +1129,18 @@ describe("RelationshipClass Rule Tests", () => {
       let index = 0;
       for await (const diagnostic of result) {
         expect(diagnostic).to.not.be.undefined;
-        expect(diagnostic!.ecDefinition).to.equal(relationship);
+        expect(diagnostic.ecDefinition).to.equal(relationship);
         if (index === 0)
-          expect(diagnostic!.messageArgs).to.eql(["Source", "TestSchema.TestRelationship", "TestSchema.EntityA"]);
+          expect(diagnostic.messageArgs).to.eql(["Source", "TestSchema.TestRelationship", "TestSchema.EntityA"]);
         else if (index === 1)
-          expect(diagnostic!.messageArgs).to.eql(["Source", "TestSchema.TestRelationship", "TestSchema.EntityA1"]);
+          expect(diagnostic.messageArgs).to.eql(["Source", "TestSchema.TestRelationship", "TestSchema.EntityA1"]);
         else if (index === 2)
-          expect(diagnostic!.messageArgs).to.eql(["Source", "TestSchema.TestRelationship", "TestSchema.EntityA2"]);
+          expect(diagnostic.messageArgs).to.eql(["Source", "TestSchema.TestRelationship", "TestSchema.EntityA2"]);
         else if (index === 3)
-          expect(diagnostic!.messageArgs).to.eql(["Target", "TestSchema.TestRelationship", "TestSchema.EntityB1"]);
-        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.RelationshipConstraintShouldNotUseDeprecatedConstraintClass);
-        expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
-        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
+          expect(diagnostic.messageArgs).to.eql(["Target", "TestSchema.TestRelationship", "TestSchema.EntityB1"]);
+        expect(diagnostic.code).to.equal(Rules.DiagnosticCodes.RelationshipConstraintShouldNotUseDeprecatedConstraintClass);
+        expect(diagnostic.category).to.equal(DiagnosticCategory.Warning);
+        expect(diagnostic.diagnosticType).to.equal(DiagnosticType.SchemaItem);
 
         ++index;
       }
@@ -1168,7 +1192,8 @@ describe("RelationshipClass Rule Tests", () => {
       const relationship = (await schema.getItem("TestRelationship")) as RelationshipClass;
 
       const result = Rules.relationshipConstraintShouldNotUseDeprecatedAbstractConstraint(relationship);
-      for await (const _diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
     });
@@ -1216,14 +1241,14 @@ describe("RelationshipClass Rule Tests", () => {
       let index = 0;
       for await (const diagnostic of result) {
         expect(diagnostic).to.not.be.undefined;
-        expect(diagnostic!.ecDefinition).to.equal(relationship);
+        expect(diagnostic.ecDefinition).to.equal(relationship);
         if (index === 0)
-          expect(diagnostic!.messageArgs).to.eql(["Source", "TestSchema.TestRelationship", "TestSchema.EntityA"]);
+          expect(diagnostic.messageArgs).to.eql(["Source", "TestSchema.TestRelationship", "TestSchema.EntityA"]);
         else if (index === 1)
-          expect(diagnostic!.messageArgs).to.eql(["Target", "TestSchema.TestRelationship", "TestSchema.EntityB"]);
-        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.RelationshipConstraintShouldNotUseDeperecatedAbstractConstraint);
-        expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
-        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
+          expect(diagnostic.messageArgs).to.eql(["Target", "TestSchema.TestRelationship", "TestSchema.EntityB"]);
+        expect(diagnostic.code).to.equal(Rules.DiagnosticCodes.RelationshipConstraintShouldNotUseDeperecatedAbstractConstraint);
+        expect(diagnostic.category).to.equal(DiagnosticCategory.Warning);
+        expect(diagnostic.diagnosticType).to.equal(DiagnosticType.SchemaItem);
 
         ++index;
       }
@@ -1305,18 +1330,18 @@ describe("RelationshipClass Rule Tests", () => {
       let index = 0;
       for await (const diagnostic of result) {
         expect(diagnostic).to.not.be.undefined;
-        expect(diagnostic!.ecDefinition).to.equal(relationship);
+        expect(diagnostic.ecDefinition).to.equal(relationship);
         if (index === 0)
-          expect(diagnostic!.messageArgs).to.eql(["Source", "TestSchema.TestRelationship", "TestSchema.EntityA1", "TestSchema.EntityA", "TestSchema.EntityA"]);
+          expect(diagnostic.messageArgs).to.eql(["Source", "TestSchema.TestRelationship", "TestSchema.EntityA1", "TestSchema.EntityA", "TestSchema.EntityA"]);
         else if (index === 1)
-          expect(diagnostic!.messageArgs).to.eql(["Source", "TestSchema.TestRelationship", "TestSchema.EntityA2", "TestSchema.EntityA1", "TestSchema.EntityA"]);
+          expect(diagnostic.messageArgs).to.eql(["Source", "TestSchema.TestRelationship", "TestSchema.EntityA2", "TestSchema.EntityA1", "TestSchema.EntityA"]);
         else if (index === 2)
-          expect(diagnostic!.messageArgs).to.eql(["Source", "TestSchema.TestRelationship", "TestSchema.EntityA3", "TestSchema.EntityA2", "TestSchema.EntityA"]);
+          expect(diagnostic.messageArgs).to.eql(["Source", "TestSchema.TestRelationship", "TestSchema.EntityA3", "TestSchema.EntityA2", "TestSchema.EntityA"]);
         else
-          expect(diagnostic!.messageArgs).to.eql(["Target", "TestSchema.TestRelationship", "TestSchema.EntityB1", "TestSchema.EntityB", "TestSchema.EntityB"]);
-        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.RelationshipConstraintShouldNotUseConstraintClassWithDeprecatedBase);
-        expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
-        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
+          expect(diagnostic.messageArgs).to.eql(["Target", "TestSchema.TestRelationship", "TestSchema.EntityB1", "TestSchema.EntityB", "TestSchema.EntityB"]);
+        expect(diagnostic.code).to.equal(Rules.DiagnosticCodes.RelationshipConstraintShouldNotUseConstraintClassWithDeprecatedBase);
+        expect(diagnostic.category).to.equal(DiagnosticCategory.Warning);
+        expect(diagnostic.diagnosticType).to.equal(DiagnosticType.SchemaItem);
 
         ++index;
       }
@@ -1396,18 +1421,18 @@ describe("RelationshipClass Rule Tests", () => {
       let index = 0;
       for await (const diagnostic of result) {
         expect(diagnostic).to.not.be.undefined;
-        expect(diagnostic!.ecDefinition).to.equal(relationship);
+        expect(diagnostic.ecDefinition).to.equal(relationship);
         if (index === 0)
-          expect(diagnostic!.messageArgs).to.eql(["Source", "TestSchema.TestRelationship", "TestSchema.EntityA1", "TestSchema.EntityA", "TestSchema.EntityA"]);
+          expect(diagnostic.messageArgs).to.eql(["Source", "TestSchema.TestRelationship", "TestSchema.EntityA1", "TestSchema.EntityA", "TestSchema.EntityA"]);
         else if (index === 1)
-          expect(diagnostic!.messageArgs).to.eql(["Source", "TestSchema.TestRelationship", "TestSchema.EntityA1", "TestSchema.IndirectDeprecatedMixin", "TestSchema.DeprecatedMixin"]);
+          expect(diagnostic.messageArgs).to.eql(["Source", "TestSchema.TestRelationship", "TestSchema.EntityA1", "TestSchema.IndirectDeprecatedMixin", "TestSchema.DeprecatedMixin"]);
         else if (index === 2)
-          expect(diagnostic!.messageArgs).to.eql(["Target", "TestSchema.TestRelationship", "TestSchema.EntityB2", "TestSchema.EntityB1", "TestSchema.EntityB"]);
+          expect(diagnostic.messageArgs).to.eql(["Target", "TestSchema.TestRelationship", "TestSchema.EntityB2", "TestSchema.EntityB1", "TestSchema.EntityB"]);
         else
-          expect(diagnostic!.messageArgs).to.eql(["Target", "TestSchema.TestRelationship", "TestSchema.EntityB2", "TestSchema.DeprecatedMixin", "TestSchema.DeprecatedMixin"]);
-        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.RelationshipConstraintShouldNotUseAbstractConstraintWithDeprecatedBase);
-        expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
-        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
+          expect(diagnostic.messageArgs).to.eql(["Target", "TestSchema.TestRelationship", "TestSchema.EntityB2", "TestSchema.DeprecatedMixin", "TestSchema.DeprecatedMixin"]);
+        expect(diagnostic.code).to.equal(Rules.DiagnosticCodes.RelationshipConstraintShouldNotUseAbstractConstraintWithDeprecatedBase);
+        expect(diagnostic.category).to.equal(DiagnosticCategory.Warning);
+        expect(diagnostic.diagnosticType).to.equal(DiagnosticType.SchemaItem);
 
         ++index;
       }
@@ -1462,11 +1487,11 @@ describe("RelationshipClass Rule Tests", () => {
       for await (const diagnostic of result) {
         resultHasEntries = true;
         expect(diagnostic).to.not.be.undefined;
-        expect(diagnostic!.ecDefinition).to.equal(relationship);
-        expect(diagnostic!.messageArgs).to.eql(["TestSchema.TestRelationship"]);
-        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.NoAdditionalLinkTableRelationships);
-        expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
-        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic.ecDefinition).to.equal(relationship);
+        expect(diagnostic.messageArgs).to.eql(["TestSchema.TestRelationship"]);
+        expect(diagnostic.code).to.equal(Rules.DiagnosticCodes.NoAdditionalLinkTableRelationships);
+        expect(diagnostic.category).to.equal(DiagnosticCategory.Error);
+        expect(diagnostic.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
 
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
@@ -1514,7 +1539,8 @@ describe("RelationshipClass Rule Tests", () => {
 
       const result = Rules.noAdditionalLinkTableRelationships(relationship);
 
-      for await (const _diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
     });
@@ -1561,7 +1587,8 @@ describe("RelationshipClass Rule Tests", () => {
 
       const result = Rules.noAdditionalLinkTableRelationships(relationship);
 
-      for await (const _diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
     });
@@ -1604,11 +1631,11 @@ describe("RelationshipClass Rule Tests", () => {
       for await (const diagnostic of result) {
         resultHasEntries = true;
         expect(diagnostic).to.not.be.undefined;
-        expect(diagnostic!.ecDefinition).to.equal(relationship);
-        expect(diagnostic!.messageArgs).to.eql(["TestSchema.TestRelationship"]);
-        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.NoAdditionalLinkTableRelationships);
-        expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
-        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic.ecDefinition).to.equal(relationship);
+        expect(diagnostic.messageArgs).to.eql(["TestSchema.TestRelationship"]);
+        expect(diagnostic.code).to.equal(Rules.DiagnosticCodes.NoAdditionalLinkTableRelationships);
+        expect(diagnostic.category).to.equal(DiagnosticCategory.Error);
+        expect(diagnostic.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
 
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
@@ -1649,7 +1676,8 @@ describe("RelationshipClass Rule Tests", () => {
 
       const result = Rules.noAdditionalLinkTableRelationships(relationship);
 
-      for await (const _diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
     });
@@ -1689,7 +1717,8 @@ describe("RelationshipClass Rule Tests", () => {
 
       const result = Rules.noAdditionalLinkTableRelationships(relationship);
 
-      for await (const _diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
     });
@@ -1732,11 +1761,11 @@ describe("RelationshipClass Rule Tests", () => {
       for await (const diagnostic of result) {
         resultHasEntries = true;
         expect(diagnostic).to.not.be.undefined;
-        expect(diagnostic!.ecDefinition).to.equal(relationship);
-        expect(diagnostic!.messageArgs).to.eql(["TestSchema.TestRelationship"]);
-        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.NoAdditionalLinkTableRelationships);
-        expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
-        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic.ecDefinition).to.equal(relationship);
+        expect(diagnostic.messageArgs).to.eql(["TestSchema.TestRelationship"]);
+        expect(diagnostic.code).to.equal(Rules.DiagnosticCodes.NoAdditionalLinkTableRelationships);
+        expect(diagnostic.category).to.equal(DiagnosticCategory.Error);
+        expect(diagnostic.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
 
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
@@ -1777,7 +1806,8 @@ describe("RelationshipClass Rule Tests", () => {
 
       const result = Rules.noAdditionalLinkTableRelationships(relationship);
 
-      for await (const _diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
     });
@@ -1817,7 +1847,8 @@ describe("RelationshipClass Rule Tests", () => {
 
       const result = Rules.noAdditionalLinkTableRelationships(relationship);
 
-      for await (const _diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
     });

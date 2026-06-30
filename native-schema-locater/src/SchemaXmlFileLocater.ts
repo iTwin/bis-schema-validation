@@ -194,8 +194,10 @@ export class SchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLo
 
     this.loadSchemasFromNative(orderedSchemas, schemaKey, context, nativeContext, SchemaMatchType.LatestWriteCompatible);
 
-    // Schema should always be found (!) as it was just added to the context above.
-    return context.getSchemaSync(schemaStub.schemaKey)!;
+    const schema = context.getSchemaSync(schemaStub.schemaKey);
+    if (!schema)
+      throw new ECSchemaError(ECSchemaStatus.UnableToLocateSchema, `Unable to locate schema '${schemaKey.name}' after loading from native environment.`);
+    return schema;
   }
 
   private preloadUnitsFormatsSchema(locater: ISchemaLocater, context: SchemaContext, nativeContext: ECSchemaXmlContext) {
@@ -227,7 +229,7 @@ export class SchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLo
           continue;
 
         const xmlKey = currentStub.schemaKey as FileSchemaKey;
-        const schemaJson = nativeContext!.readSchemaFromXmlFile(xmlKey.fileName);
+        const schemaJson = nativeContext.readSchemaFromXmlFile(xmlKey.fileName);
         Schema.fromJsonSync(schemaJson, context);
       } catch (err: any) {
         if (err.message === "ReferencedSchemaNotFound")
@@ -294,7 +296,10 @@ class StubSchemaXmlFileLocater extends SchemaFileLocater implements ISchemaLocat
       return undefined;
 
     const maxCandidate = candidates.sort(this.compareSchemaKeyByVersion)[candidates.length - 1];
-    const alias = this.getSchemaAlias(maxCandidate.schemaText!);
+    if (!maxCandidate.schemaText)
+      throw new ECSchemaError(ECSchemaStatus.UnableToLocateSchema, `Schema text not found for schema '${maxCandidate.name}'.`);
+
+    const alias = this.getSchemaAlias(maxCandidate.schemaText);
     const schema = new Schema(context, maxCandidate, alias) as T;
     context.addSchemaSync(schema);
 

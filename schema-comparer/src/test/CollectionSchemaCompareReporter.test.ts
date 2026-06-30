@@ -25,6 +25,6 @@ describe("CollectionSchemaCompareReporter Tests", () => {
     expect(reporter.changeMessages[1].message).to.equal(`!\tLabel: LabelA -> LabelB`);
     const change = reporter.changeMessages[1].change;
     expect(change).to.not.be.undefined;
-    expect(change!.diagnostic.code).to.equal(SchemaCompareCodes.SchemaDelta);
+    expect(change?.diagnostic.code).to.equal(SchemaCompareCodes.SchemaDelta);
   });
 });

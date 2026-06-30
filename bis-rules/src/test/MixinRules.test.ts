@@ -28,14 +28,15 @@ describe("Mixin Rule Tests", () => {
       const result = Rules.mixinsCannotOverrideInheritedProperties(mixin as Mixin);
 
       let resultHasEntries = false;
-      for await (const diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const diagnostic of result) {
         resultHasEntries = true;
         expect(diagnostic).to.not.be.undefined;
-        expect(diagnostic!.ecDefinition).to.equal(mixin);
-        expect(diagnostic!.messageArgs).to.eql([mixin.fullName, "TestProperty"]);
-        expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
-        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.MixinsCannotOverrideInheritedProperties);
-        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic.ecDefinition).to.equal(mixin);
+        expect(diagnostic.messageArgs).to.eql([mixin.fullName, "TestProperty"]);
+        expect(diagnostic.category).to.equal(DiagnosticCategory.Error);
+        expect(diagnostic.code).to.equal(Rules.DiagnosticCodes.MixinsCannotOverrideInheritedProperties);
+        expect(diagnostic.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -83,20 +84,21 @@ describe("Mixin Rule Tests", () => {
       };
 
       const testSchema = await Schema.fromJson(schemaJson, new SchemaContext());
-      const grandChildMixin = await testSchema.getMixin("GrandChildMixin");
+      const grandChildMixin = await testSchema.getMixin("GrandChildMixin") as Mixin;
       expect(grandChildMixin).to.not.be.undefined;
 
-      const result = Rules.mixinsCannotOverrideInheritedProperties(grandChildMixin!);
+      const result = Rules.mixinsCannotOverrideInheritedProperties((grandChildMixin as Mixin));
 
       let resultHasEntries = false;
-      for await (const diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const diagnostic of result) {
         resultHasEntries = true;
         expect(diagnostic).to.not.be.undefined;
-        expect(diagnostic!.ecDefinition).to.equal(grandChildMixin);
-        expect(diagnostic!.messageArgs).to.eql([grandChildMixin!.fullName, "TestProperty"]);
-        expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
-        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.MixinsCannotOverrideInheritedProperties);
-        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic.ecDefinition).to.equal(grandChildMixin);
+        expect(diagnostic.messageArgs).to.eql([grandChildMixin.fullName, "TestProperty"]);
+        expect(diagnostic.category).to.equal(DiagnosticCategory.Error);
+        expect(diagnostic.code).to.equal(Rules.DiagnosticCodes.MixinsCannotOverrideInheritedProperties);
+        expect(diagnostic.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -106,7 +108,8 @@ describe("Mixin Rule Tests", () => {
 
       const result = Rules.mixinsCannotOverrideInheritedProperties(mixin as Mixin);
 
-      for await (const _diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
     });
@@ -121,7 +124,8 @@ describe("Mixin Rule Tests", () => {
 
       const result = Rules.mixinsCannotOverrideInheritedProperties(mixin as Mixin);
 
-      for await (const _diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
     });

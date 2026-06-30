@@ -9,8 +9,7 @@ module.exports = [
     files: ["**/*.ts"],
     rules: {
       "prefer-template": "off",
-      "@typescript-eslint/no-unnecessary-type-assertion": "off",
-      "@typescript-eslint/no-non-null-assertion": "off",
+      "@typescript-eslint/no-unnecessary-type-assertion": "off"
     }
   },
 ];
