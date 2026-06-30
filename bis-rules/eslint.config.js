@@ -8,10 +8,8 @@ module.exports = [
   {
     files: ["**/*.ts"],
     rules: {
-      "prefer-template": "off",
       "@typescript-eslint/naming-convention": "off",
       "@typescript-eslint/no-unnecessary-type-assertion": "off",
-      "@typescript-eslint/no-require-imports": "off",
       "@typescript-eslint/dot-notation": "off"
     }
   },

@@ -69,7 +69,7 @@ describe("KindOfQuantity Rule Tests", () => {
       const testKoq = await schema.getItem(koqProps.name, KindOfQuantity) as KindOfQuantity;
       expect(testKoq).to.not.be.undefined;
 
-      const result = await iterableToArray(Rules.koqMustUseSIUnitForPersistenceUnit((testKoq as KindOfQuantity)));
+      const result = await iterableToArray(Rules.koqMustUseSIUnitForPersistenceUnit((testKoq)));
       expect(result.length).to.equal(1);
       expect(result[0].ecDefinition).to.equal(testKoq);
       expect(result[0].messageArgs).to.eql([testKoq.fullName, "Units.USCustom"]);
@@ -88,7 +88,7 @@ describe("KindOfQuantity Rule Tests", () => {
       const testKoq = await schema.getItem(koqProps.name, KindOfQuantity) as KindOfQuantity;
       expect(testKoq).to.not.be.undefined;
 
-      const result = await iterableToArray(Rules.koqMustUseSIUnitForPersistenceUnit((testKoq as KindOfQuantity)));
+      const result = await iterableToArray(Rules.koqMustUseSIUnitForPersistenceUnit((testKoq)));
       expect(result.length).to.equal(0, "Rule should have passed because we made a special case for COEFFICIENT unit");
     });
 
@@ -102,7 +102,7 @@ describe("KindOfQuantity Rule Tests", () => {
       const testKoq = await schema.getItem(koqProps.name, KindOfQuantity) as KindOfQuantity;
       expect(testKoq).to.not.be.undefined;
 
-      const result = await iterableToArray(Rules.koqMustUseSIUnitForPersistenceUnit((testKoq as KindOfQuantity)));
+      const result = await iterableToArray(Rules.koqMustUseSIUnitForPersistenceUnit((testKoq)));
       expect(result.length).to.equal(1);
       expect(result[0].ecDefinition).to.equal(testKoq, "KindOfQuantity Definition not as expected");
       expect(result[0].messageArgs).to.eql([testKoq.fullName, (await (await testKoq.persistenceUnit)?.unitSystem)?.fullName], "Message arguments not as expected");
@@ -123,7 +123,7 @@ describe("KindOfQuantity Rule Tests", () => {
       const testKoq = await schema.getItem(koqProps.name, KindOfQuantity) as KindOfQuantity;
       expect(testKoq).to.not.be.undefined;
 
-      const result = await iterableToArray(Rules.koqMustUseSIUnitForPersistenceUnit((testKoq as KindOfQuantity)));
+      const result = await iterableToArray(Rules.koqMustUseSIUnitForPersistenceUnit((testKoq)));
       expect(result.length).to.equal(0, "Rule should have passed because we made a special case for unitless ratios");
     });
 
@@ -140,7 +140,7 @@ describe("KindOfQuantity Rule Tests", () => {
       const testKoq = await schema.getItem(koqProps.name, KindOfQuantity) as KindOfQuantity;
       expect(testKoq).to.not.be.undefined;
 
-      const result = await iterableToArray(Rules.koqMustUseSIUnitForPersistenceUnit((testKoq as KindOfQuantity)));
+      const result = await iterableToArray(Rules.koqMustUseSIUnitForPersistenceUnit((testKoq)));
       expect(result.length).to.equal(1);
       expect(result[0].ecDefinition).to.equal(testKoq, "KindOfQuantity Definition not as expected");
       expect(result[0].messageArgs).to.eql([testKoq.fullName, (await (await testKoq.persistenceUnit)?.unitSystem)?.fullName], "Message arguments not as expected");
@@ -159,7 +159,7 @@ describe("KindOfQuantity Rule Tests", () => {
       const testKoq = await schema.getItem(koqProps.name, KindOfQuantity) as KindOfQuantity;
       expect(testKoq).to.not.be.undefined;
 
-      const result = await iterableToArray(Rules.koqMustUseSIUnitForPersistenceUnit((testKoq as KindOfQuantity)));
+      const result = await iterableToArray(Rules.koqMustUseSIUnitForPersistenceUnit((testKoq)));
       expect(result.length).to.equal(1);
       expect(result[0].ecDefinition).to.equal(testKoq, "KindOfQuantity definition not as expected");
       expect(result[0].messageArgs).to.eql([testKoq.fullName, (await (await testKoq.persistenceUnit)?.unitSystem)?.fullName], "Message argument not as expected");
@@ -178,7 +178,7 @@ describe("KindOfQuantity Rule Tests", () => {
       const testKoq = await schema.getItem(koqProps.name, KindOfQuantity) as KindOfQuantity;
       expect(testKoq).to.not.be.undefined;
 
-      const result = await iterableToArray(Rules.koqMustUseSIUnitForPersistenceUnit((testKoq as KindOfQuantity)));
+      const result = await iterableToArray(Rules.koqMustUseSIUnitForPersistenceUnit((testKoq)));
       expect(result.length).to.equal(1);
       expect(result[0].ecDefinition).to.equal(testKoq, "KindOfQuantity definition not as expected");
       expect(result[0].messageArgs).to.eql([testKoq.fullName, (await (await testKoq.persistenceUnit)?.unitSystem)?.fullName], "Message argument not as expected");
@@ -200,7 +200,7 @@ describe("KindOfQuantity Rule Tests", () => {
       const testKoq = await schema.getItem(koqProps.name, KindOfQuantity) as KindOfQuantity;
       expect(testKoq).to.not.be.undefined;
 
-      const result = await iterableToArray(Rules.koqMustUseSIUnitForPersistenceUnit((testKoq as KindOfQuantity)));
+      const result = await iterableToArray(Rules.koqMustUseSIUnitForPersistenceUnit((testKoq)));
 
       expect(result.length).to.equal(0, "Rule should have passed.");
     });
@@ -224,7 +224,7 @@ describe("KindOfQuantity Rule Tests", () => {
       const testKoq = await schema.getItem(koqProps.name, KindOfQuantity) as KindOfQuantity;
       expect(testKoq).to.not.be.undefined;
 
-      const result = await iterableToArray(Rules.koqDuplicatePresentationFormat((testKoq as KindOfQuantity)));
+      const result = await iterableToArray(Rules.koqDuplicatePresentationFormat((testKoq)));
 
       expect(result.length).to.equal(2);
       expect(result[0].ecDefinition).to.equal(testKoq);
@@ -254,7 +254,7 @@ describe("KindOfQuantity Rule Tests", () => {
       const testKoq = await schema.getItem(koqProps.name, KindOfQuantity) as KindOfQuantity;
       expect(testKoq).to.not.be.undefined;
 
-      const result = await iterableToArray(Rules.koqDuplicatePresentationFormat((testKoq as KindOfQuantity)));
+      const result = await iterableToArray(Rules.koqDuplicatePresentationFormat((testKoq)));
 
       expect(result.length).to.equal(0);
     });
@@ -301,7 +301,7 @@ describe("KindOfQuantity Rule Tests", () => {
       let testKoq = await schema.getItem(koqProps.name, KindOfQuantity) as KindOfQuantity;
       expect(testKoq).to.not.be.undefined;
 
-      let result = await iterableToArray(Rules.koqDuplicatePresentationFormat((testKoq as KindOfQuantity)));
+      let result = await iterableToArray(Rules.koqDuplicatePresentationFormat((testKoq)));
       expect(result.length).to.equal(0);
 
       // schema AecUnits 1.0.1 rule pass
@@ -312,7 +312,7 @@ describe("KindOfQuantity Rule Tests", () => {
       testKoq = await schema.getItem(koqProps.name, KindOfQuantity) as KindOfQuantity;
       expect(testKoq).to.not.be.undefined;
 
-      result = await iterableToArray(Rules.koqDuplicatePresentationFormat((testKoq as KindOfQuantity)));
+      result = await iterableToArray(Rules.koqDuplicatePresentationFormat((testKoq)));
       expect(result.length).to.equal(0);
 
       // schema AecUnits above or equal to 1.0.2 rule violated
@@ -325,7 +325,7 @@ describe("KindOfQuantity Rule Tests", () => {
         testKoq = await schema.getItem(koqProps.name, KindOfQuantity) as KindOfQuantity;
         expect(testKoq).to.not.be.undefined;
 
-        result = await iterableToArray(Rules.koqDuplicatePresentationFormat((testKoq as KindOfQuantity)));
+        result = await iterableToArray(Rules.koqDuplicatePresentationFormat((testKoq)));
         expect(result.length).to.equal(1);
       }
     });

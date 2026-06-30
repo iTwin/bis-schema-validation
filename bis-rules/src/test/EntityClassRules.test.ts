@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { expect } from "chai";
-import sinon = require("sinon");
+import * as sinon from "sinon";
 import { MutableSchema } from "@itwin/ecschema-metadata/lib/cjs/Metadata/Schema";
 import { MutableClass } from "@itwin/ecschema-metadata/lib/cjs/Metadata/Class";
 import { MutableEntityClass } from "@itwin/ecschema-metadata/lib/cjs/Metadata/EntityClass";

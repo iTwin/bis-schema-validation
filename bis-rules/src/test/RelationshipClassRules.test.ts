@@ -3,7 +3,7 @@
 * Licensed under the MIT License. See LICENSE.md in the project root for license terms.
 *--------------------------------------------------------------------------------------------*/
 
-import sinon = require("sinon");
+import * as sinon from "sinon";
 import { expect } from "chai";
 import * as Rules from "../BisRules";
 import { RelationshipClass, Schema, SchemaContext } from "@itwin/ecschema-metadata";
