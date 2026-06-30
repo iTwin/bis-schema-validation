@@ -25,6 +25,7 @@ program.option("-c, --checkReleaseDynamicSchema", "Check all dynamic schemas wit
 program.option("-m, --imjs_uri <required>", "The default imjs url.");
 
 program.parse(process.argv);
+const options = program.opts();
 
 /**
  * Validates the command line inputs for verifyIModelSchemas function
@@ -44,21 +45,21 @@ async function validateInput() {
     throw new Error("Missing from required arguments and their values.");
   }
 
-  if (!program.userName || !program.password || !program.projectId || !program.iModelName ||
-    !program.baseSchemaRefDir || !program.environment || !program.output || !program.imjs_uri) {
-    console.log(chalk.red("Invalid input. For help use the '-h' option."));
+  if (!options.userName || !options.password || !options.projectId || !options.iModelName ||
+    !options.baseSchemaRefDir || !options.environment || !options.output || !options.imjs_uri) {
+    console.log("Invalid input. For help use the '-h' option.");
     process.exit(1);
   }
 
-  const env = program.environment.toUpperCase();
+  const env = options.environment.toUpperCase();
   if (env.includes("QA") || env.includes("DEV") || env.includes("PROD")) {
   } else {
     const error = "Environment value is incorrect. DEV, QA and PROD are acceptable environment values. ";
     throw new Error(error);
   }
 
-  if (!fs.existsSync(program.baseSchemaRefDir)) {
-    const error = "baseSchemaRefDir: " + program.baseSchemaRefDir + " is incorrect.";
+  if (!fs.existsSync(options.baseSchemaRefDir)) {
+    const error = "baseSchemaRefDir: " + options.baseSchemaRefDir + " is incorrect.";
     throw new Error(error);
   }
 
@@ -76,13 +77,13 @@ async function validateInput() {
   fs.mkdirSync(briefcaseDir, { recursive: true });
   console.log("Briefcase Directory: " + briefcaseDir);
 
-  if (program.checkReleaseDynamicSchema) {
+  if (options.checkReleaseDynamicSchema) {
     checkReleaseDynamicSchema = true;
   }
 
   try {
-    const iModelSchemaDir = await IModelProvider.exportSchemasFromIModel(program.projectId, program.iModelName, briefcaseDir, program.userName, program.password, program.environment, program.imjs_uri);
-    await verifyIModelSchemas(iModelSchemaDir, checkReleaseDynamicSchema, program.baseSchemaRefDir, program.output);
+    const iModelSchemaDir = await IModelProvider.exportSchemasFromIModel(options.projectId, options.iModelName, briefcaseDir, options.userName, options.password, options.environment, options.imjs_uri);
+    await verifyIModelSchemas(iModelSchemaDir, checkReleaseDynamicSchema, options.baseSchemaRefDir, options.output);
     process.exit(0); // exit forcefully
   } catch (err) {
     console.log(err);
@@ -90,7 +91,7 @@ async function validateInput() {
   }
 }
 
-if (program.verifyIModelSchemas === true) {
+if (options.verifyIModelSchemas === true) {
   validateInput().then()
     .catch((error) => {
       console.error(error);
