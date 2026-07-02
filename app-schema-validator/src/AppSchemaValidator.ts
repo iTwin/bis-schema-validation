@@ -5,7 +5,7 @@
 
 import * as fs from "fs";
 import * as path from "path";
-import chalk from "chalk";
+import * as chalk from "chalk";
 import { readdirpPromise } from "readdirp";
 import { Reporter } from "@bentley/imodel-schema-validator/lib/Reporter";
 import { SchemaKey } from "@itwin/ecschema-metadata";
