@@ -66,7 +66,7 @@
     "@itwin/core-backend": "5.11.0-dev.5",
     "@itwin/core-quantity": "5.11.0-dev.5",
     "@itwin/core-common": "5.11.0-dev.5",
-    "chalk": "^5.6.2",
+    "chalk": "^4.1.2",
     "commander": "^14.0.3",
     "fs-extra": "^7.0.1",
     "@xmldom/xmldom": "~0.8.13"

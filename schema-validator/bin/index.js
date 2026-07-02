@@ -24,21 +24,22 @@ program.option("-r, --ref [optional path]", "Optional paths to search when locat
 program.option("-a, --all", "Validate the entire schema graph.");
 
 program.parse(process.argv);
+const opts = program.opts();
 
 if (process.argv.length === 0) program.help();
 
-if (!program.input) {
+if (!opts.input) {
   // tslint:disable-next-line:no-console
   console.log(chalk.red("Invalid input. For help use the '-h' option."));
   process.exit(1);
 }
 
 // tslint:disable-next-line:no-console
-console.log("\nPerforming schema validation on file/folder " + program.input + ".");
+console.log("\nPerforming schema validation on file/folder " + opts.input + ".");
 
 async function validate() {
   try {
-    const options = new ValidationOptions(program.input, program.ref, program.all, program.output);
+    const options = new ValidationOptions(opts.input, opts.ref, opts.all, opts.output);
     const results = await SchemaValidator.validate(options);
     for (const line of results) {
       switch (line.resultType) {

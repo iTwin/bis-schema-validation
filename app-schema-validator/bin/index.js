@@ -6,6 +6,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 const fs = require("fs");
+const chalk = require("chalk");
 const commander = require("commander");
 const getResults = require("@bentley/imodel-schema-validator").getResults;
 const verifyAppSchemas = require("../lib/AppSchemaValidator").verifyAppSchemas;
@@ -16,6 +17,7 @@ program.option("-b, --baseSchemaRefDir <required>", "Root directory of all relea
 program.option("-o, --output <required>", "Path where output files will be generated.");
 
 program.parse(process.argv);
+const options = program.opts();
 
 async function validate() {
   if (process.argv.length != 8) {
@@ -26,24 +28,24 @@ async function validate() {
     throw new Error("Missing from required arguments and their values.");
   }
 
-  if (!program.installerDir || !program.baseSchemaRefDir || !program.output) {
+  if (!options.installerDir || !options.baseSchemaRefDir || !options.output) {
     console.log(chalk.red("Invalid input. For help use the '-h' option."));
     process.exit(1);
   }
 
-  if (!fs.existsSync(program.installerDir)) {
-    const error = "App installer directory do not exist: " + program.installerDir;
+  if (!fs.existsSync(options.installerDir)) {
+    const error = "App installer directory do not exist: " + options.installerDir;
     throw new Error(error);
   }
 
-  if (!fs.existsSync(program.baseSchemaRefDir)) {
-    const error = "The baseSchemaRefDir do not exist: " + program.baseSchemaRefDir;
+  if (!fs.existsSync(options.baseSchemaRefDir)) {
+    const error = "The baseSchemaRefDir do not exist: " + options.baseSchemaRefDir;
     throw new Error(error);
   }
 
   try {
-    const results = await verifyAppSchemas(program.installerDir, program.baseSchemaRefDir, program.output);
-    await getResults(results, program.baseSchemaRefDir, program.output);
+    const results = await verifyAppSchemas(options.installerDir, options.baseSchemaRefDir, options.output);
+    await getResults(results, options.baseSchemaRefDir, options.output);
     process.exit(0);
   } catch (err) {
     console.log(err);
