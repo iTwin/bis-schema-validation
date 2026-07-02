@@ -10,27 +10,27 @@ import * as path from "path";
 declare const __dirname: string;
 
 export function getAssetsDir(): string {
-  return path.normalize(__dirname + "/../../../src/test/assets/");
+  return path.normalize(`${__dirname}/../../../src/test/assets/`);
 }
 
 export function getKOQAssetDir(): string {
-  return path.normalize(__dirname + "/../../../src/test/assets/koqSuppressions/");
+  return path.normalize(`${__dirname}/../../../src/test/assets/koqSuppressions/`);
 }
 
 export function getRelationshipAssetDir(): string {
-  return path.normalize(__dirname + "/../../../src/test/assets/relationshipSuppressions/");
+  return path.normalize(`${__dirname}/../../../src/test/assets/relationshipSuppressions/`);
 }
 
 export function getXmlDeserializationDir(): string {
-  return path.normalize(__dirname + "/../../../src/test/assets/xml-deserialization/");
+  return path.normalize(`${__dirname}/../../../src/test/assets/xml-deserialization/`);
 }
 
 export function getReferencesDir(): string {
-  return path.normalize(__dirname + "/../../../src/test/assets/references/");
+  return path.normalize(`${__dirname}/../../../src/test/assets/references/`);
 }
 
 export function getOutDir(): string {
-  const outputDir = path.normalize(__dirname + "/../../../src/test/output/");
+  const outputDir = path.normalize(`${__dirname}/../../../src/test/output/`);
   fs.ensureDirSync(outputDir);
   return outputDir;
 }

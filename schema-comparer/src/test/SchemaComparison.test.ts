@@ -25,7 +25,7 @@ describe("SchemaValidater Tests", () => {
   const deserializationDir = utils.getXmlDeserializationDir();
 
   beforeEach(async () => {
-    await fs.remove(outDir + "SchemaA.compare.log");
+    await fs.remove(`${outDir}SchemaA.compare.log`);
   });
 
   afterEach(async () => {
@@ -43,8 +43,8 @@ describe("SchemaValidater Tests", () => {
     expect(compareSpy.calledOnce).to.be.true;
     expect(compareSpy.args[0][0]).to.not.be.undefined;
     expect(compareSpy.args[0][1]).to.not.be.undefined;
-    const schemaA = compareSpy.args[0][0] as Schema;
-    const schemaB = compareSpy.args[0][1] as Schema;
+    const schemaA: Schema = compareSpy.args[0][0];
+    const schemaB: Schema = compareSpy.args[0][1];
     expect(schemaA.fullName).to.equal("SchemaA");
     expect(schemaB.fullName).to.equal("SchemaB");
   });

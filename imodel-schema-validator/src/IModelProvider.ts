@@ -71,10 +71,10 @@ export class IModelProvider {
       postfix = "-prod";
 
     const oidcConfig = {
-      clientId: "imodel-schema-validator-spa" + postfix,
+      clientId: `imodel-schema-validator-spa${postfix}`,
       redirectUri: "http://localhost:3000/signin-callback",
       scope: "imodels:read",
-      authority: this._regionCode === 103 || this._regionCode === 102 ? "https://qa-" + this._url : "https://" + this._url,
+      authority: this._regionCode === 103 || this._regionCode === 102 ? `https://qa-${this._url}` : `https://${this._url}`,
     };
 
     const userCredentials: TestUserCredentials = {
@@ -86,7 +86,7 @@ export class IModelProvider {
     try {
       token = await getTestAccessToken(oidcConfig, userCredentials);
     } catch (err) {
-      const error = "oidc-signin-tool failed to generate token and failed with error: " + err;
+      const error = `oidc-signin-tool failed to generate token and failed with error: ${String(err)}`;
       throw Error(error);
     }
     return token;
@@ -138,7 +138,7 @@ export class IModelProvider {
   public static async exportIModelSchemas(projectId: string, iModelName: string, schemaDir: string, userName: string, password: string) {
     const accessToken = await this.getTokenFromSigninTool(userName, password);
     const imodelId = await this.getIModelId(accessToken, projectId, iModelName);
-    const iModelFilePath = path.join(schemaDir, iModelName, iModelName + ".bim");
+    const iModelFilePath = path.join(schemaDir, iModelName, `${iModelName}.bim`);
 
     if (!imodelId) {
       throw new Error("iModel either does not exist or cannot be found!");
@@ -167,7 +167,7 @@ export class IModelProvider {
     try {
 
       if (!iModel.isOpen) {
-        const error = "iModel not open: " + iModelName;
+        const error = `iModel not open: ${iModelName}`;
         throw new Error(error);
       }
 

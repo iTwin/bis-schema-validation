@@ -51,7 +51,7 @@ export class SchemaDeserializer {
   public async deserializeJsonFile(schemaFilePath: string, context: EC.SchemaContext, referencePaths?: string[]): Promise<EC.Schema> {
     // If the schema file doesn't exist, throw an error
     if (!fs.existsSync(schemaFilePath))
-      throw new EC.ECSchemaError(EC.ECSchemaStatus.UnableToLocateSchema, "Unable to locate schema JSON file at " + schemaFilePath);
+      throw new EC.ECSchemaError(EC.ECSchemaStatus.UnableToLocateSchema, `Unable to locate schema JSON file at ${schemaFilePath}`);
 
     // add locater to the context
     if (!referencePaths)

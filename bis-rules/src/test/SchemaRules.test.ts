@@ -36,7 +36,8 @@ describe("Schema Rule Tests", () => {
 
       const result = Rules.schemaXmlVersionMustBeTheLatest(schema);
 
-      for await (const _diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
     });
@@ -49,14 +50,15 @@ describe("Schema Rule Tests", () => {
 
       expect(result).not.undefined;
       let resultHasEntries = false;
-      for await (const diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const diagnostic of result) {
         resultHasEntries = true;
         expect(diagnostic).to.not.be.undefined;
-        expect(diagnostic!.ecDefinition).to.equal(schema);
-        expect(diagnostic!.messageArgs).to.eql(["3.1.0"]);
-        expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
-        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.SchemaXmlVersionMustBeTheLatest);
-        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.Schema);
+        expect(diagnostic.ecDefinition).to.equal(schema);
+        expect(diagnostic.messageArgs).to.eql(["3.1.0"]);
+        expect(diagnostic.category).to.equal(DiagnosticCategory.Error);
+        expect(diagnostic.code).to.equal(Rules.DiagnosticCodes.SchemaXmlVersionMustBeTheLatest);
+        expect(diagnostic.diagnosticType).to.equal(DiagnosticType.Schema);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -71,7 +73,8 @@ describe("Schema Rule Tests", () => {
 
       const result = Rules.schemaMustNotReferenceOldStandardSchemas(schema);
 
-      for await (const _diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
     });
@@ -89,14 +92,15 @@ describe("Schema Rule Tests", () => {
       expect(result).not.undefined;
       let resultHasEntries = false;
       let nameIndex = 0;
-      for await (const diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const diagnostic of result) {
         resultHasEntries = true;
         expect(diagnostic).to.not.be.undefined;
-        expect(diagnostic!.ecDefinition).to.equal(schema);
-        expect(diagnostic!.messageArgs).to.eql([schema.schemaKey.toString(), oldStandardSchemaNames[nameIndex]]);
-        expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
-        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.SchemaMustNotReferenceOldStandardSchemas);
-        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.Schema);
+        expect(diagnostic.ecDefinition).to.equal(schema);
+        expect(diagnostic.messageArgs).to.eql([schema.schemaKey.toString(), oldStandardSchemaNames[nameIndex]]);
+        expect(diagnostic.category).to.equal(DiagnosticCategory.Error);
+        expect(diagnostic.code).to.equal(Rules.DiagnosticCodes.SchemaMustNotReferenceOldStandardSchemas);
+        expect(diagnostic.diagnosticType).to.equal(DiagnosticType.Schema);
         nameIndex++;
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
@@ -111,7 +115,8 @@ describe("Schema Rule Tests", () => {
 
       const result = Rules.schemaMustNotReferenceOldStandardSchemas(schema);
 
-      for await (const _diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
     });
@@ -123,7 +128,8 @@ describe("Schema Rule Tests", () => {
 
       const result = Rules.schemaWithDynamicInNameMustHaveDynamicSchemaCA(schema);
 
-      for await (const _diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
     });
@@ -136,14 +142,15 @@ describe("Schema Rule Tests", () => {
 
       expect(result).not.undefined;
       let resultHasEntries = false;
-      for await (const diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const diagnostic of result) {
         resultHasEntries = true;
         expect(diagnostic).to.not.be.undefined;
-        expect(diagnostic!.ecDefinition).to.equal(schema);
-        expect(diagnostic!.messageArgs).to.eql([schema.schemaKey.toString()]);
-        expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
-        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.SchemaWithDynamicInNameMustHaveDynamicSchemaCA);
-        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.Schema);
+        expect(diagnostic.ecDefinition).to.equal(schema);
+        expect(diagnostic.messageArgs).to.eql([schema.schemaKey.toString()]);
+        expect(diagnostic.category).to.equal(DiagnosticCategory.Error);
+        expect(diagnostic.code).to.equal(Rules.DiagnosticCodes.SchemaWithDynamicInNameMustHaveDynamicSchemaCA);
+        expect(diagnostic.diagnosticType).to.equal(DiagnosticType.Schema);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -156,14 +163,15 @@ describe("Schema Rule Tests", () => {
 
       expect(result).not.undefined;
       let resultHasEntries = false;
-      for await (const diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const diagnostic of result) {
         resultHasEntries = true;
         expect(diagnostic).to.not.be.undefined;
-        expect(diagnostic!.ecDefinition).to.equal(schema);
-        expect(diagnostic!.messageArgs).to.eql([schema.schemaKey.toString()]);
-        expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
-        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.SchemaWithDynamicInNameMustHaveDynamicSchemaCA);
-        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.Schema);
+        expect(diagnostic.ecDefinition).to.equal(schema);
+        expect(diagnostic.messageArgs).to.eql([schema.schemaKey.toString()]);
+        expect(diagnostic.category).to.equal(DiagnosticCategory.Error);
+        expect(diagnostic.code).to.equal(Rules.DiagnosticCodes.SchemaWithDynamicInNameMustHaveDynamicSchemaCA);
+        expect(diagnostic.diagnosticType).to.equal(DiagnosticType.Schema);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -173,7 +181,8 @@ describe("Schema Rule Tests", () => {
       (schema as MutableSchema).addCustomAttribute({ className: "CoreCustomAttributes.DynamicSchema" });
       const result = Rules.schemaWithDynamicInNameMustHaveDynamicSchemaCA(schema);
 
-      for await (const _diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
     });
@@ -196,7 +205,8 @@ describe("Schema Rule Tests", () => {
 
       const result = Rules.schemaClassDisplayLabelMustBeUnique(schema);
 
-      for await (const _diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
     });
@@ -213,17 +223,18 @@ describe("Schema Rule Tests", () => {
       expect(result).not.undefined;
       let resultHasEntries = false;
       let index = 0;
-      for await (const diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const diagnostic of result) {
         resultHasEntries = true;
         expect(diagnostic).to.not.be.undefined;
-        expect(diagnostic!.ecDefinition).to.equal(schema);
+        expect(diagnostic.ecDefinition).to.equal(schema);
         if (index === 0)
-          expect(diagnostic!.messageArgs).to.eql(["TestSchema.TestEntityB", "TestSchema.TestEntityA", "LabelA"]);
+          expect(diagnostic.messageArgs).to.eql(["TestSchema.TestEntityB", "TestSchema.TestEntityA", "LabelA"]);
         else
-          expect(diagnostic!.messageArgs).to.eql(["TestSchema.TestEntityC", "TestSchema.TestEntityA", "LabelA"]);
-        expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
-        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.SchemaClassDisplayLabelMustBeUnique);
-        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.Schema);
+          expect(diagnostic.messageArgs).to.eql(["TestSchema.TestEntityC", "TestSchema.TestEntityA", "LabelA"]);
+        expect(diagnostic.category).to.equal(DiagnosticCategory.Error);
+        expect(diagnostic.code).to.equal(Rules.DiagnosticCodes.SchemaClassDisplayLabelMustBeUnique);
+        expect(diagnostic.diagnosticType).to.equal(DiagnosticType.Schema);
         index++;
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
@@ -238,7 +249,8 @@ describe("Schema Rule Tests", () => {
 
       const result = Rules.schemaClassDisplayLabelMustBeUnique(schema);
 
-      for await (const _diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
     });
@@ -297,17 +309,18 @@ describe("Schema Rule Tests", () => {
 
       let index = 0;
       let resultHasEntries = false;
-      for await (const diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const diagnostic of result) {
         resultHasEntries = true;
         expect(diagnostic).to.not.be.undefined;
-        expect(diagnostic!.ecDefinition).to.equal(schema);
+        expect(diagnostic.ecDefinition).to.equal(schema);
         if (index === 0)
-          expect(diagnostic!.messageArgs).to.eql(["TestSchema", "DeprecatedTestSchemaA"]);
+          expect(diagnostic.messageArgs).to.eql(["TestSchema", "DeprecatedTestSchemaA"]);
         else
-          expect(diagnostic!.messageArgs).to.eql(["TestSchema", "DeprecatedTestSchemaB"]);
-        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.SchemaShouldNotUseDeprecatedSchema);
-        expect(diagnostic!.category).to.equal(DiagnosticCategory.Warning);
-        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.Schema);
+          expect(diagnostic.messageArgs).to.eql(["TestSchema", "DeprecatedTestSchemaB"]);
+        expect(diagnostic.code).to.equal(Rules.DiagnosticCodes.SchemaShouldNotUseDeprecatedSchema);
+        expect(diagnostic.category).to.equal(DiagnosticCategory.Warning);
+        expect(diagnostic.diagnosticType).to.equal(DiagnosticType.Schema);
 
         ++index;
       }

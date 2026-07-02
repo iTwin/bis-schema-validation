@@ -95,6 +95,6 @@ describe("BisRules Tests", () => {
     if (missingRules.length === 0)
       return;
 
-    assert(false, "Rules not found in rule set: " + missingRules.toString());
+    assert(false, `Rules not found in rule set: ${  missingRules.toString()}`);
   });
 });

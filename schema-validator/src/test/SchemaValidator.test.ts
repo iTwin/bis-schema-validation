@@ -72,7 +72,7 @@ describe("SchemaValidater Tests", () => {
     await SchemaValidator.validate(options);
 
     expect(validateSchema.callCount).to.equal(3);
-    const schema = validateSchema.getCall(2).args[0] as Schema;
+    const schema: Schema = validateSchema.getCall(2).args[0];
     expect(schema).not.undefined;
     expect(schema.name).to.equal("CoreCustomAttributes");
     expect(traverseSchema.callCount).to.equal(2, "Expected traverseSchema to be called only twice (schema and base schema).");

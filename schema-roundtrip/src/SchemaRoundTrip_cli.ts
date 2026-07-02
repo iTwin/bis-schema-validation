@@ -56,7 +56,7 @@ async function roundTrip() {
     }
   } catch (err: any) {
     // tslint:disable-next-line:no-console
-    console.log(chalk.red("An error occurred during round trip: " + err.message));
+    console.log(chalk.red(`An error occurred during round trip: ${err.message}`));
     process.exit(1);
   }
 }

@@ -18,7 +18,7 @@ export class LaunchCodesProvider {
 
     schemaInventoryPath = path.join(schemaInventoryPath, "SchemaInventory.json");
     if (!fs.existsSync(schemaInventoryPath)) {
-      const error = "SchemaInventory.json not found at: " + schemaInventoryPath;
+      const error = `SchemaInventory.json not found at: ${schemaInventoryPath}`;
       throw new Error(error);
     }
 

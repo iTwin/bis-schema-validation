@@ -25,14 +25,15 @@ describe("StructClass Rule Tests", () => {
       const result = Rules.structsCannotHaveBaseClasses(struct);
 
       let resultHasEntries = false;
-      for await (const diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const diagnostic of result) {
         resultHasEntries = true;
         expect(diagnostic).to.not.be.undefined;
-        expect(diagnostic!.ecDefinition).to.equal(struct);
-        expect(diagnostic!.messageArgs).to.eql([struct.fullName]);
-        expect(diagnostic!.category).to.equal(DiagnosticCategory.Error);
-        expect(diagnostic!.code).to.equal(Rules.DiagnosticCodes.StructsCannotHaveBaseClasses);
-        expect(diagnostic!.diagnosticType).to.equal(DiagnosticType.SchemaItem);
+        expect(diagnostic.ecDefinition).to.equal(struct);
+        expect(diagnostic.messageArgs).to.eql([struct.fullName]);
+        expect(diagnostic.category).to.equal(DiagnosticCategory.Error);
+        expect(diagnostic.code).to.equal(Rules.DiagnosticCodes.StructsCannotHaveBaseClasses);
+        expect(diagnostic.diagnosticType).to.equal(DiagnosticType.SchemaItem);
       }
       expect(resultHasEntries, "expected rule to return an AsyncIterable with entries.").to.be.true;
     });
@@ -42,7 +43,8 @@ describe("StructClass Rule Tests", () => {
 
       const result = Rules.structsCannotHaveBaseClasses(struct);
 
-      for await (const _diagnostic of result!) {
+      expect(result).to.not.be.undefined;
+      for await (const _diagnostic of result) {
         expect(false, "Rule should have passed").to.be.true;
       }
     });

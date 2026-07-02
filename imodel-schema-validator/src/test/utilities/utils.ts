@@ -22,7 +22,7 @@ export function prepareOutputFile(iModelDir: string, imodelName: string): string
   const exportSchemaDir = path.join(outputDir, "exported");
   const wipLogs = path.join(outputDir, "logs", "wip");
   const releasedLogs = path.join(outputDir, "logs", "released");
-  const outputFile = path.join(outputDir, imodelName + ".bim");
+  const outputFile = path.join(outputDir, `${imodelName}.bim`);
 
   if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });
@@ -111,7 +111,7 @@ export function findLatestReleasedVersion(releasedSchemas: string[]): string[] {
  * @returns Version string of schema
  */
 export function getVersionString(readVersion: number, writeVersion: number, minorVersion: number): string {
-  const versionStr = ("0" + readVersion).slice(-2) + "." + ("0" + writeVersion).slice(-2) + "." + ("0" + minorVersion).slice(-2);
+  const versionStr = `${`0${readVersion}`.slice(-2)}.${`0${writeVersion}`.slice(-2)}.${`0${minorVersion}`.slice(-2)}`;
   return versionStr;
 }
 
@@ -122,7 +122,7 @@ export function getVersionString(readVersion: number, writeVersion: number, mino
  * @returns Schema XML filename
  */
 export function generateSchemaXMLName(schemaName: string, version: string): string {
-  const schemaXMLFile = schemaName + "." + version + ".ecschema.xml";
+  const schemaXMLFile = `${schemaName}.${version}.ecschema.xml`;
   return schemaXMLFile;
 }
 
@@ -155,7 +155,7 @@ export function getSchemaNameFromFileName(schemaFilePath: string): string {
 export function getVerifiedSchemaName(schemaKeyName: string, schemaFilePath: string): string {
   const xmlFileName = getSchemaNameFromFileName(schemaFilePath);
   if (schemaKeyName !== xmlFileName) {
-    console.log("schemaName is different in XML content (" + schemaKeyName + ") from XML file name (" + xmlFileName + ").");
+    console.log(`schemaName is different in XML content (${schemaKeyName}) from XML file name (${xmlFileName}).`);
     return xmlFileName;
   }
   return schemaKeyName;

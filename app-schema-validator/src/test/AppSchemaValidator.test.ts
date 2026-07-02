@@ -11,7 +11,7 @@ import { generateAppSchemaDirectoryList, verifyAppSchemas } from "../AppSchemaVa
 
 describe("AppSchemaValidator Tests", async () => {
   const bisSchemaRepo: any = process.env.BisSchemaRepo;
-  const outputDir = path.resolve(path.normalize(__dirname + "/output"));
+  const outputDir = path.resolve(path.normalize(`${__dirname}/output`));
 
   before(async () => {
     if (!fs.existsSync(outputDir)) {
@@ -21,9 +21,9 @@ describe("AppSchemaValidator Tests", async () => {
 
   it("App don't have licensing module, schema directory list has relevant paths.", async () => {
     // app1 don't have licensing module
-    const installerDir = path.resolve(path.normalize(__dirname + "/assets/app1"));
-    const schemaDir1 = path.resolve(path.normalize(__dirname + "/assets/app1/dist/resources/schemas"));
-    const schemaDir2 = path.resolve(path.normalize(__dirname + "/assets/app1/dist/resources/other"));
+    const installerDir = path.resolve(path.normalize(`${__dirname}/assets/app1`));
+    const schemaDir1 = path.resolve(path.normalize(`${__dirname}/assets/app1/dist/resources/schemas`));
+    const schemaDir2 = path.resolve(path.normalize(`${__dirname}/assets/app1/dist/resources/other`));
     const appSchemaDirs = await generateAppSchemaDirectoryList(installerDir);
 
     expect(appSchemaDirs.length).to.equals(2);
@@ -33,9 +33,9 @@ describe("AppSchemaValidator Tests", async () => {
 
   it("App has licensing module, schema directory list exclude it.", async () => {
     // app3 contains the licensing module directory containing SchemaA
-    const installerDir = path.resolve(path.normalize(__dirname + "/assets/app3"));
-    const schemaDir1 = path.resolve(path.normalize(__dirname + "/assets/app3/dist/resources/schemas"));
-    const schemaDir2 = path.resolve(path.normalize(__dirname + "/assets/app3/dist/resources/other"));
+    const installerDir = path.resolve(path.normalize(`${__dirname}/assets/app3`));
+    const schemaDir1 = path.resolve(path.normalize(`${__dirname}/assets/app3/dist/resources/schemas`));
+    const schemaDir2 = path.resolve(path.normalize(`${__dirname}/assets/app3/dist/resources/other`));
     const appSchemaDirs = await generateAppSchemaDirectoryList(installerDir);
 
     expect(appSchemaDirs.length).to.equals(2);
@@ -45,7 +45,7 @@ describe("AppSchemaValidator Tests", async () => {
 
   it("App has all released schemas, validations are successful.", async () => {
 
-    const installerDir = path.resolve(path.normalize(__dirname + "/assets/app1"));
+    const installerDir = path.resolve(path.normalize(`${__dirname}/assets/app1`));
     const results = await verifyAppSchemas(installerDir, bisSchemaRepo, outputDir);
 
     expect(results.length).to.equals(2);
@@ -63,7 +63,7 @@ describe("AppSchemaValidator Tests", async () => {
 
   it("App contains mix of released and wip schemas, comparision failed for wip schema.", async () => {
 
-    const installerDir = path.resolve(path.normalize(__dirname + "/assets/app2"));
+    const installerDir = path.resolve(path.normalize(`${__dirname}/assets/app2`));
     const results = await verifyAppSchemas(installerDir, bisSchemaRepo, outputDir);
 
     expect(results.length).to.equals(2);
@@ -85,7 +85,7 @@ describe("AppSchemaValidator Tests", async () => {
 
     // app3 contains iip_mdb_customAttributes.01.00 ec2 schema
     // app3 contains SchemaA from licensing module
-    const installerDir = path.resolve(path.normalize(__dirname + "/assets/app3"));
+    const installerDir = path.resolve(path.normalize(`${__dirname}/assets/app3`));
     const results = await verifyAppSchemas(installerDir, bisSchemaRepo, outputDir);
 
     expect(results.length).to.equals(2);

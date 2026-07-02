@@ -68,7 +68,7 @@ async function applyValidations(iModelSchemaDir: string, iModelSchemaFile: strin
   const iModelSchemaPath = path.join(iModelSchemaDir, iModelSchemaFile);
   const rawDetails = iModelSchemaFile.split(".");
   const name = rawDetails[0];
-  const version: string = rawDetails[1] + "." + rawDetails[2] + "." + rawDetails[3];
+  const version: string = `${rawDetails[1]}.${rawDetails[2]}.${rawDetails[3]}`;
   const validationResult: IModelValidationResult = { name, version };
 
   // Special case to handle RoadRailAlignment.02.00.01 and Construction.01.00.01 until their missing ECSchemaReference issue is fixed
@@ -162,7 +162,7 @@ export async function validateSchema(schemaName: string, version: string, imodel
       switch (line.resultType) {
         case ValidationResultType.RuleViolation:
           console.log(chalk.yellow(line.resultText));
-          Reporter.writeToLogFile(schemaName, version, line.resultText + "\n", output);
+          Reporter.writeToLogFile(schemaName, version, `${line.resultText}\n`, output);
           // Allow warnings to be skipped
           if (ruleViolationError(line.resultText)) {
             validationResult.validator = iModelValidationResultTypes.Failed;
@@ -170,7 +170,7 @@ export async function validateSchema(schemaName: string, version: string, imodel
           break;
         case ValidationResultType.Error:
           console.log(chalk.red(line.resultText));
-          Reporter.writeToLogFile(schemaName, version, line.resultText + "\n", output);
+          Reporter.writeToLogFile(schemaName, version, `${line.resultText}\n`, output);
           // skip the validation for the schemas which are not supported
           if (line.resultText.toLowerCase().includes("standard schemas are not supported by this tool")) {
             validationResult.validator = iModelValidationResultTypes.Skipped;
@@ -180,13 +180,13 @@ export async function validateSchema(schemaName: string, version: string, imodel
           break;
         default:
           console.log(chalk.green(line.resultText));
-          Reporter.writeToLogFile(schemaName, version, line.resultText + "\n", output);
+          Reporter.writeToLogFile(schemaName, version, `${line.resultText}\n`, output);
           validationResult.validator = iModelValidationResultTypes.Passed;
       }
     }
   } catch (error: any) {
-    console.log(chalk.red("An error occurred during validation: " + error.message));
-    Reporter.writeToLogFile(schemaName, version, "An error occurred during validation: " + error.message + "\n", output);
+    console.log(chalk.red(`An error occurred during validation: ${error.message}`));
+    Reporter.writeToLogFile(schemaName, version, `An error occurred during validation: ${error.message}\n`, output);
     validationResult.validator = iModelValidationResultTypes.Error;
   }
 }
@@ -207,29 +207,29 @@ export async function compareSchema(schemaName: string, version: string, imodelS
             if (!deltaExists)
               validationResult.comparer = iModelValidationResultTypes.ReferenceDifferenceWarning;
             console.log(chalk.yellow(line.resultText));
-            Reporter.writeToLogFile(schemaName, version, line.resultText + "\n", output);
+            Reporter.writeToLogFile(schemaName, version, `${line.resultText}\n`, output);
             break;
           }
           if (line.compareCode)
             deltaExists = true;
           validationResult.comparer = iModelValidationResultTypes.Failed;
           console.log(chalk.yellow(line.resultText));
-          Reporter.writeToLogFile(schemaName, version, line.resultText + "\n", output);
+          Reporter.writeToLogFile(schemaName, version, `${line.resultText}\n`, output);
           break;
         case ComparisonResultType.Error:
           console.log(chalk.red(line.resultText));
-          Reporter.writeToLogFile(schemaName, version, line.resultText + "\n", output);
+          Reporter.writeToLogFile(schemaName, version, `${line.resultText}\n`, output);
           validationResult.comparer = iModelValidationResultTypes.Error;
           break;
         default:
           console.log(chalk.green(line.resultText));
-          Reporter.writeToLogFile(schemaName, version, line.resultText + "\n", output);
+          Reporter.writeToLogFile(schemaName, version, `${line.resultText}\n`, output);
           validationResult.comparer = iModelValidationResultTypes.Passed;
       }
     }
   } catch (err: any) {
-    console.log(chalk.red("An error occurred during comparison: " + err.message));
-    Reporter.writeToLogFile(schemaName, version, "An error occurred during comparison: " + err.message + "\n", output);
+    console.log(chalk.red(`An error occurred during comparison: ${err.message}`));
+    Reporter.writeToLogFile(schemaName, version, `An error occurred during comparison: ${err.message}\n`, output);
     validationResult.comparer = iModelValidationResultTypes.Error;
   }
   return comparisonResults;
@@ -255,13 +255,13 @@ function referenceDifference(comparisonResult: IComparisonResult): boolean {
 async function removeECSchemaReference(schemaFilePath: string, ecReferenceNames: string[]) {
   let data = fs.readFileSync(schemaFilePath, "utf-8").split("\n");
   ecReferenceNames.forEach((ecReference) => {
-    const ecReferenceRegex = new RegExp('<ECSchemaReference name="' + ecReference + '"');
+    const ecReferenceRegex = new RegExp(`<ECSchemaReference name="${ecReference}"`);
     data = data.filter((line) => ecReferenceRegex.test(line) !== true);
   });
 
   const writeStream = fs.createWriteStream(schemaFilePath);
   data.forEach((line) => {
-    writeStream.write(line + "\n");
+    writeStream.write(`${line}\n`);
   });
   writeStream.end();
 }

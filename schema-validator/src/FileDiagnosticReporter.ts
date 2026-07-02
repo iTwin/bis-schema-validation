@@ -60,7 +60,7 @@ export class FileDiagnosticReporter extends ValidationDiagnosticReporter {
     if (!fs.pathExistsSync(realDir))
       throw new Error(`The out directory ${realDir} does not exist.`);
 
-    const baseFile = realDir + schemaName + ".validation.log";
+    const baseFile = `${realDir}${schemaName}.validation.log`;
     this._stream = fs.createWriteStream(baseFile);
   }
 
@@ -68,7 +68,7 @@ export class FileDiagnosticReporter extends ValidationDiagnosticReporter {
     if (!this._stream)
       return;
 
-    this._stream.write(text + "\r\n", (err) => {
+    this._stream.write(`${text}\r\n`, (err) => {
       if (err)
         throw err;
     });

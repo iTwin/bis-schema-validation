@@ -8,9 +8,7 @@ module.exports = [
   {
     files: ["**/*.ts"],
     rules: {
-      "prefer-template": "off",
       "no-console": "off",
-      "@typescript-eslint/no-unnecessary-type-assertion": "off"
     }
   },
 ];

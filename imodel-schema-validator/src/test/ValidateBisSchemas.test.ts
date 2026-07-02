@@ -49,7 +49,7 @@ describe("Import and validate schemas in bis-schemas repository", async () => {
 
     for (const releasedSchema of releasedSchemas) {
       await IModelHost.startup();
-      console.log("\nValidating Released Schema: " + releasedSchema);
+      console.log(`\nValidating Released Schema: ${releasedSchema}`);
       const key = getSchemaInfo(releasedSchema);
       const schemaName = getVerifiedSchemaName(key.name, releasedSchema);
       const schemaVersion = getVersionString(key.readVersion, key.writeVersion, key.minorVersion);
@@ -92,7 +92,7 @@ describe("Import and validate schemas in bis-schemas repository", async () => {
     schemaDirs = schemaDirs.concat(wipSchemas.map((schemaPath) => path.dirname(schemaPath)));
     for (const wipSchema of wipSchemas) {
       await IModelHost.startup();
-      console.log("\nValidating WIP Schema: " + wipSchema);
+      console.log(`\nValidating WIP Schema: ${wipSchema}`);
       const key = getSchemaInfo(wipSchema);
       const schemaName = getVerifiedSchemaName(key.name, wipSchema);
       const schemaVersion = getVersionString(key.readVersion, key.writeVersion, key.minorVersion);

@@ -3,5 +3,10 @@
     "module_name": "serialize-javascript",
     "severity": "HIGH",
     "from": "mocha"
+  },
+  {
+    "module_name": "form-data",
+    "severity": "HIGH",
+    "from": "@itwin/core-backend, @itwin/imodels-access-backend"
   }
 ]

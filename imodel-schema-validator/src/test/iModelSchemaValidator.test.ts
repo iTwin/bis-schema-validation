@@ -13,19 +13,19 @@ import * as fs from "fs";
 describe("iModelSchemaValidator Tests", async () => {
 
   it("Dynamic Schema, A schema is a dynamic schema.", async () => {
-    const schemaFile = path.resolve(path.normalize(__dirname + "/assets/"), "SchemaE.ecschema.xml");
+    const schemaFile = path.resolve(path.normalize(`${__dirname}/assets/`), "SchemaE.ecschema.xml");
     expect(isDynamicSchema(schemaFile)).to.equal(true);
   });
 
   it("Dynamic Schema, A schema is not dynamic schema.", async () => {
-    const schemaFile = path.resolve(path.normalize(__dirname + "/assets/"), "SchemaA.ecschema.xml");
+    const schemaFile = path.resolve(path.normalize(`${__dirname}/assets/`), "SchemaA.ecschema.xml");
     expect(isDynamicSchema(schemaFile)).to.equal(false);
   });
 
   it("Schema Comparison, Difference is not reference only", async () => {
-    const schemaAFile = path.resolve(path.normalize(__dirname + "/assets/"), "SchemaA.ecschema.xml");
-    const schemaBFile = path.resolve(path.normalize(__dirname + "/assets/"), "SchemaB.ecschema.xml");
-    const references = path.normalize(__dirname + "/assets/references/");
+    const schemaAFile = path.resolve(path.normalize(`${__dirname}/assets/`), "SchemaA.ecschema.xml");
+    const schemaBFile = path.resolve(path.normalize(`${__dirname}/assets/`), "SchemaB.ecschema.xml");
+    const references = path.normalize(`${__dirname}/assets/references/`);
     const outputDir = path.normalize(__dirname);
     const validationResult: IModelValidationResult = { name: "SchemaB", version: "01.01.01" };
 
@@ -39,9 +39,9 @@ describe("iModelSchemaValidator Tests", async () => {
   });
 
   it("Schema Comparison, Difference is reference only", async () => {
-    const schemaAFile = path.resolve(path.normalize(__dirname + "/assets/"), "SchemaD.ecschema.xml");
-    const schemaBFile = path.resolve(path.normalize(__dirname + "/assets/subAssets/"), "SchemaD.ecschema.xml");
-    const references = path.normalize(__dirname + "/assets/references/");
+    const schemaAFile = path.resolve(path.normalize(`${__dirname}/assets/`), "SchemaD.ecschema.xml");
+    const schemaBFile = path.resolve(path.normalize(`${__dirname}/assets/subAssets/`), "SchemaD.ecschema.xml");
+    const references = path.normalize(`${__dirname}/assets/references/`);
     const outputDir = path.normalize(__dirname);
     const validationResult: IModelValidationResult = { name: "SchemaD", version: "01.00.01" };
 
