@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import * as commander from "commander";
-import chalk from "chalk";
+import * as chalk from "chalk";
 
 import { RoundTripOptions, RoundTripResultType, SchemaRoundTrip } from "./SchemaRoundTrip";
 

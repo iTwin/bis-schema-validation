@@ -34,10 +34,11 @@ program.option("--ref1 [optional path]", "Comma-separated list of paths to searc
 program.option("--ref2 [optional path]", "Comma-separated list of paths to search when locating schema 2 references (Ex. '-r2 c:\\dir1, c:\\dir2').", ref2);
 
 program.parse(process.argv);
+const options = program.opts();
 
 if (process.argv.length === 0) program.help();
 
-if (!program.input) {
+if (!options.input) {
   // tslint:disable-next-line:no-console
   console.log(chalk.red("Invalid input. For help use the '-h' option."));
   process.exit(1);
@@ -48,8 +49,8 @@ console.log("\nPerforming schema comparison...");
 
 async function compare() {
   try {
-    const options = new CompareOptions(program.input[0], program.input[1], program.ref1, program.ref2, program.output);
-    const results = await SchemaComparison.compare(options);
+    const compareOptions = new CompareOptions(options.input[0], options.input[1], options.ref1, options.ref2, options.output);
+    const results = await SchemaComparison.compare(compareOptions);
     for (const line of results) {
       switch (line.resultType) {
         case ComparisonResultType.Delta:
